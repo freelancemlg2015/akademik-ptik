@@ -11,7 +11,7 @@ class Laporan extends CI_Controller {
     }
 
     function index() {
-        redirect('laporan/template_report');
+        redirect('master/sample');
     }
 
 }
