@@ -1,0 +1,148 @@
+/* over write bootstrap */
+
+*{
+    font-family: verdana !important;
+    font-size: 11px !important;
+    color: #666666;
+}
+
+body {
+   /* padding-top: 60px;
+    font-family: verdana !important;
+    font-size: 11px !important;*/
+    color: #666666;
+    background: none;
+}
+
+ /*body {
+   background: url("../images/bg-xy.jpg") repeat scroll 0 0 #FBFBFB;
+    
+    padding-top: 40px;
+}*/
+ 
+.block_head {
+  background-color: #eeeeee; /* Old browsers */
+  background-repeat: repeat-x; /* Repeat the gradient */
+  background-image: -moz-linear-gradient(top, #f5f5f5 0%, #eeeeee 100%); /* FF3.6+ */
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f5f5f5), color-stop(100%,#eeeeee)); /* Chrome,Safari4+ */
+  background-image: -webkit-linear-gradient(top, #f5f5f5 0%,#eeeeee 100%); /* Chrome 10+,Safari 5.1+ */
+  background-image: -ms-linear-gradient(top, #f5f5f5 0%,#eeeeee 100%); /* IE10+ */
+  background-image: -o-linear-gradient(top, #f5f5f5 0%,#eeeeee 100%); /* Opera 11.10+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f5f5f5', endColorstr='#eeeeee',GradientType=0 ); /* IE6-9 */
+  background-image: linear-gradient(top, #f5f5f5 0%,#eeeeee 100%); /* W3C */
+}
+
+/*
+//kalau ini dropdown dan mau keliatan active*/
+.navbar .nav .active > a{
+    background-color: rgba(0, 0, 0, 0.5) !important;
+}
+
+#main-container{
+    /*background: url("../images/bg.jpg") repeat-x scroll 0 0 transparent;
+    min-height: 402px;
+    padding-top: 60px;*/
+}
+
+.navbar-fixed-top {
+    z-index: 9999;
+}
+/*
+.pagination ul li.active {
+    border-right: 1px solid rgba(0, 0, 0, 0.15);
+    float: left;
+    line-height: 34px;
+    padding: 0 14px;
+    text-decoration: none;
+}
+
+.pagination ul li:last-child{
+    border-right: 0;
+}
+
+.pagination ul li.last a{
+    border-left: 1px solid rgba(0, 0, 0, 0.15);
+    border-right : 0;
+}*/
+
+.topbar p {
+    color: #BFBFBF;
+}
+
+form em {
+    color: #CE0000;
+    font-size: 11px;
+    font-style: normal;
+    font-weight: normal;
+}
+
+form table td ,.modal-body table td{
+    border: 0;
+}
+
+.notice {
+    color: #CE0000;
+    display: block;
+    clear: both;
+    font-size: 9px !important;
+    width: 200px;
+    text-align: right;
+}
+
+label{
+    width: 200px;
+}
+
+table tbody th{
+    border : 0;
+}
+
+
+.data_list tbody tr{
+    cursor: pointer;
+}
+
+.centered{
+    margin: 0 auto;
+}
+
+.btn.small {
+    font-size: 11px;
+    padding: 5px 7px 6px;
+}
+
+#login form{
+    margin: 0;
+}
+
+
+#login label, #login .notice {
+    margin: 10px;
+    text-align: left;
+}
+
+#login.modal{
+    width: 352px; 
+    margin-left:-200px;
+}
+
+#login table{
+    margin: 0;
+
+}
+
+
+#login table td{
+    padding: 4px;
+}
+
+#login .modal-body{
+    padding: 5px;
+}
+
+/*form login*/
+input, textarea, select, .uneditable-input {
+    margin-bottom: 4px;
+}
+/*END*/
+
