@@ -1,0 +1,186 @@
+/* over write bootstrap */
+
+code, pre {
+    border-radius: 3px 3px 3px 3px;
+    color: #333333;
+    font-family: Menlo,Monaco,"Courier New",monospace !important;
+    font-size: 12px;
+    padding: 0 3px 2px;
+}
+
+.block_content {
+    background: none repeat scroll 0 0 #FFFFFF;
+    border-left: 1px solid #CCCCCC;
+    border-right: 1px solid #CCCCCC;
+    overflow: hidden;
+    padding: 10px 20px 0;
+}
+
+.block_content {
+    background: url("../../assets/images/sidebar.gif") repeat-y scroll 0 0 #ffffff;
+    padding: 0 20px 0 210px;
+    position: relative;
+}
+.block_content:before, .block_content:after {
+    content: "";
+    display: table;
+}
+.block_content:after {
+    clear: both;
+}
+.block_content .sidebar {
+    float: left;
+    font-size: 11px;
+    margin: 0 20px 18px -210px;
+    width: 190px;
+}
+.block_content .sidebar p {
+    padding: 0 13px 15px;
+}
+.block_content .sidebar ul.sidemenu {
+    list-style: none outside none;
+    margin: 0 0 10px;
+    padding: 0;
+}
+.block_content .sidebar ul.sidemenu li {
+    background: none repeat scroll 0 50% transparent;
+    border-bottom: 1px solid #CCCCCC;
+    margin: 0;
+    padding: 0;
+}
+.block_content .sidebar ul.sidemenu li a {
+    display: block;
+    padding: 10px 13px;
+}
+.block_content .sidebar ul.sidemenu li a .badge {
+    float: right;
+    margin-right: 1px;
+    margin-top: 4px;
+}
+.block_content .sidebar ul.sidemenu li a:hover {
+    background: none repeat scroll 0 0 #FDFDFD;
+    border-right: 1px solid #CCCCCC;
+    text-decoration: none;
+}
+.block_content .sidebar ul.sidemenu li a:hover .badge {
+    margin-right: 0;
+}
+.block_content .sidebar ul.sidemenu li.active a, .block_content .sidebar ul.sidemenu li.active a:hover {
+    background: none repeat scroll 0 0 #FFFFFF;
+    border: 0 none;
+}
+.block_content .sidebar ul.sidemenu li.active a .badge, .block_content .sidebar ul.sidemenu li.active a:hover .badge {
+    margin-right: 1px;
+}
+.block_content .sidebar_content {
+    float: left;
+    padding: 15px 0;
+    width: 100%;
+    background-color:#ffffff; 
+}
+
+.sidebar_content th, .sidebar_content td {
+    border: 0 !important;
+}
+
+.block_info {
+    margin-bottom: 18px;
+}
+.block_info .block_info_title h6 {
+    font-weight: normal;
+    line-height: 15px;
+}
+.block_info .block_info_title h6 .inline_action {
+    color: #999999;
+    font-size: 11px;
+    text-transform: lowercase;
+}
+.block_info .block_info_content h3, .block_info .block_info_content h4, .block_info .block_info_content h5 {
+    color: #454545;
+    line-height: 24px;
+}
+.block_info .block_info_aux {
+    color: #999999;
+    font-size: 11px;
+    line-height: 13px;
+}
+
+.sidebar_content .btn-group{
+    margin: 0 auto;
+}
+
+.btn-group.span7,.btn-group.span8,.btn-group.span9{
+    float: none;
+}
+
+.sidebar_content .dropdown-menu a {
+    text-align: left;
+}
+
+
+.sidebar_content .btn-group.open .dropdown-menu {
+    right: 71px;
+   width: 160px;
+   left: inherit !important;
+}
+
+.form-horizontal .control-group {
+    margin-bottom: 5px;
+}
+
+.form-horizontal .help-block {
+    margin-bottom: 0;
+    margin-top:0;
+}
+
+.form-horizontal .help-block .notice{
+    text-align: left;
+}
+
+.block_info .inline_action, .block_info .inline_action a, .block_info .inline_action a:hover{
+    text-transform: lowercase;
+    font-weight: normal;
+    text-decoration: none;
+}
+
+#kilometer_upToDate{
+    color: #333333;
+}
+
+.xpadd1{
+    padding: 5px 0;
+}
+
+.toggle-detail{
+    cursor: pointer;
+}
+
+.collapsed{
+    display: none;
+}
+
+.expanded{
+    display: block;
+}
+
+
+#status_action.dropdown-menu {
+    left: 0 !important;
+    right: 0;
+    width: 0;
+}
+
+#album-besar2{
+float:left;
+}
+
+#sub-album2{
+float:left;
+padding:5px;
+margin:5px;
+text-align:center;
+	-moz-border-radius:4px;
+	-khtml-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	border:1px dashed #cccccc;
+}

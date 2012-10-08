@@ -1,0 +1,962 @@
+<?php
+
+$config = array(
+    'kendaraan_create' => array(
+        array(
+            'field' => 'no_polisi',
+            'label' => 'No Polisi',
+            'rules' => 'trim|required'
+        ),
+        array(
+            'field' => 'merk_id',
+            'label' => 'Merk',
+            'rules' => 'trim|greater_than[0]'
+        ),
+        array(
+            'field' => 'jenis_id',
+            'label' => 'Jenis',
+            'rules' => 'trim|greater_than[0]'
+        ),
+        array(
+            'field' => 'kota_id',
+            'label' => 'Kota',
+            'rules' => 'trim|greater_than[0]'
+        ),
+        array(
+            'field' => 'tahun',
+            'label' => 'Tahun',
+            'rules' => 'trim|integer'
+        ),
+        array(
+            'field' => 'kapasitas_mesin',
+            'label' => 'Kapasitas mesin',
+            'rules' => 'trim'
+        ),
+        array(
+            'field' => 'bahan_bakar',
+            'label' => 'Bahan bakar',
+            'rules' => 'trim'
+        ),
+        array(
+            'field' => 'warna_id',
+            'label' => 'Warna',
+            'rules' => 'trim'
+        ),
+        array(
+            'field' => 'pool',
+            'label' => 'Pool',
+            'rules' => 'trim'
+        ),
+        array(
+            'field' => 'no_rangka',
+            'label' => 'No Rangka',
+            'rules' => 'trim|required'
+        ),
+        array(
+            'field' => 'no_mesin',
+            'label' => 'No Mesin',
+            'rules' => 'trim|required'
+        ),
+        array(
+            'field' => 'no_bpkb',
+            'label' => 'No BPKB',
+            'rules' => 'trim'
+        ),
+        array(
+            'field' => 'bank_id',
+            'label' => 'Bank',
+            'rules' => 'trim'
+        ),
+        array(
+            'field' => 'no_faktur',
+            'label' => 'No Faktur',
+            'rules' => 'trim'
+        ),
+        array(
+            'field' => 'tgl_akhir_stnk',
+            'label' => 'Tanggal akhir STNK',
+            'rules' => 'trim'
+        ),
+        array(
+            'field' => 'alamat_stnk',
+            'label' => 'Alamat STNK',
+            'rules' => 'trim'
+        ),
+        array(
+            'field' => 'biaya_stnk',
+            'label' => 'Biaya STNK',
+            'rules' => 'trim|integer'
+        ),
+        array(
+            'field' => 'tgl_akhir_kir',
+            'label' => 'Tanggal akhir KIR',
+            'rules' => 'trim'
+        ),
+        array(
+            'field' => 'wilayah_kir_id',
+            'label' => 'Wilayah KIR',
+            'rules' => 'trim'
+        ),
+        array(
+            'field' => 'biaya_kir',
+            'label' => 'Biaya KIR',
+            'rules' => 'trim|integer'
+        ),
+        array(
+            'field' => 'pemilik_id',
+            'label' => 'Pemilik',
+            'rules' => 'trim|greater_than[0]'
+        ),
+        array(
+            'field' => 'harga_beli',
+            'label' => 'Harga beli',
+            'rules' => 'trim|integer'
+        ),
+        array(
+            'field' => 'kilometer_terakhir',
+            'label' => 'Kilometer terakhir',
+            'rules' => 'trim|required|integer'
+        ),
+        array(
+            'field' => 'tgl_akhir_asuransi',
+            'label' => 'Tanggal akhir asuransi',
+            'rules' => 'trim'
+        ),
+        array(
+            'field' => 'no_asuransi',
+            'label' => 'No Asuransi',
+            'rules' => 'trim'
+        ),
+        array(
+            'field' => 'tgl_jual',
+            'label' => 'Tanggal jual',
+            'rules' => 'trim'
+        ),
+        array(
+            'field' => 'status_audit',
+            'label' => 'Status audit',
+            'rules' => 'trim'
+        )
+    ), 'kendaraan_update' => array(
+        array(
+            'field' => 'no_polisi',
+            'label' => 'No Polisi',
+            'rules' => 'trim|required'
+        ),
+        array(
+            'field' => 'merk_id',
+            'label' => 'Merk',
+            'rules' => 'trim|greater_than[0]'
+        ),
+        array(
+            'field' => 'jenis_id',
+            'label' => 'Jenis',
+            'rules' => 'trim|greater_than[0]'
+        ),
+        array(
+            'field' => 'kota_id',
+            'label' => 'Kota',
+            'rules' => 'trim|greater_than[0]'
+        ),
+        array(
+            'field' => 'tahun',
+            'label' => 'Tahun',
+            'rules' => 'trim|integer'
+        ),
+        array(
+            'field' => 'kapasitas_mesin',
+            'label' => 'Kapasitas mesin',
+            'rules' => 'trim'
+        ),
+        array(
+            'field' => 'bahan_bakar',
+            'label' => 'Bahan bakar',
+            'rules' => 'trim'
+        ),
+        array(
+            'field' => 'warna_id',
+            'label' => 'Warna',
+            'rules' => 'trim'
+        ),
+        array(
+            'field' => 'pool',
+            'label' => 'Pool',
+            'rules' => 'trim'
+        ),
+        array(
+            'field' => 'no_rangka',
+            'label' => 'No Rangka',
+            'rules' => 'trim|required'
+        ),
+        array(
+            'field' => 'no_mesin',
+            'label' => 'No Mesin',
+            'rules' => 'trim|required'
+        ),
+        array(
+            'field' => 'no_bpkb',
+            'label' => 'No BPKB',
+            'rules' => 'trim'
+        ),
+        array(
+            'field' => 'bank_id',
+            'label' => 'Bank',
+            'rules' => 'trim'
+        ),
+        array(
+            'field' => 'no_faktur',
+            'label' => 'No Faktur',
+            'rules' => 'trim'
+        ),
+        array(
+            'field' => 'tgl_akhir_stnk',
+            'label' => 'Tanggal akhir STNK',
+            'rules' => 'trim'
+        ),
+        array(
+            'field' => 'alamat_stnk',
+            'label' => 'Alamat STNK',
+            'rules' => 'trim'
+        ),
+        array(
+            'field' => 'biaya_stnk',
+            'label' => 'Biaya STNK',
+            'rules' => 'trim|integer'
+        ),
+        array(
+            'field' => 'tgl_akhir_kir',
+            'label' => 'Tanggal akhir KIR',
+            'rules' => 'trim'
+        ),
+        array(
+            'field' => 'wilayah_kir_id',
+            'label' => 'Wilayah KIR',
+            'rules' => 'trim'
+        ),
+        array(
+            'field' => 'biaya_kir',
+            'label' => 'Biaya KIR',
+            'rules' => 'trim|integer'
+        ),
+        array(
+            'field' => 'pemilik_id',
+            'label' => 'Pemilik',
+            'rules' => 'trim|greater_than[0]'
+        ),
+        array(
+            'field' => 'harga_beli',
+            'label' => 'Harga beli',
+            'rules' => 'trim|integer'
+        ),
+        array(
+            'field' => 'kilometer_terakhir',
+            'label' => 'Kilometer terakhir',
+            'rules' => 'trim|required|integer'
+        ),
+        array(
+            'field' => 'tgl_akhir_asuransi',
+            'label' => 'Tanggal akhir asuransi',
+            'rules' => 'trim'
+        ),
+        array(
+            'field' => 'no_asuransi',
+            'label' => 'No Asuransi',
+            'rules' => 'trim'
+        ),
+        array(
+            'field' => 'tgl_jual',
+            'label' => 'Tanggal jual',
+            'rules' => 'trim'
+        ),
+        array(
+            'field' => 'status_audit',
+            'label' => 'Status audit',
+            'rules' => 'trim'
+        )
+    ), 'merk_create' => array(
+        array(
+            'field' => 'merk',
+            'label' => 'Merk',
+            'rules' => 'trim|required|is_unique[m_merk.merk]'
+        ),
+        array(
+            'field' => 'description',
+            'label' => 'Description',
+            'rules' => 'trim|required'
+        )
+    ), 'merk_update' => array(
+        array(
+            'field' => 'merk',
+            'label' => 'Merk',
+            'rules' => 'trim|required'
+        ),
+        array(
+            'field' => 'description',
+            'label' => 'Description',
+            'rules' => 'trim|required'
+        )
+    ), 'peminjam_create' => array(
+        array(
+            'field' => 'nip',
+            'label' => 'nip',
+            'rules' => 'trim|required|is_unique[m_peminjam.nip]'
+        ),
+        array(
+            'field' => 'peminjam',
+            'label' => 'peminjam',
+            'rules' => 'trim|required'
+        )
+    ), 'peminjam_update' => array(
+        array(
+            'field' => 'nip',
+            'label' => 'nip',
+            'rules' => 'trim|required'
+        ),
+        array(
+            'field' => 'peminjam',
+            'label' => 'peminjam',
+            'rules' => 'trim|required'
+        )
+    ), 'jenis_create' => array(
+        array(
+            'field' => 'jenis',
+            'label' => 'Jenis',
+            'rules' => 'trim|required|is_unique[m_jenis.jenis]'
+        ),
+        array(
+            'field' => 'merk',
+            'label' => 'Merk',
+            'rules' => 'required'
+        ),
+        array(
+            'field' => 'description',
+            'label' => 'Description',
+            'rules' => 'trim|required'
+        )
+    ), 'jenis_update' => array(
+        array(
+            'field' => 'jenis',
+            'label' => 'Jenis',
+            'rules' => 'trim|required'
+        ),
+        array(
+            'field' => 'merk',
+            'label' => 'Merk',
+            'rules' => 'required'
+        ),
+        array(
+            'field' => 'description',
+            'label' => 'Description',
+            'rules' => 'trim|required'
+        )
+    ), 'company_create' => array(
+        array(
+            'field' => 'company',
+            'label' => 'Company',
+            'rules' => 'trim|required|is_unique[m_company.company]'
+        ),
+        array(
+            'field' => 'description',
+            'label' => 'Description',
+            'rules' => 'trim|required'
+        ),
+        array(
+            'field' => 'kota',
+            'label' => 'kota',
+            'rules' => 'trim|required'
+        ),
+        array(
+            'field' => 'alamat',
+            'label' => 'alamat',
+            'rules' => 'trim|required'
+        )
+    ), 'company_update' => array(
+        array(
+            'field' => 'company',
+            'label' => 'Company',
+            'rules' => 'trim|required'
+        ),
+        array(
+            'field' => 'description',
+            'label' => 'Description',
+            'rules' => 'trim|required'
+        ),
+        array(
+            'field' => 'kota',
+            'label' => 'kota',
+            'rules' => 'trim|required'
+        ),
+        array(
+            'field' => 'alamat',
+            'label' => 'alamat',
+            'rules' => 'trim|required'
+        )
+    ), 'departments_create' => array(
+        array(
+            'field' => 'department',
+            'label' => 'Department',
+            'rules' => 'trim|required|is_unique[m_jenis.jenis]'
+        ),
+        array(
+            'field' => 'description',
+            'label' => 'Description',
+            'rules' => 'trim|required'
+        ),
+        array(
+            'field' => 'company',
+            'label' => 'Company',
+            'rules' => 'required'
+        )
+    ), 'departments_update' => array(
+        array(
+            'field' => 'department',
+            'label' => 'Department',
+            'rules' => 'trim|required'
+        ),
+        array(
+            'field' => 'description',
+            'label' => 'Description',
+            'rules' => 'trim|required'
+        ),
+        array(
+            'field' => 'company',
+            'label' => 'Company',
+            'rules' => 'required'
+        )
+    ), 'kota_create' => array(
+        array(
+            'field' => 'kota',
+            'label' => 'kota',
+            'rules' => 'trim|required|is_unique[m_kota.kota]'
+        ),
+        array(
+            'field' => 'description',
+            'label' => 'Description',
+            'rules' => 'trim|required'
+        )
+    ), 'kota_update' => array(
+        array(
+            'field' => 'kota',
+            'label' => 'kota',
+            'rules' => 'trim|required'
+        ),
+        array(
+            'field' => 'description',
+            'label' => 'Description',
+            'rules' => 'trim|required'
+        )
+    ), 'bank_create' => array(
+        array(
+            'field' => 'bank',
+            'label' => 'bank',
+            'rules' => 'trim|required|is_unique[m_bank.bank]'
+        ),
+        array(
+            'field' => 'description',
+            'label' => 'Description',
+            'rules' => 'trim|required'
+        )
+    ), 'bank_update' => array(
+        array(
+            'field' => 'bank',
+            'label' => 'bank',
+            'rules' => 'trim|required|is_unique[m_bank.bank]'
+        ),
+        array(
+            'field' => 'description',
+            'label' => 'Description',
+            'rules' => 'trim|required'
+        )
+    ), 'warna_create' => array(
+        array(
+            'field' => 'warna',
+            'label' => 'warna',
+            'rules' => 'trim|required|is_unique[m_warna.warna]'
+        ),
+        array(
+            'field' => 'description',
+            'label' => 'Description',
+            'rules' => 'trim|required'
+        )
+    ), 'warna_update' => array(
+        array(
+            'field' => 'warna',
+            'label' => 'warna',
+            'rules' => 'trim|required'
+        ),
+        array(
+            'field' => 'description',
+            'label' => 'Description',
+            'rules' => 'trim|required'
+        )
+    ), 'jabatan_create' => array(
+        array(
+            'field' => 'jabatan',
+            'label' => 'jabatan',
+            'rules' => 'trim|required|is_unique[m_jabatan.jabatan]'
+        ),
+        array(
+            'field' => 'description',
+            'label' => 'Description',
+            'rules' => 'trim|required'
+        )
+    ), 'jabatan_update' => array(
+        array(
+            'field' => 'jabatan',
+            'label' => 'jabatan',
+            'rules' => 'trim|required'
+        ),
+        array(
+            'field' => 'description',
+            'label' => 'Description',
+            'rules' => 'trim|required'
+        )
+    ), 'lokasi_create' => array(
+        array(
+            'field' => 'lokasi',
+            'label' => 'lokasi',
+            'rules' => 'trim|required|is_unique[m_lokasi.lokasi]'
+        ),
+        array(
+            'field' => 'lokasi',
+            'label' => 'lokasi',
+            'rules' => 'required'
+        )
+    ), 'lokasi_update' => array(
+        array(
+            'field' => 'lokasi',
+            'label' => 'lokasi',
+            'rules' => 'trim|required'
+        ),
+        array(
+            'field' => 'lokasi',
+            'label' => 'lokasi',
+            'rules' => 'required'
+        )
+    ), 'teknisi_create' => array(
+        array(
+            'field' => 'nip',
+            'label' => 'NIP',
+            'rules' => 'trim|required|is_unique[m_teknisi.nip]'
+        ),
+        array(
+            'field' => 'fullname',
+            'label' => 'Fullname',
+            'rules' => 'trim|required'
+        ),
+        array(
+            'field' => 'email',
+            'label' => 'Email',
+            'rules' => 'trim'
+        ),
+        array(
+            'field' => 'telephone',
+            'label' => 'Telephone',
+            'rules' => 'trim'
+        )
+    ), 'teknisi_update' => array(
+        array(
+            'field' => 'nip',
+            'label' => 'NIP',
+            'rules' => 'trim|required'
+        ),
+        array(
+            'field' => 'fullname',
+            'label' => 'Fullname',
+            'rules' => 'trim|required'
+        ),
+        array(
+            'field' => 'email',
+            'label' => 'Email',
+            'rules' => 'trim'
+        ),
+        array(
+            'field' => 'telephone',
+            'label' => 'Telephone',
+            'rules' => 'trim'
+        )
+    ), 'part_create' => array(
+        array(
+            'field' => 'id',
+            'label' => 'id',
+            'rules' => 'trim|required|is_unique[m_part.id]'
+        ),
+        array(
+            'field' => 'part',
+            'label' => 'part',
+            'rules' => 'trim|required'
+        )
+    ), 'part_update' => array(
+        array(
+            'field' => 'id',
+            'label' => 'id',
+            'rules' => 'trim|required'
+        ),
+        array(
+            'field' => 'part',
+            'label' => 'part',
+            'rules' => 'trim|required'
+        )
+    ), 'perbaikan_create' => array(
+        array(
+            'field' => 'service_category_id',
+            'label' => 'Category',
+            'rules' => 'trim|greater_than[0]'
+        ),
+        array(
+            'field' => 'perbaikan',
+            'label' => 'Perbaikan',
+            'rules' => 'trim|required|is_unique[m_perbaikan.perbaikan]'
+        )
+    ), 'perbaikan_update' => array(
+        array(
+            'field' => 'service_category_id',
+            'label' => 'Category',
+            'rules' => 'trim|greater_than[0]'
+        ),
+        array(
+            'field' => 'perbaikan',
+            'label' => 'Perbaikan',
+            'rules' => 'trim|required'
+        )
+    ), 'warehouse_create' => array(
+        array(
+            'field' => 'warehouse',
+            'label' => 'warehouse',
+            'rules' => 'trim|required|is_unique[m_warehouse.warehouse]'
+        ),
+        array(
+            'field' => 'description',
+            'label' => 'Description',
+            'rules' => 'trim|required'
+        )
+    ), 'warehouse_update' => array(
+        array(
+            'field' => 'warehouse',
+            'label' => 'warehouse',
+            'rules' => 'trim|required'
+        ),
+        array(
+            'field' => 'description',
+            'label' => 'Description',
+            'rules' => 'trim|required'
+        )
+    ), 'consumable_create' => array(
+        array(
+            'field' => 'item',
+            'label' => 'Item',
+            'rules' => 'trim|required|is_unique[m_warehouse.warehouse]'),
+        array(
+            'field' => 'description',
+            'label' => 'Description',
+            'rules' => 'trim'
+        ),
+        array(
+            'field' => 'warehouse',
+            'label' => 'warehouse',
+            'rules' => 'trim|greater_than[0]'
+        )
+    ), 'consumable_update' => array(
+        array(
+            'field' => 'item',
+            'label' => 'Item',
+            'rules' => 'trim|required'),
+        array(
+            'field' => 'description',
+            'label' => 'Description',
+            'rules' => 'trim'
+        ),
+        array(
+            'field' => 'warehouse',
+            'label' => 'warehouse',
+            'rules' => 'trim|greater_than[0]'
+        )
+    ), 'employee_create' => array(
+        array(
+            'field' => 'employee_id',
+            'label' => 'employee_id',
+            'rules' => 'trim|required|is_unique[m_employee_point.employee_id]'
+        ),
+        array(
+            'field' => 'employee_name',
+            'label' => 'employee_name',
+            'rules' => 'trim|required'
+        )
+    ), 'employee_update' => array(
+        array(
+            'field' => 'employee_id',
+            'label' => 'employee_id',
+            'rules' => 'trim|required'
+        ),
+        array(
+            'field' => 'employee_name',
+            'label' => 'employee_name',
+            'rules' => 'trim|required'
+        )
+    ), 'peminjaman_create' => array(
+        array(
+            'field' => 'tgl_peminjaman',
+            'label' => 'Tanggal Peminjaman',
+            'rules' => 'trim|required'
+        ), array(
+            'field' => 'nip',
+            'label' => 'Nip',
+            'rules' => 'trim|required'
+        ),
+        array(
+            'field' => 'tgl_pemakaian',
+            'label' => 'Tanggal Pemakaian',
+            'rules' => 'trim|required'
+        ),
+        array(
+            'field' => 'tujuan',
+            'label' => 'Tujuan',
+            'rules' => 'trim|required'
+        ),
+        array(
+            'field' => 'no_polisi',
+            'label' => 'No Polisi',
+            'rules' => 'trim|required'
+        )
+    ), 'peminjaman_update' => array(
+        array(
+            'field' => 'tgl_peminjaman',
+            'label' => 'Tanggal Peminjaman',
+            'rules' => 'trim|required'
+        ), array(
+            'field' => 'nip',
+            'label' => 'Nip',
+            'rules' => 'trim|required'
+        ),
+        array(
+            'field' => 'tgl_pemakaian',
+            'label' => 'Tanggal Pemakaian',
+            'rules' => 'trim|required'
+        ),
+        array(
+            'field' => 'tujuan',
+            'label' => 'Tujuan',
+            'rules' => 'trim|required'
+        ),
+        array(
+            'field' => 'no_polisi',
+            'label' => 'No Polisi',
+            'rules' => 'trim|required'
+        )
+    ), 'pengembalian_create' => array(
+        array(
+            'field' => 'tgl_pengembalian',
+            'label' => 'Tanggal Pengembalian',
+            'rules' => 'trim|required'
+        ),
+        array(
+            'field' => 'yang_menyerahkan',
+            'label' => 'Yang menyerahkan',
+            'rules' => 'trim|required'
+        ),
+        array(
+            'field' => 'yang_menerima',
+            'label' => 'Yang Menerima',
+            'rules' => 'trim|required'
+        )
+    ), 'pengembalian_update' => array(
+        array(
+            'field' => 'tgl_pengembalian',
+            'label' => 'Tanggal Pengembalian',
+            'rules' => 'trim|required'
+        ),
+        array(
+            'field' => 'yang_menyerahkan',
+            'label' => 'Yang menyerahkan',
+            'rules' => 'trim|required'
+        ),
+        array(
+            'field' => 'yang_menerima',
+            'label' => 'Yang Menerima',
+            'rules' => 'trim|required'
+        )
+    ), 'surat_kuasa_create' => array(
+        array(
+            'field' => 'no_polisi',
+            'label' => 'No Polisi',
+            'rules' => 'trim|required'
+        ),
+        array(
+            'field' => 'jenis_surat_kuasa',
+            'label' => 'Jenis Surat Kuasa',
+            'rules' => 'trim|required'
+        )
+    )
+    , 'surat_kuasa_update' => array(
+        array(
+            'field' => 'no_polisi',
+            'label' => 'No Polisi',
+            'rules' => 'trim|required'
+        ),
+        array(
+            'field' => 'jenis_surat_kuasa',
+            'label' => 'Jenis Surat Kuasa',
+            'rules' => 'trim'
+        )
+    ), 'service_category_create' => array(
+        array(
+            'field' => 'category',
+            'label' => 'category',
+            'rules' => 'trim|required|is_unique[m_service_category.category]'
+        )
+    ), 'service_category_update' => array(
+        array(
+            'field' => 'category',
+            'label' => 'category',
+            'rules' => 'trim|required'
+        )
+    ), 'pengambilan_create' => array(
+        array(
+            'field' => 'tgl_pengambilan',
+            'label' => 'Tgl Pengambilan',
+            'rules' => 'trim|required'
+        ),
+        array(
+            'field' => 'nip',
+            'label' => 'NIP',
+            'rules' => 'trim|required'
+        ),
+        array(
+            'field' => 'kilometer_pengambilan',
+            'label' => 'Kilometer Pengambilan',
+            'rules' => 'trim|required'
+        )
+    ), 'pengambilan_update' => array(
+        array(
+            'field' => 'tgl_pengambilan',
+            'label' => 'Tgl Pengambilan',
+            'rules' => 'trim|required'
+        ),
+        array(
+            'field' => 'nip',
+            'label' => 'NIP',
+            'rules' => 'trim|required'
+        ),
+        array(
+            'field' => 'kilometer_pengambilan',
+            'label' => 'Kilometer Pengambilan',
+            'rules' => 'trim|required'
+        )
+    ), 'payment_create' => array(
+        array(
+            'field' => 'no_ref',
+            'label' => 'No Referensi',
+            'rules' => 'trim|required'
+        ),
+        array(
+            'field' => 'tgl_payment',
+            'label' => 'Tgl Payment',
+            'rules' => 'trim|required'
+        )
+    ), 'payment_update' => array(
+        array(
+            'field' => 'no_ref',
+            'label' => 'No Referensi',
+            'rules' => 'trim|required'
+        ),
+        array(
+            'field' => 'tgl_payment',
+            'label' => 'Tgl Payment',
+            'rules' => 'trim|required'
+        )
+    ), 'service_create' => array(
+        array(
+            'field' => 'no_polisi',
+            'label' => 'No Polisi',
+            'rules' => 'trim|required'
+        ),
+        array(
+            'field' => 'kilometer',
+            'label' => 'kilometer',
+            'rules' => 'trim|required'
+        ),
+        array(
+            'field' => 'customer',
+            'label' => 'customer',
+            'rules' => 'trim|required'
+        ),
+        array(
+            'field' => 'tgl_terima',
+            'label' => 'tgl terima',
+            'rules' => 'trim|required'
+        ),
+        array(
+            'field' => 'teknisi',
+            'label' => 'Teknisi',
+            'rules' => 'trim|required'
+        )
+    ), 'service_update' => array(
+        array(
+            'field' => 'no_polisi',
+            'label' => 'No Polisi',
+            'rules' => 'trim|required'
+        ),
+        array(
+            'field' => 'kilometer',
+            'label' => 'kilometer',
+            'rules' => 'trim|required'
+        ),
+        array(
+            'field' => 'customer',
+            'label' => 'customer',
+            'rules' => 'trim|required'
+        ),
+        array(
+            'field' => 'tgl_terima',
+            'label' => 'tgl terima',
+            'rules' => 'trim|required'
+        ),
+        array(
+            'field' => 'teknisi',
+            'label' => 'Teknisi',
+            'rules' => 'trim|required'
+        )
+    ), 'service_luar_create' => array(
+        array(
+            'field' => 'no_polisi',
+            'label' => 'No Polisi',
+            'rules' => 'trim|required'
+        ),
+        array(
+            'field' => 'kilometer',
+            'label' => 'kilometer',
+            'rules' => 'trim|required'
+        ),
+        array(
+            'field' => 'customer',
+            'label' => 'customer',
+            'rules' => 'trim|required'
+        ),
+        array(
+            'field' => 'tgl_terima',
+            'label' => 'tgl terima',
+            'rules' => 'trim|required'
+        )
+    ), 'service_luar_update' => array(
+        array(
+            'field' => 'no_polisi',
+            'label' => 'No Polisi',
+            'rules' => 'trim|required'
+        ),
+        array(
+            'field' => 'kilometer',
+            'label' => 'kilometer',
+            'rules' => 'trim|required'
+        ),
+        array(
+            'field' => 'customer',
+            'label' => 'customer',
+            'rules' => 'trim|required'
+        ),
+        array(
+            'field' => 'tgl_terima',
+            'label' => 'tgl terima',
+            'rules' => 'trim|required'
+        )
+    )
+);
