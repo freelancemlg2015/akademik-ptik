@@ -63,6 +63,7 @@ $route['master/sample/create'] = "sample/create";
 $route['master/sample/search'] = "sample/search";
 //END
 
+
 //DIREKTORAT
 $route['master/direktorat'] = "direktorat";
 $route['master/direktorat/view/(:any)'] = "direktorat/index/$1";
@@ -174,18 +175,6 @@ $route['master/tahun_akademik/search'] = "tahun_akademik/search";
 $route['master/tahun_akademik/suggestion'] = "tahun_akademik/suggestion";
 //END
 
-//KELOMPOK MATA KULIAH 
-$route['master/kelompok_mata_kuliah'] = "kelompok_mata_kuliah";
-$route['master/kelompok_mata_kuliah/view/(:any)'] = "kelompok_mata_kuliah/index/$1";
-$route['master/kelompok_mata_kuliah/(:any)/info'] = "kelompok_mata_kuliah/info/$1";
-$route['master/kelompok_mata_kuliah/(:any)/edit'] = "kelompok_mata_kuliah/edit/$1";
-$route['master/kelompok_mata_kuliah/(:any)/delete'] = "kelompok_mata_kuliah/delete/$1";
-$route['master/kelompok_mata_kuliah/(:any)/(:any)/(:any)'] = "kelompok_mata_kuliah/index/$1/$2/$3";
-$route['master/kelompok_mata_kuliah/create/(:any)'] = "kelompok_mata_kuliah/create/$1";
-$route['master/kelompok_mata_kuliah/create'] = "kelompok_mata_kuliah/create";
-$route['master/kelompok_mata_kuliah/search'] = "kelompok_mata_kuliah/search";
-//END
-
 //MATA KULIAH 
 $route['master/mata_kuliah'] = "mata_kuliah";
 $route['master/mata_kuliah/view/(:any)'] = "mata_kuliah/index/$1";
@@ -239,7 +228,7 @@ $route['master/pelaksana_pemutakhiran/search'] = "pelaksana_pemutakhiran/search"
 $route['master/jam_pelajaran'] = "jam_pelajaran";
 $route['master/jam_pelajaran/view/(:any)'] = "jam_pelajaran/index/$1";
 $route['master/jam_pelajaran/(:any)/info'] = "jam_pelajaran/info/$1";
-$route['master/jam_pelajaran/(:any)/edit'] = "jam_pelajarn/edit/$1";
+$route['master/jam_pelajaran/(:any)/edit'] = "jam_pelajaran/edit/$1";
 $route['master/jam_pelajaran/(:any)/delete'] = "jam_pelajaran/delete/$1";
 $route['master/jam_pelajaran/(:any)/(:any)/(:any)'] = "jam_pelajaran/index/$1/$2/$3";
 $route['master/jam_pelajaran/create/(:any)'] = "jam_pelajaran/create/$1";
@@ -587,6 +576,20 @@ $route['transaction/ujian_skripsi/create'] = "ujian_skripsi/create";
 $route['transaction/ujian_skripsi/search'] = "ujian_skripsi/search";
 //END
 
+//PLOT MATAKULIAH
+$route['transaction/plot_mata_kuliah'] = "plot_mata_kuliah";
+$route['transaction/plot_mata_kuliah/view/(:any)'] = "plot_mata_kuliah/index/$1";
+$route['transaction/plot_mata_kuliah/(:any)/info'] = "plot_mata_kuliah/info/$1";
+$route['transaction/plot_mata_kuliah/(:any)/edit'] = "plot_mata_kuliah/edit/$1";
+$route['transaction/plot_mata_kuliah/(:any)/delete'] = "plot_mata_kuliah/delete/$1";
+$route['transaction/plot_mata_kuliah/(:any)/(:any)/(:any)'] = "plot_mata_kuliah/index/$1/$2/$3";
+$route['transaction/plot_mata_kuliah/create/(:any)'] = "plot_mata_kuliah/create/$1";
+$route['transaction/plot_mata_kuliah/create'] = "plot_mata_kuliah/create";
+$route['transaction/plot_mata_kuliah/search'] = "plot_mata_kuliah/search";
+$route['transaction/plot_mata_kuliah/suggestion'] = "plot_mata_kuliah/suggestion";
+//END
+
+
 //PAKET MATAKULIAH
 $route['transaction/paket_matakuliah'] = "paket_matakuliah";
 $route['transaction/paket_matakuliah/view/(:any)'] = "paket_matakuliah/index/$1";
@@ -613,6 +616,20 @@ $route['transaction/kalender_akademik/search'] = "kalender_akademik/search";
 $route['transaction/kalender_akademik/suggestion'] = "kalender_akademik/suggestion";
 //END
 
+//PLOT KELAS 
+$route['transaction/plot_kelas'] = "plot_kelas";
+$route['transaction/plot_kelas/view/(:any)'] = "plot_kelas/index/$1";
+$route['transaction/plot_kelas/(:any)/info'] = "plot_kelas/info/$1";
+$route['transaction/plot_kelas/(:any)/edit'] = "plot_kelas/edit/$1";
+$route['transaction/plot_kelas/(:any)/delete'] = "plot_kelas/delete/$1";
+$route['transaction/plot_kelas/(:any)/(:any)/(:any)'] = "plot_kelas/index/$1/$2/$3";
+$route['transaction/plot_kelas/create/(:any)'] = "plot_kelas/create/$1";
+$route['transaction/plot_kelas/create'] = "plot_kelas/create";
+$route['transaction/plot_kelas/search'] = "plot_kelas/search";
+$route['transaction/plot_kelas/suggestion'] = "plot_kelas/suggestion";
+//END
+
+
 //PLOT DOSEN AJAR
 $route['transaction/plot_dosen_ajar'] = "plot_dosen_ajar";
 $route['transaction/plot_dosen_ajar/view/(:any)'] = "plot_dosen_ajar/index/$1";
@@ -624,6 +641,30 @@ $route['transaction/plot_dosen_ajar/create/(:any)'] = "plot_dosen_ajar/create/$1
 $route['transaction/plot_dosen_ajar/create'] = "plot_dosen_ajar/create";
 $route['transaction/plot_dosen_ajar/search'] = "plot_dosen_ajar/search";
 $route['transaction/plot_dosen_ajar/suggestion'] = "plot_dosen_ajar/suggestion";
+//END
+
+//ABSENSI DOSEN
+$route['transaction/absensi_dosen'] = "absensi_dosen";
+$route['transaction/absensi_dosen/view/(:any)'] = "absensi_dosen/index/$1";
+$route['transaction/absensi_dosen/(:any)/info'] = "absensi_dosen/info/$1";
+$route['transaction/absensi_dosen/(:any)/edit'] = "absensi_dosen/edit/$1";
+$route['transaction/absensi_dosen/(:any)/delete'] = "absensi_dosen/delete/$1";
+$route['transaction/absensi_dosen/(:any)/(:any)/(:any)'] = "absensi_dosen/index/$1/$2/$3";
+$route['transaction/absensi_dosen/create/(:any)'] = "absensi_dosen/create/$1";
+$route['transaction/absensi_dosen/create'] = "absensi_dosen/create";
+$route['transaction/absensi_dosen/search'] = "absensi_dosen/search";
+//END
+
+//JADWAL UJIAN
+$route['transaction/jadwal_ujian'] = "jadwal_ujian";
+$route['transaction/jadwal_ujian/view/(:any)'] = "jadwal_ujian/index/$1";
+$route['transaction/jadwal_ujian/(:any)/info'] = "jadwal_ujian/info/$1";
+$route['transaction/jadwal_ujian/(:any)/edit'] = "jadwal_ujian/edit/$1";
+$route['transaction/jadwal_ujian/(:any)/delete'] = "jadwal_ujian/delete/$1";
+$route['transaction/jadwal_ujian/(:any)/(:any)/(:any)'] = "jadwal_ujian/index/$1/$2/$3";
+$route['transaction/jadwal_ujian/create/(:any)'] = "jadwal_ujian/create/$1";
+$route['transaction/jadwal_ujian/create'] = "jadwal_ujian/create";
+$route['transaction/jadwal_ujian/search'] = "jadwal_ujian/search";
 //END
 
 //NILAI MENTAL
@@ -672,9 +713,39 @@ $route['transaction/nilai_akademik/(:any)/(:any)/(:any)'] = "nilai_akademik/inde
 $route['transaction/nilai_akademik/create/(:any)'] = "nilai_akademik/create/$1";
 $route['transaction/nilai_akademik/create'] = "nilai_akademik/create";
 $route['transaction/nilai_akademik/search'] = "nilai_akademik/search";
+$route['transaction/nilai_akademik/getOptProgramStudi'] = "nilai_akademik/getOptProgramStudi";
+$route['transaction/nilai_akademik/getOptMataKuliah'] = "nilai_akademik/getMataKuliah";
+$route['transaction/nilai_akademik/getMahasiswa'] = "nilai_akademik/getMahasiswa";
+$route['transaction/nilai_akademik/submit_nilai'] = "nilai_akademik/submit_nilai";
 //END
 
 //NILAI AKADEMIK
+$route['laporan/template_report'] = "template_report";
+$route['laporan/template_report/view/(:any)'] = "template_report/index/$1";
+$route['laporan/template_report/(:any)/info'] = "template_report/info/$1";
+$route['laporan/template_report/(:any)/edit'] = "template_report/edit/$1";
+$route['laporan/template_report/(:any)/delete'] = "template_report/delete/$1";
+$route['laporan/template_report/(:any)/(:any)/(:any)'] = "template_report/index/$1/$2/$3";
+$route['laporan/template_report/create/(:any)'] = "template_report/create/$1";
+$route['laporan/template_report/create'] = "template_report/create";
+$route['laporan/template_report/search'] = "template_report/search";
+//END
+
+
+//LAPORAN DAFTAR MATAKULIAH PAKET
+$route['laporan/laporan_daftar_matakuliah_paket'] = "laporan_daftar_matakuliah_paket";
+$route['laporan/laporan_daftar_matakuliah_paket/view/(:any)'] = "laporan_daftar_matakuliah_paket/index/$1";
+$route['laporan/laporan_daftar_matakuliah_paket/(:any)/info'] = "laporan_daftar_matakuliah_paket/info/$1";
+$route['laporan/laporan_daftar_matakuliah_paket/(:any)/edit'] = "laporan_daftar_matakuliah_paket/edit/$1";
+$route['laporan/laporan_daftar_matakuliah_paket/(:any)/delete'] = "laporan_daftar_matakuliah_paket/delete/$1";
+$route['laporan/laporan_daftar_matakuliah_paket/(:any)/(:any)/(:any)'] = "laporan_daftar_matakuliah_paket/index/$1/$2/$3";
+$route['laporan/laporan_daftar_matakuliah_paket/create/(:any)'] = "laporan_daftar_matakuliah_paket/create/$1";
+$route['laporan/laporan_daftar_matakuliah_paket/create'] = "laporan_daftar_matakuliah_paket/create";
+$route['laporan/laporan_daftar_matakuliah_paket/search'] = "laporan_daftar_matakuliah_paket/search";
+$route['laporan/laporan_daftar_matakuliah_paket/report'] = "laporan_daftar_matakuliah_paket/report";
+//END
+
+//LAPORAN DAFTAR MAHASISWA
 $route['laporan/laporan_daftar_mahasiswa'] = "laporan_daftar_mahasiswa";
 $route['laporan/laporan_daftar_mahasiswa/view/(:any)'] = "laporan_daftar_mahasiswa/index/$1";
 $route['laporan/laporan_daftar_mahasiswa/(:any)/info'] = "laporan_daftar_mahasiswa/info/$1";
@@ -684,4 +755,19 @@ $route['laporan/laporan_daftar_mahasiswa/(:any)/(:any)/(:any)'] = "laporan_dafta
 $route['laporan/laporan_daftar_mahasiswa/create/(:any)'] = "laporan_daftar_mahasiswa/create/$1";
 $route['laporan/laporan_daftar_mahasiswa/create'] = "laporan_daftar_mahasiswa/create";
 $route['laporan/laporan_daftar_mahasiswa/search'] = "laporan_daftar_mahasiswa/search";
+$route['laporan/laporan_daftar_mahasiswa/report'] = "laporan_daftar_mahasiswa/report";
 //END
+
+//LAPORAN DAFTAR JADWAL PERKULIAHAN
+$route['laporan/laporan_jadwal_perkuliahan'] = "laporan_jadwal_perkuliahan";
+$route['laporan/laporan_jadwal_perkuliahan/view/(:any)'] = "laporan_jadwal_perkuliahan/index/$1";
+$route['laporan/laporan_jadwal_perkuliahan/(:any)/info'] = "laporan_jadwal_perkuliahan/info/$1";
+$route['laporan/laporan_jadwal_perkuliahan/(:any)/edit'] = "laporan_jadwal_perkuliahan/edit/$1";
+$route['laporan/laporan_jadwal_perkuliahan/(:any)/delete'] = "laporan_jadwal_perkuliahan/delete/$1";
+$route['laporan/laporan_jadwal_perkuliahan/(:any)/(:any)/(:any)'] = "laporan_jadwal_perkuliahan/index/$1/$2/$3";
+$route['laporan/laporan_jadwal_perkuliahan/create/(:any)'] = "laporan_jadwal_perkuliahan/create/$1";
+$route['laporan/laporan_jadwal_perkuliahan/create'] = "laporan_jadwal_perkuliahan/create";
+$route['laporan/laporan_jadwal_perkuliahan/search'] = "laporan_jadwal_perkuliahan/search";
+$route['laporan/laporan_jadwal_perkuliahan/report'] = "laporan_jadwal_perkuliahan/report";
+//END
+
