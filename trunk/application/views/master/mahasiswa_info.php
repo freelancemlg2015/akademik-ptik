@@ -7,8 +7,28 @@ $control_label = array(
 );
 ?>
 <div class="container-full form-horizontal" id="mahasiswa">
-    <table cellspacing="0" cellpadding="0" border="0" class="table table-bordered span4">
+    <table cellspacing="0" cellpadding="0" border="0" class="table table-bordered">
         <tbody>
+            <tr>
+                <th class="span2">Kode Dik</th>
+                <td><?= $kode_dik ?></td>
+            </tr>
+            <tr>
+                <th class="span2">Angkatan</th>
+                <td><?= $nama_angkatan ?></td>
+            </tr>
+            <tr>
+                <th class="span2">Kode Dik Ang</th>
+                <td><?= $kode_dik_ang ?></td>
+            </tr>
+            <tr>
+                <th class="span2">Jenis Dik</th>
+                <td><?= $nama_jenis_dik ?></td>
+            </tr>
+            <tr>
+                <th class="span2">Sebutan Dik</th>
+                <td><?= $sebutan_dik ?></td>
+            </tr>
             <tr>
                 <th class="span2">Nim</th>
                 <td><?= $nim ?></td>
@@ -16,10 +36,6 @@ $control_label = array(
             <tr>
                 <th class="span2">Nama</th>
                 <td><?= $nama ?></td>
-            </tr>
-            <tr>
-                <th class="span2">Angkatan</th>
-                <td><?= $nama_angkatan ?></td>
             </tr>
             <tr>
                 <th class="span2">Program Studi</th>
@@ -64,14 +80,6 @@ $control_label = array(
              <tr>
                 <th class="span2">Jurusan Sebelumnya</th>
                 <td><?= $jurusan_sebelumnya ?></td>
-            </tr>
-            <tr>
-                <th class="span2">Judicium</th>
-                <td><?= $judicium ?></td>
-            </tr>
-             <tr>
-                <th class="span2">Penasehat Akademik</th>
-                <td><?= $status_dosen_penasehat ?></td>
             </tr>
             <tr>
                 <th class="span2">Propinsi SLTA</th>
@@ -141,56 +149,16 @@ $control_label = array(
                 <td><?= $thn_dik_abri ?></td>
             </tr>
             <tr>
-                <th class="span2">Nama Ayah</th>
-                <td><?= $nama_ayah ?></td>
+                <th class="span2">Sindikat</th>
+                <td><?= $sindikat ?></td>
             </tr>
             <tr>
-                <th class="span2">Pekerjaan Ayah</th>
-                <td><?= $pekerjaan_ayah ?></td>
+                <th class="span2">Nama Istri</th>
+                <td><?= $nama_istri ?></td>
             </tr>
             <tr>
-                <th class="span2">Tanggal Lahir Ayah</th>
-                <td><?= $tgl_lahir_ayah ?></td>
-            </tr>
-            <tr>
-                <th class="span2">Agama</th>
-                <td><?= $agama ?></td>
-            </tr>
-            <tr>
-                <th class="span2">Pendidikan Ayah</th>
-                <td><?= $pendidikan_ayah ?></td>
-            </tr>
-            <tr>
-                <th class="span2">Alamat</th>
-                <td><?= $alamat_ayah ?></td>
-            </tr>
-            <tr>
-                <th class="span2">No Telepon</th>
-                <td><?= $no_telepon ?></td>
-            </tr>
-            <tr>
-                <th class="span2">Nama Wali</th>
-                <td><?= $nama_wali ?></td>
-            </tr>
-            <tr>
-                <th class="span2">Pekerjaan Wali</th>
-                <td><?= $pekerjaan_wali ?></td>
-            </tr>
-            <tr>
-                <th class="span2">Tanggal Lahir Wali</th>
-                <td><?= $tgl_lahir_wali ?></td>
-            </tr>
-            <tr>
-                <th class="span2">Agama</th>
-                <td><?= $agama ?></td>
-            </tr>            
-            <tr>
-                <th class="span2">Pendidikan Wali</th>
-                <td><?= $pendidikan_wali ?></td>
-            </tr>            
-            <tr>
-                <th class="span2">Alamat</th>
-                <td><?= $alamat_wali ?></td>
+                <th class="span2">Anak</th>
+                <td><?= $nama_anak ?></td>
             </tr>            
         </tbody>
     </table>

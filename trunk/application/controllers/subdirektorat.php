@@ -69,8 +69,8 @@ class Subdirektorat extends CI_Controller {
 
     function search() {
         $query_array = array(
-            'nama_direktorat' => $this->input->post('nama_direktorat'),
-            'nama_subdirektorat'      => $this->input->post('nama_subdirektorat'),
+            'nama_direktorat'    => $this->input->post('nama_direktorat'),
+            'nama_subdirektorat' => $this->input->post('nama_subdirektorat'),
             'active'          => 1
         );
         $query_id = $this->input->save_query($query_array);

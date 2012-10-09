@@ -41,7 +41,7 @@ class Berita_model extends CI_Model {
                 ->order_by($sort_by, $sort_order);
 
         if ($query_array['kategori_berita'] != '') {
-            $this->db->where('m_kategori_berita.kategori_berita', $query_array['kategori_berita']);
+            $this->db->like('m_kategori_berita.kategori_berita', $query_array['kategori_berita']);
         }
 
         if ($query_array['judul_berita'] != '') {
@@ -64,7 +64,7 @@ class Berita_model extends CI_Model {
         $this->s_berita();
 
         if ($query_array['kategori_berita'] != '') {
-            $this->db->where('m_kategori_barita.kategori_berita', $query_array['kategori_berita']);
+            $this->db->like('m_kategori_berita.kategori_berita', $query_array['kategori_berita']);
         }
 
         if ($query_array['judul_berita'] != '') {

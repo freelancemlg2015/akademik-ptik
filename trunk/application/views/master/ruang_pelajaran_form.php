@@ -16,19 +16,19 @@ $kode_ruang_attr = array(
 
 $nama_ruang_attr = array(
     'name' => 'nama_ruang',
-    'class' => 'input-xlarge',
+    'class' => 'input-medium',
     'value' => set_value('nama_ruang', $nama_ruang),
     'autocomplete' => 'off'
 );
 
-$jenis_ruang_data[0] = '-PILIH-';
+$jenis_ruang_data[0] = '';
 foreach ($jenis_ruang_options as $row) {
     $jenis_ruang_data[$row->id] = $row->jenis_ruang;
 }
 
 $kapasitas_ruang_attr = array(
     'name' => 'kapasitas_ruang',
-    'class'=> 'input-xlarge',
+    'class'=> 'input-mini',
     'value'=> set_value('kapasitas_ruang', $kapasitas_ruang),
     'autorcomplete' => 'off'
 );
@@ -56,7 +56,7 @@ $kapasitas_ruang_attr = array(
     <div class="control-group">
         <?= form_label('Jenis Ruang', 'jenis_ruang_id', $control_label); ?>
         <div class="controls">
-            <?= form_dropdown('jenis_ruang_id', $jenis_ruang_data, set_value('jenis_ruang_id', $jenis_ruang_id), 'id="jenis_ruang_id" class="input-medium" prevData-selected="' . set_value('jenis_ruang_id', $jenis_ruang_id) . '"') . '&nbsp;&nbsp;'; ?>
+            <?= form_dropdown('jenis_ruang_id', $jenis_ruang_data, set_value('jenis_ruang_id', $jenis_ruang_id), 'id="jenis_ruang_id" class="input-medium" prevData-selected="' . set_value('jenis_ruang_id', $jenis_ruang_id) . '"'); ?>
             <p class="help-block"><?php echo form_error('jenis_ruang_id') ?></p>
         </div>
     </div>

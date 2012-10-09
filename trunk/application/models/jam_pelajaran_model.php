@@ -42,14 +42,6 @@ class Jam_pelajaran_model extends CI_Model {
         if ($query_array['kode_jam'] != '') {
             $this->db->where('m_jam_pelajaran.kode_jam', $query_array['kode_jam']);
         }
-
-        if ($query_array['jam_normal'] != '') {
-            $this->db->like('m_jam_pelajaran.jam_normal', $query_array['jam_normal']);
-        }
-        
-        if ($query_array['jam_puasa'] != '') {
-            $this->db->like('m_jam_pelajaran.jam_puasa', $query_array['jam_puasa']);
-        }
         
         if ($query_array['active'] != '') {
             $this->db->where('m_jam_pelajaran.active', $query_array['active']);
@@ -68,14 +60,6 @@ class Jam_pelajaran_model extends CI_Model {
 
         if ($query_array['kode_jam'] != '') {
             $this->db->where('m_jam_pelajaran.kode_jam', $query_array['kode_jam']);
-        }
-
-        if ($query_array['jam_normal'] != '') {
-            $this->db->like('m_jam_pelajaran.jam_normal', $query_array['jam_normal']);
-        }
-        
-        if ($query_array['jam_puasa'] != '') {
-            $this->db->like('m_jam_pelajaran.jam_puasa', $query_array['jam_puasa']);
         }
 
         if ($query_array['active'] != '') {

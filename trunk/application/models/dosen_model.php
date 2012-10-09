@@ -7,15 +7,16 @@ class Dosen_model extends CI_Model {
     }
 
     function s_dosen() {
-        return $this->db->select('m_dosen.*,m_angkatan.nama_angkatan,m_program_studi.nama_program_studi,m_jenjang_studi.jenjang_studi,
+        return $this->db->select('m_dosen.*,m_angkatan.nama_angkatan,m_angkatan.kode_angkatan,m_program_studi.nama_program_studi,m_jenjang_studi.jenjang_studi,
                                   m_jenis_kelamin.jenis_kelamin,m_agama.agama,m_jabatan_akademik.nama_jabatan_akademik,m_jabatan_tertinggi.jabatan_tertinggi,
                                   m_status_kerja_dosen.status_kerja_dosen,m_status_aktivitas_dosen.status_aktivitas_dosen,m_semester_mulai_aktivitas.semester_mulai_aktivitas,
-                                  m_akta_mengajar.nama_akta_mengajar, m_surat_ijin_mengajar.surat_ijin_mengajar,m_golongan.golongan
+                                  m_akta_mengajar.nama_akta_mengajar, m_surat_ijin_mengajar.surat_ijin_mengajar,m_pangkat.nama_pangkat,m_golongan.golongan
                                  ')
                         ->from('m_dosen')
                         ->join('m_angkatan', 'm_angkatan.id = m_dosen.angkatan_id', 'left')
                         ->join('m_program_studi', 'm_program_studi.id = m_dosen.program_studi_id', 'left')
                         ->join('m_jenjang_studi', 'm_jenjang_studi.id = m_dosen.jenjang_studi_id', 'left')
+                        ->join('m_pangkat', 'm_pangkat.id = m_dosen.pangkat_id', 'left')
                         ->join('m_jenis_kelamin', 'm_jenis_kelamin.id = m_dosen.jenis_kelamin_id', 'left')
                         ->join('m_agama', 'm_agama.id = m_dosen.agama_id', 'left')
                         ->join('m_jabatan_akademik', 'm_jabatan_akademik.id = m_dosen.jabatan_akademik_id', 'left')
@@ -64,6 +65,14 @@ class Dosen_model extends CI_Model {
             $this->db->like('m_dosen.nama_dosen', $query_array['nama_dosen']);
         }
 
+        if (@$query_array['nama_program_studi'] != '') {
+            $this->db->where('m_program_studi.nama_program_studi', $query_array['nama_program_studi']);
+        }
+
+        if ($query_array['kode_angkatan'] != '') {
+            $this->db->where('m_angkatan.kode_angkatan', $query_array['kode_angkatan']);
+        }
+
         if ($query_array['active'] != '') {
             $this->db->where('m_dosen.active', $query_array['active']);
         }
@@ -85,6 +94,14 @@ class Dosen_model extends CI_Model {
 
         if ($query_array['nama_dosen'] != '') {
             $this->db->like('m_dosen.nama_dosen', $query_array['nama_dosen']);
+        }
+
+	if (@$query_array['nama_program_studi'] != '') {
+            $this->db->where('m_program_studi.nama_program_studi', $query_array['nama_program_studi']);
+        }
+
+        if ($query_array['kode_angkatan'] != '') {
+            $this->db->where('m_angkatan.kode_angkatan', $query_array['kode_angkatan']);
         }
 
         if ($query_array['active'] != '') {

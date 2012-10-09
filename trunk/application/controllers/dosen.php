@@ -35,6 +35,9 @@ class Dosen extends CI_Controller {
         $query_array = array(
             'no_karpeg_dosen' => $this->input->get('no_karpeg_dosen'),
             'nama_dosen' => $this->input->get('nama_dosen'),
+            'nama_program_studi' => $this->input->get('nama_program_studi'),
+            'kode_angkatan' => $this->input->get('kode_angkatan'),
+            'nama_dosen' => $this->input->get('nama_dosen'),
             'active' => 1
         );
 
@@ -70,6 +73,9 @@ class Dosen extends CI_Controller {
     function search() {
         $query_array = array(
             'no_karpeg_dosen' => $this->input->post('no_karpeg_dosen'),
+            'nama_dosen' => $this->input->post('nama_dosen'),
+            'nama_program_studi' => $this->input->post('nama_program_studi'),
+            'kode_angkatan' => $this->input->post('kode_angkatan'),
             'nama_dosen' => $this->input->post('nama_dosen'),
             'active' => 1
         );

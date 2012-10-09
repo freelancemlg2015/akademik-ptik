@@ -7,6 +7,9 @@
 <script src="<?php echo base_url() ?>assets/js/lib/jsapi.js"></script>
 <script src="<?php echo base_url() ?>assets/js/lib/format+en,default,corechart.I.js"></script>
 <script src="<?php echo base_url() ?>assets/js/lib/jquery.gvChart-1.0.1.js"></script>
+<script src="<?php echo base_url() ?>assets/js/combobox/bootstrap-combobox.js"></script>
+<script src="<?php echo base_url() ?>assets/js/combobox/bootstrap-typeahead.js"></script>
+<script src="<?php echo base_url() ?>assets/js/combobox/bootstrap-typeahead.min.js"></script>
 <script src="<?php echo base_url() ?>assets/js/bootstrap-timepicker.js"></script>
 <script src="<?php echo base_url() ?>assets/js/fn.main.js"></script>
 <script src="<?php echo base_url() ?>assets/js/shadowbox.js"></script>
@@ -23,6 +26,7 @@
 <script src="<?php echo base_url() ?>assets/js/subdirektorat.js"></script>
 <script src="<?php echo base_url() ?>assets/js/kalender_akademik.js"></script>
 <script src="<?php echo base_url() ?>assets/js/paket_matakuliah.js"></script>
+<script src="<?php echo base_url() ?>assets/js/combobox_autocomplete.js"></script>
 <!-- <script src="<?php echo base_url() ?>assets/js/main_test.js"></script>hanya untuk test -->
 <script src="<?php echo base_url() ?>assets/js/jquery.formatCurrency-1.4.0.js"></script>
 <script>gvChartInit();</script>

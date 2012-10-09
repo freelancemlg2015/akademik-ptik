@@ -16,7 +16,7 @@ $judul_berita_attr = array(
 
 $konten_berita_attr = array(
     'name' => 'konten_berita',
-    'class' => 'input-medium',
+    'class' => 'span3',
     'value' => set_value('konten_berita', $konten_berita),
     'autocomplete' => 'off'
 );
@@ -28,7 +28,7 @@ $foto_berita_attr = array(
     'autocomplete' => 'off'
 );
 
-$kategori_berita_data[0] = '-PILIH-';
+$kategori_berita_data[0] = '';
 foreach ($kategori_berita_options as $row) {
     $kategori_berita_data[$row->id] = $row->kategori_berita;
 }
@@ -40,7 +40,7 @@ foreach ($kategori_berita_options as $row) {
     <div class="control-group">
         <?= form_label('Kategori', 'kategori_berita_id', $control_label); ?>
         <div class="controls">
-            <?= form_dropdown('kategori_berita_id', $kategori_berita_data, set_value('kategori_berita_id', $kategori_berita_id), 'id="kategori_berita_id" class="input-medium" prevData-selected="' . set_value('kategori_berita_id', $kategori_berita_id) . '"') . '&nbsp;&nbsp;'; ?>
+            <?= form_dropdown('kategori_berita_id', $kategori_berita_data, set_value('kategori_berita_id', $kategori_berita_id), 'id="kategori_berita_id" class="input-medium" prevData-selected="' . set_value('kategori_berita_id', $kategori_berita_id) . '"'); ?>
             <p class="help-block"><?php echo form_error('kode_angkatan') ?></p>
         </div>
     </div>
@@ -56,7 +56,7 @@ foreach ($kategori_berita_options as $row) {
     <div class="control-group">
         <?= form_label('Konten Berita' . required(), 'konten_berita', $control_label); ?>
         <div class="controls">
-            <?= form_input($konten_berita_attr) ?>
+            <?= form_textarea($konten_berita_attr) ?>
             <p class="help-block"><?php echo form_error('konten_berita') ?></p>
         </div>
     </div>

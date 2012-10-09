@@ -39,12 +39,12 @@ class Bobot_nilai_model extends CI_Model {
                 ->limit($limit, $offset)
                 ->order_by($sort_by, $sort_order);
 
-        if ($query_array['kode_bobot_nilai'] != '') {
-            $this->db->where('m_bobot_nilai.kode_bobot_nilai', $query_array['kode_bobot_nilai']);
+        if ($query_array['nilai_angka'] != '') {
+            $this->db->where('m_bobot_nilai.nilai_angka', $query_array['nilai_angka']);
         }
         
-        if ($query_array['keterangan_nilai'] != '') {
-            $this->db->like('m_bobot_nilai.keterangan_nilai', $query_array['keterangan_nilai']);
+        if ($query_array['nilai_huruf'] != '') {
+            $this->db->like('m_bobot_nilai.nilai_huruf', $query_array['nilai_huruf']);
         }
 
         if ($query_array['active'] != '') {
@@ -62,12 +62,12 @@ class Bobot_nilai_model extends CI_Model {
 
         $this->s_bobot_nilai();
 
-        if ($query_array['kode_bobot_nilai'] != '') {
-            $this->db->where('m_bobot_nilai.kode_bobot_nilai', $query_array['kode_bobot_nilai']);
+        if ($query_array['nilai_angka'] != '') {
+            $this->db->where('m_bobot_nilai.nilai_angka', $query_array['nilai_angka']);
         }
         
-        if ($query_array['keterangan_nilai'] != '') {
-            $this->db->like('m_bobot_nilai.keterangan_nilai', $query_array['keterangan_nilai']);
+        if ($query_array['nilai_huruf'] != '') {
+            $this->db->like('m_bobot_nilai.nilai_huruf', $query_array['nilai_huruf']);
         }
 
         if ($query_array['active'] != '') {

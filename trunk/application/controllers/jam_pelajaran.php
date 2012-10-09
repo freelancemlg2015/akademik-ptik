@@ -34,8 +34,6 @@ class Jam_pelajaran extends CI_Controller {
         $this->input->load_query($query_id);
         $query_array = array(
             'kode_jam' => $this->input->get('kode_jam'),
-            'jam_normal' => $this->input->get('jam_normal'),
-            'jam_puasa' => $this->input->get('jam_puasa'),
             'active' => 1
         );
 
@@ -71,8 +69,6 @@ class Jam_pelajaran extends CI_Controller {
     function search() {
         $query_array = array(
             'kode_jam' => $this->input->post('kode_jam'),
-            'jam_normal' => $this->input->post('jam_normal'),
-            'jam_puasa' => $this->input->post('jam_puasa'),
             'active' => 1
         );
         $query_id = $this->input->save_query($query_array);
@@ -128,9 +124,11 @@ class Jam_pelajaran extends CI_Controller {
         } else {
             $this->crud->use_table('m_jam_pelajaran');
             $data_in = array(
-                'kode_jam' => $this->input->post('kode_jam'),
-                'jam_normal' => $this->input->post('jam_normal'),
-                'jam_puasa' => $this->input->post('jam_puasa'),
+                'kode_jam'         => $this->input->post('kode_jam'),
+                'jam_normal_mulai' => $this->input->post('jam_normal_mulai'),
+                'jam_normal_akhir' => $this->input->post('jam_normal_akhir'),
+                'jam_puasa_mulai' => $this->input->post('jam_puasa_mulai'),
+                'jam_puasa_akhir'  => $this->input->post('jam_puasa_akhir'),
                 'created_on' => date($this->config->item('log_date_format')),
                 'created_by' => logged_info()->on
             );
@@ -170,9 +168,11 @@ class Jam_pelajaran extends CI_Controller {
                 'id' => $id
             );
             $data_in = array(
-                'kode_jam' => $this->input->post('kode_jam'),
-                'jam_normal' => $this->input->post('jam_normal'),
-                'jam_puasa' => $this->input->post('jam_puasa'),
+                'kode_jam'         => $this->input->post('kode_jam'),
+                'jam_normal_mulai' => $this->input->post('jam_normal_mulai'),
+                'jam_normal_akhir' => $this->input->post('jam_normal_akhir'),
+                'jam_puasa_mulai' => $this->input->post('jam_puasa_mulai'),
+                'jam_puasa_akhir'  => $this->input->post('jam_puasa_akhir'),
                 'modified_on' => date($this->config->item('log_date_format')),
                 'modified_by' => logged_info()->on
             );

@@ -40,7 +40,6 @@ $this->load->view('_shared/menus');
         <tr>
             <th>No Karpeg Dosen</th>
             <th>No Dosen Fakultas</th>
-            <th>No Dosen Dikti</th>
             <th>Nama Dosen</th>
             <th>Gelar Depan</th>
             <th>Gelar Belakang</th>
@@ -54,7 +53,6 @@ $this->load->view('_shared/menus');
             echo '<tr id="' . $row->id . '">
               <td>' . $row->no_karpeg_dosen . '</td>
               <td>' . $row->no_dosen_fakultas . '</td>
-              <td>' . $row->no_dosen_dikti . '</td>
               <td>' . $row->nama_dosen . '</td>
               <td>' . $row->gelar_depan . '</td>
               <td>' . $row->gelar_belakang . '</td>

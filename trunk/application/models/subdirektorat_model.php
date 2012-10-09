@@ -24,7 +24,7 @@ class Subdirektorat_model extends CI_Model {
         //[debug]echo $this->db->last_query();
         if ($data_type == 'json') {
             foreach ($query->result() as $row) {
-                $options[$row->id] = $row->nama_subdirektorat;
+                $options[$row->id] = $row->nama_direktorat;
             }
             echo json_encode($options);
         } else {
@@ -45,7 +45,7 @@ class Subdirektorat_model extends CI_Model {
         }
         
         if ($query_array['nama_subdirektorat'] != '') {
-            $this->db->like('m_subdirektorat.nama_subdirektorat', $query_array['nama_subdirektorat']);
+            $this->db->where('m_subdirektorat.nama_subdirektorat', $query_array['nama_subdirektorat']);
         }
 
         if ($query_array['active'] != '') {

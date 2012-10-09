@@ -7,7 +7,7 @@ class Ujian_skripsi_model extends CI_Model {
     }
 
     function s_ujian_skripsi() {
-        return $this->db->select('t_ujian_skripsi.*,m_mahasiswa.nim')
+        return $this->db->select('t_ujian_skripsi.*,m_mahasiswa.nama')
                         ->from('t_ujian_skripsi')
                         ->join('m_mahasiswa', 'm_mahasiswa.id = t_ujian_skripsi.mahasiswa_id', 'left');
     }
@@ -40,8 +40,8 @@ class Ujian_skripsi_model extends CI_Model {
                 ->limit($limit, $offset)
                 ->order_by($sort_by, $sort_order);
 
-        if ($query_array['nim'] != '') {
-            $this->db->like('m_mahasiswa.nim', $query_array['nim']);
+        if ($query_array['nama'] != '') {
+            $this->db->like('m_mahasiswa.nama', $query_array['nama']);
         }
         
         if ($query_array['judul_skripsi'] != '') {
@@ -68,13 +68,17 @@ class Ujian_skripsi_model extends CI_Model {
     function count_ujian_skripsi($query_array) {
 
         $this->s_ujian_skripsi();
-
+        
+        if ($query_array['nama'] != '') {
+            $this->db->like('m_mahasiswa.nama', $query_array['nama']);
+        }
+        
         if ($query_array['judul_skripsi'] != '') {
             $this->db->where('t_judul_skripsi.judul_skripsi', $query_array['judul_skripsi']);
         }
-
-        if ($query_array['nim'] != '') {
-            $this->db->like('t_judul_skripsi.nim', $query_array['nim']);
+        
+        if ($query_array['active'] != '') {
+            $this->db->where('t_ujian_skripsi.active', $query_array['active']);
         }
 
         if (isset($query_array['tgl_ujian_start']) && $query_array['tgl_ujian_start'] != 0 && isset($query_array['tgl_ujian_akhir']) && $query_array['tgl_ujian_akhir'] != 0) {

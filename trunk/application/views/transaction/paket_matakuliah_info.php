@@ -7,7 +7,7 @@ $control_label = array(
 );
 ?>
 <div class="container-full form-horizontal" id="paket_matakuliah">
-    <table cellspacing="0" cellpadding="0" border="0" class="table table-bordered span4">
+    <table cellspacing="0" cellpadding="0" border="0" class="table table-bordered">
         <tbody>
             <tr>
                 <th class="span2">Angkatan</th>
@@ -15,7 +15,7 @@ $control_label = array(
             </tr>
             <tr>
                 <th class="span2">Tahun Akademik</th>
-                <td><?= $tahun_ajar ?></td>
+                <td><?= $tahun_ajar_mulai.'-'.$tahun_ajar_akhir ?></td>
             </tr>
             <tr>
                 <th class="span2">Semester</th>

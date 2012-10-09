@@ -6,11 +6,11 @@ $this->load->view('_shared/menus');
 <div class="container-fluid form-inline well" id="jadwal_kuliah-search">
     <?php
     $nama_dosen_attr = array(
-        'id' => 'nama_dosen',
+        'id' => 'nama_dosen', //yg ini masih rancu dosen apa mata kuliah
         'name' => 'nama_dosen',
         'class' => 'input-medium',
         'style' => 'text-transform : uppercase;',
-        'placeholder' => 'Nama Dosen'
+        'placeholder' => 'Nama Mata Kuliah'
     );
     $nama_ruang_attr = array(
         'id' => 'nama_ruang',
@@ -38,7 +38,7 @@ $this->load->view('_shared/menus');
 <table class="table table-bordered table-striped container-full data_list" id="jadwal_kuliah" controller="transaction">
     <thead>
         <tr>
-            <th>Dosen</th>
+            <th>Nama Mata Kuliah</th>
             <th>Ruang</th>
             <th>Jenis Waktu</th>
         </tr>
@@ -47,7 +47,7 @@ $this->load->view('_shared/menus');
         <?php
         foreach ($results->result() as $row) {
             echo '<tr id="' . $row->id . '">
-              <td>' . $row->nama_dosen . '</td>  
+              <td>' . $row->nama_mata_kuliah . '</td>  
               <td>' . $row->nama_ruang . '</td>  
               <td>' . $row->jenis_waktu . '</td>  
             </tr>

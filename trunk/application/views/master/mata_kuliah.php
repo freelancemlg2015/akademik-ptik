@@ -39,54 +39,27 @@ $this->load->view('_shared/menus');
     <thead>
         <tr>
             <th>Angkatan</th>
+            <th>Tahun Akademik</th>
             <th>Program Studi</th>
-            <th>Jenjang Studi</th>
-            <th>Tahun Ajar</th>
-            <th>Kode Mata Kuliah</th>
-            <th>Nama Mata Kuliah</th>
-            <th>english</th>
-            <th>Sks Mata Kuliah</th>
-            <th>Sks Tatap Muka</th>
-            <th>Sks Praktikum</th>
-            <th>Nama Laboratorium</th>   
-            <th>Sks Praktek Lapangan</th>
             <th>Semester</th>
-            <th>Kelompok Mata Kuliah</th>
-            <th>Jenis Kurikulum</th>
-            <th>Jenis Mata Kuliah</th>
-            <th>Jenis Program Studi Pengampu</th>
-            <th>Program Studi Pengampu</th>
-            <th>Status Mata Kuliah</th>
-            <th>Mata Kuliah Syarat Tempuh</th>
-            <th>Mata Kuliah Syarat Lulus</th>
-            <th>Silabus</th>
+            <th>Kode Matakuliah</th>
+            <th>Nama Matakuliah</th>
+            <th>SKS Matakuliah</th>
         </tr>
     </thead>
     <tbody>
         <?php
         foreach ($results->result() as $row) {
+            $tahun = $row->tahun_ajar_mulai.$row->tahun_ajar_akhir;
+            if(strrpos($tahun,'-')<1)$tahun = $row->tahun_ajar_mulai.'-'.$row->tahun_ajar_akhir;
             echo '<tr id="' . $row->id . '">
               <td>' . $row->nama_angkatan . '</td>
+              <td>' . $tahun . '</td>
               <td>' . $row->nama_program_studi . '</td>
-              <td>' . $row->jenjang_studi . '</td>
-              <td>' . $row->tahun_ajar . '</td>
+              <td>' . $row->nama_semester . '</td>
               <td>' . $row->kode_mata_kuliah . '</td>
               <td>' . $row->nama_mata_kuliah . '</td>
-              <td>' . $row->english . '</td>
               <td>' . $row->sks_mata_kuliah . '</td>
-              <td>' . $row->sks_tatap_muka . '</td>
-              <td>' . $row->nama_laboratorium . '</td>
-              <td>' . $row->sks_praktek_lapangan . '</td>
-              <td>' . $row->semester . '</td>
-              <td>' . $row->kelompok_mata_kuliah_id . '</td>    
-              <td>' . $row->jenis_kurikulum . '</td>  
-              <td>' . $row->jenis_mata_kuliah . '</td>  
-              <td>' . $row->jenjang_program_studi_pengampu . '</td>  
-              <td>' . $row->program_studi_pengampu . '</td>  
-              <td>' . $row->status_mata_kuliah . '</td>    
-              <td>' . $row->mata_kuliah_syarat_tempuh . '</td>
-              <td>' . $row->mata_kuliah_syarat_lulus . '</td>  
-              <td>' . $row->silabus . '</td>     
             </tr>
           ';
         }

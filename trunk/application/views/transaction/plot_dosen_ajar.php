@@ -12,16 +12,16 @@ $this->load->view('_shared/menus');
         'style' => 'text-transform : uppercase;',
         'placeholder' => 'Angkatan'
     );
-    $tahun_ajar_mulai_attr = array(
-        'id' => 'ajar',
-        'name' => 'ajar_ajar_mulai',
+    $nama_dosen_attr = array(
+        'id' => 'nama_dosen',
+        'name' => 'nama_dosen',
         'class' => 'input-medium',
         'style' => 'text-transform : uppercase;',
-        'placeholder' => 'Tahun Akademik'
+        'placeholder' => 'Dosen'
     );
     echo form_open('transaction/plot_dosen_ajar/search/') .
     form_input($nama_angkatan_attr) . ' ' .
-    form_input($tahun_ajar_mulai_attr) . ' ' .
+    form_input($nama_dosen_attr) . ' ' .
     form_submit('cari', 'CARI', 'class="btn btn-mini"') .
     form_close();
     ?>
@@ -49,9 +49,11 @@ $this->load->view('_shared/menus');
     <tbody>
         <?php
         foreach ($results->result() as $row) {
+            $tahun = $row->tahun_ajar_mulai.$row->tahun_ajar_akhir;
+            if(strrpos($tahun,'-')<1)$tahun = $row->tahun_ajar_mulai.'-'.$row->tahun_ajar_akhir;
             echo '<tr id="' . $row->id . '">
               <td>' . $row->nama_angkatan . '</td>
-              <td>' . $row->tahun_ajar_mulai . '</td>    
+              <td>' . $tahun . '</td>    
               <td>' . $row->nama_semester . '</td>    
               <td>' . $row->nama_mata_kuliah . '</td>    
               <td>' . $row->nama_dosen . '</td>    

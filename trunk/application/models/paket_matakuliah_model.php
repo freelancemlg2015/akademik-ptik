@@ -7,7 +7,7 @@ class Paket_matakuliah_model extends CI_Model {
     }
 
     function s_paket_matakuliah() {
-        return $this->db->select('t_paket_mata_kuliah.*,m_angkatan.nama_angkatan,m_tahun_akademik.tahun_ajar,m_mata_kuliah.nama_mata_kuliah,m_semester.nama_semester')
+        return $this->db->select('t_paket_mata_kuliah.*,m_angkatan.nama_angkatan,m_tahun_akademik.tahun_ajar_mulai,m_tahun_akademik.tahun_ajar_akhir,m_mata_kuliah.nama_mata_kuliah,m_semester.nama_semester')
                         ->from('t_paket_mata_kuliah')
                         ->join('m_angkatan', 'm_angkatan.id   = t_paket_mata_kuliah.angkatan_id', 'left')
                         ->join('m_tahun_akademik', 'm_tahun_akademik.id = t_paket_mata_kuliah.tahun_akademik_id', 'left')

@@ -11,7 +11,7 @@ class Laporan extends CI_Controller {
     }
 
     function index() {
-        redirect('master/sample');
+        redirect('laporan/laporan_daftar_mahasiswa');
     }
 
 }

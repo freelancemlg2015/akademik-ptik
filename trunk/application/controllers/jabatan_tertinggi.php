@@ -33,7 +33,7 @@ class Jabatan_tertinggi extends CI_Controller {
         $this->load->library(array('form_validation', 'table', 'pagination'));
         $this->input->load_query($query_id);
         $query_array = array(
-            'kode_jabatan_tertinggi' => $this->input->get('jabatan_tertinggi'),
+            'kode_jabatan_tertinggi' => $this->input->get('kode_jabatan_tertinggi'),
             'jabatan_tertinggi' => $this->input->get('jabatan_tertinggi'),
             'active' => 1
         );
@@ -70,7 +70,7 @@ class Jabatan_tertinggi extends CI_Controller {
     function search() {
         $query_array = array(
             'kode_jabatan_tertinggi' => $this->input->post('kode_jabatan_tertinggi'),
-            'jabatan_tertinggi' => $this->input->post('jabatan_tertinggi'),
+            'jabatan_tertinggi'      => $this->input->post('jabatan_tertinggi'),
             'active' => 1
         );
         $query_id = $this->input->save_query($query_array);
@@ -126,7 +126,7 @@ class Jabatan_tertinggi extends CI_Controller {
         } else {
             $this->crud->use_table('m_jabatan_tertinggi');
             $data_in = array(
-                'status_akreditasi_id' => $this->input->post('status_akreditasi_id'),
+                //'status_akreditasi_id' => $this->input->post('status_akreditasi_id'),
                 'kode_jabatan_tertinggi' => $this->input->post('jabatan_tertinggi'),
                 'jabatan_tertinggi' => $this->input->post('jabatan_tertinggi'),
                 'created_on' => date($this->config->item('log_date_format')),
@@ -146,8 +146,8 @@ class Jabatan_tertinggi extends CI_Controller {
             'master/jabatan_tertinggi' => 'Back'
         );
 
-        $this->crud->use_table('m_status_akreditasi');
-        $data['status_akreditasi_options'] = $this->crud->retrieve()->result();
+//        $this->crud->use_table('m_status_akreditasi');
+//        $data['status_akreditasi_options'] = $this->crud->retrieve()->result();
 
         $this->load->model('jabatan_tertinggi_model', 'jabatan_tertinggi');
         $data = array_merge($data, $this->jabatan_tertinggi->set_default()); //merge dengan arr data dengan default
@@ -189,8 +189,8 @@ class Jabatan_tertinggi extends CI_Controller {
         $this->crud->use_table('m_jabatan_tertinggi');
         $jabatan_tertinggi_data = $this->crud->retrieve(array('id' => $id))->row();
 
-        $this->crud->use_table('m_status_akreditasi');
-        $data['status_akreditasi_options'] = $this->crud->retrieve()->result();
+//        $this->crud->use_table('m_status_akreditasi');
+//        $data['status_akreditasi_options'] = $this->crud->retrieve()->result();
 
         $this->load->model('jabatan_tertinggi_model', 'jabatan_tertinggi');
         $data = array_merge($data, $this->jabatan_tertinggi->set_default()); //merge dengan arr data dengan default

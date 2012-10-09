@@ -14,6 +14,8 @@
         <link rel="stylesheet" href="<?php echo base_url() ?>assets/css/docs.css" type="text/css">
         <link rel="stylesheet" href="<?php echo base_url() ?>assets/css/timepicker.css" type="text/css">
         <link rel="stylesheet" href="<?php echo base_url() ?>assets/css/shadowbox.css" type="text/css">
+        <link rel="stylesheet" href="<?php echo base_url() ?>assets/css/combobox/bootstrap.css" type="text/css">
+        <link rel="stylesheet" href="<?php echo base_url() ?>assets/css/combobox/bootstrap-combobox.css" type="text/css">
         <link href="<?php echo base_url() ?>assets/css/jUI/jquery-ui-1.8.17.custom.css" rel="stylesheet">
         <link href="<?php echo base_url() ?>assets/js/google-code-prettify/prettify.css" rel="stylesheet">
         <link href="<?php echo base_url() ?>assets/css/lib/google-chart-tooltip.css" rel="stylesheet">

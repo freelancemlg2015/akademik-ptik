@@ -7,7 +7,7 @@ $control_label = array(
 );
 ?>
 <div class="container-full form-horizontal" id="jam_pelajaran">
-    <table cellspacing="0" cellpadding="0" border="0" class="table table-bordered span4">
+    <table cellspacing="0" cellpadding="0" border="0" class="table table-bordered">
         <tbody>
             <tr>
                 <th class="span2">Kode Jam</th>
@@ -15,11 +15,11 @@ $control_label = array(
             </tr>
             <tr>
                 <th class="span2">Jam Normal</th>
-                <td><?= $jam_normal ?></td>
+                <td><?= substr($jam_normal_mulai, 0,5).'-'.substr($jam_normal_akhir, 0,5) ?></td>
             </tr>
             <tr>
                 <th class="span2">Jam Puasa</th>
-                <td><?= $jam_puasa ?></td>
+                <td><?= substr($jam_puasa_akhir, 0,5).'-'.substr($jam_puasa_akhir, 0,5) ?></td>
             </tr>
         </tbody>
     </table>

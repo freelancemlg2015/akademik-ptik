@@ -33,7 +33,8 @@ class Status_mata_kuliah extends CI_Controller {
         $this->load->library(array('form_validation', 'table', 'pagination'));
         $this->input->load_query($query_id);
         $query_array = array(
-            'status_mata_kuliah' => $this->input->get('status_mata_kuliah'),
+            'kode_matakuliah' => $this->input->get('kode_matakuliah'),
+            'nama_matakuliah' => $this->input->get('nama_matakuliah'),
             'active' => 1
         );
 
@@ -68,7 +69,8 @@ class Status_mata_kuliah extends CI_Controller {
 
     function search() {
         $query_array = array(
-            'status_mata_kuliah' => $this->input->post('status_mata_kuliah'),
+            'kode_matakuliah' => $this->input->post('kode_matakuliah'),
+            'nama_matakuliah' => $this->input->post('nama_matakuliah'),
             'active' => 1
         );
         $query_id = $this->input->save_query($query_array);
@@ -79,7 +81,7 @@ class Status_mata_kuliah extends CI_Controller {
         $id = $this->uri->segment(3);
         $data['auth'] = $this->auth;
         $criteria = array(
-            'm_status_mata_kuliah.id' => $id
+            'm_status_matakuliah.id' => $id
         );
         $this->load->model('status_mata_kuliah_model', 'status_mata_kuliah');
         $result = $this->status_mata_kuliah->get_many('', $criteria)->row_array();
@@ -100,7 +102,7 @@ class Status_mata_kuliah extends CI_Controller {
 
     function delete() {
         $id = $this->uri->segment(3);
-        $this->crud->use_table('m_status_mata_kuliah');
+        $this->crud->use_table('m_statusmata_kuliah');
         $criteria = array('id' => $id);
         $data_in = array(
             'active' => 0,
@@ -122,11 +124,21 @@ class Status_mata_kuliah extends CI_Controller {
         if ($this->form_validation->run('status_mata_kuliah_create') === FALSE) {
             //don't do anything
         } else {
-            $this->crud->use_table('m_status_mata_kuliah');
+            $this->crud->use_table('m_status_matakuliah');
             $data_in = array(
-                'status_mata_kuliah' => $this->input->post('status_mata_kuliah'),
-                'created_on' => date($this->config->item('log_date_format')),
-                'created_by' => logged_info()->on
+                'kode_dik_id'       => $this->input->post('kode_dik_id'),
+                'angkatan_id'       => $this->input->post('angkatan_id'),
+                'kode_dikang'       => $this->input->post('kode_dikang'),
+                'kode_matakuliah'   => $this->input->post('kode_matakuliah'),
+                'nama_matakuliah'   => $this->input->post('nama_matakuliah'),
+                'status_mata_kuliah'=> $this->input->post('status_mata_kuliah'),
+                'jml_sks'           => $this->input->post('jml_sks'),
+                'kons_studi_id'     => $this->input->post('kons_studi_id'),
+                'bobot_nts'         => $this->input->post('bobot_nts'),
+                'bobot_nas'         => $this->input->post('bobot_nas'),
+                'bobot_tgs'         => $this->input->post('bobot_tgs'),
+                'created_on'        => date($this->config->item('log_date_format')),
+                'created_by'        => logged_info()->on
             );
             /*
               echo '<pre>';
@@ -141,6 +153,12 @@ class Status_mata_kuliah extends CI_Controller {
         $data['tools'] = array(
             'master/status_mata_kuliah' => 'Back'
         );
+        
+        $this->crud->use_table('m_angkatan');
+        $data['angkatan_options'] = $this->crud->retrieve()->result();
+        
+        $this->crud->use_table('m_konsentrasi_studi');
+        $data['konsentrasi_studi_options'] = $this->crud->retrieve()->result();
 
         $this->load->model('status_mata_kuliah_model', 'status_mata_kuliah');
         $data = array_merge($data, $this->status_mata_kuliah->set_default()); //merge dengan arr data dengan default
@@ -159,12 +177,22 @@ class Status_mata_kuliah extends CI_Controller {
         if ($this->form_validation->run('status_mata_kuliah_update') === FALSE) {
             //don't do anything
         } else {
-            $this->crud->use_table('m_status_mata_kuliah');
+            $this->crud->use_table('m_status_matakuliah');
             $criteria = array(
                 'id' => $id
             );
             $data_in = array(
-                'status_mata_kuliah' => $this->input->post('status_mata_kuliah'),
+                'kode_dik_id'       => $this->input->post('kode_dik_id'),
+                'angkatan_id'       => $this->input->post('angkatan_id'),
+                'kode_dikang'       => $this->input->post('kode_dikang'),
+                'kode_matakuliah'   => $this->input->post('kode_matakuliah'),
+                'nama_matakuliah'   => $this->input->post('nama_matakuliah'),
+                'status_mata_kuliah'=> $this->input->post('status_mata_kuliah'),
+                'jml_sks'           => $this->input->post('jml_sks'),
+                'kons_studi_id'     => $this->input->post('kons_studi_id'),
+                'bobot_nts'         => $this->input->post('bobot_nts'),
+                'bobot_nas'         => $this->input->post('bobot_nas'),
+                'bobot_tgs'         => $this->input->post('bobot_tgs'),
                 'modified_on' => date($this->config->item('log_date_format')),
                 'modified_by' => logged_info()->on
             );
@@ -177,8 +205,14 @@ class Status_mata_kuliah extends CI_Controller {
             'master/status_mata_kuliah' => 'Back'
         );
 
-        $this->crud->use_table('m_status_mata_kuliah');
+        $this->crud->use_table('m_status_matakuliah');
         $status_mata_kuliah_data = $this->crud->retrieve(array('id' => $id))->row();
+        
+        $this->crud->use_table('m_angkatan');
+        $data['angkatan_options'] = $this->crud->retrieve()->result();
+        
+        $this->crud->use_table('m_konsentrasi_studi');
+        $data['konsentrasi_studi_options'] = $this->crud->retrieve()->result();
 
         $this->load->model('status_mata_kuliah_model', 'status_mata_kuliah');
         $data = array_merge($data, $this->status_mata_kuliah->set_default()); //merge dengan arr data dengan default
@@ -186,11 +220,11 @@ class Status_mata_kuliah extends CI_Controller {
         $this->load->view('master/status_mata_kuliah_form', $data);
     }
 
-    function unique_status_mata_kuliah($status_mata_kuliah) {
-        $this->crud->use_table('m_status_mata_kuliah');
-        $status_mata_kuliah = $this->crud->retrieve(array('status_mata_kuliah' => $status_mata_kuliah))->row();
+    function unique_nama_mata_kuliah($nama_mata_kuliah) {
+        $this->crud->use_table('m_status_matakuliah');
+        $status_mata_kuliah = $this->crud->retrieve(array('nama_mata_kuliah' => $nama_mata_kuliah))->row();
         if (sizeof($status_mata_kuliah) > 0) {
-            $this->form_validation->set_message(__FUNCTION__, 'Status Mata Kuliah sudah terdaftar'); //pakai function karena ini harus sama dengan nama function nya
+            $this->form_validation->set_message(__FUNCTION__, 'Nama Status Matakuliah sudah terdaftar'); //pakai function karena ini harus sama dengan nama function nya
             return FALSE;
         } else {
             return true;

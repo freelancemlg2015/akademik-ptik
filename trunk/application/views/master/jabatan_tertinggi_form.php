@@ -16,15 +16,15 @@ $kode_jabatan_tertinggi_attr = array(
 
 $jabatan_tertinggi_attr = array(
     'name' => 'jabatan_tertinggi',
-    'class' => 'input-xlarge',
+    'class' => 'input-medium',
     'value' => set_value('jabatan_tertinggi', $jabatan_tertinggi),
     'autocomplete' => 'off'
 );
 
-$status_akreditasi_data[0] = '-PILIH-';
+/*$status_akreditasi_data[0] = '-PILIH-';
 foreach ($status_akreditasi_options as $row) {
     $status_akreditasi_data[$row->id] = $row->status_akreditasi;
-}
+}*/
 
 
 ?>
@@ -47,13 +47,13 @@ foreach ($status_akreditasi_options as $row) {
         </div>
     </div>
 
-    <div class="control-group">
-        <?= form_label('Status Akreditasi', 'status_akreditasi_id', $control_label); ?>
+<!--    <div class="control-group">
+        <?//= form_label('Status Akreditasi', 'status_akreditasi_id', $control_label); ?>
         <div class="controls">
-            <?= form_dropdown('status_akreditasi_id', $status_akreditasi_data, set_value('status_akreditasi_id', $status_akreditasi_id), 'id="status_akreditasi_id" class="input-medium" prevData-selected="' . set_value('status_akreditasi_id', $status_akreditasi_id) . '"') . '&nbsp;&nbsp;'; ?>
-            <p class="help-block"><?php echo form_error('status_akreditasi_id') ?></p>
+            <?//= form_dropdown('status_akreditasi_id', $status_akreditasi_data, set_value('status_akreditasi_id', $status_akreditasi_id), 'id="status_akreditasi_id" class="input-medium" prevData-selected="' . set_value('status_akreditasi_id', $status_akreditasi_id) . '"') . '&nbsp;&nbsp;'; ?>
+            <p class="help-block"><?php //echo form_error('status_akreditasi_id') ?></p>
         </div>
-    </div>
+    </div>-->
 
     <div class="form-actions well">
         <button class="btn btn-small btn-primary" type="submit">Simpan</button>

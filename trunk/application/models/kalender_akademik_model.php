@@ -7,7 +7,7 @@ class Kalender_akademik_model extends CI_Model {
     }
 
     function s_kalender_akademik() {
-        return $this->db->select("t_kalender_akademik.*,m_angkatan.nama_angkatan,CONCAT(tahun_ajar_mulai,'-',tahun_ajar_akhir) AS tahun,m_semester.nama_semester",false)
+        return $this->db->select('t_kalender_akademik.*,m_angkatan.nama_angkatan,m_tahun_akademik.tahun_ajar_mulai,m_tahun_akademik.tahun_ajar_akhir,m_semester.nama_semester')
                         ->from('t_kalender_akademik')
                         ->join('m_angkatan', 'm_angkatan.id = t_kalender_akademik.angkatan_id', 'left')
                         ->join('m_tahun_akademik', 'm_tahun_akademik.id = t_kalender_akademik.tahun_akademik_id', 'left')
@@ -46,18 +46,14 @@ class Kalender_akademik_model extends CI_Model {
             $this->db->like('m_angkatan.nama_angkatan', $query_array['nama_angkatan']);
         }
         
-        if ($query_array['tahun'] != '') {
-            $this->db->where('m_tahun_akademik.tahun', $query_array['tahun']);
-        }
-
-        if ($query_array['nama_semester'] != '') {
-            $this->db->like('m_semester.nama_semster', $query_array['nama_semster']);
-        }
-        
         if ($query_array['nama_kegiatan'] != '') {
             $this->db->like('t_kalender_akademik.nama_kegiatan', $query_array['nama_kegiatan']);
         }
-
+        
+        if ($query_array['active'] != '') {
+            $this->db->where('t_kalender_akademik.active', $query_array['active']);
+        }
+        
         if (isset($query_array['tgl_ujian_start']) && $query_array['tgl_ujian_start'] != 0 && isset($query_array['tgl_ujian_akhir']) && $query_array['tgl_ujian_akhir'] != 0) {
             $date = new DateTime();
             $format = 'Y-m-j';
@@ -81,16 +77,12 @@ class Kalender_akademik_model extends CI_Model {
             $this->db->like('m_angkatan.nama_angkatan', $query_array['nama_angkatan']);
         }
         
-        if ($query_array['tahun'] != '') {
-            $this->db->where('m_tahun_akademik.tahun', $query_array['tahun']);
-        }
-
-        if ($query_array['nama_semester'] != '') {
-            $this->db->like('m_semester.nama_semster', $query_array['nama_semster']);
-        }
-        
         if ($query_array['nama_kegiatan'] != '') {
             $this->db->like('t_kalender_akademik.nama_kegiatan', $query_array['nama_kegiatan']);
+        }
+        
+        if ($query_array['active'] != '') {
+            $this->db->where('t_kalender_akademik.active', $query_array['active']);
         }
 
         if (isset($query_array['tgl_ujian_start']) && $query_array['tgl_ujian_start'] != 0 && isset($query_array['tgl_ujian_akhir']) && $query_array['tgl_ujian_akhir'] != 0) {

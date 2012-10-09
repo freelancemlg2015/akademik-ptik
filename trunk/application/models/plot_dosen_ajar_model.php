@@ -8,7 +8,7 @@ class Plot_dosen_ajar_model extends CI_Model {
 
     function s_plot_dosen_ajar() {
         return $this->db->select('t_dosen_ajar.*,m_angkatan.nama_angkatan,m_tahun_akademik.tahun_ajar_mulai,
-                                                 m_semester.nama_semester,m_mata_kuliah.nama_mata_kuliah,
+                                                 m_tahun_akademik.tahun_ajar_akhir,m_semester.nama_semester,m_mata_kuliah.nama_mata_kuliah,
                                                  m_dosen.nama_dosen,m_mahasiswa.nama')
                         ->from('t_dosen_ajar')
                         ->join('m_angkatan', 'm_angkatan.id = t_dosen_ajar.angkatan_id', 'left')
@@ -51,8 +51,8 @@ class Plot_dosen_ajar_model extends CI_Model {
             $this->db->like('m_angkatan.nama_angkatan', $query_array['nama_angkatan']);
         }
 
-        if ($query_array['tahun_ajar'] != '') {
-            $this->db->where('m_tahun_akademik.tahun_ajar', $query_array['tahun_ajar']);
+        if ($query_array['nama_dosen'] != '') {
+            $this->db->where('m_dosen.nama_dosen', $query_array['nama_dosen']);
         }
 
         if ($query_array['active'] != '') {
@@ -74,8 +74,8 @@ class Plot_dosen_ajar_model extends CI_Model {
             $this->db->like('m_angkatan.nama_angkatan', $query_array['nama_angkatan']);
         }
 
-        if ($query_array['tahun_ajar'] != '') {
-            $this->db->where('m_tahun_akademik.tahun_ajar', $query_array['tahun_ajar']);
+        if ($query_array['nama_dosen'] != '') {
+            $this->db->where('m_dosen.nama_dosen', $query_array['nama_dosen']);
         }
 
         if ($query_array['active'] != '') {

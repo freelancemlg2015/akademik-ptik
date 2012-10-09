@@ -7,15 +7,23 @@ $control_label = array(
 );
 ?>
 <div class="container-full form-horizontal" id="bobot_nilai">
-    <table cellspacing="0" cellpadding="0" border="0" class="table table-bordered span4">
+    <table cellspacing="0" cellpadding="0" border="0" class="table table-bordered">
         <tbody>
             <tr>
-                <th class="span2">Kode Bobot Nilai</th>
-                <td><?= $kode_bobot_nilai ?></td>
+                <th class="span2">Nilai Angka</th>
+                <td><?= $nilai_angka ?></td>
             </tr>
             <tr>
-                <th class="span2">Keterangan Nilai</th>
-                <td><?= $keterangan_nilai ?></td>
+                <th class="span2">Nilai Huruf</th>
+                <td><?= $nilai_huruf ?></td>
+            </tr>
+            <tr>
+                <th class="span2">Bobot Nilai Huruf</th>
+                <td><?= $bobot_nilai_huruf ?></td>
+            </tr>
+            <tr>
+                <th class="span2">Keterangan Bobot Nilai</th>
+                <td><?= $keterangan_bobot_nilai ?></td>
             </tr>
         </tbody>
     </table>

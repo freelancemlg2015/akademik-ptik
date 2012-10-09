@@ -35,6 +35,7 @@ class Mahasiswa extends CI_Controller {
         $query_array = array(
             'nim' => $this->input->get('nim'),
             'nama' => $this->input->get('nama'),
+            'kode_angkatan' => $this->input->get('kode_angkatan'),
             'active' => 1
         );
 
@@ -71,6 +72,7 @@ class Mahasiswa extends CI_Controller {
         $query_array = array(
             'nim' => $this->input->post('nim'),
             'nama' => $this->input->post('nama'),
+            'kode_angkatan' => $this->input->post('kode_angkatan'),
             'active' => 1
         );
         $query_id = $this->input->save_query($query_array);
@@ -129,9 +131,13 @@ class Mahasiswa extends CI_Controller {
             $data     = $this->upload->data();
             $this->crud->use_table('m_mahasiswa');
             $data_in = array(
+                'kode_dik' => $this->input->post('kode_dik'),
+                'angkatan_id' => $this->input->post('angkatan_id'),
+                'kode_dik_ang' => $this->input->post('kode_dik_ang'),
+                'nama_jenis_dik' => $this->input->post('nama_jenis_dik'),
+                'sebutan_dik' => $this->input->post('sebutan_dik'),
                 'nim' => $this->input->post('nim'),
                 'nama' => $this->input->post('nama'),
-                'angkatan_id' => $this->input->post('angkatan_id'),
                 'program_studi_id' => $this->input->post('program_studi_id'),
                 'jenjang_studi_id' => $this->input->post('jenjang_studi_id'),
                 'kons_studi_id' => $this->input->post('kons_studi_id'),
@@ -143,8 +149,6 @@ class Mahasiswa extends CI_Controller {
                 'jml_sks_diakui' => $this->input->post('jml_sks_diakui'),
                 'perguruan_tinggi_sebelumnya' => $this->input->post('perguruan_tinggi_sebelumnya'),
                 'jurusan_sebelumnya' => $this->input->post('jurusan_sebelumnya'),
-                'judicium' => $this->input->post('judicium'),
-                'penasehat_akademik_id' => $this->input->post('penasehat_akademik_id'),
                 'propinsi_asal_slta' => $this->input->post('propinsi_asal_slta'),
                 'kota_asal_slta' => $this->input->post('kota_asal_slta'),
                 'nama_slta' => $this->input->post('nama_slta'),
@@ -154,24 +158,14 @@ class Mahasiswa extends CI_Controller {
                 'hobby' => $this->input->post('hobby'),
                 'foto_mahasiswa' => $data['file_name'],
                 'jabatan_akhir_id' => $this->input->post('jabatan_akhir_id'),
-                'satuan_asal_id' => $this->input->post('satuan_asal_id'),
+                'kesatuan_asal_id' => $this->input->post('kesatuan_asal_id'),
                 'pangkat_id' => $this->input->post('pangkat_id'),
                 'nrp' => $this->input->post('nrp'),
                 'dik_abri' => $this->input->post('dik_abri'),
                 'thn_dik_abri' => $this->input->post('thn_dik_abri'),
-                'nama_ayah' => $this->input->post('nama_ayah'),
-                'pekerjaan_ayah' => $this->input->post('pekerjaan_ayah'),
-                'tgl_lahir_ayah' => $this->input->post('tgl_lahir_ayah'),
-                'agama_ayah_id' => $this->input->post('agama_ayah_id'),
-                'pendidikan_ayah' => $this->input->post('pendidikan_ayah'),
-                'alamat_ayah' => $this->input->post('alamat_ayah'),
-                'no_telepon' => $this->input->post('no_telepon'),
-                'nama_wali' => $this->input->post('nama_wali'),
-                'pekerjaan_wali' => $this->input->post('pekerjaan_wali'),
-                'tgl_lahir_wali' => $this->input->post('tgl_lahir_wali'),
-                'agama_wali_id' => $this->input->post('agama_wali_id'),
-                'pendidikan_wali' => $this->input->post('pendidikan_wali'),
-                'alamat_wali' => $this->input->post('alamat_wali'),
+                'sindikat' => $this->input->post('sindikat'),
+                'nama_istri' => $this->input->post('nama_istri'),
+                'anak_id' => $this->input->post('anak_id'),
                 'created_on' => date($this->config->item('log_date_format')),
                 'created_by' => logged_info()->on
             );
@@ -220,6 +214,9 @@ class Mahasiswa extends CI_Controller {
         $this->crud->use_table('m_pangkat');
         $data['pangkat_options'] = $this->crud->retrieve()->result();
         
+        $this->crud->use_table('m_anak');
+        $data['anak_options'] = $this->crud->retrieve()->result();
+        
         $this->load->model('mahasiswa_model', 'mahasiswa');
         $data = array_merge($data, $this->mahasiswa->set_default()); //merge dengan arr data dengan default
         $this->load->view('master/mahasiswa_form', $data);
@@ -244,9 +241,13 @@ class Mahasiswa extends CI_Controller {
                     'id' => $id
                 );
                 $data_in = array(
+                    'kode_dik' => $this->input->post('kode_dik'),
+                    'angkatan_id' => $this->input->post('angkatan_id'),
+                    'kode_dik_ang' => $this->input->post('kode_dik_ang'),
+                    'nama_jenis_dik' => $this->input->post('nama_jenis_dik'),
+                    'sebutan_dik' => $this->input->post('sebutan_dik'),
                     'nim' => $this->input->post('nim'),
                     'nama' => $this->input->post('nama'),
-                    'angkatan_id' => $this->input->post('angkatan_id'),
                     'program_studi_id' => $this->input->post('program_studi_id'),
                     'jenjang_studi_id' => $this->input->post('jenjang_studi_id'),
                     'kons_studi_id' => $this->input->post('kons_studi_id'),
@@ -258,8 +259,6 @@ class Mahasiswa extends CI_Controller {
                     'jml_sks_diakui' => $this->input->post('jml_sks_diakui'),
                     'perguruan_tinggi_sebelumnya' => $this->input->post('perguruan_tinggi_sebelumnya'),
                     'jurusan_sebelumnya' => $this->input->post('jurusan_sebelumnya'),
-                    'judicium' => $this->input->post('judicium'),
-                    'penasehat_akademik_id' => $this->input->post('penasehat_akademik_id'),
                     'propinsi_asal_slta' => $this->input->post('propinsi_asal_slta'),
                     'kota_asal_slta' => $this->input->post('kota_asal_slta'),
                     'nama_slta' => $this->input->post('nama_slta'),
@@ -268,26 +267,16 @@ class Mahasiswa extends CI_Controller {
                     'telepon' => $this->input->post('telepon'),
                     'hobby' => $this->input->post('hobby'),
                     'jabatan_akhir_id' => $this->input->post('jabatan_akhir_id'),
-                    'satuan_asal_id' => $this->input->post('satuan_asal_id'),
+                    'kesatuan_asal_id' => $this->input->post('kesatuan_asal_id'),
                     'pangkat_id' => $this->input->post('pangkat_id'),
                     'nrp' => $this->input->post('nrp'),
                     'dik_abri' => $this->input->post('dik_abri'),
                     'thn_dik_abri' => $this->input->post('thn_dik_abri'),
-                    'nama_ayah' => $this->input->post('nama_ayah'),
-                    'pekerjaan_ayah' => $this->input->post('pekerjaan_ayah'),
-                    'tgl_lahir_ayah' => $this->input->post('tgl_lahir_ayah'),
-                    'agama_ayah_id' => $this->input->post('agama_ayah_id'),
-                    'pendidikan_ayah' => $this->input->post('pendidikan_ayah'),
-                    'alamat_ayah' => $this->input->post('alamat_ayah'),
-                    'no_telepon' => $this->input->post('no_telepon'),
-                    'nama_wali' => $this->input->post('nama_wali'),
-                    'pekerjaan_wali' => $this->input->post('pekerjaan_wali'),
-                    'tgl_lahir_wali' => $this->input->post('tgl_lahir_wali'),
-                    'agama_wali_id' => $this->input->post('agama_wali_id'),
-                    'pendidikan_wali' => $this->input->post('pendidikan_wali'),
-                    'alamat_wali' => $this->input->post('alamat_wali'),
-                    'created_on' => date($this->config->item('log_date_format')),
-                    'created_by' => logged_info()->on
+                    'sindikat' => $this->input->post('sindikat'),
+                    'nama_istri' => $this->input->post('nama_istri'),
+                    'anak_id' => $this->input->post('anak_id'),
+                    'modified_on' => date($this->config->item('log_date_format')),
+                    'modified_by' => logged_info()->on
                 );
             }else{
                 $this->crud->use_table('m_mahasiswa');
@@ -295,9 +284,13 @@ class Mahasiswa extends CI_Controller {
                     'id' => $id
                 );
                 $data_in = array(
+                    'kode_dik' => $this->input->post('kode_dik'),
+                    'angkatan_id' => $this->input->post('angkatan_id'),
+                    'kode_dik_ang' => $this->input->post('kode_dik_ang'),
+                    'nama_jenis_dik' => $this->input->post('nama_jenis_dik'),
+                    'sebutan_dik' => $this->input->post('sebutan_dik'),
                     'nim' => $this->input->post('nim'),
                     'nama' => $this->input->post('nama'),
-                    'angkatan_id' => $this->input->post('angkatan_id'),
                     'program_studi_id' => $this->input->post('program_studi_id'),
                     'jenjang_studi_id' => $this->input->post('jenjang_studi_id'),
                     'kons_studi_id' => $this->input->post('kons_studi_id'),
@@ -309,8 +302,6 @@ class Mahasiswa extends CI_Controller {
                     'jml_sks_diakui' => $this->input->post('jml_sks_diakui'),
                     'perguruan_tinggi_sebelumnya' => $this->input->post('perguruan_tinggi_sebelumnya'),
                     'jurusan_sebelumnya' => $this->input->post('jurusan_sebelumnya'),
-                    'judicium' => $this->input->post('judicium'),
-                    'penasehat_akademik_id' => $this->input->post('penasehat_akademik_id'),
                     'propinsi_asal_slta' => $this->input->post('propinsi_asal_slta'),
                     'kota_asal_slta' => $this->input->post('kota_asal_slta'),
                     'nama_slta' => $this->input->post('nama_slta'),
@@ -320,30 +311,20 @@ class Mahasiswa extends CI_Controller {
                     'hobby' => $this->input->post('hobby'),
                     'foto_mahasiswa' => $img,
                     'jabatan_akhir_id' => $this->input->post('jabatan_akhir_id'),
-                    'satuan_asal_id' => $this->input->post('satuan_asal_id'),
+                    'kesatuan_asal_id' => $this->input->post('kesatuan_asal_id'),
                     'pangkat_id' => $this->input->post('pangkat_id'),
                     'nrp' => $this->input->post('nrp'),
                     'dik_abri' => $this->input->post('dik_abri'),
                     'thn_dik_abri' => $this->input->post('thn_dik_abri'),
-                    'nama_ayah' => $this->input->post('nama_ayah'),
-                    'pekerjaan_ayah' => $this->input->post('pekerjaan_ayah'),
-                    'tgl_lahir_ayah' => $this->input->post('tgl_lahir_ayah'),
-                    'agama_ayah_id' => $this->input->post('agama_ayah_id'),
-                    'pendidikan_ayah' => $this->input->post('pendidikan_ayah'),
-                    'alamat_ayah' => $this->input->post('alamat_ayah'),
-                    'no_telepon' => $this->input->post('no_telepon'),
-                    'nama_wali' => $this->input->post('nama_wali'),
-                    'pekerjaan_wali' => $this->input->post('pekerjaan_wali'),
-                    'tgl_lahir_wali' => $this->input->post('tgl_lahir_wali'),
-                    'agama_wali_id' => $this->input->post('agama_wali_id'),
-                    'pendidikan_wali' => $this->input->post('pendidikan_wali'),
-                    'alamat_wali' => $this->input->post('alamat_wali'),
-                    'created_on' => date($this->config->item('log_date_format')),
-                    'created_by' => logged_info()->on
+                    'sindikat' => $this->input->post('sindikat'),
+                    'nama_istri' => $this->input->post('nama_istri'),
+                    'anak_id' => $this->input->post('anak_id'),
+                    'modified_on' => date($this->config->item('log_date_format')),
+                    'modified_by' => logged_info()->on
                 );
             }
             
-            $this->crud->update($criteria, $data_in);
+             $this->crud->update($criteria, $data_in);
             redirect('master/mahasiswa/' . $id . '/info');
         }
         $data['action_url'] = $master_url . $id . '/' . __FUNCTION__;
@@ -384,6 +365,9 @@ class Mahasiswa extends CI_Controller {
 
         $this->crud->use_table('m_pangkat');
         $data['pangkat_options'] = $this->crud->retrieve()->result();
+        
+        $this->crud->use_table('m_anak');
+        $data['anak_options'] = $this->crud->retrieve()->result();
 
         $this->load->model('mahasiswa_model', 'mahasiswa');
         $data = array_merge($data, $this->mahasiswa->set_default()); //merge dengan arr data dengan default

@@ -16,9 +16,9 @@
 */
 
 //LOKAL
-$config['base_url']	= 'http://localhost:8077/akademik_dev/';
+//$config['base_url']	= 'http://localhost/akademik_dev/';
 //SERVER 
-//$config['base_url']	= 'http://10.10.10.20/akademik_dev/';
+$config['base_url']	= 'http://10.10.10.20/akademik_dev/';
 
 /*
 |--------------------------------------------------------------------------

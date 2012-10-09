@@ -7,11 +7,11 @@ $control_label = array(
 );
 ?>
 <div class="container-full form-horizontal" id="ujian_skripsi">
-    <table cellspacing="0" cellpadding="0" border="0" class="table table-bordered span4">
+    <table cellspacing="0" cellpadding="0" border="0" class="table table-bordered">
         <tbody>
             <tr>
-                <th class="span2">Nim</th>
-                <td><?= $nim ?></td>
+                <th class="span2">Mahasiswa</th>
+                <td><?= $nama ?></td>
             </tr>
             <tr>
                 <th class="span2">Judul Skripsi</th>
@@ -22,8 +22,19 @@ $control_label = array(
                 <td><?= $tgl_ujian ?></td>
             </tr>
             <tr>
-                <th class="span2">Jam Mulai</th>
-                <td><?= $jam_mulai ?></td>
+                <th class="span2">Jam</th>
+                <td>
+                    <?php 
+                        $jam = $jam_mulai.$jam_akhir;
+                        if(empty($jam)){
+                            
+                        }else{
+                    ?>
+                        <?= substr($jam_mulai, 0,5).'-'.substr($jam_akhir, 0,5) ?>
+                    <?php
+                        }
+                    ?>
+                </td>
             </tr>
             <tr>
                 <th class="span2">Jam Akhir</th>

@@ -34,9 +34,7 @@ class Kalender_akademik extends CI_Controller {
         $this->input->load_query($query_id);
         $query_array = array(
             'nama_angkatan'  => $this->input->get('nama_angkatan'),
-            'tahun'          => $this->input->get('tahun'),
-            'nama_semester'  => $this->input->get('nama_semester'),
-            'nama_kegiatan'  => $this->input->get('nama_kegiatan'),
+            'nama_kegiatan'          => $this->input->get('nama_kegiatan'),
             'active'         => 1
         );
 
@@ -71,10 +69,8 @@ class Kalender_akademik extends CI_Controller {
 
     function search() {
         $query_array = array(
-            'nama_angkatan'  => $this->input->get('nama_angkatan'),
-            'tahun'          => $this->input->get('tahun'),
-            'nama_semester'  => $this->input->get('nama_semester'),
-            'nama_kegiatan'  => $this->input->get('nama_kegiatan'),
+            'nama_angkatan'  => $this->input->post('nama_angkatan'),
+            'nama_kegiatan'  => $this->input->post('nama_kegiatan'),
             'active' => 1
         );
         $query_id = $this->input->save_query($query_array);
@@ -156,9 +152,15 @@ class Kalender_akademik extends CI_Controller {
             'transaction/kalender_akademik' => 'Back'
         );
         
+        $this->crud->use_table('m_angkatan');
+        $data['angkatan_options'] = $this->crud->retrieve()->result();
+        
+        $this->crud->use_table('m_tahun_akademik');
+        $data['tahun_akademik_options'] = $this->crud->retrieve()->result();
+
         $this->crud->use_table('m_semester');
         $data['semester_options'] = $this->crud->retrieve()->result();
-
+        
         $this->load->model('kalender_akademik_model', 'kalender_akademik');
         $data = array_merge($data, $this->kalender_akademik->set_default()); //merge dengan arr data dengan default
         
@@ -198,8 +200,8 @@ class Kalender_akademik extends CI_Controller {
                 'tgl_akhir_kegiatan' => $this->input->post('tgl_akhir_kegiatan'),
                 'nama_kegiatan'      => $this->input->post('nama_kegiatan'),
                 'keterangan'         => $this->input->post('keterangan'),
-                'modified_on'     => date($this->config->item('log_date_format')),
-                'modified_by'     => logged_info()->on
+                'modified_on'        => date($this->config->item('log_date_format')),
+                'modified_by'        => logged_info()->on
             );
             
             $this->crud->update($criteria, $data_in);
@@ -215,20 +217,17 @@ class Kalender_akademik extends CI_Controller {
         $kalender_akademik_data = $this->crud->retrieve(array('id' => $id))->row();
         
         $this->crud->use_table('m_angkatan');
-        $angkatan_data = $this->crud->retrieve(array('id' => $id))->row();
-         
-        $this->crud->use_table('m_tahun_akademik');
-        $tahun_akademik_data = $this->crud->retrieve(array('id' => $id))->row();
+        $data['angkatan_options'] = $this->crud->retrieve()->result();
         
-        //print_r($tahun_akademik_data);
+        $this->crud->use_table('m_tahun_akademik');
+        $data['tahun_akademik_options'] = $this->crud->retrieve()->result();
+
         $this->crud->use_table('m_semester');
         $data['semester_options'] = $this->crud->retrieve()->result();
-        
+                
         $this->load->model('kalender_akademik_model', 'kalender_akademik');
         $data = array_merge($data, $this->kalender_akademik->set_default()); //merge dengan arr data dengan default
         $data = array_merge($data, (array) $kalender_akademik_data);
-        $data = array_merge($data, (array) $angkatan_data);
-        $data = array_merge($data, (array) $tahun_akademik_data);
         $this->load->view('transaction/kalender_akademik_form', $data);
     }
 

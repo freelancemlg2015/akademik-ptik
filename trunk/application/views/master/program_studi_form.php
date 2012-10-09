@@ -16,7 +16,7 @@ $kode_program_studi_attr = array(
 
 $nama_program_studi_attr = array(
     'name' => 'nama_program_studi',
-    'class' => 'input-xlarge',
+    'class' => 'input-medium',
     'value' => set_value('nama_program_studi', $nama_program_studi),
     'autocomplete' => 'off'
 );
@@ -70,13 +70,6 @@ $thn_semester_mulai_attr = array(
     'autocomplete' => 'off'
 );
 
-$email_attr = array(
-    'name' => 'email',
-    'class' => 'input-medium',
-    'value' => set_value('email', $email),
-    'autocomplete' => 'off'
-);
-
 $tgl_pendirian_program_studi_attr = array(
     'name' => 'tgl_pendirian_program_studi',
     'class' => 'input-small',
@@ -119,12 +112,12 @@ $pelaksana_pemutahiran_attr = array(
     'autocomplete' => 'off'
 );
 
-$angkatan_data[0] = '-PILIH-';
+$angkatan_data[0] = '';
 foreach ($angkatan_options as $row) {
     $angkatan_data[$row->id] = $row->nama_angkatan;
 }
 
-$jenjang_studi_data[0] = '-PILIH-';
+$jenjang_studi_data[0] = '';
 foreach ($jenjang_studi_options as $row) {
     $jenjang_studi_data[$row->id] = $row->jenjang_studi;
 }
@@ -134,7 +127,15 @@ foreach ($jenjang_studi_options as $row) {
     <?= form_open($action_url, array('class' => 'form-horizontal')); ?>
 
     <div class="control-group">
-        <?= form_label('Kode Program Studi' . required(), 'kode_program_studi', $control_label); ?>
+        <?= form_label('Angkatan' , 'angkatan_id', $control_label); ?>
+        <div class="controls">
+            <?= form_dropdown('angkatan_id', $angkatan_data, set_value('angkatan_id', $angkatan_id), 'id="angkatan_id" class="input-medium" prevData-selected="' . set_value('angkatan_id', $angkatan_id) . '"'); ?>
+            <p class="help-block"><?php echo form_error('kode_program_studi') ?></p>
+        </div>
+    </div>
+    
+    <div class="control-group">
+        <?= form_label('Kode Program Studi' .required(), 'kode_program_studi', $control_label); ?>
         <div class="controls">
             <?= form_input($kode_program_studi_attr) ?>
             <p class="help-block"><?php echo form_error('kode_program_studi') ?></p>
@@ -150,14 +151,6 @@ foreach ($jenjang_studi_options as $row) {
     </div>
 
     <div class="control-group">
-        <?= form_label('Angkatan', 'angkatan_id', $control_label); ?>
-        <div class="controls">
-            <?= form_dropdown('angkatan_id', $angkatan_data, set_value('angkatan_id', $angkatan_id), 'id="angkatan_id" class="input-medium" prevData-selected="' . set_value('angkatan_id', $angkatan_id) . '"') . '&nbsp;&nbsp;'; ?>
-            <p class="help-block"><?php echo form_error('angkatan_id') ?></p>
-        </div>
-    </div>
-
-    <div class="control-group">
         <?= form_label('Inisial', 'inisial', $control_label); ?>
         <div class="controls">
             <?= form_input($inisial_attr) ?>
@@ -168,7 +161,7 @@ foreach ($jenjang_studi_options as $row) {
     <div class="control-group">
         <?= form_label('Jenjang Studi', 'jenjang_studi_id', $control_label); ?>
         <div class="controls">
-            <?= form_dropdown('jenjang_studi_id', $jenjang_studi_data, set_value('jenjang_studi_id', $jenjang_studi_id), 'id="jenjang_studi_id" class="input-medium" prevData-selected="' . set_value('jenjang_studi_id', $jenjang_studi_id) . '"') . '&nbsp;&nbsp;'; ?>
+            <?= form_dropdown('jenjang_studi_id', $jenjang_studi_data, set_value('jenjang_studi_id', $jenjang_studi_id), 'id="jenjang_studi_id" class="input-medium" prevData-selected="' . set_value('jenjang_studi_id', $jenjang_studi_id) . '"'); ?>
             <p class="help-block"><?php echo form_error('jenjang_studi_id') ?></p>
         </div>
     </div>
@@ -218,14 +211,6 @@ foreach ($jenjang_studi_options as $row) {
         <div class="controls">
             <?= form_input($thn_semester_mulai_attr) ?>
             <p class="help-block"><?php echo form_error('thn_semester_mulai') ?></p>
-        </div>
-    </div>
-
-    <div class="control-group">
-        <?= form_label('Email', 'email', $control_label); ?>
-        <div class="controls">
-            <?= form_input($email_attr) ?>
-            <p class="help-block"><?php echo form_error('email') ?></p>
         </div>
     </div>
 

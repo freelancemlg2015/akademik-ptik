@@ -8,9 +8,7 @@ class Mahasiswa_model extends CI_Model {
 
     function s_mahasiswa() {
         return $this->db->select('m_mahasiswa.*,m_angkatan.nama_angkatan,m_program_studi.nama_program_studi,m_jenjang_studi.jenjang_studi,m_konsentrasi_studi.nama_konsentrasi_studi,
-                                  m_jenis_kelamin.jenis_kelamin,m_agama.agama,m_status_dosen_penasehat.status_dosen_penasehat,m_jabatan_tertinggi.jabatan_tertinggi,
-                                  m_kesatuan_asal.nama_kesatuan_asal,m_pangkat.nama_pangkat
-                                  
+                                  m_jenis_kelamin.jenis_kelamin,m_agama.agama,m_jabatan_tertinggi.jabatan_tertinggi,m_kesatuan_asal.nama_kesatuan_asal,m_pangkat.nama_pangkat,m_anak.nama_anak
                                  ')
                         ->from('m_mahasiswa')
                         ->join('m_angkatan', 'm_angkatan.id = m_mahasiswa.angkatan_id', 'left')
@@ -19,10 +17,10 @@ class Mahasiswa_model extends CI_Model {
                         ->join('m_konsentrasi_studi', 'm_konsentrasi_studi.id = m_mahasiswa.kons_studi_id', 'left')
                         ->join('m_jenis_kelamin', 'm_jenis_kelamin.id = m_mahasiswa.jenis_kelamin_id', 'left')
                         ->join('m_agama', 'm_agama.id = m_mahasiswa.agama_id', 'left')
-                        ->join('m_status_dosen_penasehat', 'm_status_dosen_penasehat.id = m_mahasiswa.penasehat_akademik_id', 'left')
                         ->join('m_jabatan_tertinggi', 'm_jabatan_tertinggi.id = m_mahasiswa.jabatan_akhir_id', 'left')
-                        ->join('m_kesatuan_asal', 'm_kesatuan_asal.id = m_mahasiswa.satuan_asal_id', 'left')
-                        ->join('m_pangkat', 'm_pangkat.id = m_mahasiswa.pangkat_id', 'left');
+                        ->join('m_kesatuan_asal', 'm_kesatuan_asal.id = m_mahasiswa.kesatuan_asal_id', 'left')
+                        ->join('m_pangkat', 'm_pangkat.id = m_mahasiswa.pangkat_id', 'left')
+                        ->join('m_anak', 'm_anak.id = m_mahasiswa.anak_id', 'left');
                         
     }
 
@@ -35,7 +33,7 @@ class Mahasiswa_model extends CI_Model {
             $this->db->where($where);
         }
         $query = $this->db->get();
-        //[debug]echo $this->db->last_query();
+        //echo $this->db->last_query();
         if ($data_type == 'json') {
             foreach ($query->result() as $row) {
                 $options[$row->id] = $row->nim;
@@ -62,6 +60,10 @@ class Mahasiswa_model extends CI_Model {
             $this->db->like('m_mahasiswa.nama', $query_array['nama']);
         }
 
+        if ($query_array['kode_angkatan'] != '') {
+            $this->db->where('m_angkatan.kode_angkatan', $query_array['kode_angkatan']);
+        }
+
         if ($query_array['active'] != '') {
             $this->db->where('m_mahasiswa.active', $query_array['active']);
         }
@@ -83,6 +85,10 @@ class Mahasiswa_model extends CI_Model {
 
         if ($query_array['nama'] != '') {
             $this->db->like('m_mahasiswa.nama', $query_array['nama']);
+        }
+
+        if ($query_array['kode_angkatan'] != '') {
+            $this->db->where('m_angkatan.kode_angkatan', $query_array['kode_angkatan']);
         }
 
         if ($query_array['active'] != '') {

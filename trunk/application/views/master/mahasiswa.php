@@ -38,26 +38,22 @@ $this->load->view('_shared/menus');
 <table class="table table-bordered table-striped container-full data_list" id="mahasiswa" controller="master">
     <thead>
         <tr>
+            <?php /*?><th>Kode Dik</th><?php */?>
+            <th>Angkatan</th>
+            <?php /*?><th>Kode Dik Ang</th><?php 
+            <th>Jenis Dik</th>
+            <th>Sebutan Dik</th>*/?>
             <th>Nim</th>
             <th>Nama</th>
-            <th>Angkatan</th>
-            <th>Tempat Lahir</th>
-            <th>Tanggal Lahir</th>
-            <th>Jenis Kelamin</th>
-            <th>Agama</th>
         </tr>
     </thead>
     <tbody>
         <?php
         foreach ($results->result() as $row) {
             echo '<tr id="' . $row->id . '">
+              <td>' . $row->nama_angkatan . '</td>
               <td>' . $row->nim . '</td>
               <td>' . $row->nama . '</td>
-              <td>' . $row->nama_angkatan . '</td>
-              <td>' . $row->tempat_lahir . '</td>
-              <td>' . $row->tgl_lahir . '</td>
-              <td>' . $row->jenis_kelamin . '</td>
-              <td>' . $row->agama . '</td>
             </tr>
           ';
         }

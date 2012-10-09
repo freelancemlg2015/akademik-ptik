@@ -5,23 +5,23 @@ $this->load->view('_shared/menus');
 
 <div class="container-fluid form-inline well" id="bobot_nilai-search">
     <?php
-    $kode_bobot_nilai_attr = array(
-        'id' => 'kode_bobot_nilai',
-        'name' => 'kode_bobot_nilai',
+    $nilai_angka_attr = array(
+        'id' => 'nilai_angka',
+        'name' => 'nilai_angka',
         'class' => 'input-medium',
         'style' => 'text-transform : uppercase;',
-        'placeholder' => 'Kode Bobot Nilai'
+        'placeholder' => 'Nilai Angka'
     );
-    $keterangan_nilai_attr = array(
-        'id' => 'keterangan_nilai',
-        'name' => 'keterangan_nilai',
+    $nilai_huruf_attr = array(
+        'id' => 'nilai_huruf',
+        'name' => 'nilai_huruf',
         'class' => 'input-medium',
         'style' => 'text-transform : uppercase;',
-        'placeholder' => 'Keterangan Nilai'
+        'placeholder' => 'Nilai Huruf'
     );
     echo form_open('master/bobot_nilai/search/') .
-    form_input($kode_bobot_nilai_attr) . ' ' .
-    form_input($keterangan_nilai_attr) . ' ' .
+    form_input($nilai_angka_attr) . ' ' .
+    form_input($nilai_huruf_attr) . ' ' .
     form_submit('cari', 'CARI', 'class="btn btn-mini"') .
     form_close();
     ?>
@@ -38,16 +38,18 @@ $this->load->view('_shared/menus');
 <table class="table table-bordered table-striped container-full data_list" id="bobot_nilai" controller="master">
     <thead>
         <tr>
-            <th>Kode Bobot Nilai</th>
-            <th>Keterangan Nilai</th>
+            <th>Nilai Angka</th>
+            <th>Nilai Huruf</th>
+            <th>Bobot Nilai Huruf</th>
         </tr>
     </thead>
     <tbody>
         <?php
         foreach ($results->result() as $row) {
             echo '<tr id="' . $row->id . '">
-              <td>' . $row->kode_bobot_nilai . '</td>
-              <td>' . $row->keterangan_nilai . '</td>    
+              <td>' . $row->nilai_angka . '</td>
+              <td>' . $row->nilai_huruf . '</td>    
+              <td>' . $row->bobot_nilai_huruf . '</td>    
             </tr>
           ';
         }

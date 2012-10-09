@@ -30,7 +30,7 @@ $keterangan_attr = array(
     'autocomplete' => 'off'
 );
 
-$direktorat_data[0] = '-PILIH-';
+$direktorat_data[0] = '';
 foreach ($direktorat_options as $row) {
     $direktorat_data[$row->id] = $row->nama_direktorat;
 }
@@ -42,7 +42,7 @@ foreach ($direktorat_options as $row) {
     <div class="control-group">
         <?= form_label('Direktorat' . required(), 'nama_direktorat', $control_label); ?>
         <div class="controls">
-            <?= form_dropdown('direktorat_id', $direktorat_data, set_value('direktorat_id', $direktorat_id), 'id="direktorat_id" class="input-medium" prevData-selected="' . set_value('direktorat_id', $direktorat_id) . '"') . '&nbsp;&nbsp;'; ?>
+            <?= form_dropdown('direktorat_id', $direktorat_data, set_value('direktorat_id', $direktorat_id), 'id="direktorat_id" class="input-medium" prevData-selected="' . set_value('direktorat_id', $direktorat_id) . '"'); ?>
             <p class="help-block"><?php echo form_error('nama_direktorat') ?></p>
         </div>
     </div>

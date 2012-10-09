@@ -5,12 +5,12 @@ $this->load->view('_shared/menus');
 
 <div class="container-fluid form-inline well" id="ujian_skripsi-search">
     <?php
-    $nim_attr = array(
-        'id' => 'nim',
-        'name' => 'nim',
+    $nama_attr = array(
+        'id' => 'nama',
+        'name' => 'nama',
         'class' => 'input-medium',
         'style' => 'text-transform : uppercase;',
-        'placeholder' => 'Nim'
+        'placeholder' => 'Nama'
     );
     $judul_skripsi_attr = array(
         'id' => 'judul_skripsi',
@@ -20,7 +20,7 @@ $this->load->view('_shared/menus');
         'placeholder' => 'Judul Skripsi'
     );
     echo form_open('transaction/ujian_skripsi/search/') .
-    form_input($nim_attr) . ' ' .
+    form_input($nama_attr) . ' ' .
     form_input($judul_skripsi_attr) . ' ' .
     form_submit('cari', 'CARI', 'class="btn btn-mini"') .
     form_close();
@@ -38,24 +38,30 @@ $this->load->view('_shared/menus');
 <table class="table table-bordered table-striped container-full data_list" id="ujian_skripsi" controller="transaction">
     <thead>
         <tr>
-            <th>Nim</th>
+            <th>Mahasiswa</th>
             <th>Judul Skripsi</th>
             <th>Tanggal Ujian</th>
-            <th>Jam Mulai</th>
-            <th>Jam Akhir</th>
+            <th>Jam</th>
             <th>Ketua Penguji</th>
+            <th>Sekretaris Penguji</th>
         </tr>
     </thead>
     <tbody>
         <?php
         foreach ($results->result() as $row) {
+            $jam = $row->jam_mulai.$row->jam_akhir;
+            if(empty($jam)){
+                
+            }else{
+               $jam = substr($row->jam_mulai,0,5).'-'.substr($row->jam_akhir, 0,5); 
+            }
             echo '<tr id="' . $row->id . '">
-              <td>' . $row->nim . '</td>
+              <td>' . $row->nama . '</td>
               <td>' . $row->judul_skripsi . '</td>    
-              <td>' . $row->tgl_ujian . '</td>    
-              <td>' . $row->jam_mulai . '</td>    
-              <td>' . $row->jam_akhir . '</td>    
-              <td>' . $row->ketua_penguji . '</td>    
+              <td>' . $row->tgl_ujian . '</td>   
+              <td>' . $row->ketua_penguji . '</td>     
+              <td>' . $jam . '</td>    
+              <td>' . $row->sekretaris_penguji . '</td>    
             </tr>
           ';
         }

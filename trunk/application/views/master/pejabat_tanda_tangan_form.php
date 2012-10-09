@@ -28,12 +28,12 @@ $tanggal_tanda_tangan_attr = array(
     'autocomplete' => 'off'
 );
 
-$subdirektorat_data[0] = '-PILIH-';
+$subdirektorat_data[0] = '';
 foreach ($subdirektorat_options as $row) {
     $subdirektorat_data[$row->id] = $row->nama_subdirektorat;
 }
 
-$kategori_pejabat_data[0] = '-PILIH-';
+$kategori_pejabat_data[0] = '';
 foreach ($kategori_pejabat_options as $row) {
     $kategori_pejabat_data[$row->id] = $row->nama_jenis_pejabat;
 }
@@ -44,7 +44,7 @@ foreach ($kategori_pejabat_options as $row) {
     <div class="control-group">
         <?= form_label('Sub Direktorat' , 'sub_direktorat_id', $control_label); ?>
         <div class="controls">
-            <?= form_dropdown('sub_direktorat_id', $subdirektorat_data, set_value('sub_direktorat_id', $sub_direktorat_id), 'id="sub_direktorat_id" class="input-medium" prevData-selected="' . set_value('sub_direktorat_id', $sub_direktorat_id) . '"') . '&nbsp;&nbsp;'; ?>
+            <?= form_dropdown('sub_direktorat_id', $subdirektorat_data, set_value('sub_direktorat_id', $sub_direktorat_id), 'id="sub_direktorat_id" class="input-medium" prevData-selected="' . set_value('sub_direktorat_id', $sub_direktorat_id) . '"'); ?>
             <p class="help-block"><?php echo form_error('sub_direktorat_id') ?></p>
         </div>
     </div>
@@ -52,7 +52,7 @@ foreach ($kategori_pejabat_options as $row) {
     <div class="control-group">
         <?= form_label('Kategori' , 'kategori_pejabat_id', $control_label); ?>
         <div class="controls">
-           <?= form_dropdown('kategori_pejabat_id', $kategori_pejabat_data, set_value('kategori_pejabat_id', $kategori_pejabat_id), 'id="kategori_pejabat_id" class="input-medium" prevData-selected="' . set_value('kategori_pejabat_id', $kategori_pejabat_id) . '"') . '&nbsp;&nbsp;'; ?>
+           <?= form_dropdown('kategori_pejabat_id', $kategori_pejabat_data, set_value('kategori_pejabat_id', $kategori_pejabat_id), 'id="kategori_pejabat_id" class="input-medium" prevData-selected="' . set_value('kategori_pejabat_id', $kategori_pejabat_id) . '"'); ?>
             <p class="help-block"><?php echo form_error('karegori_pejabat_id') ?></p>
         </div>
     </div>

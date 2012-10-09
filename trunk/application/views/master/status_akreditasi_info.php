@@ -7,7 +7,7 @@ $control_label = array(
 );
 ?>
 <div class="container-full form-horizontal" id="status_akreditasi">
-    <table cellspacing="0" cellpadding="0" border="0" class="table table-bordered span4">
+    <table cellspacing="0" cellpadding="0" border="0" class="table table-bordered">
         <tbody>
             <tr>
                 <th class="span2">Status Akreditasi</th>
