@@ -109,7 +109,6 @@ $db['default']['swap_pre'] = '';
 $db['default']['autoinit'] = TRUE;
 $db['default']['stricton'] = FALSE;
 
-
 //SERVER
 /*
 $db['default']['hostname'] = '10.10.10.20';
