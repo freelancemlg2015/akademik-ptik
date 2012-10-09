@@ -33,7 +33,7 @@ class Ujian_skripsi extends CI_Controller {
         $this->load->library(array('form_validation', 'table', 'pagination'));
         $this->input->load_query($query_id);
         $query_array = array(
-            'nim'           => $this->input->get('nim'),
+            'nama'          => $this->input->get('nama'),
             'judul_skripsi' => $this->input->get('judul_skripsi'),
             'active'        => 1
         );
@@ -69,10 +69,8 @@ class Ujian_skripsi extends CI_Controller {
 
     function search() {
         $query_array = array(
-            'nim'             => $this->input->post('nim'),
+            'nama'            => $this->input->post('nama'),
             'judul_skripsi'   => $this->input->post('judul_skripsi'),
-            'tgl_ujian_start' => $this->input->post('tgl_ujian_start'),
-            'tgl_ujian_akhir' => $this->input->post('tgl_ujian_akhir'),
             'active' => 1
         );
         $query_id = $this->input->save_query($query_array);
@@ -128,12 +126,18 @@ class Ujian_skripsi extends CI_Controller {
         } else {
             $this->crud->use_table('t_ujian_skripsi');
             $data_in = array(
-                'nim'             => $this->input->post('nim'),
-                'judul_skripsi'   => $this->input->post('judul_skripsi'),
-                'tgl_ujian_start' => $this->input->post('tgl_ujian_start'),
-                'tgl_ujian_akhir' => $this->input->post('tgl_ujian_akhir'),
-                'created_on'      => date($this->config->item('log_date_format')),
-                'created_by'      => logged_info()->on
+                'mahasiswa_id'       => $this->input->post('mahasiswa_id'),
+                'judul_skripsi'      => $this->input->post('judul_skripsi'),
+                'tgl_ujian'          => $this->input->post('tgl_ujian'),
+                'jam_mulai'          => $this->input->post('jam_mulai'),
+                'jam_akhir'          => $this->input->post('jam_akhir'),
+                'ketua_penguji'      => $this->input->post('ketua_penguji'),
+                'anggota_penguji_1'  => $this->input->post('anggota_penguji_1'),
+                'anggota_penguji_2'  => $this->input->post('anggota_penguji_2'),
+                'sekretaris_penguji' => $this->input->post('sekretaris_penguji'),
+                'keterangan'         => $this->input->post('keterangan'),
+                'created_on'         => date($this->config->item('log_date_format')),
+                'created_by'         => logged_info()->on
             );
             /*
               echo '<pre>';
@@ -148,12 +152,12 @@ class Ujian_skripsi extends CI_Controller {
         $data['tools']      = array(
             'transaction/ujian_skripsi' => 'Back'
         );
+        
+        $this->crud->use_table('m_mahasiswa');
+        $data['mahasiswa_options'] = $this->crud->retrieve()->result();
 
         $this->load->model('ujian_skripsi_model', 'ujian_skripsi');
         $data = array_merge($data, $this->ujian_skripsi->set_default()); //merge dengan arr data dengan default
-        
-        $data['nim'] = ''; 
-        
         $this->load->view('transaction/ujian_skripsi_form', $data);
     }
 
@@ -181,10 +185,16 @@ class Ujian_skripsi extends CI_Controller {
                 'id' => $id
             );
             $data_in = array(
-                'nim'             => $this->input->post('nim'),
-                'judul_skripsi'   => $this->input->post('judul_skripsi'),
-                'tgl_ujian_start' => $this->input->post('tgl_ujian_start'),
-                'tgl_ujian_akhir' => $this->input->post('tgl_ujian_akhir'),
+                'mahasiswa_id'       => $this->input->post('mahasiswa_id'),
+                'judul_skripsi'      => $this->input->post('judul_skripsi'),
+                'tgl_ujian'          => $this->input->post('tgl_ujian'),
+                'jam_mulai'          => $this->input->post('jam_mulai'),
+                'jam_akhir'          => $this->input->post('jam_akhir'),
+                'ketua_penguji'      => $this->input->post('ketua_penguji'),
+                'anggota_penguji_1'  => $this->input->post('anggota_penguji_1'),
+                'anggota_penguji_2'  => $this->input->post('anggota_penguji_2'),
+                'sekretaris_penguji' => $this->input->post('sekretaris_penguji'),
+                'keterangan'         => $this->input->post('keterangan'),
                 'modified_on'     => date($this->config->item('log_date_format')),
                 'modified_by'     => logged_info()->on
             );
@@ -198,11 +208,14 @@ class Ujian_skripsi extends CI_Controller {
         );
 
         $this->crud->use_table('t_ujian_skripsi');
-        $angkatan_data = $this->crud->retrieve(array('id' => $id))->row();
-
+        $ujian_skripsi_data = $this->crud->retrieve(array('id' => $id))->row();
+        
+        $this->crud->use_table('m_mahasiswa');
+        $data['mahasiswa_options'] = $this->crud->retrieve()->result();
+        
         $this->load->model('ujian_skripsi_model', 'ujian_skripsi');
-        $data = array_merge($data, $this->angkatan->set_default()); //merge dengan arr data dengan default
-        $data = array_merge($data, (array) $angkatan_data);
+        $data = array_merge($data, $this->ujian_skripsi->set_default()); //merge dengan arr data dengan default
+        $data = array_merge($data, (array) $ujian_skripsi_data);
         $this->load->view('transaction/ujian_skripsi_form', $data);
     }
 

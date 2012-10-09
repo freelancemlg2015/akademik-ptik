@@ -34,7 +34,7 @@ class Plot_dosen_ajar extends CI_Controller {
         $this->input->load_query($query_id);
         $query_array = array(
             'nama_angkatan'  => $this->input->get('nama_angkatan'),
-            'tahun_ajar'     => $this->input->get('tahun_ajar'),
+            'nama_dosen'     => $this->input->get('nama_dosen'),
             'active'         => 1
         );
 
@@ -69,8 +69,8 @@ class Plot_dosen_ajar extends CI_Controller {
 
     function search() {
         $query_array = array(
-            'nama_angkatan'  => $this->input->get('nama_angkatan'),
-            'tahun_ajar'     => $this->input->get('tahun_ajar'),
+            'nama_angkatan'  => $this->input->post('nama_angkatan'),
+            'nama_dosen'     => $this->input->post('nama_dosen'),
             'active' => 1
         );
         $query_id = $this->input->save_query($query_array);
@@ -96,7 +96,7 @@ class Plot_dosen_ajar extends CI_Controller {
             'transaction/plot_dosen_ajar/' . $id . '/edit' => 'Edit',
             'transaction/plot_dosen_ajar/' . $id . '/delete' => 'Delete'
         );
-        $data['page_title'] = 'Detail Plot Dosen';
+        $data['page_title'] = 'Detail Plot Dosen Ajar';
         $this->load->view('transaction/plot_dosen_ajar_info', $data);
     }
 
@@ -114,9 +114,9 @@ class Plot_dosen_ajar extends CI_Controller {
     }
 
     function create() {
-        $data['auth']        = $this->auth;
+        $data['auth'] = $this->auth;
         $data['action_type'] = __FUNCTION__;
-        $master_url          = 'transaction/plot_dosen_ajar/';
+        $transaction_url = 'transaction/plot_dosen_ajar/';
 
         $this->load->library(array('form_validation', 'table'));
         $this->load->helper(array('form', 'snippets'));
@@ -126,17 +126,17 @@ class Plot_dosen_ajar extends CI_Controller {
         } else {
             $this->crud->use_table('t_dosen_ajar');
             $data_in = array(
-                'angkatan_id'        => $this->input->post('angkatan_id'),
-                'tahun_akademik_id'  => $this->input->post('tahun_akademik_id'),
-                'semester_id'        => $this->input->post('semester_id'),
-                'mata_kuliah_id'     => $this->input->post('mata_kuliah_id'),
-                'dosen_id'           => $this->input->post('dosen_id'),
-                'mahasiswa_id'       => $this->input->post('mahasiswa_id'),
-                'keterangan'         => $this->input->post('keterangan'),
-                'created_on'         => date($this->config->item('log_date_format')),
-                'created_by'         => logged_info()->on
+                'angkatan_id'       => $this->input->post('angkatan_id'),
+                'tahun_akademik_id' => $this->input->post('tahun_akademik_id'),
+                'semester_id'       => $this->input->post('semester_id'),
+                'mata_kuliah_id'    => $this->input->post('mata_kuliah_id'),
+                'dosen_id'          => $this->input->post('dosen_id'),
+                'mahasiswa_id'      => $this->input->post('mahasiswa_id'),
+                'keterangan'        => $this->input->post('keterangan'),
+                'created_on'        => date($this->config->item('log_date_format')),
+                'created_by'        => logged_info()->on
             );
-            /*
+            /*        
               echo '<pre>';
               var_dump($data_in);
               echo '</pre>';
@@ -144,26 +144,34 @@ class Plot_dosen_ajar extends CI_Controller {
             $created_id = $this->crud->create($data_in);
             redirect('transaction/plot_dosen_ajar/' . $created_id . '/info');
         }
-        $data['action_url'] = $master_url . __FUNCTION__;
+        $data['action_url'] = $transaction_url . __FUNCTION__;
         $data['page_title'] = 'Create Plot Dosen Ajar';
-        $data['tools']      = array(
+        $data['tools'] = array(
             'transaction/plot_dosen_ajar' => 'Back'
         );
         
-        $data['nama_angkatan']   = '';
-        $data['tahun_ajar_mulai']      = '';
-        $data['nama_semester']   = '';
-        $data['nama_mata_kuliah']= '';
-        $data['nama_dosen']      = '';
-        $data['nama']  = '';
-        
+        $this->crud->use_table('m_angkatan');
+        $data['angkatan_options'] = $this->crud->retrieve()->result();
+
+        $this->crud->use_table('m_tahun_akademik');
+        $data['tahun_akademik_options'] = $this->crud->retrieve()->result();
+
         $this->crud->use_table('m_semester');
         $data['semester_options'] = $this->crud->retrieve()->result();
 
+        $this->crud->use_table('m_mata_kuliah');
+        $data['mata_kuliah_options'] = $this->crud->retrieve()->result();
+
+        $this->crud->use_table('m_dosen');
+        $data['dosen_options'] = $this->crud->retrieve()->result();
+
+        $this->crud->use_table('m_mahasiswa');
+        $data['mahasiswa_options'] = $this->crud->retrieve()->result();
+        
         $this->load->model('plot_dosen_ajar_model', 'plot_dosen_ajar');
         $data = array_merge($data, $this->plot_dosen_ajar->set_default()); //merge dengan arr data dengan default
         
-        $this->load->view('transaction/plot_dosen_ajar', $data);
+        $this->load->view('transaction/plot_dosen_ajar_form', $data);
     }
 
 //1. Model
@@ -176,7 +184,7 @@ class Plot_dosen_ajar extends CI_Controller {
     function edit() {
         $data['auth']        = $this->auth;
         $data['action_type'] = __FUNCTION__;
-        $master_url          = 'transaction/plot_dosen_ajar/';
+        $transaction_url          = 'transaction/plot_dosen_ajar/';
         $id                  = $this->uri->segment(3);
 
         $this->load->library(array('form_validation', 'table'));
@@ -204,27 +212,38 @@ class Plot_dosen_ajar extends CI_Controller {
             $this->crud->update($criteria, $data_in);
             redirect('transaction/plot_dosen_ajar/' . $id . '/info');
         }
-        $data['action_url'] = $master_url . $id . '/' . __FUNCTION__;
+        $data['action_url'] = $transaction_url . $id . '/' . __FUNCTION__;
         $data['page_title'] = 'Update Plot Dosen Ajar';
         $data['tools']      = array(
             'transaction/plot_dosen_ajar' => 'Back'
         );
         
-        $data['nama_angkatan'] = '';
-        $data['tahun_ajar']    = '';
-        
         $this->crud->use_table('t_dosen_ajar');
         $plot_dosen_ajar_data = $this->crud->retrieve(array('id' => $id))->row();
+        
+        $this->crud->use_table('m_angkatan');
+        $data['angkatan_options'] = $this->crud->retrieve()->result();
+        
+        $this->crud->use_table('m_tahun_akademik');
+        $data['tahun_akademik_options'] = $this->crud->retrieve()->result();
         
         $this->crud->use_table('m_semester');
         $data['semester_options'] = $this->crud->retrieve()->result();
         
+        $this->crud->use_table('m_mata_kuliah');
+        $data['mata_kuliah_options'] = $this->crud->retrieve()->result();
+        
+        $this->crud->use_table('m_dosen');
+        $data['dosen_options'] = $this->crud->retrieve()->result();
+        
+        $this->crud->use_table('m_mahasiswa');
+        $data['mahasiswa_options'] = $this->crud->retrieve()->result();
+                
         $this->load->model('plot_dosen_ajar_model', 'plot_dosen_ajar');
         $data = array_merge($data, $this->plot_dosen_ajar->set_default()); //merge dengan arr data dengan default
         $data = array_merge($data, (array) $plot_dosen_ajar_data);
         $this->load->view('transaction/plot_dosen_ajar_form', $data);
     }
-
 }
 
 ?>

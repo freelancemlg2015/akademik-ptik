@@ -7,7 +7,7 @@ $control_label = array(
 );
 ?>
 <div class="container-full form-horizontal" id="mata_kuliah">
-    <table cellspacing="0" cellpadding="0" border="0" class="table table-bordered span4">
+    <table cellspacing="0" cellpadding="0" border="0" class="table table-bordered">
         <tbody>
             <tr>
                 <th class="span2">Angkatan</th>
@@ -22,8 +22,8 @@ $control_label = array(
                 <td><?= $jenjang_studi ?></td>
             </tr>
             <tr>
-                <th class="span2">Tahun Ajar</th>
-                <td><?= $tahun_ajar ?></td>
+                <th class="span2">Tahun Akademik</th>
+                <td><?= $tahun_ajar_mulai.'-'.$tahun_ajar_akhir ?></td>
             </tr>
             <tr>
                 <th class="span2">Kode Mata Kuliah</th>
@@ -59,11 +59,7 @@ $control_label = array(
             </tr>
             <tr>
                 <th class="span2">Semester</th>
-                <td><?= $semester ?></td>
-            </tr>
-            <tr>
-                <th class="span2">Kelompok Mata Kuliah</th>
-                <td><?= $kelompok_mata_kuliah ?></td>
+                <td><?= $nama_semester?></td>
             </tr>
             <tr>
                 <th class="span2">Jenis Kurikulum</th>
@@ -83,7 +79,7 @@ $control_label = array(
             </tr>
             <tr>
                 <th class="span2">Status Mata Kuliah</th>
-                <td><?= $status_mata_kuliah ?></td>
+                <td><?= $nama_matakuliah ?></td>
             </tr>
             <tr>
                 <th class="span2">Mata Kuliah Syarat Tempuh</th>

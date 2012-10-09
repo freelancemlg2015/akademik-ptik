@@ -33,8 +33,8 @@ class Bobot_nilai extends CI_Controller {
         $this->load->library(array('form_validation', 'table', 'pagination'));
         $this->input->load_query($query_id);
         $query_array = array(
-            'kode_bobot_nilai' => $this->input->get('kode_bobot_nilai'),
-            'keterangan_nilai' => $this->input->get('keterangan_nilai'),
+            'nilai_angka' => $this->input->get('nilai_angka'),
+            'nilai_huruf' => $this->input->get('nilai_huruf'),
             'active' => 1
         );
 
@@ -69,8 +69,8 @@ class Bobot_nilai extends CI_Controller {
 
     function search() {
         $query_array = array(
-            'kode_bobot_nilai' => $this->input->post('kode_bobot_nilai'),
-            'keterangan_nilai' => $this->input->post('keterangan_nilai'),
+            'nilai_angka' => $this->input->post('nilai_angka'),
+            'nilai_huruf' => $this->input->post('nilai_huruf'),
             'active' => 1
         );
         $query_id = $this->input->save_query($query_array);
@@ -126,10 +126,12 @@ class Bobot_nilai extends CI_Controller {
         } else {
             $this->crud->use_table('m_bobot_nilai');
             $data_in = array(
-                'kode_bobot_nilai' => $this->input->post('kode_bobot_nilai'),
-                'keterangan_nilai' => $this->input->post('keterangan_nilai'),
-                'created_on' => date($this->config->item('log_date_format')),
-                'created_by' => logged_info()->on
+                'nilai_angka'            => $this->input->post('nilai_angka'),
+                'nilai_huruf'            => $this->input->post('nilai_huruf'),
+                'bobot_nilai_huruf'      => $this->input->post('bobot_nilai_huruf'),
+                'keterangan_bobot_nilai' => $this->input->post('keterangan_bobot_nilai'),
+                'created_on'             => date($this->config->item('log_date_format')),
+                'created_by'             => logged_info()->on
             );
             /*
               echo '<pre>';
@@ -167,10 +169,12 @@ class Bobot_nilai extends CI_Controller {
                 'id' => $id
             );
             $data_in = array(
-                'kode_bobot_nilai' => $this->input->post('kode_bobot_nilai'),
-                'keterangan_nilai' => $this->input->post('keterangan_nilai'),
-                'modified_on' => date($this->config->item('log_date_format')),
-                'modified_by' => logged_info()->on
+                'nilai_angka'            => $this->input->post('nilai_angka'),
+                'nilai_huruf'            => $this->input->post('nilai_huruf'),
+                'bobot_nilai_huruf'      => $this->input->post('bobot_nilai_huruf'),
+                'keterangan_bobot_nilai' => $this->input->post('keterangan_bobot_nilai'),
+                'modified_on'            => date($this->config->item('log_date_format')),
+                'modified_by'            => logged_info()->on
             );
             $this->crud->update($criteria, $data_in);
             redirect('master/bobot_nilai/' . $id . '/info');
@@ -190,9 +194,9 @@ class Bobot_nilai extends CI_Controller {
         $this->load->view('master/bobot_nilai_form', $data);
     }
 
-    function unique_kode_bobot_nilai($kode_bobot_nilai) {
+    function unique_nilai_angka($nilai_angka) {
         $this->crud->use_table('m_bobot_nilai');
-        $bobot_nilai = $this->crud->retrieve(array('kode_bobot_nilai' => $kode_bobot_nilai))->row();
+        $bobot_nilai = $this->crud->retrieve(array('nilai_angka' => $nilai_angka))->row();
         if (sizeof($bobot_nilai) > 0) {
             $this->form_validation->set_message(__FUNCTION__, 'Kode Bobot Nilai sudah terdaftar'); //pakai function karena ini harus sama dengan nama function nya
             return FALSE;

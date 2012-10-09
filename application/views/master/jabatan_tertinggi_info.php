@@ -7,7 +7,7 @@ $control_label = array(
 );
 ?>
 <div class="container-full form-horizontal" id="jabatan_tertinggi">
-    <table cellspacing="0" cellpadding="0" border="0" class="table table-bordered span4">
+    <table cellspacing="0" cellpadding="0" border="0" class="table table-bordered">
         <tbody>
             <tr>
                 <th class="span2">Kode Jabatan Tertinggi</th>
@@ -17,10 +17,10 @@ $control_label = array(
                 <th class="span2">Jabatan Tertinggi</th>
                 <td><?= $jabatan_tertinggi ?></td>
             </tr>
-             <tr>
+             <!--<tr>
                 <th class="span2">Status Akreditasi</th>
-                <td><?= $status_akreditasi ?></td>
-            </tr>
+                <td><?//= $status_akreditasi ?></td>
+            </tr>-->
         </tbody>
     </table>
 </div>

@@ -1,8 +1,8 @@
 <?php
 
 /*
- * Imam Syarifudin
- * Master Tugas Imam : Jenis Kelamin
+ * Fachrul Rozi
+ * Master Lain-lain : Jenis Kelamin
  * 5/9/2012
  */
 
@@ -188,15 +188,14 @@ class Jenis_kelamin extends CI_Controller {
 
     function unique_jenis_kelamin($jenis_kelamin) {
         $this->crud->use_table('m_jenis_kelamin');
-        $angkatan = $this->crud->retrieve(array('jenis_kelamin' => $jenis_kelamin))->row();
-        if (sizeof($angkatan) > 0) {
+        $jenis_kelamin = $this->crud->retrieve(array('jenis_kelamin' => $jenis_kelamin))->row();
+        if (sizeof($jenis_kelamin) > 0) {
             $this->form_validation->set_message(__FUNCTION__, 'Jenis Kelamin sudah terdaftar'); //pakai function karena ini harus sama dengan nama function nya
             return FALSE;
         } else {
             return true;
         }
     }
-
 }
 
 ?>

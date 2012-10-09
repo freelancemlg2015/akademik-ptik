@@ -12,16 +12,8 @@ $this->load->view('_shared/menus');
         'style' => 'text-transform : uppercase;',
         'placeholder' => 'Kode Jam'
     );
-    $jam_normal_attr = array(
-        'id' => 'jam_normal',
-        'name' => 'jam_normal',
-        'class' => 'input-medium',
-        'style' => 'text-transform : uppercase;',
-        'placeholder' => 'Jam Normal'
-    );
     echo form_open('master/jam_pelajaran/search/') .
     form_input($kode_jam_attr) . ' ' .
-    form_input($jam_normal_attr) . ' ' .
     form_submit('cari', 'CARI', 'class="btn btn-mini"') .
     form_close();
     ?>
@@ -46,10 +38,14 @@ $this->load->view('_shared/menus');
     <tbody>
         <?php
         foreach ($results->result() as $row) {
+            $jam_normal  = $row->jam_normal_mulai.$row->jam_normal_akhir;
+            if(strrpos($jam_normal,'-')<1)$jam_normal = substr ($row->jam_normal_mulai, 0,5).'-'.substr ($row->jam_normal_akhir, 0,5);
+            $jam_puasa  = $row->jam_puasa_mulai.$row->jam_puasa_akhir;
+            if(strrpos($jam_puasa,'-')<1)$jam_puasa = substr ($row->jam_puasa_mulai, 0,5).'-'.substr ($row->jam_puasa_akhir, 0,5);
             echo '<tr id="' . $row->id . '">
               <td>' . $row->kode_jam . '</td>
-              <td>' . $row->jam_normal . '</td>    
-              <td>' . $row->jam_puasa . '</td>    
+              <td>' . $jam_normal . '</td>    
+              <td>' . $jam_puasa . '</td>    
             </tr>
           ';
         }

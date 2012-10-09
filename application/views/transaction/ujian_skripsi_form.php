@@ -7,13 +7,6 @@ $control_label = array(
     'class' => 'control-label'
 );
 
-$nim_attr = array(
-    'name' => 'nim',
-    'class' => 'input-medium',
-    'value' => set_value('nim', $nim),
-    'autocomplete' => 'off'
-);
-
 $judul_skripsi_attr = array(
     'name' => 'judul_skripsi',
     'class' => 'input-medium',
@@ -77,14 +70,20 @@ $keterangan_attr = array(
     'value' => set_value('keterangan', $keterangan),
     'autocomplete' => 'on'    
 );
+
+$mahasiswa_data[0] = '';
+foreach ($mahasiswa_options as $row) {
+    $mahasiswa_data[$row->id] = $row->nama;
+}
+
 ?>
 <div class="container-full" id="ujian_skripsi">
 <?= form_open($action_url, array('class' => 'form-horizontal')); ?>
 
     <div class="control-group">
-        <?= form_label('Nim' . required(), 'nim', $control_label); ?>
+        <?= form_label('Mahasiswa' , 'mahasiswa_id', $control_label); ?>
         <div class="controls">
-        <?= form_input($nim_attr) ?>
+            <?= form_dropdown('mahasiswa_id', $mahasiswa_data, set_value('mahasiswa_id', $mahasiswa_id), 'id="mahasiswa_id" class="input-medium" prevData-selected="' . set_value('mahasiswa_id', $mahasiswa_id) . '"'); ?>
             <p class="help-block"><?php echo form_error('nim') ?></p>
         </div>
     </div>
@@ -106,21 +105,13 @@ $keterangan_attr = array(
     </div>
     
     <div class="control-group">
-        <?= form_label('Jam Mulai' , 'jam_mulai', $control_label); ?>
+        <?= form_label('Jam' , 'jam_mulai', $control_label); ?>
         <div class="controls">
-        <?= form_input($jam_mulai_attr) ?>
+        <?= form_input($jam_mulai_attr) ?> <?= form_input($jam_akhir_attr) ?>
             <p class="help-block"><?php echo form_error('jam_mulai') ?></p>
         </div>
     </div>
-    
-    <div class="control-group">
-        <?= form_label('Jam Akhir' , 'jam_akhir', $control_label); ?>
-        <div class="controls">
-        <?= form_input($jam_akhir_attr) ?>
-            <p class="help-block"><?php echo form_error('jam_akhir') ?></p>
-        </div>
-    </div>
-    
+        
     <div class="control-group">
         <?= form_label('Ketua Penguji' , 'ketua_penguji', $control_label); ?>
         <div class="controls">

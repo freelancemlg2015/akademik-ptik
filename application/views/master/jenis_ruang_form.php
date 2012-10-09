@@ -9,7 +9,7 @@ $control_label = array(
 
 $jenis_ruang_attr = array(
     'name' => 'jenis_ruang',
-    'class' => 'input-small',
+    'class' => 'input-medium',
     'value' => set_value('jenis_ruang', $jenis_ruang),
     'autocomplete' => 'off'
 );

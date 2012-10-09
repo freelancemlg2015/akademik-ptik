@@ -49,7 +49,7 @@ $tgl_mulai_attr = array(
     <div class="control-group">
         <?= form_label('Tahun Mulai' , 'tahun_ajar_mulai', $control_label); ?>
         <div class="controls">
-            <?= form_input($tahun_ajar_mulai_attr) ?>
+            <?= form_input($tahun_ajar_mulai_attr) ?> 
             <p class="help-block"><?php echo form_error('tahun_ajar_mulai') ?></p>
         </div>
     </div>

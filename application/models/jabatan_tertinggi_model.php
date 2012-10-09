@@ -7,9 +7,9 @@ class Jabatan_tertinggi_model extends CI_Model {
     }
 
     function s_jabatan_tertinggi() {
-        return $this->db->select('m_jabatan_tertinggi.*,m_status_akreditasi.status_akreditasi')
-                        ->from('m_jabatan_tertinggi')
-                        ->join('m_status_akreditasi', 'm_status_akreditasi.id = m_jabatan_tertinggi.status_akreditasi_id', 'left');
+        return $this->db->select('m_jabatan_tertinggi.*')
+                        ->from('m_jabatan_tertinggi');
+                        //->join('m_status_akreditasi', 'm_status_akreditasi.id = m_jabatan_tertinggi.status_akreditasi_id', 'left');
     }
 
     function get_many($data_type = NULL, $term = array(), $limit = NULL, $offset = NULL) {

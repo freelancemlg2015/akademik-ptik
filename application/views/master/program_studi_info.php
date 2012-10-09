@@ -7,8 +7,12 @@ $control_label = array(
 );
 ?>
 <div class="container-full form-horizontal" id="program_studi">
-    <table cellspacing="0" cellpadding="0" border="0" class="table table-bordered span4">
+    <table cellspacing="0" cellpadding="0" border="0" class="table table-bordered">
         <tbody>
+            <tr>
+                <th class="span2">Angkatan</th>
+                <td><?= $nama_angkatan ?></td>
+            </tr>
             <tr>
                 <th class="span2">Kode Program Studi</th>
                 <td><?= $kode_program_studi ?></td>
@@ -16,10 +20,6 @@ $control_label = array(
             <tr>
                 <th class="span2">Nama Program Studi</th>
                 <td><?= $nama_program_studi ?></td>
-            </tr>
-             <tr>
-                <th class="span2">Angkatan</th>
-                <td><?= $nama_angkatan ?></td>
             </tr>
             <tr>
                 <th class="span2">Inisial</th>
@@ -52,10 +52,6 @@ $control_label = array(
             <tr>
                 <th class="span2">Tahun Semester Mulai</th>
                 <td><?= $thn_semester_mulai ?></td>
-            </tr>
-             <tr>
-                <th class="span2">Email</th>
-                <td><?= $email ?></td>
             </tr>
             <tr>
                 <th class="span2">Tgl Pendirian Program Studi</th>

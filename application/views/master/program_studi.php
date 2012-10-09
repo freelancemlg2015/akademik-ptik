@@ -38,47 +38,24 @@ $this->load->view('_shared/menus');
 <table class="table table-bordered table-striped container-full data_list" id="program_studi" controller="master">
     <thead>
         <tr>
+            <th>Angkatan</th>
             <th>Kode Program Studi</th>
             <th>Nama Program Studi</th>
-            <th>Angkatan</th>
             <th>Inisial</th>
             <th>Jenjang Studi</th>
             <th>Status Akreditasi</th>
-            <th>No SK Terakhir</th>
-            <th>Tgl SK Terakhir</th>
-            <th>Kode Status Program Studi</th>
-            <th>Tahun Semester Mulai</th>
-            <th>Email</th>   
-            <th>Tgl Pendirian Program Studi</th>
-            <th>No SK Akreditasi</th>
-            <th>Tgl SK Akreditasi</th>
-            <th>Tgl Akhir SK</th>
-            <th>Frekuensi Pemutakhiran Kurikulum</th>
-            <th>Pelaksana Pemutakhiran</th> 
         </tr>
     </thead>
     <tbody>
         <?php
         foreach ($results->result() as $row) {
             echo '<tr id="' . $row->id . '">
+              <td>' . $row->nama_angkatan . '</td>
               <td>' . $row->kode_program_studi . '</td>
               <td>' . $row->nama_program_studi . '</td>
-              <td>' . $row->nama_angkatan . '</td>
               <td>' . $row->inisial . '</td>
               <td>' . $row->jenjang_studi . '</td>
-              <td>' . $row->status_akreditasi . '</td>
-              <td>' . $row->no_sk_terakhir . '</td>
-              <td>' . $row->tgl_sk_terakhir . '</td>
-              <td>' . $row->jml_sks . '</td>
-              <td>' . $row->kode_status_program_studi . '</td>
-              <td>' . $row->thn_semester_mulai . '</td>
-              <td>' . $row->email . '</td>
-              <td>' . $row->tgl_pendirian_program_studi . '</td>    
-              <td>' . $row->no_sk_akreditasi . '</td>  
-              <td>' . $row->tgl_sk_akreditasi . '</td>  
-              <td>' . $row->tgl_akhir_sk . '</td>  
-              <td>' . $row->frekuensi_pemutahiran_kurikulum . '</td>  
-              <td>' . $row->pelaksana_pemutahiran . '</td>       
+              <td>' . $row->status_akreditasi . '</td>      
             </tr>
           ';
         }

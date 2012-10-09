@@ -4,16 +4,16 @@ $this->load->view('_shared/menus');
 ?>
 
 <div class="container-fluid form-inline well" id="kategori_uduhan-search">
-    <?php
-    $ketegori_unduhan_attr = array(
-        'id' => 'kategori_uduhan',
-        'name' => 'kategori_uduhan',
+     <?php
+    $kategori_unduhan_attr = array(
+        'id' => 'kategori_unduhan',
+        'name' => 'kategori_unduhan',
         'class' => 'input-medium',
         'style' => 'text-transform : uppercase;',
-        'placeholder' => 'Kategori Unduhan'
+        'placeholder' => 'Kategori'
     );
-    echo form_open('master/kategori_uduhan/search/') .
-    form_input($ketegori_unduhan_attr) . ' ' .
+    echo form_open('master/kategori_unduhan/search/') .
+    form_input($kategori_unduhan_attr) . ' ' .
     form_submit('cari', 'CARI', 'class="btn btn-mini"') .
     form_close();
     ?>

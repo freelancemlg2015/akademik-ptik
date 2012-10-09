@@ -7,11 +7,11 @@ $control_label = array(
 );
 ?>
 <div class="container-full form-horizontal" id="jadwal_kuliah">
-    <table cellspacing="0" cellpadding="0" border="0" class="table table-bordered span4">
+    <table cellspacing="0" cellpadding="0" border="0" class="table table-bordered">
         <tbody>
             <tr>
-                <th class="span2">Nama Dosen</th>
-                <td><?= $nama_dosen  ?></td>
+                <th class="span2">Nama Mata Kuliah</th>
+                <td><?= $nama_mata_kuliah  ?></td>
             </tr>
             <tr>
                 <th class="span2">Ruang</th>
@@ -19,15 +19,15 @@ $control_label = array(
             </tr>
             <tr>
                 <th class="span2">Jenis Waktu</th>
-                <td><?= $jenis_waktu ?></td>
+                <td><?//= $jenis_waktu ?></td>
             </tr>
             <tr>
                 <th class="span2">Tanggal</th>
-                <td><?= $tanggal ?></td>
+                <td><?//= $tanggal ?></td>
             </tr>
             <tr>
                 <th class="span2">Jam</th>
-                <td><?= $jam ?></td>
+                <td><?//= $jam ?></td>
             </tr>
             <tr>
                 <th class="span2">Keterangan</th>

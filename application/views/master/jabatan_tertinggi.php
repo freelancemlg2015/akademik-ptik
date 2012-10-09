@@ -40,7 +40,7 @@ $this->load->view('_shared/menus');
         <tr>
             <th>Kode Jabatan Tertinggi</th>
             <th>Jabatan Tertinggi</th>
-            <th>Status Akreditasi</th>
+        <!--<th>Status Akreditasi</th>-->
         </tr>
     </thead>
     <tbody>
@@ -49,7 +49,6 @@ $this->load->view('_shared/menus');
             echo '<tr id="' . $row->id . '">
               <td>' . $row->kode_jabatan_tertinggi . '</td>
               <td>' . $row->jabatan_tertinggi . '</td>
-              <td>' . $row->status_akreditasi. '</td>
             </tr>
           ';
         }

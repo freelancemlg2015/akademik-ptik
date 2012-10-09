@@ -72,11 +72,10 @@ class Paket_matakuliah extends CI_Controller {
 
     function search() {
         $query_array = array(
-            'nama_angkatan'    => $this->input->get('nama_angkatan'),
-            'tahun_ajar'       => $this->input->get('tahun_ajar'),
-            'nama_semester'    => $this->input->get('nama_semester'),
-            'nama_paket'       => $this->input->get('nama_kegiatan'),
-            'nama_mata_kuliah' => $this->input->get('nama_mata_kuliah'),
+            'nama_angkatan'    => $this->input->post('nama_angkatan'),
+            'nama_semester'    => $this->input->post('nama_semester'),
+            'nama_paket'       => $this->input->post('nama_paket'),
+            'nama_mata_kuliah' => $this->input->post('nama_mata_kuliah'),
             'active'         => 1
         );
         $query_id = $this->input->save_query($query_array);
@@ -155,12 +154,19 @@ class Paket_matakuliah extends CI_Controller {
             'transaction/paket_matakuliah' => 'Back'
         );
         
-        $data['nama_angkatan']    = '';
-        $data['tahun_ajar']       = '';
-        $data['nama_mata_kuliah'] = '';
+        
+        $this->crud->use_table('m_angkatan');
+        $data['angkatan_options'] = $this->crud->retrieve()->result();
+        
+        $this->crud->use_table('m_tahun_akademik');
+        $data['tahun_akademik_options'] = $this->crud->retrieve()->result();
         
         $this->crud->use_table('m_semester');
         $data['semester_options'] = $this->crud->retrieve()->result();
+
+        $this->crud->use_table('m_mata_kuliah');
+        $data['mata_kuliah_options'] = $this->crud->retrieve()->result();
+        
 
         $this->load->model('paket_matakuliah_model', 'paket_matakuliah');
         $data = array_merge($data, $this->paket_matakuliah->set_default()); //merge dengan arr data dengan default
@@ -187,7 +193,7 @@ class Paket_matakuliah extends CI_Controller {
         if ($this->form_validation->run('paket_matakuliah_update') === FALSE) {
             //don't do anything
         } else {
-            $this->crud->use_table('t_paket_matakuliah');
+            $this->crud->use_table('t_paket_mata_kuliah');
             $criteria = array(
                 'id' => $id
             );
@@ -211,15 +217,20 @@ class Paket_matakuliah extends CI_Controller {
             'transaction/paket_matakuliah' => 'Back'
         );
         
-        $data['nama_angkatan']    = '';
-        $data['tahun_ajar']       = '';
-        $data['nama_mata_kuliah'] = '';
-        
         $this->crud->use_table('t_paket_mata_kuliah');
         $paket_matakuliah_data = $this->crud->retrieve(array('id' => $id))->row();
         
+        $this->crud->use_table('m_angkatan');
+        $data['angkatan_options'] = $this->crud->retrieve()->result();
+        
+        $this->crud->use_table('m_tahun_akademik');
+        $data['tahun_akademik_options'] = $this->crud->retrieve()->result();
+        
         $this->crud->use_table('m_semester');
         $data['semester_options'] = $this->crud->retrieve()->result();
+
+        $this->crud->use_table('m_mata_kuliah');
+        $data['mata_kuliah_options'] = $this->crud->retrieve()->result();
         
         $this->load->model('paket_matakuliah_model', 'paket_matakuliah');
         $data = array_merge($data, $this->paket_matakuliah->set_default()); //merge dengan arr data dengan default

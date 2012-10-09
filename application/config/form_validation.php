@@ -255,29 +255,49 @@ $config = array(
             'rules' => 'trim|required|callback_unique_kode_jam'
         ),
         array(
-            'field' => 'jam_normal',
-            'label' => 'jam_normal',
+            'field' => 'jam_normal_mulai',
+            'label' => 'jam_normal_mulai',
             'rules' => 'trim|required'
         ),
         array(
-            'field' => 'jam_puasa',
-            'label' => 'jam_puasa',
+            'field' => 'jam_normal_akhir',
+            'label' => 'jam_normal_akhir',
+            'rules' => 'trim|required'
+        ),
+        array(
+            'field' => 'jam_puasa_mulai',
+            'label' => 'jam_puasa_mulai',
+            'rules' => 'trim|required'
+        ),
+        array(
+            'field' => 'jam_puasa_akhir',
+            'label' => 'jam_puasa_akhir',
             'rules' => 'trim|required'
         )
     ), 'jam_pelajaran_update' => array(
         array(
             'field' => 'kode_jam',
             'label' => 'kode_jam',
+            'rules' => 'trim|required|callback_unique_kode_jam'
+        ),
+        array(
+            'field' => 'jam_normal_mulai',
+            'label' => 'jam_normal_mulai',
             'rules' => 'trim|required'
         ),
         array(
-            'field' => 'jam_normal',
-            'label' => 'jam_normal',
+            'field' => 'jam_normal_akhir',
+            'label' => 'jam_normal_akhir',
             'rules' => 'trim|required'
         ),
         array(
-            'field' => 'jam_puasa',
-            'label' => 'jam_puasa',
+            'field' => 'jam_puasa_mulai',
+            'label' => 'jam_puasa_mulai',
+            'rules' => 'trim|required'
+        ),
+        array(
+            'field' => 'jam_puasa_akhir',
+            'label' => 'jam_puasa_akhir',
             'rules' => 'trim|required'
         )
 
@@ -408,11 +428,31 @@ $config = array(
     /* STATUS MATA KULIAH */
     ), 'status_mata_kuliah_create' => array(
         array(
+            'field' => 'kode_matakuliah',
+            'label' => 'kode_matakuliah',
+            'rules' => 'trim|required|callback_unique_kode_matakuliah'
+        ),
+        array(
+            'field' => 'nama_matakuliah',
+            'label' => 'nama_matakuliah',
+            'rules' => 'trim|required'
+        ),
+        array(
             'field' => 'status_mata_kuliah',
             'label' => 'status_mata_kuliah',
-            'rules' => 'trim|required|callback_unique_status_mata_kuliah'
+            'rules' => 'trim|required'
         )
     ), 'status_mata_kuliah_update' => array(
+        array(
+            'field' => 'kode_matakuliah',
+            'label' => 'kode_matakuliah',
+            'rules' => 'trim|required|callback_unique_kode_matakuliah'
+        ),
+        array(
+            'field' => 'nama_matakuliah',
+            'label' => 'nama_matakuliah',
+            'rules' => 'trim|required'
+        ),
         array(
             'field' => 'status_mata_kuliah',
             'label' => 'status_mata_kuliah',
@@ -424,7 +464,7 @@ $config = array(
         array(
             'field' => 'kode_golongan',
             'label' => 'kode_golongan',
-            'rules' => 'trim|required|callback_unique_kode_golongan'
+            'rules' => 'trim|required'
         ),
         array(
             'field' => 'golongan',
@@ -694,29 +734,69 @@ $config = array(
     /* BOBOT NILAI */
     ), 'bobot_nilai_create' => array(
         array(
-            'field' => 'kode_bobot_nilai',
-            'label' => 'kode_bobot_nilai',
-            'rules' => 'trim|required|callback_unique_kode_bobot_nilai'
+            'field' => 'nilai_angka',
+            'label' => 'nilai_angka',
+            'rules' => 'trim|required'
         ),
         array(
-            'field' => 'keterangan_nilai',
-            'label' => 'keterangan_nilai',
+            'field' => 'nilai_huruf',
+            'label' => 'nilai_huruf',
+            'rules' => 'trim|required'
+        ),
+        array(
+            'field' => 'bobot_nilai_huruf',
+            'label' => 'bobot_nilai_huruf',
+            'rules' => 'trim|required'
+        ),
+        array(
+            'field' => 'keterangan_bobot_nilai',
+            'label' => 'keterangan_bobot_nilai',
             'rules' => 'trim|required'
         )
     ), 'bobot_nilai_update' => array(
         array(
-            'field' => 'kode_bobot_nilai',
-            'label' => 'kode_bobot_nilai',
+            'field' => 'nilai_angka',
+            'label' => 'nilai_angka',
             'rules' => 'trim|required'
         ),
         array(
-            'field' => 'keterangan_nilai',
-            'label' => 'keterangan_nilai',
+            'field' => 'nilai_huruf',
+            'label' => 'nilai_huruf',
+            'rules' => 'trim|required'
+        ),
+        array(
+            'field' => 'bobot_nilai_huruf',
+            'label' => 'bobot_nilai_huruf',
+            'rules' => 'trim|required'
+        ),
+        array(
+            'field' => 'keterangan_bobot_nilai',
+            'label' => 'keterangan_bobot_nilai',
             'rules' => 'trim|required'
         )
 
     /* DATA MAHASISWA */
     ), 'mahasiswa_create' => array(
+        array(
+            'field' => 'kode_dik',
+            'label' => 'kode_dik',
+            'rules' => 'trim|required'
+        ),
+        array(
+            'field' => 'kode_dik_ang',
+            'label' => 'kode_dik_ang',
+            'rules' => 'trim|required'
+        ),
+        array(
+            'field' => 'nama_jenis_dik',
+            'label' => 'nama_jenis_dik',
+            'rules' => 'trim|required'
+        ),
+        array(
+            'field' => 'sebutan_dik',
+            'label' => 'sebutan_dik',
+            'rules' => 'trim|required'
+        ),
         array(
             'field' => 'nim',
             'label' => 'nim',
@@ -728,6 +808,26 @@ $config = array(
             'rules' => 'trim|required'
         )
     ), 'mahasiswa_update' => array(
+        array(
+            'field' => 'kode_dik',
+            'label' => 'kode_dik',
+            'rules' => 'trim|required'
+        ),
+        array(
+            'field' => 'kode_dik_ang',
+            'label' => 'kode_dik_ang',
+            'rules' => 'trim|required'
+        ),
+        array(
+            'field' => 'nama_jenis_dik',
+            'label' => 'nama_jenis_dik',
+            'rules' => 'trim|required'
+        ),
+        array(
+            'field' => 'sebutan_dik',
+            'label' => 'sebutan_dik',
+            'rules' => 'trim|required'
+        ),
         array(
             'field' => 'nim',
             'label' => 'nim',
@@ -742,19 +842,9 @@ $config = array(
     /* DATA DOSEN */
     ), 'dosen_create' => array(
         array(
-            'field' => 'no_karpeg_dosen',
-            'label' => 'no_karpeg_dosen',
-            'rules' => 'trim|required'
-        ),
-        array(
-            'field' => 'no_dosen_fakultas',
-            'label' => 'no_dosen_fakultas',
-            'rules' => 'trim|required'
-        ),
-        array(
-            'field' => 'no_dosen_dikti',
-            'label' => 'no_dosen_dikti',
-            'rules' => 'trim|required'
+            'field' => 'angkatan_id',
+            'label' => 'angkatan_id',
+            'rules' => 'trim|required|greater_than[0]'
         ),
         array(
             'field' => 'nama_dosen',
@@ -763,18 +853,8 @@ $config = array(
         )
     ), 'dosen_update' => array(
         array(
-            'field' => 'no_karpeg_dosen',
-            'label' => 'no_karpeg_dosen',
-            'rules' => 'trim|required'
-        ),
-        array(
-            'field' => 'no_dosen_fakultas',
-            'label' => 'no_dosen_fakultas',
-            'rules' => 'trim|required'
-        ),
-        array(
-            'field' => 'no_dosen_dikti',
-            'label' => 'no_dosen_dikti',
+            'field' => 'angkatan_id',
+            'label' => 'angkatan_id',
             'rules' => 'trim|required'
         ),
         array(
@@ -900,24 +980,28 @@ $config = array(
             'rules' => 'trim|required'
         )
         
+    /* JADWAL UJIAN */
+    ), 'jadwal_ujian_create' => array(
+        array(
+            'field' => 'unit',
+            'label' => 'unit',
+            'rules' => 'trim|required'
+        )
+    ), 'jadwal_ujian_update' => array(
+        array(
+            'field' => 'unit',
+            'label' => 'unit',
+            'rules' => 'trim|required'
+        )
+        
     /*UJIAN SKRIPSI*/
     ),'ujian_skripsi_create' => array(
-        array(
-            'field' => 'nim',
-            'label' => 'nim',
-            'rules' => 'trim|required'
-        ),
         array(
             'field' => 'judul_skripsi',
             'label' => 'judul_skripsi',
             'rules' => 'trim|required'
         )
     ), 'ujian_skripsi_update' => array(
-        array(
-            'field' => 'nim',
-            'label' => 'nim',
-            'rules' => 'trim|required'
-        ),
         array(
             'field' => 'judul_skripsi',
             'label' => 'judul_skripsi',
@@ -1121,7 +1205,49 @@ $config = array(
             'label' => 'nama_pejabat',
             'rules' => 'trim|required'
         )
-        
+     
+	/* PLOT MATA KULIAH*/
+    ), 'plot_mata_kuliah_create' => array(
+        array(
+            'field' => 'angkatan_id',
+            'label' => 'angkatan_id',
+            'rules' => 'trim|required'
+        )
+    ), 'plot_mata_kuliah_update' => array(
+        array(
+            'field' => 'tahun_akademik_id',
+            'label' => 'tahun_akademik_id',
+            'rules' => 'trim|required'
+        )      
+ 
+	/* STATUS PLOT KELAS */
+    ), 'plot_kelas_create' => array(
+        array(
+            'field' => 'jumlah_kelas',
+            'label' => 'jumlah_kelas',
+            'rules' => 'trim|required'
+        )
+    ), 'plot_kelas_update' => array(
+        array(
+            'field' => 'jumlah_kelas',
+            'label' => 'jumlah_kelas',
+            'rules' => 'trim|required'
+        )
+	 
+	 
+    /* PLOT DOSEN AJAR*/
+    ), 'plot_dosen_ajar_create' => array(
+//        array(
+//            'field' => 'keterangan',
+//            'label' => 'keterangan',
+//            'rules' => 'trim|required'
+//        )
+    ), 'plot_dosen_ajar_update' => array(
+//        array(
+//            'field' => 'keterangan',
+//            'label' => 'keterangan',
+//            'rules' => 'trim|required'
+//        )      
     )
     
 );

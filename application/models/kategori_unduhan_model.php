@@ -40,7 +40,7 @@ class Kategori_unduhan_model extends CI_Model {
                 ->order_by($sort_by, $sort_order);
 
         if ($query_array['kategori_unduhan'] != '') {
-            $this->db->like('m_kategori_unduhan.kategori_unduhan', $query_array['kategori_unduhan']);
+            $this->db->where('m_kategori_unduhan.kategori_unduhan', $query_array['kategori_unduhan']);
         }
 
         if ($query_array['active'] != '') {
@@ -65,7 +65,6 @@ class Kategori_unduhan_model extends CI_Model {
         if ($query_array['active'] != '') {
             $this->db->where('m_kategori_unduhan.active', $query_array['active']);
         }
-
         return $this->db->count_all_results();
     }
 

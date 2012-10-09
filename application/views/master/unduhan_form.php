@@ -21,7 +21,7 @@ $keterangan_attr = array(
     'autocomplete' => 'off'
 );
 
-$kategori_unduhan_data[0] = '-PILIH-';
+$kategori_unduhan_data[0] = '';
 foreach ($kategori_unduhan_options as $row) {
     $kategori_unduhan_data[$row->id] = $row->kategori_unduhan;
 }
@@ -33,7 +33,7 @@ foreach ($kategori_unduhan_options as $row) {
     <div class="control-group">
         <?= form_label('Kategori' , 'kategori_unduhan_id', $control_label); ?>
         <div class="controls">
-            <?= form_dropdown('kategori_unduhan_id', $kategori_unduhan_data, set_value('kategori_unduhan_id', $kategori_unduhan_id), 'id="kategori_unduhan_id" class="input-medium" prevData-selected="' . set_value('kategori_unduhan_id', $kategori_unduhan_id) . '"') . '&nbsp;&nbsp;'; ?>
+            <?= form_dropdown('kategori_unduhan_id', $kategori_unduhan_data, set_value('kategori_unduhan_id', $kategori_unduhan_id), 'id="kategori_unduhan_id" class="input-medium" prevData-selected="' . set_value('kategori_unduhan_id', $kategori_unduhan_id) . '"'); ?>
             <p class="help-block"><?php echo form_error('kategori_unduhan_id') ?></p>
         </div>
     </div>

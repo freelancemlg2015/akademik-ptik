@@ -8,7 +8,7 @@ class MY_Input extends CI_Input {
 
     function save_query($query_array) {
         $MY_this =& get_instance();
-        $MY_this->db->insert('query', array('query_string' => http_build_query($query_array)));
+        $MY_this->db->insert('query', array('query_string' => http_build_query($query_array, '', '&')));
         return $MY_this->db->insert_id();
     }
 

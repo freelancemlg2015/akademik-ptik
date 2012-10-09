@@ -40,7 +40,7 @@ class Jenis_kelamin_model extends CI_Model {
                 ->order_by($sort_by, $sort_order);
 
         if ($query_array['jenis_kelamin'] != '') {
-            $this->db->where('m_jenis_kelamin.jenis_kelamin', $query_array['jenis_kelamin']);
+            $this->db->like('m_jenis_kelamin.jenis_kelamin', $query_array['jenis_kelamin']);
         }
 
         if ($query_array['active'] != '') {
@@ -59,7 +59,7 @@ class Jenis_kelamin_model extends CI_Model {
         $this->s_jenis_kelamin();
 
         if ($query_array['jenis_kelamin'] != '') {
-            $this->db->where('m_jenis_kelamin.jenis_kelamin', $query_array['jenis_kelamin']);
+            $this->db->like('m_jenis_kelamin.jenis_kelamin', $query_array['jenis_kelamin']);
         }
 
         if ($query_array['active'] != '') {

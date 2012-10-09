@@ -590,6 +590,19 @@ $route['transaction/plot_mata_kuliah/suggestion'] = "plot_mata_kuliah/suggestion
 //END
 
 
+//PLOT SEMESTER
+$route['transaction/plot_semester'] = "plot_semester";
+$route['transaction/plot_semester/view/(:any)'] = "plot_semester/index/$1";
+$route['transaction/plot_semester/(:any)/info'] = "plot_semester/info/$1";
+$route['transaction/plot_semester/(:any)/edit'] = "plot_semester/edit/$1";
+$route['transaction/plot_semester/(:any)/delete'] = "plot_semester/delete/$1";
+$route['transaction/plot_semester/(:any)/(:any)/(:any)'] = "plot_semester/index/$1/$2/$3";
+$route['transaction/plot_semester/create/(:any)'] = "plot_semester/create/$1";
+$route['transaction/plot_semester/create'] = "plot_semester/create";
+$route['transaction/plot_semester/search'] = "plot_semester/search";
+//END
+
+
 //PAKET MATAKULIAH
 $route['transaction/paket_matakuliah'] = "paket_matakuliah";
 $route['transaction/paket_matakuliah/view/(:any)'] = "paket_matakuliah/index/$1";
@@ -769,5 +782,18 @@ $route['laporan/laporan_jadwal_perkuliahan/create/(:any)'] = "laporan_jadwal_per
 $route['laporan/laporan_jadwal_perkuliahan/create'] = "laporan_jadwal_perkuliahan/create";
 $route['laporan/laporan_jadwal_perkuliahan/search'] = "laporan_jadwal_perkuliahan/search";
 $route['laporan/laporan_jadwal_perkuliahan/report'] = "laporan_jadwal_perkuliahan/report";
+//END
+
+//LAPORAN DAFTAR DOSEN
+$route['laporan/laporan_daftar_dosen'] = "laporan_daftar_dosen";
+$route['laporan/laporan_daftar_dosen/view/(:any)'] = "laporan_daftar_dosen/index/$1";
+$route['laporan/laporan_daftar_dosen/(:any)/info'] = "laporan_daftar_dosen/info/$1";
+$route['laporan/laporan_daftar_dosen/(:any)/edit'] = "laporan_daftar_dosen/edit/$1";
+$route['laporan/laporan_daftar_dosen/(:any)/delete'] = "laporan_daftar_dosen/delete/$1";
+$route['laporan/laporan_daftar_dosen/(:any)/(:any)/(:any)'] = "laporan_daftar_dosen/index/$1/$2/$3";
+$route['laporan/laporan_daftar_dosen/create/(:any)'] = "laporan_daftar_dosen/create/$1";
+$route['laporan/laporan_daftar_dosen/create'] = "laporan_daftar_dosen/create";
+$route['laporan/laporan_daftar_dosen/search'] = "laporan_daftar_dosen/search";
+$route['laporan/laporan_daftar_dosen/report'] = "laporan_daftar_dosen/report";
 //END
 

@@ -92,7 +92,7 @@ $active_group = 'default';
 $active_record = TRUE;
 
 //LOKAL
-
+/*
 $db['default']['hostname'] = 'localhost';
 $db['default']['username'] = 'root';
 $db['default']['password'] = '';
@@ -108,25 +108,25 @@ $db['default']['dbcollat'] = 'utf8_general_ci';
 $db['default']['swap_pre'] = '';
 $db['default']['autoinit'] = TRUE;
 $db['default']['stricton'] = FALSE;
-
+*/
 
 //SERVER
-//
-//$db['default']['hostname'] = '10.10.10.20';
-//$db['default']['username'] = 'root';
-//$db['default']['password'] = 'toormysql';
-//$db['default']['database'] = 'db_akademik';
-//$db['default']['dbdriver'] = 'mysql';
-//$db['default']['dbprefix'] = 'akademik_';
-//$db['default']['pconnect'] = TRUE;
-//$db['default']['db_debug'] = TRUE;
-//$db['default']['cache_on'] = FALSE;
-//$db['default']['cachedir'] = '';
-//$db['default']['char_set'] = 'utf8';
-//$db['default']['dbcollat'] = 'utf8_general_ci';
-//$db['default']['swap_pre'] = '';
-//$db['default']['autoinit'] = TRUE;
-//$db['default']['stricton'] = FALSE;
+
+$db['default']['hostname'] = '10.10.10.20';
+$db['default']['username'] = 'root';
+$db['default']['password'] = 'toormysql';
+$db['default']['database'] = 'db_akademik';
+$db['default']['dbdriver'] = 'mysql';
+$db['default']['dbprefix'] = 'akademik_';
+$db['default']['pconnect'] = TRUE;
+$db['default']['db_debug'] = TRUE;
+$db['default']['cache_on'] = FALSE;
+$db['default']['cachedir'] = '';
+$db['default']['char_set'] = 'utf8';
+$db['default']['dbcollat'] = 'utf8_general_ci';
+$db['default']['swap_pre'] = '';
+$db['default']['autoinit'] = TRUE;
+$db['default']['stricton'] = FALSE;
 
 
 /* End of file database.php */

@@ -147,67 +147,67 @@ $foto_dosen_attr = array(
     'autocomplete' => 'off'
 );
 
-$angkatan_data[0] = '-PILIH-';
+$angkatan_data[0] = '';
 foreach ($angkatan_options as $row) {
     $angkatan_data[$row->id] = $row->nama_angkatan;
 }
 
-$program_studi_data[0] = '-PILIH-';
+$program_studi_data[0] = '';
 foreach ($program_studi_options as $row) {
     $program_studi_data[$row->id] = $row->nama_program_studi;
 }
 
-$jenjang_studi_data[0] = '-PILIH-';
+$jenjang_studi_data[0] = '';
 foreach ($jenjang_studi_options as $row) {
     $jenjang_studi_data[$row->id] = $row->jenjang_studi;
 }
 
-$jenis_kelamin_data[0] = '-PILIH-';
+$jenis_kelamin_data[0] = '';
 foreach ($jenis_kelamin_options as $row) {
     $jenis_kelamin_data[$row->id] = $row->jenis_kelamin;
 }
 
-$agama_data[0] = '-PILIH-';
+$agama_data[0] = '';
 foreach ($agama_options as $row) {
     $agama_data[$row->id] = $row->agama;
 }
 
-$jabatan_akademik_data[0] = '-PILIH-';
+$jabatan_akademik_data[0] = '';
 foreach ($jabatan_akademik_options as $row) {
     $jabatan_akademik_data[$row->id] = $row->nama_jabatan_akademik;
 }
 
-$jabatan_tertinggi_data[0] = '-PILIH-';
+$jabatan_tertinggi_data[0] = '';
 foreach ($jabatan_tertinggi_options as $row) {
     $jabatan_tertinggi_data[$row->id] = $row->jabatan_tertinggi;
 }
 
-$status_kerja_dosen_data[0] = '-PILIH-';
+$status_kerja_dosen_data[0] = '';
 foreach ($status_kerja_dosen_options as $row) {
     $status_kerja_dosen_data[$row->id] = $row->status_kerja_dosen;
 }
 
-$status_aktivitas_dosen_data[0] = '-PILIH-';
+$status_aktivitas_dosen_data[0] = '';
 foreach ($status_aktivitas_dosen_options as $row) {
     $status_aktivitas_dosen_data[$row->id] = $row->status_aktivitas_dosen;
 }
 
-$semester_mulai_aktivitas_data[0] = '-PILIH-';
+$semester_mulai_aktivitas_data[0] = '';
 foreach ($semester_mulai_aktivitas_options as $row) {
     $semester_mulai_aktivitas_data[$row->id] = $row->semester_mulai_aktivitas;
 }
 
-$akta_mengajar_data[0] = '-PILIH-';
+$akta_mengajar_data[0] = '';
 foreach ($akta_mengajar_options as $row) {
     $akta_mengajar_data[$row->id] = $row->nama_akta_mengajar;
 }
 
-$surat_ijin_mengajar_data[0] = '-PILIH-';
+$surat_ijin_mengajar_data[0] = '';
 foreach ($surat_ijin_mengajar_options as $row) {
     $surat_ijin_mengajar_data[$row->id] = $row->surat_ijin_mengajar;
 }
 
-$golongan_data[0] = '-PILIH-';
+$golongan_data[0] = '';
 foreach ($golongan_options as $row) {
     $golongan_data[$row->id] = $row->golongan;
 }
@@ -217,9 +217,9 @@ foreach ($golongan_options as $row) {
     <?= form_open_multipart($action_url, array('class' => 'form-horizontal')); ?>
 
     <div class="control-group">
-        <?= form_label('Angkatan', 'angkatan_id', $control_label); ?>
+        <?= form_label('Angkatan' . required(), 'angkatan_id', $control_label); ?>
         <div class="controls">
-            <?= form_dropdown('angkatan_id', $angkatan_data, set_value('angkatan_id', $angkatan_id), 'id="angkatan_id" class="input-medium" prevData-selected="' . set_value('angkatan_id', $angkatan_id) . '"') . '&nbsp;&nbsp;'; ?>
+            <?= form_dropdown('angkatan_id', $angkatan_data, set_value('angkatan_id', $angkatan_id), 'id="angkatan_id" class="input-medium" prevData-selected="' . set_value('angkatan_id', $angkatan_id) . '"'); ?>
             <p class="help-block"><?php echo form_error('angkatan_id') ?></p>
         </div>
     </div>
@@ -227,7 +227,7 @@ foreach ($golongan_options as $row) {
     <div class="control-group">
         <?= form_label('Program Studi', 'program_studi_id', $control_label); ?>
         <div class="controls">
-            <?= form_dropdown('program_studi_id', $program_studi_data, set_value('program_studi_id', $program_studi_id), 'id="program_studi_id" class="input-medium" prevData-selected="' . set_value('program_studi_id', $program_studi_id) . '"') . '&nbsp;&nbsp;'; ?>
+            <?= form_dropdown('program_studi_id', $program_studi_data, set_value('program_studi_id', $program_studi_id), 'id="program_studi_id" class="input-medium" prevData-selected="' . set_value('program_studi_id', $program_studi_id) . '"'); ?>
             <p class="help-block"><?php echo form_error('program_studi_id') ?></p>
         </div>
     </div>
@@ -235,13 +235,13 @@ foreach ($golongan_options as $row) {
     <div class="control-group">
         <?= form_label('Jenjang Studi', 'jenjang_studi_id', $control_label); ?>
         <div class="controls">
-            <?= form_dropdown('jenjang_studi_id', $jenjang_studi_data, set_value('jenjang_studi_id', $program_studi_id), 'id="jenjang_studi_id" class="input-medium" prevData-selected="' . set_value('jenjang_studi_id', $jenjang_studi_id) . '"') . '&nbsp;&nbsp;'; ?>
+            <?= form_dropdown('jenjang_studi_id', $jenjang_studi_data, set_value('jenjang_studi_id', $program_studi_id), 'id="jenjang_studi_id" class="input-medium" prevData-selected="' . set_value('jenjang_studi_id', $jenjang_studi_id) . '"'); ?>
             <p class="help-block"><?php echo form_error('jenjang_studi_id') ?></p>
         </div>
     </div>
 
     <div class="control-group">
-        <?= form_label('No Karpeg Dosen' . required(), 'no_karpeg_dosen', $control_label); ?>
+        <?= form_label('No Karpeg Dosen' , 'no_karpeg_dosen', $control_label); ?>
         <div class="controls">
             <?= form_input($no_karpeg_dosen_attr) ?>
             <p class="help-block"><?php echo form_error('no_karpeg_dosen') ?></p>
@@ -251,7 +251,7 @@ foreach ($golongan_options as $row) {
     
 
     <div class="control-group">
-        <?= form_label('No Dosen Fakultas' . required(), 'no_dosen_fakultas', $control_label); ?>
+        <?= form_label('No Dosen Fakultas' , 'no_dosen_fakultas', $control_label); ?>
         <div class="controls">
             <?= form_input($no_dosen_fakultas_attr) ?>
             <p class="help-block"><?php echo form_error('no_dosen_fakultas') ?></p>
@@ -259,7 +259,7 @@ foreach ($golongan_options as $row) {
     </div>
 
     <div class="control-group">
-        <?= form_label('No Dosen Dikti' . required(), 'no_dosen_dikti', $control_label); ?>
+        <?= form_label('No Dosen Dikti' , 'no_dosen_dikti', $control_label); ?>
         <div class="controls">
             <?= form_input($no_dosen_dikti_attr) ?>
             <p class="help-block"><?php echo form_error('no_dosen_dikti') ?></p>
@@ -309,7 +309,7 @@ foreach ($golongan_options as $row) {
      <div class="control-group">
         <?= form_label('Jenis Kelamin', 'jenis_kelamin_id', $control_label); ?>
         <div class="controls">
-            <?= form_dropdown('jenis_kelamin_id', $jenis_kelamin_data, set_value('jenis_kelamin_id', $jenis_kelamin_id), 'id="jenis_kelamin_id" class="input-medium" prevData-selected="' . set_value('jenis_kelamin_id', $jenis_kelamin_id) . '"') . '&nbsp;&nbsp;'; ?>
+            <?= form_dropdown('jenis_kelamin_id', $jenis_kelamin_data, set_value('jenis_kelamin_id', $jenis_kelamin_id), 'id="jenis_kelamin_id" class="input-medium" prevData-selected="' . set_value('jenis_kelamin_id', $jenis_kelamin_id) . '"'); ?>
             <p class="help-block"><?php echo form_error('jenis_kelamin_id') ?></p>
         </div>
     </div>
@@ -317,7 +317,7 @@ foreach ($golongan_options as $row) {
     <div class="control-group">
         <?= form_label('Agama', 'agama_id', $control_label); ?>
         <div class="controls">
-            <?= form_dropdown('agama_id', $agama_data, set_value('agama_id', $agama_id), 'id="agama_id" class="input-medium" prevData-selected="' . set_value('agama_id', $agama_id) . '"') . '&nbsp;&nbsp;'; ?>
+            <?= form_dropdown('agama_id', $agama_data, set_value('agama_id', $agama_id), 'id="agama_id" class="input-medium" prevData-selected="' . set_value('agama_id', $agama_id) . '"'); ?>
             <p class="help-block"><?php echo form_error('agama_id') ?></p>
         </div>
     </div>
@@ -325,7 +325,7 @@ foreach ($golongan_options as $row) {
     <div class="control-group">
         <?= form_label('Jabatan Akademik', 'jabatan_akademik_id', $control_label); ?>
         <div class="controls">
-            <?= form_dropdown('jabatan_akademik_id', $jabatan_akademik_data, set_value('jabatan_akademik_id', $jabatan_akademik_id), 'id="jabatan_akademik_id" class="input-medium" prevData-selected="' . set_value('jabatan_akademik_id', $jabatan_akademik_id) . '"') . '&nbsp;&nbsp;'; ?>
+            <?= form_dropdown('jabatan_akademik_id', $jabatan_akademik_data, set_value('jabatan_akademik_id', $jabatan_akademik_id), 'id="jabatan_akademik_id" class="input-medium" prevData-selected="' . set_value('jabatan_akademik_id', $jabatan_akademik_id) . '"'); ?>
             <p class="help-block"><?php echo form_error('jabatan_akademik_id') ?></p>
         </div>
     </div>
@@ -333,7 +333,7 @@ foreach ($golongan_options as $row) {
     <div class="control-group">
         <?= form_label('Jabatan Tertinggi', 'jabatan_tertinggi_id', $control_label); ?>
         <div class="controls">
-            <?= form_dropdown('jabatan_tertinggi_id', $jabatan_tertinggi_data, set_value('jabatan_tertinggi_id', $jabatan_tertinggi_id), 'id="jabatan_tertinggi_id" class="input-medium" prevData-selected="' . set_value('jabatan_tertinggi_id', $jabatan_tertinggi_id) . '"') . '&nbsp;&nbsp;'; ?>
+            <?= form_dropdown('jabatan_tertinggi_id', $jabatan_tertinggi_data, set_value('jabatan_tertinggi_id', $jabatan_tertinggi_id), 'id="jabatan_tertinggi_id" class="input-medium" prevData-selected="' . set_value('jabatan_tertinggi_id', $jabatan_tertinggi_id) . '"'); ?>
             <p class="help-block"><?php echo form_error('jabatan_tertinggi_id') ?></p>
         </div>
     </div>
@@ -341,7 +341,7 @@ foreach ($golongan_options as $row) {
     <div class="control-group">
         <?= form_label('Status Kerja Dosen', 'status_kerja_dosen_id', $control_label); ?>
         <div class="controls">
-            <?= form_dropdown('status_kerja_dosen_id', $status_kerja_dosen_data, set_value('status_kerja_dosen_id', $status_kerja_dosen_id), 'id="status_kerja_dosen_id" class="input-medium" prevData-selected="' . set_value('status_kerja_dosen_id', $status_kerja_dosen_id) . '"') . '&nbsp;&nbsp;'; ?>
+            <?= form_dropdown('status_kerja_dosen_id', $status_kerja_dosen_data, set_value('status_kerja_dosen_id', $status_kerja_dosen_id), 'id="status_kerja_dosen_id" class="input-medium" prevData-selected="' . set_value('status_kerja_dosen_id', $status_kerja_dosen_id) . '"'); ?>
             <p class="help-block"><?php echo form_error('status_kerja_dosen_id') ?></p>
         </div>
     </div>
@@ -349,7 +349,7 @@ foreach ($golongan_options as $row) {
     <div class="control-group">
         <?= form_label('Status Aktivitas Dosen', 'status_aktivitas_dosen_id', $control_label); ?>
         <div class="controls">
-            <?= form_dropdown('status_aktivitas_dosen_id', $status_aktivitas_dosen_data, set_value('status_aktivitas_dosen_id', $status_aktivitas_dosen_id), 'id="status_aktivitas_dosen_id" class="input-medium" prevData-selected="' . set_value('status_aktivitas_dosen_id', $status_aktivitas_dosen_id) . '"') . '&nbsp;&nbsp;'; ?>
+            <?= form_dropdown('status_aktivitas_dosen_id', $status_aktivitas_dosen_data, set_value('status_aktivitas_dosen_id', $status_aktivitas_dosen_id), 'id="status_aktivitas_dosen_id" class="input-medium" prevData-selected="' . set_value('status_aktivitas_dosen_id', $status_aktivitas_dosen_id) . '"'); ?>
             <p class="help-block"><?php echo form_error('status_aktivitas_dosen_id') ?></p>
         </div>
     </div>
@@ -357,7 +357,7 @@ foreach ($golongan_options as $row) {
     <div class="control-group">
         <?= form_label('Semester Mulai Aktivitas', 'semester_mulai_aktivitas_id', $control_label); ?>
         <div class="controls">
-            <?= form_dropdown('semester_mulai_aktivitas_id', $semester_mulai_aktivitas_data, set_value('semester_mulai_aktivitas_id', $semester_mulai_aktivitas_id), 'id="semester_mulai_aktivitas_id" class="input-medium" prevData-selected="' . set_value('semester_mulai_aktivitas_id', $semester_mulai_aktivitas_id) . '"') . '&nbsp;&nbsp;'; ?>
+            <?= form_dropdown('semester_mulai_aktivitas_id', $semester_mulai_aktivitas_data, set_value('semester_mulai_aktivitas_id', $semester_mulai_aktivitas_id), 'id="semester_mulai_aktivitas_id" class="input-medium" prevData-selected="' . set_value('semester_mulai_aktivitas_id', $semester_mulai_aktivitas_id) . '"'); ?>
             <p class="help-block"><?php echo form_error('semester_mulai_aktivitas_id') ?></p>
         </div>
     </div>
@@ -365,7 +365,7 @@ foreach ($golongan_options as $row) {
     <div class="control-group">
         <?= form_label('Akta Mengajar', 'akta_mengajar_id', $control_label); ?>
         <div class="controls">
-            <?= form_dropdown('akta_mengajar_id', $akta_mengajar_data, set_value('akta_mengajar_id', $akta_mengajar_id), 'id="akta_mengajar_id" class="input-medium" prevData-selected="' . set_value('akta_mengajar_id', $akta_mengajar_id) . '"') . '&nbsp;&nbsp;'; ?>
+            <?= form_dropdown('akta_mengajar_id', $akta_mengajar_data, set_value('akta_mengajar_id', $akta_mengajar_id), 'id="akta_mengajar_id" class="input-medium" prevData-selected="' . set_value('akta_mengajar_id', $akta_mengajar_id) . '"'); ?>
             <p class="help-block"><?php echo form_error('akta_mengajar_id') ?></p>
         </div>
     </div>
@@ -373,7 +373,7 @@ foreach ($golongan_options as $row) {
     <div class="control-group">
         <?= form_label('Surat Ijin Mengajar', 'surat_ijin_mengajar_id', $control_label); ?>
         <div class="controls">
-            <?= form_dropdown('surat_ijin_mengajar_id', $surat_ijin_mengajar_data, set_value('surat_ijin_mengajar_id', $surat_ijin_mengajar_id), 'id="surat_ijin_mengajar_id" class="input-medium" prevData-selected="' . set_value('surat_ijin_mengajar_id', $surat_ijin_mengajar_id) . '"') . '&nbsp;&nbsp;'; ?>
+            <?= form_dropdown('surat_ijin_mengajar_id', $surat_ijin_mengajar_data, set_value('surat_ijin_mengajar_id', $surat_ijin_mengajar_id), 'id="surat_ijin_mengajar_id" class="input-medium" prevData-selected="' . set_value('surat_ijin_mengajar_id', $surat_ijin_mengajar_id) . '"'); ?>
             <p class="help-block"><?php echo form_error('surat_ijin_mengajar_id') ?></p>
         </div>
     </div>
@@ -397,7 +397,7 @@ foreach ($golongan_options as $row) {
     <div class="control-group">
         <?= form_label('Golongan', 'golongan_id', $control_label); ?>
         <div class="controls">
-            <?= form_dropdown('golongan_id', $golongan_data, set_value('golongan_id', $golongan_id), 'id="golongan_id" class="input-medium" prevData-selected="' . set_value('golongan_id', $golongan_id) . '"') . '&nbsp;&nbsp;'; ?>
+            <?= form_dropdown('golongan_id', $golongan_data, set_value('golongan_id', $golongan_id), 'id="golongan_id" class="input-medium" prevData-selected="' . set_value('golongan_id', $golongan_id) . '"'); ?>
             <p class="help-block"><?php echo form_error('golongan_id') ?></p>
         </div>
     </div>

@@ -8,7 +8,7 @@
             return $(target)
             .val('')
             .hide();//reset & hide
-        }
+        } 
     }
     
     function asuransi_perusahaan_checker(check,target){
@@ -291,9 +291,9 @@
         $('#letter_of_authority.data_list tbody tr,#letter_of_authority.data_list tbody tr,#dropoff.data_list tbody tr,#member.data_list tbody tr,\n\
            #desa_kelurahan.data_list tbody tr,#kecamatan.data_list tbody tr,#kategori_skpd.data_list tbody tr,#skpd.data_list tbody tr,#status_prioritas.data_list tbody tr,#status_kegiatan.data_list tbody tr,#status_pelaksanaan.data_list tbody tr,#status_musrenbang.data_list tbody tr,#musrenbang_usulan.data_list tbody tr,#sample.data_list tbody tr,\n\
            #direktorat.data_list tbody tr,#subdirektorat.data_list tbody tr,,#angkatan.data_list tbody tr,#program_studi.data_list tbody tr,#tahun_akademik.data_list tbody tr,#kelompok_mata_kuliah.data_list tbody tr,#mata_kuliah.data_list tbody tr,#jenjang_studi.data_list tbody tr,#akta_mengajar.data_list tbody tr,#bobot_nilai.data_list tbody tr,#mahasiswa.data_list tbody tr,#dosen.data_list tbody tr,#frekuensi_pemutakhiran.data_list tbody tr,,#pelaksana_pemutakhiran.data_list tbody tr,\n\
-           #jam_pelajaran.data_list tbody tr,#ruang_pelajaran.data_list tbody tr,#jenis_ruang.data_list tbody tr,#status_akreditasi.data_list tbody tr,#status_aktivitas_dosen.data_list tbody tr,#status_kerja_dosen.data_list tbody tr,#status_dosen_penasehat.data_list tbody tr,#status_mata_kuliah.data_list tbody tr,#golongan.data_list tbody tr,#jabatan_akademik.data_list tbody tr,jabatan_tertinggi.data_list tbody tr,jenis_kelamin.data_list tbody tr,\n\
+           #jam_pelajaran.data_list tbody tr,#ruang_pelajaran.data_list tbody tr,#jenis_ruang.data_list tbody tr,#status_akreditasi.data_list tbody tr,#status_aktivitas_dosen.data_list tbody tr,#status_kerja_dosen.data_list tbody tr,#status_dosen_penasehat.data_list tbody tr,#status_mata_kuliah.data_list tbody tr,#golongan.data_list tbody tr,#jabatan_akademik.data_list tbody tr,#jabatan_tertinggi.data_list tbody tr,#jenis_kelamin.data_list tbody tr,\n\
            #jenis_ujian.data_list tbody tr,#nilai.data_list tbody tr,#pangkat.data_list tbody tr,#kesatuan_asal.data_list tbody tr,#konsentrasi_studi.data_list tbody tr,#semester.data_list tbody tr,#semester_mulai_aktivitas.data_list tbody tr,#surat_ijin_mengajar.data_list tbody tr,#nilai_fisik.data_list tbody tr,#nilai_mental.data_list tbody tr,#jadwal_kuliah.data_list tbody tr,#ujian_skripsi.data_list tbody tr,#kalender_akademik.data_list tbody tr,\n\
-           #paket_matakuliah.data_list tbody tr,#plot_dosen_ajar,data_list tbody tr,#nilai_akademik.data_list tbody tr, #penasehat_akademik.data_list tbody tr,#provinsi.data_list tbody tr,#kategori_pejabat.data_list tbody tr,#pejabat_tanda_tangan.data_list tbody tr,#kategori_berita.data_list tbody tr,#berita.data_list tbody tr,#kategori_unduhan.data_list tbody tr,#unduhan.data_list tbody tr').live('dblclick',function(){
+           #plot_mata_kuliah.data_list tbody tr,#plot_semester.data_list tbody tr,#paket_matakuliah.data_list tbody tr,#plot_dosen_ajar.data_list tbody tr,#plot_kelas.data_list tbody tr,#nilai_akademik.data_list tbody tr, #penasehat_akademik.data_list tbody tr,#provinsi.data_list tbody tr,#kategori_pejabat.data_list tbody tr,#pejabat_tanda_tangan.data_list tbody tr,#kategori_berita.data_list tbody tr,#berita.data_list tbody tr,#kategori_unduhan.data_list tbody tr,#unduhan.data_list tbody tr,#jadwal_ujian.data_list tbody tr').live('dblclick',function(){
             var data_list_id = $('.data_list').attr('id');
             var id = $(this).attr('id');
             var controller = $('.data_list').attr('controller');
@@ -319,7 +319,7 @@
         //end datepicker
         
         //Timepicker
-        $('input[name="jam"],input[name="jam_normal"],input[name="jam_puasa"],input[name="jam_mulai"],input[name="jam_akhir"]')
+        $('input[name="jam"],input[name="jam_normal_mulai"],input[name="jam_normal_akhir"],input[name="jam_puasa_mulai"],input[name=jam_puasa_akhir],input[name="jam_mulai"],input[name="jam_akhir"],input[name="waktu_mulai"],input[name="waktu_selesai"]')
         .timepicker();
         //end timepicker
         
