@@ -34,7 +34,31 @@ foreach ($kategori_berita_options as $row) {
 }
 
 ?>
-<div class="container-full" id="berita">
+<div id="contant">
+  <div id="main">
+     <div class="left">
+      <div class="leftbox">
+        <div class="leftnav"><strong>Pengumuman</strong></div>
+        <div class="leftn"> <marquee direction="up"  height="160" scrollamount="2"  onMouseOver="this.stop()" onMouseOut="this.start()">
+	   Ini konten kiri
+		</a>
+
+					</marquee></div>
+      </div>
+      <div class="leftbox">
+        <div class="leftnav"><strong>ewwew</strong></div>
+        <div class="leftn">
+        
+        
+        <br />PTIK
+		<br />eqweq 
+		<br />eqweq
+        <br />2027-88888888
+        <br />2027-88888888</div>
+      </div>
+    </div>
+<div class="container" id="berita">
+<div id="main">
     <?= form_open_multipart($action_url, array('class' => 'form-horizontal')); ?>
 
     <div class="control-group">

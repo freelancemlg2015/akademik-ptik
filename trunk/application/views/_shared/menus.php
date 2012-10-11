@@ -21,7 +21,7 @@ $icon_color = 'icon-grey';
             <ul class="nav">
 
                 <li class="<?= isActive($primary_nav, 'home') ?>"><?= anchor('home', isIconActive($primary_nav, 'home', 'icon-home')) ?></li>
-                <li class="<?= isActive($primary_nav, 'sample'); ?>"><?= anchor('master', isIconActive($primary_nav, 'sample', 'icon-hdd') . ' Master'); ?></li>
+                <li class="<?= isActive($primary_nav, 'master'); ?>"><?= anchor('master', isIconActive($primary_nav, 'sample', 'icon-hdd') . ' Master'); ?></li>
                 <li class="<?= ($this->uri->segment(1) == 'transaction') ? 'active' : ''; ?>"><?= anchor('transaction', isIconActive($primary_nav, 'transaction', 'icon-list-alt') . ' Transaksi'); ?></li>
                 <li class="<?= isActive($primary_nav, 'laporan'); ?>"><?= anchor('laporan', isIconActive($primary_nav, 'laporan', 'icon-info-sign') . ' Laporan'); ?></li>
 <!--            <li class="<?//= isActive($primary_nav, 'modul') ? 'active' : ''; ?>"><?//= anchor('modul', isIconActive($primary_nav, 'modul', 'icon-folder-open') . ' Modul'); ?></li>-->
@@ -154,8 +154,9 @@ $icon_color = 'icon-grey';
                         <a href="#" data-toggle="dropdown" class="dropdown-toggle">Kurikulum<b class="caret"></b></a>
                         <ul class="dropdown-menu">    
                             <li class="<?= isActive($secondary_nav, 'plot_mata_kuliah'); ?>"><?= anchor('transaction/plot_mata_kuliah', 'Plot Mata kuliah'); ?></li>                  
-                            <li class="<?= isActive($secondary_nav, 'plot_semester'); ?>"><?= anchor('transaction/plot_semester', 'Plot Semester'); ?></li>                  
                             <li class="<?= isActive($secondary_nav, 'paket_matakuliah'); ?>"><?= anchor('transaction/paket_matakuliah', 'Paket Matakuliah'); ?></li>
+                            <li class="<?= isActive($secondary_nav, 'plot_semester'); ?>"><?= anchor('transaction/plot_semester', 'Plot Semester'); ?></li>                  
+
                             <li class="<?= isActive($secondary_nav, 'kalender_akademik'); ?>"><?= anchor('transaction/kalender_akademik', 'Kalender Akademik'); ?></li>
 
                         </ul>
@@ -280,6 +281,7 @@ $icon_color = 'icon-grey';
     }
     ?>
     <?php if (isset($page_title)): ?>
+    
         <div class="well">
             <b class="pull-left"><?php
     $num_results = (isset($num_results)) ? ' <span class="badge"> ' . $num_results . ' </span> ' : ' ';
