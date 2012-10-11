@@ -54,7 +54,7 @@
     </div>
 
     <div class="modal-footer">
-        <h6 style="text-align: center;"><p>&copy; 2012 Global Mandiri Engineering</p></h6>
+        <h6 style="text-align: center;"><p>&copy; 2012</p></h6>
     </div>
 
     <?php form_close() ?>

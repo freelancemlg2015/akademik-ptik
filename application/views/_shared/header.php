@@ -10,8 +10,8 @@
           <script src="<?php echo base_url() ?>assets/js/html5.js"></script>
         <![endif]-->
         <link rel="stylesheet" href="<?php echo base_url() ?>assets/css/bootstrap.min.css" type="text/css">
-        <link rel="stylesheet" href="<?php echo base_url() ?>assets/css/bootstrap-responsive.min.css" type="text/css">
         <link rel="stylesheet" href="<?php echo base_url() ?>assets/css/docs.css" type="text/css">
+        <link rel="stylesheet" href="<?php echo base_url() ?>assets/css/css.css" type="text/css">
         <link rel="stylesheet" href="<?php echo base_url() ?>assets/css/timepicker.css" type="text/css">
         <link rel="stylesheet" href="<?php echo base_url() ?>assets/css/shadowbox.css" type="text/css">
         <link rel="stylesheet" href="<?php echo base_url() ?>assets/css/combobox/bootstrap.css" type="text/css">
