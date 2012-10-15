@@ -7,12 +7,17 @@ class Paket_matakuliah_model extends CI_Model {
     }
 
     function s_paket_matakuliah() {
-        return $this->db->select('t_paket_mata_kuliah.*,m_angkatan.nama_angkatan,m_tahun_akademik.tahun_ajar_mulai,m_tahun_akademik.tahun_ajar_akhir,m_mata_kuliah.nama_mata_kuliah,m_semester.nama_semester')
+        return $this->db->select('t_paket_mata_kuliah.*,m_angkatan.nama_angkatan,m_tahun_akademik.tahun_ajar_mulai,m_tahun_akademik.tahun_ajar_akhir,
+                                                        m_mata_kuliah.nama_mata_kuliah,m_semester.nama_semester,m_program_studi.nama_program_studi,
+                                                        m_kelompok_matakuliah.nama_kelompok_mata_kuliah')
                         ->from('t_paket_mata_kuliah')
                         ->join('m_angkatan', 'm_angkatan.id   = t_paket_mata_kuliah.angkatan_id', 'left')
                         ->join('m_tahun_akademik', 'm_tahun_akademik.id = t_paket_mata_kuliah.tahun_akademik_id', 'left')
                         ->join('m_semester', 'm_semester.id = t_paket_mata_kuliah.semester_id', 'left')
-                        ->join('m_mata_kuliah', 'm_mata_kuliah.id = t_paket_mata_kuliah.mata_kuliah_id', 'left');
+                        ->join('m_program_studi', 'm_program_studi.id = t_paket_mata_kuliah.program_studi_id', 'left')
+                        ->join('t_plot_mata_kuliah', 't_plot_mata_kuliah.id = t_paket_mata_kuliah.plot_mata_kuliah_id', 'left')
+                        ->join('m_mata_kuliah', 'm_mata_kuliah.id = t_plot_mata_kuliah.mata_kuliah_id', 'left')
+                        ->join('m_kelompok_matakuliah', 'm_kelompok_matakuliah.id = t_plot_mata_kuliah.kelompok_mata_kuliah_id', 'left');
     }
 
     function get_many($data_type = NULL, $term = array(), $limit = NULL, $offset = NULL) {
@@ -46,17 +51,9 @@ class Paket_matakuliah_model extends CI_Model {
         if ($query_array['nama_angkatan'] != '') {
             $this->db->like('m_angkatan.nama_angkatan', $query_array['nama_angkatan']);
         }
-        
-        if ($query_array['tahun_ajar'] != '') {
-            $this->db->where('m_tahun_akademik.tahun_ajar', $query_array['tahun_ajar']);
-        }
 
         if ($query_array['nama_semester'] != '') {
             $this->db->like('m_semester.nama_semster', $query_array['nama_semster']);
-        }
-        
-        if ($query_array['nama_paket'] != '') {
-            $this->db->like('t_paket_mata_kuliah.nama_paket', $query_array['nama_paket']);
         }
 
         if (isset($query_array['tgl_ujian_start']) && $query_array['tgl_ujian_start'] != 0 && isset($query_array['tgl_ujian_akhir']) && $query_array['tgl_ujian_akhir'] != 0) {
@@ -82,18 +79,10 @@ class Paket_matakuliah_model extends CI_Model {
             $this->db->like('m_angkatan.nama_angkatan', $query_array['nama_angkatan']);
         }
         
-        if ($query_array['tahun_ajar'] != '') {
-            $this->db->where('m_tahun_akademik.tahun_ajar', $query_array['tahun_ajar']);
-        }
-
         if ($query_array['nama_semester'] != '') {
             $this->db->like('m_semester.nama_semster', $query_array['nama_semster']);
         }
         
-        if ($query_array['nama_paket'] != '') {
-            $this->db->like('t_paket_mata_kuliah.nama_paket', $query_array['nama_paket']);
-        }
-
         if (isset($query_array['tgl_ujian_start']) && $query_array['tgl_ujian_start'] != 0 && isset($query_array['tgl_ujian_akhir']) && $query_array['tgl_ujian_akhir'] != 0) {
             $date = new DateTime();
             $format = 'Y-m-j';
