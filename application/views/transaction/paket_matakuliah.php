@@ -12,16 +12,16 @@ $this->load->view('_shared/menus');
         'style' => 'text-transform : uppercase;',
         'placeholder' => 'Angkatan'
     );
-    $nama_paket_attr = array(
-        'id' => 'nama_paket',
-        'name' => 'nama_paket',
+    $semester_attr = array(
+        'id' => 'semester',
+        'name' => 'semester',
         'class' => 'input-medium',
         'style' => 'text-transform : uppercase;',
-        'placeholder' => 'Paket'
+        'placeholder' => 'Semester'
     );
     echo form_open('transaction/paket_matakuliah/search/') .
     form_input($nama_angkatan_attr) . ' ' .
-    form_input($nama_paket_attr) . ' ' .
+    form_input($semester_attr) . ' ' .
     form_submit('cari', 'CARI', 'class="btn btn-mini"') .
     form_close();
     ?>
@@ -41,7 +41,7 @@ $this->load->view('_shared/menus');
             <th>Angkatan</th>
             <th>Tahun Akademik</th>
             <th>Semester</th>
-            <th>Paket</th>
+            <th>Program Studi</th>
             <th>Mata Kuliah</th>
         </tr>
     </thead>
@@ -54,7 +54,7 @@ $this->load->view('_shared/menus');
               <td>' . $row->nama_angkatan . '</td>
               <td>' . $tahun . '</td>    
               <td>' . $row->nama_semester . '</td>    
-              <td>' . $row->nama_paket . '</td>    
+              <td>' . $row->nama_program_studi . '</td>    
               <td>' . $row->nama_mata_kuliah . '</td>    
             </tr>
           ';

@@ -7,13 +7,6 @@ $control_label = array(
     'class' => 'control-label'
 );
 
-$nama_paket_attr = array(
-    'name'  => 'nama_paket',
-    'class' => 'input-medium',
-    'value' => set_value('nama_paket', $nama_paket),
-    'autocomplete' => 'off'    
-);
-
 $keterangan_attr = array(
     'name' => 'keterangan',
     'class' => 'span3',
@@ -41,6 +34,29 @@ foreach ($mata_kuliah_options as $row) {
     $mata_kuliah_data[$row->id] = $row->nama_mata_kuliah;
 }
 
+$program_studi_data[0] = '';
+foreach ($program_studi_options as $row) {
+    $program_studi_data[$row->id] = $row->nama_program_studi;
+}
+
+$plot_mata_kuliah_data[0] = '';
+foreach ($plot_mata_kuliah_options as $row) {
+    $plot_mata_kuliah_data[$row->id] = $row->mata_kuliah_id;
+}
+
+$kelompok_matakuliah_data[0] = '';
+foreach ($kelompok_matakuliah_options as $row) {
+    $kelompok_matakuliah_data[$row->id] = $row->nama_kelompok_mata_kuliah;
+}
+//
+//foreach ($kelompok_matakuliah_options as $row) {
+//    $row->nama_kelompok_mata_kuliah; 
+//    $checkboxattr = array(
+//          'name'  => 'nama_kelompok_mata_kuliah',
+//          'value' => 'nama_kelompok_mata_kuliah',
+//          'id'    => 'id'
+//    );  //'checkbox_'.
+//}
 ?>
 <div class="container-full" id="paket_matakuliah">
 <?= form_open($action_url, array('class' => 'form-horizontal')); ?>
@@ -70,30 +86,26 @@ foreach ($mata_kuliah_options as $row) {
     </div>
     
     <div class="control-group">
-        <?= form_label('Paket' . required(), 'nama_paket', $control_label); ?>
+        <?= form_label('Program Studi' , 'program_studi_id', $control_label); ?>
         <div class="controls">
-        <?= form_input($nama_paket_attr) ?>
-            <p class="help-block"><?php echo form_error('nama_paket') ?></p>
+        <?= form_dropdown('program_studi_id', $program_studi_data, set_value('program_studi_id', $program_studi_id), 'id="program_studi_id" class="input-medium" prevData-selected="' . set_value('program_studi_id', $program_studi_id) . '"'); ?>
+            <p class="help-block"><?php echo form_error('program_studi_id') ?></p>
         </div>
     </div>
     
-    <div class="control-group">
-        <?= form_label('Mata Kuliah' , 'mata_kuliah_id', $control_label); ?>
-        <div class="controls">
-        <?= form_dropdown('mata_kuliah_id', $mata_kuliah_data, set_value('mata_kuliah_id', $mata_kuliah_id), 'id="mata_kuliah_id" class="input-medium" prevData-selected="' . set_value('mata_kuliah_id', $mata_kuliah_id) . '"'); ?>
-            <p class="help-block"><?php echo form_error('mata_kuliah_id') ?></p>
-        </div>
+    <div class="right->column">
+        <fieldset>
+            <legend>Pilih Kelompok Mata Kuliah</legend>
+                <div class="controls">
+                    <?php 
+                        $i=1;
+                        foreach($kelompok_matakuliah_options as $value){?>
+                        <input type="checkbox" name="nama_kelompok_mata_kuliah<?php echo $i; ?>" value="<?php echo $value->nama_kelompok_mata_kuliah; ?>">&nbsp;&nbsp;<?php echo $value->nama_kelompok_mata_kuliah; ?><br>
+                    <?php $i++; } ?>
+                </div>
+        </fieldset>
     </div>
     
-    <div class="control-group">
-        <?= form_label('Keterangan' , 'keterangan', $control_label); ?>
-        <div class="controls">
-        <?= form_textarea($keterangan_attr) ?>
-            <p class="help-block"><?php echo form_error('keterangan') ?></p>
-        </div>
-    </div>
-    
-
     <div class="form-actions well">
         <button class="btn btn-small btn-primary" type="submit">Simpan</button>
     </div>

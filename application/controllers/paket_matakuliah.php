@@ -34,10 +34,7 @@ class Paket_matakuliah extends CI_Controller {
         $this->input->load_query($query_id);
         $query_array = array(
             'nama_angkatan'    => $this->input->get('nama_angkatan'),
-            'tahun_ajar'       => $this->input->get('tahun_ajar'),
             'nama_semester'    => $this->input->get('nama_semester'),
-            'nama_paket'       => $this->input->get('nama_paket'),
-            'nama_mata_kuliah' => $this->input->get('nama_mata_kuliah'),
             'active'         => 1
         );
 
@@ -74,8 +71,6 @@ class Paket_matakuliah extends CI_Controller {
         $query_array = array(
             'nama_angkatan'    => $this->input->post('nama_angkatan'),
             'nama_semester'    => $this->input->post('nama_semester'),
-            'nama_paket'       => $this->input->post('nama_paket'),
-            'nama_mata_kuliah' => $this->input->post('nama_mata_kuliah'),
             'active'         => 1
         );
         $query_id = $this->input->save_query($query_array);
@@ -134,17 +129,16 @@ class Paket_matakuliah extends CI_Controller {
                 'angkatan_id'        => $this->input->post('angkatan_id'),
                 'tahun_akademik_id'  => $this->input->post('tahun_akademik_id'),
                 'semester_id'        => $this->input->post('semester_id'),
-                'nama_paket'         => $this->input->post('nama_paket'),
-                'mata_kuliah_id'     => $this->input->post('mata_kuliah_id'),
-                'keterangan'         => $this->input->post('keterangan'),
+                'program_studi_id'   => $this->input->post('program_studi_id'),
+                'plot_mata_kuliah_id'=> $this->input->post('plot_mata_kuliah_id'),
                 'created_on'         => date($this->config->item('log_date_format')),
                 'created_by'         => logged_info()->on
             );
-            /*
+            
               echo '<pre>';
               var_dump($data_in);
               echo '</pre>';
-             */
+             
             $created_id = $this->crud->create($data_in);
             redirect('transaction/paket_matakuliah/' . $created_id . '/info');
         }
@@ -163,11 +157,19 @@ class Paket_matakuliah extends CI_Controller {
         
         $this->crud->use_table('m_semester');
         $data['semester_options'] = $this->crud->retrieve()->result();
-
+        
         $this->crud->use_table('m_mata_kuliah');
         $data['mata_kuliah_options'] = $this->crud->retrieve()->result();
         
+        $this->crud->use_table('m_program_studi');
+        $data['program_studi_options'] = $this->crud->retrieve()->result();
+        
+        $this->crud->use_table('t_plot_mata_kuliah');
+        $data['plot_mata_kuliah_options'] = $this->crud->retrieve()->result();
 
+        $this->crud->use_table('m_kelompok_matakuliah');
+        $data['kelompok_matakuliah_options'] = $this->crud->retrieve()->result();
+        
         $this->load->model('paket_matakuliah_model', 'paket_matakuliah');
         $data = array_merge($data, $this->paket_matakuliah->set_default()); //merge dengan arr data dengan default
         
@@ -201,11 +203,12 @@ class Paket_matakuliah extends CI_Controller {
                 'angkatan_id'        => $this->input->post('angkatan_id'),
                 'tahun_akademik_id'  => $this->input->post('tahun_akademik_id'),
                 'semester_id'        => $this->input->post('semester_id'),
-                'nama_paket'         => $this->input->post('nama_paket'),
-                'mata_kuliah_id'     => $this->input->post('mata_kuliah_id'),
+                'program_studi_id'   => $this->input->post('nama_paket'),
+                'plot_mata_kuliah_id'=> $this->input->post('plot_mata_kuliah_id'),
+                'kelompok_mata_kuliah_id'=> $this->input->post('kelompok_mata_kuliah_id'),
                 'keterangan'         => $this->input->post('keterangan'),
-                'modified_on'     => date($this->config->item('log_date_format')),
-                'modified_by'     => logged_info()->on
+                'modified_on'        => date($this->config->item('log_date_format')),
+                'modified_by'        => logged_info()->on
             );
             
             $this->crud->update($criteria, $data_in);
@@ -228,9 +231,18 @@ class Paket_matakuliah extends CI_Controller {
         
         $this->crud->use_table('m_semester');
         $data['semester_options'] = $this->crud->retrieve()->result();
-
+        
         $this->crud->use_table('m_mata_kuliah');
         $data['mata_kuliah_options'] = $this->crud->retrieve()->result();
+        
+        $this->crud->use_table('m_program_studi');
+        $data['program_studi_options'] = $this->crud->retrieve()->result();
+        
+        $this->crud->use_table('t_plot_mata_kuliah');
+        $data['plot_mata_kuliah_options'] = $this->crud->retrieve()->result();
+
+        $this->crud->use_table('m_kelompok_matakuliah');
+        $data['kelompok_matakuliah_options'] = $this->crud->retrieve()->result();
         
         $this->load->model('paket_matakuliah_model', 'paket_matakuliah');
         $data = array_merge($data, $this->paket_matakuliah->set_default()); //merge dengan arr data dengan default

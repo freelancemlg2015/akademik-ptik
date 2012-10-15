@@ -22,8 +22,8 @@ $control_label = array(
                 <td><?= $nama_semester ?></td>
             </tr>
             <tr>
-                <th class="span2">Paket</th>
-                <td><?= $nama_paket ?></td>
+                <th class="span2">Program Studi</th>
+                <td><?= $nama_program_studi ?></td>
             </tr>
             <tr>
             <tr>
