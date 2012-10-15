@@ -155,7 +155,7 @@ foreach ($status_matakuliah_options as $row) {
     <div class="control-group">
         <?= form_label('Angkatan', 'angkatan_id', $control_label); ?>
         <div class="controls">
-            <?= form_dropdown('angkatan_id', $angkatan_data, set_value('angkatan_id', $angkatan_id), 'id="angkatan_id" class="input-mini" prevData-selected="' . set_value('angkatan_id', $angkatan_id) . '"'); ?>
+            <?= form_dropdown('angkatan_id', $angkatan_data, set_value('angkatan_id', $angkatan_id), 'id="angkatan_id" class="input-medium" prevData-selected="' . set_value('angkatan_id', $angkatan_id) . '"'); ?>
             <p class="help-block"><?php echo form_error('angkatan_id') ?></p>
         </div>
     </div>

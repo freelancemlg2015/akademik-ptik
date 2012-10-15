@@ -138,6 +138,7 @@ class Dosen extends CI_Controller {
                 'angkatan_id' => $this->input->post('angkatan_id'),
                 'program_studi_id' => $this->input->post('program_studi_id'),
                 'jenjang_studi_id' => $this->input->post('jenjang_studi_id'),
+                'pangkat_id' => $this->input->post('pangkat_id'),   
                 'no_karpeg_dosen' => $this->input->post('no_karpeg_dosen'),
                 'no_dosen_fakultas' => $this->input->post('no_dosen_fakultas'),
                 'no_dosen_dikti' => $this->input->post('no_dosen_dikti'),
@@ -221,9 +222,12 @@ class Dosen extends CI_Controller {
 
         $this->crud->use_table('m_surat_ijin_mengajar');
         $data['surat_ijin_mengajar_options'] = $this->crud->retrieve()->result();
-
+            
         $this->crud->use_table('m_golongan');
         $data['golongan_options'] = $this->crud->retrieve()->result();
+            
+        $this->crud->use_table('m_pangkat');
+        $data['pangkat_options'] = $this->crud->retrieve()->result();
 
         $this->load->model('dosen_model', 'dosen');
         $data = array_merge($data, $this->dosen->set_default()); //merge dengan arr data dengan default
@@ -253,6 +257,7 @@ class Dosen extends CI_Controller {
                     'angkatan_id' => $this->input->post('angkatan_id'),
                     'program_studi_id' => $this->input->post('program_studi_id'),
                     'jenjang_studi_id' => $this->input->post('jenjang_studi_id'),
+                    'pangkat_id' => $this->input->post('pangkat_id'),
                     'no_karpeg_dosen' => $this->input->post('no_karpeg_dosen'),
                     'no_dosen_fakultas' => $this->input->post('no_dosen_fakultas'),
                     'no_dosen_dikti' => $this->input->post('no_dosen_dikti'),
@@ -294,6 +299,7 @@ class Dosen extends CI_Controller {
                     'angkatan_id' => $this->input->post('angkatan_id'),
                     'program_studi_id' => $this->input->post('program_studi_id'),
                     'jenjang_studi_id' => $this->input->post('jenjang_studi_id'),
+                    'pangkat_id' => $this->input->post('pangkat_id'),
                     'no_karpeg_dosen' => $this->input->post('no_karpeg_dosen'),
                     'no_dosen_fakultas' => $this->input->post('no_dosen_fakultas'),
                     'no_dosen_dikti' => $this->input->post('no_dosen_dikti'),
@@ -384,6 +390,9 @@ class Dosen extends CI_Controller {
 
         $this->crud->use_table('m_golongan');
         $data['golongan_options'] = $this->crud->retrieve()->result();
+        
+        $this->crud->use_table('m_pangkat');
+        $data['pangkat_options'] = $this->crud->retrieve()->result();
 
         $this->load->model('dosen_model', 'dosen');
         $data = array_merge($data, $this->dosen->set_default()); //merge dengan arr data dengan default

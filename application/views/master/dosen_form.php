@@ -152,6 +152,18 @@ foreach ($angkatan_options as $row) {
     $angkatan_data[$row->id] = $row->nama_angkatan;
 }
 
+$nama_pangkat_attr = array(
+    'name' => 'span_pangkat',
+    'class' => 'input-medium',
+    'value' => set_value('span_pangkat', ''),
+    'autocomplete' => 'off'
+);
+
+$pangkat_data[0] = '';
+foreach ($pangkat_options as $row) {
+    $pangkat_data[$row->id."-".$row->nama_pangkat] = $row->kode_pangkat;
+}
+
 $program_studi_data[0] = '';
 foreach ($program_studi_options as $row) {
     $program_studi_data[$row->id] = $row->nama_program_studi;
@@ -237,6 +249,22 @@ foreach ($golongan_options as $row) {
         <div class="controls">
             <?= form_dropdown('jenjang_studi_id', $jenjang_studi_data, set_value('jenjang_studi_id', $program_studi_id), 'id="jenjang_studi_id" class="input-medium" prevData-selected="' . set_value('jenjang_studi_id', $jenjang_studi_id) . '"'); ?>
             <p class="help-block"><?php echo form_error('jenjang_studi_id') ?></p>
+        </div>
+    </div>
+    
+    <div class="control-group">
+        <?= form_label('Pangkat', 'pangkat_id', $control_label); ?>
+        <div class="controls">
+            <?= form_dropdown('pangkat_id', $pangkat_data, set_value('pangkat_id', $pangkat_id), 'id="pangkat_id" class="input-medium" prevData-selected="' . set_value('pangkat_id', $pangkat_id) . '"'); ?>  
+            <p class="help-block"><?php echo form_error('pangkat_id') ?></p>
+        </div>
+    </div>
+    
+    <div class="control-group">
+        <?= form_label('Nama Pangkat', 'nama_pangkat', $control_label); ?>
+        <div class="controls">
+             <?=form_input($nama_pangkat_attr) ?>
+            <p class="help-block"><?php echo form_error('nama_pangkat') ?></p>
         </div>
     </div>
 

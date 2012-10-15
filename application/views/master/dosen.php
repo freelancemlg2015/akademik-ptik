@@ -41,8 +41,6 @@ $this->load->view('_shared/menus');
             <th>No Karpeg Dosen</th>
             <th>No Dosen Fakultas</th>
             <th>Nama Dosen</th>
-            <th>Gelar Depan</th>
-            <th>Gelar Belakang</th>
             <th>Tempat Lahir</th>
             <th>Tanggal Lahir</th>
         </tr>
@@ -50,12 +48,12 @@ $this->load->view('_shared/menus');
     <tbody>
         <?php
         foreach ($results->result() as $row) {
+            $nama = $row->gelar_depan.$row->nama_dosen.$row->gelar_belakang;
+            if(strrpos($nama,'. ')<1) $nama = $row->gelar_depan.'. '. $row->nama_dosen.'. '. $row->gelar_belakang;
             echo '<tr id="' . $row->id . '">
               <td>' . $row->no_karpeg_dosen . '</td>
               <td>' . $row->no_dosen_fakultas . '</td>
-              <td>' . $row->nama_dosen . '</td>
-              <td>' . $row->gelar_depan . '</td>
-              <td>' . $row->gelar_belakang . '</td>
+              <td>' . $nama . '</td>
               <td>' . $row->tempat_lahir . '</td>
               <td>' . $row->tgl_lahir . '</td>     
             </tr>

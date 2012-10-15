@@ -84,6 +84,36 @@ class Pangkat_model extends CI_Model {
         }
         return $data;
     }
+    
+    //AJAX Impl
+
+    function suggestion($terms = NULL) {
+        //return json
+        $this->db->select('m_pangkat.id,m_pangkat.kode_pangkat,m_pangkat.nama_pangkat');
+        $this->db->from('m_pangkat');
+
+        if (isset($terms['kode_pangkat']) && $terms['kode_pangkat'] != '') {
+            $this->db->like('m_pangkat.kode_pangkat', $terms['kode_pangkat']);
+        }
+
+        $this->db->limit(10);
+        $query = $this->db->get();
+
+        //echo $this->db->last_query();exit;
+        if (sizeof($query->result()) > 0) {
+            foreach ($query->result() as $row) {
+                $options_id[$row->id] = $row->id;
+                $options_kode_pangkat[$row->kode_pangkat] = $row->kode_pangkat;
+                $options_nama_pangkat[$row->kode_pangkat] = $row->nama_pangkat;
+            }
+            $options['id_options'] = $options_id;
+            $options['kode_pangkat_options'] = $options_kode_pangkat;
+            $options['nama_pangkat_options'] = $options_nama_pangkat;
+            echo json_encode($options);
+        } else {
+            return $query;
+        }
+    }
 
 }
 
