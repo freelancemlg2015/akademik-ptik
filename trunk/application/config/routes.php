@@ -453,6 +453,7 @@ $route['master/pangkat/(:any)/(:any)/(:any)'] = "pangkat/index/$1/$2/$3";
 $route['master/pangkat/create/(:any)'] = "pangkat/create/$1";
 $route['master/pangkat/create'] = "pangkat/create";
 $route['master/pangkat/search'] = "pangkat/search";
+$route['master/pangkat/suggestion'] = "pangkat/suggestion";
 //END
 
 //KESATUAN ASAL

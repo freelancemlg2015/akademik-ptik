@@ -21,6 +21,10 @@ $control_label = array(
                 <th class="span2">Jenjang Studi</th>
                 <td><?= $jenjang_studi ?></td>
             </tr>
+             <tr>
+                <th class="span2">Pangkat</th>
+                <td><?= $nama_pangkat ?></td>
+            </tr>
             <tr>
                 <th class="span2">No Karpeg Dosen</th>
                 <td><?= $no_karpeg_dosen ?></td>

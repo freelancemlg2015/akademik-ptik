@@ -200,6 +200,15 @@ class Pangkat extends CI_Controller {
             return true;
         }
     }
+    
+    function suggestion() {
+        $this->load->model('pangkat_model');
+        $kode_pangkat = $this->input->get('kode_pangkat');
+        $terms = array(
+            'kode_pangkat' => $kode_pangkat
+        );
+        $this->pangkat_model->suggestion($terms);
+    }
 
 }
 

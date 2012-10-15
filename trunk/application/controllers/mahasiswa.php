@@ -217,8 +217,12 @@ class Mahasiswa extends CI_Controller {
         $this->crud->use_table('m_anak');
         $data['anak_options'] = $this->crud->retrieve()->result();
         
+        $this->crud->use_table('m_pangkat');
+        $data['pangkat_options'] = $this->crud->retrieve()->result();
+        
         $this->load->model('mahasiswa_model', 'mahasiswa');
         $data = array_merge($data, $this->mahasiswa->set_default()); //merge dengan arr data dengan default
+        //$data['kode_pangkat'] = '';
         $this->load->view('master/mahasiswa_form', $data);
     }
 
