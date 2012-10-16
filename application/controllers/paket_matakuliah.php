@@ -130,7 +130,7 @@ class Paket_matakuliah extends CI_Controller {
                 'tahun_akademik_id'       => $this->input->post('tahun_akademik_id'),
                 'semester_id'             => $this->input->post('semester_id'),
                 'program_studi_id'        => $this->input->post('program_studi_id'),
-                'kelompok_mata_kuliah_id' => implode(",",$this->input->post('kelompok_mata_kuliah_id'),
+                'kelompok_mata_kuliah_id' => $this->input->post('kelompok_mata_kuliah_id'),
                 'plot_mata_kuliah_id'     => $this->input->post('plot_mata_kuliah_id'),
                 'created_on'              => date($this->config->item('log_date_format')),
                 'created_by'              => logged_info()->on
