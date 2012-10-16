@@ -614,7 +614,6 @@ $route['transaction/paket_matakuliah/(:any)/(:any)/(:any)'] = "paket_matakuliah/
 $route['transaction/paket_matakuliah/create/(:any)'] = "paket_matakuliah/create/$1";
 $route['transaction/paket_matakuliah/create'] = "paket_matakuliah/create";
 $route['transaction/paket_matakuliah/search'] = "paket_matakuliah/search";
-$route['transaction/paket_matakuliah/suggestion'] = "paket_matakuliah/suggestion";
 //END
 
 //KALENDER AKADEMIK

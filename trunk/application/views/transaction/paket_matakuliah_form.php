@@ -29,10 +29,10 @@ foreach ($semester_options as $row) {
     $semester_data[$row->id] = $row->nama_semester;
 }
 
-$mata_kuliah_data[0] = '';
-foreach ($mata_kuliah_options as $row) {
-    $mata_kuliah_data[$row->id] = $row->nama_mata_kuliah;
-}
+//$mata_kuliah_data[0] = '';
+//foreach ($mata_kuliah_options as $row) {
+//    $mata_kuliah_data[$row->id] = $row->nama_mata_kuliah;
+//}
 
 $program_studi_data[0] = '';
 foreach ($program_studi_options as $row) {
@@ -44,19 +44,6 @@ foreach ($plot_mata_kuliah_options as $row) {
     $plot_mata_kuliah_data[$row->id] = $row->mata_kuliah_id;
 }
 
-$kelompok_matakuliah_data[0] = '';
-foreach ($kelompok_matakuliah_options as $row) {
-    $kelompok_matakuliah_data[$row->id] = $row->nama_kelompok_mata_kuliah;
-}
-//
-//foreach ($kelompok_matakuliah_options as $row) {
-//    $row->nama_kelompok_mata_kuliah; 
-//    $checkboxattr = array(
-//          'name'  => 'nama_kelompok_mata_kuliah',
-//          'value' => 'nama_kelompok_mata_kuliah',
-//          'id'    => 'id'
-//    );  //'checkbox_'.
-//}
 ?>
 <div class="container-full" id="paket_matakuliah">
 <?= form_open($action_url, array('class' => 'form-horizontal')); ?>
@@ -92,16 +79,17 @@ foreach ($kelompok_matakuliah_options as $row) {
             <p class="help-block"><?php echo form_error('program_studi_id') ?></p>
         </div>
     </div>
-    
     <div class="right->column">
         <fieldset>
             <legend>Pilih Kelompok Mata Kuliah</legend>
                 <div class="controls">
+                    <?php
+                        foreach($kelompok_matakuliah_options as $row){    
+                    ?>
+                        <input <?php echo $kelompok_mata_kuliah_id == $row->id ? "checked":""?> type="checkbox" id="cek" name="kelompok_mata_kuliah_id[]" value="<?php echo $row->id; ?>">&nbsp;&nbsp;<?php echo $row->nama_kelompok_mata_kuliah; ?><br>
                     <?php 
-                        $i=1;
-                        foreach($kelompok_matakuliah_options as $value){?>
-                        <input type="checkbox" name="nama_kelompok_mata_kuliah<?php echo $i; ?>" value="<?php echo $value->nama_kelompok_mata_kuliah; ?>">&nbsp;&nbsp;<?php echo $value->nama_kelompok_mata_kuliah; ?><br>
-                    <?php $i++; } ?>
+                        } 
+                    ?>
                 </div>
         </fieldset>
     </div>

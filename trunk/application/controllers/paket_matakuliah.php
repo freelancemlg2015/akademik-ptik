@@ -35,7 +35,7 @@ class Paket_matakuliah extends CI_Controller {
         $query_array = array(
             'nama_angkatan'    => $this->input->get('nama_angkatan'),
             'nama_semester'    => $this->input->get('nama_semester'),
-            'active'         => 1
+            'active'           => 1
         );
 
         $this->load->model('paket_matakuliah_model', 'paket_matakuliah');
@@ -114,9 +114,9 @@ class Paket_matakuliah extends CI_Controller {
     }
 
     function create() {
-        $data['auth']        = $this->auth;
+        $data['auth'] = $this->auth;
         $data['action_type'] = __FUNCTION__;
-        $master_url          = 'transaction/paket_matakuliah/';
+        $transaction_url = 'transaction/paket_matakuliah/';
 
         $this->load->library(array('form_validation', 'table'));
         $this->load->helper(array('form', 'snippets'));
@@ -126,28 +126,28 @@ class Paket_matakuliah extends CI_Controller {
         } else {
             $this->crud->use_table('t_paket_mata_kuliah');
             $data_in = array(
-                'angkatan_id'        => $this->input->post('angkatan_id'),
-                'tahun_akademik_id'  => $this->input->post('tahun_akademik_id'),
-                'semester_id'        => $this->input->post('semester_id'),
-                'program_studi_id'   => $this->input->post('program_studi_id'),
-                'plot_mata_kuliah_id'=> $this->input->post('plot_mata_kuliah_id'),
-                'created_on'         => date($this->config->item('log_date_format')),
-                'created_by'         => logged_info()->on
-            );
+                'angkatan_id'             => $this->input->post('angkatan_id'),
+                'tahun_akademik_id'       => $this->input->post('tahun_akademik_id'),
+                'semester_id'             => $this->input->post('semester_id'),
+                'program_studi_id'        => $this->input->post('program_studi_id'),
+                'kelompok_mata_kuliah_id' => implode(",",$this->input->post('kelompok_mata_kuliah_id'),
+                'plot_mata_kuliah_id'     => $this->input->post('plot_mata_kuliah_id'),
+                'created_on'              => date($this->config->item('log_date_format')),
+                'created_by'              => logged_info()->on
+            ); 
             
-              echo '<pre>';
-              var_dump($data_in);
-              echo '</pre>';
+//              echo '<pre>';
+//              var_dump($data_in);
+//              echo '</pre>';
              
             $created_id = $this->crud->create($data_in);
             redirect('transaction/paket_matakuliah/' . $created_id . '/info');
         }
-        $data['action_url'] = $master_url . __FUNCTION__;
-        $data['page_title'] = 'Create Paket Matakuliah';
-        $data['tools']      = array(
+        $data['action_url'] = $transaction_url . __FUNCTION__;
+        $data['page_title'] = 'Create Paket Mata Kuliah';
+        $data['tools'] = array(
             'transaction/paket_matakuliah' => 'Back'
         );
-        
         
         $this->crud->use_table('m_angkatan');
         $data['angkatan_options'] = $this->crud->retrieve()->result();
@@ -158,17 +158,14 @@ class Paket_matakuliah extends CI_Controller {
         $this->crud->use_table('m_semester');
         $data['semester_options'] = $this->crud->retrieve()->result();
         
-        $this->crud->use_table('m_mata_kuliah');
-        $data['mata_kuliah_options'] = $this->crud->retrieve()->result();
-        
         $this->crud->use_table('m_program_studi');
         $data['program_studi_options'] = $this->crud->retrieve()->result();
         
-        $this->crud->use_table('t_plot_mata_kuliah');
-        $data['plot_mata_kuliah_options'] = $this->crud->retrieve()->result();
-
         $this->crud->use_table('m_kelompok_matakuliah');
         $data['kelompok_matakuliah_options'] = $this->crud->retrieve()->result();
+        
+        $this->crud->use_table('t_plot_mata_kuliah');
+        $data['plot_mata_kuliah_options'] = $this->crud->retrieve()->result();
         
         $this->load->model('paket_matakuliah_model', 'paket_matakuliah');
         $data = array_merge($data, $this->paket_matakuliah->set_default()); //merge dengan arr data dengan default
@@ -200,16 +197,20 @@ class Paket_matakuliah extends CI_Controller {
                 'id' => $id
             );
             $data_in = array(
-                'angkatan_id'        => $this->input->post('angkatan_id'),
-                'tahun_akademik_id'  => $this->input->post('tahun_akademik_id'),
-                'semester_id'        => $this->input->post('semester_id'),
-                'program_studi_id'   => $this->input->post('nama_paket'),
-                'plot_mata_kuliah_id'=> $this->input->post('plot_mata_kuliah_id'),
-                'kelompok_mata_kuliah_id'=> $this->input->post('kelompok_mata_kuliah_id'),
-                'keterangan'         => $this->input->post('keterangan'),
-                'modified_on'        => date($this->config->item('log_date_format')),
-                'modified_by'        => logged_info()->on
+                'angkatan_id'             => $this->input->post('angkatan_id'),
+                'tahun_akademik_id'       => $this->input->post('tahun_akademik_id'),
+                'semester_id'             => $this->input->post('semester_id'),
+                'program_studi_id'        => $this->input->post('program_studi_id'),
+                'kelompok_mata_kuliah_id' => $this->input->post('kelompok_mata_kuliah_id'),
+                'plot_mata_kuliah_id'     => $this->input->post('plot_mata_kuliah_id'),
+                'keterangan'              => $this->input->post('keterangan'),
+                'modified_on'             => date($this->config->item('log_date_format')),
+                'modified_by'             => logged_info()->on
             );
+            
+//              echo '<pre>';
+//              var_dump($data_in);
+//              echo '</pre>';
             
             $this->crud->update($criteria, $data_in);
             redirect('transaction/paket_matakuliah/' . $id . '/info');
@@ -232,33 +233,19 @@ class Paket_matakuliah extends CI_Controller {
         $this->crud->use_table('m_semester');
         $data['semester_options'] = $this->crud->retrieve()->result();
         
-        $this->crud->use_table('m_mata_kuliah');
-        $data['mata_kuliah_options'] = $this->crud->retrieve()->result();
-        
         $this->crud->use_table('m_program_studi');
         $data['program_studi_options'] = $this->crud->retrieve()->result();
         
-        $this->crud->use_table('t_plot_mata_kuliah');
-        $data['plot_mata_kuliah_options'] = $this->crud->retrieve()->result();
-
         $this->crud->use_table('m_kelompok_matakuliah');
         $data['kelompok_matakuliah_options'] = $this->crud->retrieve()->result();
+        
+        $this->crud->use_table('t_plot_mata_kuliah');
+        $data['plot_mata_kuliah_options'] = $this->crud->retrieve()->result();
         
         $this->load->model('paket_matakuliah_model', 'paket_matakuliah');
         $data = array_merge($data, $this->paket_matakuliah->set_default()); //merge dengan arr data dengan default
         $data = array_merge($data, (array) $paket_matakuliah_data);
         $this->load->view('transaction/paket_matakuliah_form', $data);
-    }
-
-    function unique_nama_paket($nama_paket) {
-        $this->crud->use_table('t_paket_mata_kuliah');
-        $paket_matakuliah = $this->crud->retrieve(array('nama_paket' => $nama_paket))->row();
-        if (sizeof($paket_matakuliah) > 0) {
-            $this->form_validation->set_message(__FUNCTION__, 'Nama Paket sudah terdaftar'); //pakai function karena ini harus sama dengan nama function nya
-            return FALSE;
-        } else {
-            return true;
-        }
     }
 }
 
