@@ -184,3 +184,18 @@ text-align:center;
 	-webkit-border-radius: 4px;
 	border:1px dashed #cccccc;
 }
+
+.pg-normal 
+{
+    color: black;
+    font-weight: normal;
+    text-decoration: none;    
+    cursor: pointer;    
+}
+.pg-selected 
+{
+    color: black;
+    font-weight: bold;        
+    text-decoration: underline;
+    cursor: pointer;
+}

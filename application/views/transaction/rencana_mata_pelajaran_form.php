@@ -80,6 +80,9 @@ foreach ($plot_mata_kuliah_options as $row) {
         </div>
     </div>
     
+    <div class="pagination pagination-centered">
+        <div id="pageNavPosition"></div> 
+    </div>
     <table class="table table-bordered table-striped container-full"  id="rencana_mata_pelajaran" controller="transaction">
         <thead>
             <tr>
@@ -91,7 +94,7 @@ foreach ($plot_mata_kuliah_options as $row) {
                 </th>
             </tr>
         </thead>
-        <tbody>
+        <tbody id="rencana">
             <?php
                 $no = 1;
                 foreach ($mahasiswa_options as $row) {
@@ -119,3 +122,10 @@ foreach ($plot_mata_kuliah_options as $row) {
 <?php form_close() ?>
 </div>
     <?php $this->load->view('_shared/footer'); ?>
+
+<script type="text/javascript">
+    var pager = new Pager('rencana', 9); 
+    pager.init(); 
+    pager.showPageNav('pager', 'pageNavPosition'); 
+    pager.showPage(1);
+</script>

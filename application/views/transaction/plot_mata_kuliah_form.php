@@ -134,7 +134,11 @@ foreach ($kelompok_matakuliah_options as $row) {
         </div>
     </div>-->
 
-    <table class="table table-bordered table-striped container-full"  id="plot_mata_kuliah" controller="transaction">
+    <div class="pagination pagination-centered">
+        <div id="pageNavPosition"></div> 
+    </div>
+
+    <table class="table table-bordered table-striped container-full"  id="plot_maata_kuliah" controller="transaction">
         <thead>
             <tr>
                 <th width="20">No</th>
@@ -145,7 +149,7 @@ foreach ($kelompok_matakuliah_options as $row) {
                 </th>
             </tr>
         </thead>
-        <tbody>
+        <tbody id="plot">
             <?php
                 $no = 1;
                 foreach ($mata_kuliah_options as $row) {
@@ -173,3 +177,10 @@ foreach ($kelompok_matakuliah_options as $row) {
 <?php form_close() ?>
 </div>
     <?php $this->load->view('_shared/footer'); ?>
+
+<script type="text/javascript">
+    var pager = new Pager('plot', 10); 
+    pager.init(); 
+    pager.showPageNav('pager', 'pageNavPosition'); 
+    pager.showPage(1);
+</script>
