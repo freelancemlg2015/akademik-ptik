@@ -86,7 +86,7 @@ foreach ($plot_mata_kuliah_options as $row) {
                     <?php
                         foreach($kelompok_matakuliah_options as $row){    
                     ?>
-                        <input <?php echo $kelompok_mata_kuliah_id == $row->id ? "checked":""?> type="checkbox" id="cek" name="kelompok_mata_kuliah_id" value="<?php echo $row->id; ?>">&nbsp;&nbsp;<?php echo $row->nama_kelompok_mata_kuliah; ?><br>
+                        <input type="checkbox" id="cek" name="kelompok_mata_kuliah_id[]" value="<?php echo $row->id ?>">&nbsp;&nbsp;<?php echo $row->nama_kelompok_mata_kuliah; ?><br> 
                     <?php 
                         } 
                     ?>

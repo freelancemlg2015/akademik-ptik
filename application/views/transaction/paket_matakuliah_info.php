@@ -35,10 +35,6 @@ $control_label = array(
                 <th class="span2">Program Studi</th>
                 <td><?= $nama_program_studi ?></td>
             </tr>
-            <tr>
-                <th class="span2">Kelompok Matakuliah</th>
-                <td><?= $nama_kelompok_mata_kuliah ?></td>
-            </tr>
         </tbody>
     </table>
 </div>

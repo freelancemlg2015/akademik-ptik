@@ -42,7 +42,8 @@ $this->load->view('_shared/menus');
             <th>Tahun Akademik</th>
             <th>Semester</th>
             <th>Program Studi</th>
-            <th>Kelompok Matakuliah</th>
+            <th>Mata Kuliah</th>
+            <th>Mahasiswa</th>
         </tr>
     </thead>
     <tbody>
@@ -58,8 +59,9 @@ $this->load->view('_shared/menus');
               <td>' . $row->nama_angkatan . '</td>
               <td>' . $tahun . '</td>    
               <td>' . $row->nama_semester . '</td>    
-              <td>' . $row->nama_program_studi . '</td>    
-              <td>' . $row->nama_kelompok_mata_kuliah . '</td>    
+              <td>' . $row->nama_program_studi . '</td>      
+              <td>' . $row->nama_mata_kuliah . '</td>      
+              <td>' . $row->nama . '</td>      
             </tr>
           ';
         }

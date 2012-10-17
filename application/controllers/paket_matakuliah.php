@@ -130,7 +130,7 @@ class Paket_matakuliah extends CI_Controller {
                 'tahun_akademik_id'       => $this->input->post('tahun_akademik_id'),
                 'semester_id'             => $this->input->post('semester_id'),
                 'program_studi_id'        => $this->input->post('program_studi_id'),
-                'kelompok_mata_kuliah_id' => $this->input->post('kelompok_mata_kuliah_id'),
+                //'kelompok_mata_kuliah_id' => implode(",".$this->input->post('kelompok_mata_kuliah_id')),
                 'plot_mata_kuliah_id'     => $this->input->post('plot_mata_kuliah_id'),
                 'created_on'              => date($this->config->item('log_date_format')),
                 'created_by'              => logged_info()->on
@@ -141,6 +141,18 @@ class Paket_matakuliah extends CI_Controller {
 //              echo '</pre>';
              
             $created_id = $this->crud->create($data_in);
+            $kelompok = $this->input->post('kelompok_mata_kuliah_id');
+            if($created_id && is_array($kelompok)){
+                $this->crud->use_table('t_paket_mata_kuliah_detil');
+                for($i=0; $i< count($kelompok); $i++){
+                    
+                    $data_in = array(
+                        'paket_mata_kuliah_id' => $created_id,
+                        'kelompok_mata_kuliah_id' => $kelompok[$i]
+                    );
+                     $this->crud->create($data_in);
+                }
+            }
             redirect('transaction/paket_matakuliah/' . $created_id . '/info');
         }
         $data['action_url'] = $transaction_url . __FUNCTION__;
@@ -166,6 +178,9 @@ class Paket_matakuliah extends CI_Controller {
         
         $this->crud->use_table('t_plot_mata_kuliah');
         $data['plot_mata_kuliah_options'] = $this->crud->retrieve()->result();
+
+        $this->crud->use_table('t_paket_mata_kuliah_detil');
+        $data['paket_mata_kuliah_detil_options'] = $this->crud->retrieve()->result();
         
         $this->load->model('paket_matakuliah_model', 'paket_matakuliah');
         $data = array_merge($data, $this->paket_matakuliah->set_default()); //merge dengan arr data dengan default

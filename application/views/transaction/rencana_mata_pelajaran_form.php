@@ -79,20 +79,39 @@ foreach ($plot_mata_kuliah_options as $row) {
             <p class="help-block"><?php echo form_error('program_studi_id') ?></p>
         </div>
     </div>
-    <div class="right->column">
-        <fieldset>
-            <legend>Pilih Kelompok Mata Kuliah</legend>
-                <div class="controls">
-                    <?php
-                        foreach($kelompok_matakuliah_options as $row){    
-                    ?>
-                        <input <?php echo $kelompok_mata_kuliah_id == $row->id ? "checked":""?> type="checkbox" id="cek" name="kelompok_mata_kuliah_id" value="<?php echo $row->id; ?>">&nbsp;&nbsp;<?php echo $row->nama_kelompok_mata_kuliah; ?><br>
-                    <?php 
-                        } 
-                    ?>
-                </div>
-        </fieldset>
-    </div>
+    
+    <table class="table table-bordered table-striped container-full"  id="rencana_mata_pelajaran" controller="transaction">
+        <thead>
+            <tr>
+                <th width="20">No</th>
+                <th>Nim</th>
+                <th>Nama</th>
+                <th width="30" style="text-align: center;"> 
+                    <input type="checkbox" id="1" class="ck" style="cursor: pointer" onclick="cek_all('.ck')">
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php
+                $no = 1;
+                foreach ($mahasiswa_options as $row) {
+                echo '<tr id="' . $row->id . '">
+                        <td style="text-align: center">' . $no . '</td>    
+                        <td>' . $row->nim . '</td>    
+                        <td>' . $row->nama . '</td>';
+            ?>
+                        <td style="text-align: center">
+                            <input type="checkbox" name="mata_kuliah_id" id="cek" value="<?php echo $row->id ?>" >   
+                        </td>
+            <?php    
+                 echo'</tr>
+                ';
+                $no++;                    
+                }
+                
+            ?>
+        </tbody>
+    </table>
     
     <div class="form-actions well">
         <button class="btn btn-small btn-primary" type="submit">Simpan</button>

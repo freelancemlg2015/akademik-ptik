@@ -126,14 +126,15 @@ class Rencana_mata_pelajaran extends CI_Controller {
         } else {
             $this->crud->use_table('t_rencana_mata_pelajaran_pokok');
             $data_in = array(
-                'angkatan_id'             => $this->input->post('angkatan_id'),
-                'tahun_akademik_id'       => $this->input->post('tahun_akademik_id'),
-                'semester_id'             => $this->input->post('semester_id'),
-                'program_studi_id'        => $this->input->post('program_studi_id'),
-                'kelompok_mata_kuliah_id' => $this->input->post('kelompok_mata_kuliah_id'),
-                'plot_mata_kuliah_id'     => $this->input->post('plot_mata_kuliah_id'),
-                'created_on'              => date($this->config->item('log_date_format')),
-                'created_by'              => logged_info()->on
+                'angkatan_id'        => $this->input->post('angkatan_id'),
+                'tahun_akademik_id'  => $this->input->post('tahun_akademik_id'),
+                'semester_id'        => $this->input->post('semester_id'),
+                'program_studi_id'   => $this->input->post('program_studi_id'),
+                'mahasiswa_id'       => $this->input->post('mahasiswa_id'),
+                'mata_kuliah_id'     => $this->input->post('mata_kuliah_id'),
+                'keterangan'         => $this->input->post('keterangan'),
+                'created_on'         => date($this->config->item('log_date_format')),
+                'created_by'         => logged_info()->on
             ); 
             
 //              echo '<pre>';
@@ -167,6 +168,12 @@ class Rencana_mata_pelajaran extends CI_Controller {
         $this->crud->use_table('t_plot_mata_kuliah');
         $data['plot_mata_kuliah_options'] = $this->crud->retrieve()->result();
         
+        $this->crud->use_table('m_mahasiswa');
+        $data['mahasiswa_options'] = $this->crud->retrieve()->result();
+        
+        $this->crud->use_table('m_mata_kuliah');
+        $data['mata_kuliah_options'] = $this->crud->retrieve()->result();
+        
         $this->load->model('rencana_mata_pelajaran_model', 'rencana_mata_pelajaran');
         $data = array_merge($data, $this->rencana_mata_pelajaran->set_default()); //merge dengan arr data dengan default
         
@@ -197,15 +204,15 @@ class Rencana_mata_pelajaran extends CI_Controller {
                 'id' => $id
             );
             $data_in = array(
-                'angkatan_id'             => $this->input->post('angkatan_id'),
-                'tahun_akademik_id'       => $this->input->post('tahun_akademik_id'),
-                'semester_id'             => $this->input->post('semester_id'),
-                'program_studi_id'        => $this->input->post('program_studi_id'),
-                'kelompok_mata_kuliah_id' => $this->input->post('kelompok_mata_kuliah_id'),
-                'plot_mata_kuliah_id'     => $this->input->post('plot_mata_kuliah_id'),
-                'keterangan'              => $this->input->post('keterangan'),
-                'modified_on'             => date($this->config->item('log_date_format')),
-                'modified_by'             => logged_info()->on
+                'angkatan_id'        => $this->input->post('angkatan_id'),
+                'tahun_akademik_id'  => $this->input->post('tahun_akademik_id'),
+                'semester_id'        => $this->input->post('semester_id'),
+                'program_studi_id'   => $this->input->post('program_studi_id'),
+                'mahasiswa_id'       => $this->input->post('mahasiswa_id'),
+                'mata_kuliah_id'     => $this->input->post('mata_kuliah_id'),
+                'keterangan'         => $this->input->post('keterangan'),
+                'modified_on'        => date($this->config->item('log_date_format')),
+                'modified_by'        => logged_info()->on
             );
             
 //              echo '<pre>';
@@ -241,6 +248,12 @@ class Rencana_mata_pelajaran extends CI_Controller {
         
         $this->crud->use_table('t_plot_mata_kuliah');
         $data['plot_mata_kuliah_options'] = $this->crud->retrieve()->result();
+        
+        $this->crud->use_table('m_mahasiswa');
+        $data['mahasiswa_options'] = $this->crud->retrieve()->result();
+        
+        $this->crud->use_table('m_mata_kuliah');
+        $data['mata_kuliah_options'] = $this->crud->retrieve()->result();
         
         $this->load->model('rencana_mata_pelajaran_model', 'rencana_mata_pelajaran');
         $data = array_merge($data, $this->rencana_mata_pelajaran->set_default()); //merge dengan arr data dengan default

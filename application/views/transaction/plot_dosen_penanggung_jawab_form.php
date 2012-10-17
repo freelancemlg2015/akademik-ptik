@@ -86,6 +86,23 @@ foreach ($dosen_options as $row) {
     $dosen_data[$row->id] = $row->nama_dosen;
 }
 
+$kelompok_matakuliah_data[0] = '';
+foreach ($kelompok_matakuliah_options as $row) {
+    $kelompok_matakuliah_data[$row->id] = $row->nama_kelompok_mata_kuliah;
+}
+
+$plot_mata_kuliah_data[0] = '';
+foreach ($plot_mata_kuliah_options as $row) {
+    $plot_mata_kuliah_data[$row->id."-".$row->mata_kuliah_id] = $row->kelompok_mata_kuliah_id;
+}
+
+$plot_attr = array(
+    'name' => 'span_pangkat',
+    'class' => 'input-medium',
+    'value' => set_value('span_pangkat', ''),
+    'autocomplete' => 'off'
+);
+
 ?>
 <div class="container-full" id="plot_dosen_penanggung_jawab">
 <?= form_open($action_url, array('class' => 'form-horizontal')); ?>
@@ -114,13 +131,13 @@ foreach ($dosen_options as $row) {
     </div>
         
     <div class="control-group">
-        <?= form_label('Konsentrasi Studi' , 'semester_id', $control_label); ?>
+        <?= form_label('Konsentrasi Studi' , '', $control_label); ?>
         <div class="controls">
-            <?= form_dropdown('semester_id', $semester_data, set_value('semester_id', $semester_id), 'id="semester_id" class="input-medium" prevData-selected="' . set_value('semester_id', $semester_id) . '"'); ?>
-            <p class="help-block"><?php echo form_error('semester_id') ?></p>
+            <?= form_dropdown('plot_mata_kuliah_id', $kelompok_matakuliah_data, set_value('plot_mata_kuliah_id', $plot_mata_kuliah_id), 'id="plot_mata_kuliah_id" class="input-medium" prevData-selected="' . set_value('plot_mata_kuliah_id', $plot_mata_kuliah_id) . '"'); ?>
+            <p class="help-block"><?php echo form_error('plot_mata_kuliah_id') ?></p>
         </div>
     </div>
-
+        
     <div class="control-group">
         <?= form_label('Mata Kuliah' , 'mata_kuliah_id', $control_label); ?>
         <div class="controls">

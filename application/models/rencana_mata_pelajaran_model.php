@@ -8,12 +8,14 @@ class Rencana_mata_pelajaran_model extends CI_Model {
 
     function s_rencana_mata_pelajaran() {
         return $this->db->select('t_rencana_mata_pelajaran_pokok.*,m_angkatan.nama_angkatan,m_tahun_akademik.tahun_ajar_mulai,m_tahun_akademik.tahun_ajar_akhir,
-                                                        m_semester.nama_semester,m_program_studi.nama_program_studi')
+                                                        m_semester.nama_semester,m_program_studi.nama_program_studi,m_mahasiswa.nama,m_mata_kuliah.nama_mata_kuliah')
                         ->from('t_rencana_mata_pelajaran_pokok')
                         ->join('m_angkatan', 'm_angkatan.id   = t_rencana_mata_pelajaran_pokok.angkatan_id', 'left')
                         ->join('m_tahun_akademik', 'm_tahun_akademik.id = t_rencana_mata_pelajaran_pokok.tahun_akademik_id', 'left')
                         ->join('m_semester', 'm_semester.id = t_rencana_mata_pelajaran_pokok.semester_id', 'left')
-                        ->join('m_program_studi', 'm_program_studi.id = t_rencana_mata_pelajaran_pokok.program_studi_id', 'left');
+                        ->join('m_program_studi', 'm_program_studi.id = t_rencana_mata_pelajaran_pokok.program_studi_id', 'left')
+                        ->join('m_mahasiswa', 'm_mahasiswa.id = t_rencana_mata_pelajaran_pokok.mahasiswa_id', 'left')
+                        ->join('m_mata_kuliah', 'm_mata_kuliah.id = t_rencana_mata_pelajaran_pokok.mata_kuliah_id', 'left');
     }
 
     function get_many($data_type = NULL, $term = array(), $limit = NULL, $offset = NULL) {

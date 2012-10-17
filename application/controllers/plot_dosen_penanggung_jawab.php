@@ -136,6 +136,8 @@ class Plot_dosen_penanggung_jawab extends CI_Controller {
                 'created_on'        => date($this->config->item('log_date_format')),
                 'created_by'        => logged_info()->on
             );
+            
+            var_dump($data_in);exit();
             /*        
               echo '<pre>';
               var_dump($data_in);
@@ -165,8 +167,8 @@ class Plot_dosen_penanggung_jawab extends CI_Controller {
         $this->crud->use_table('t_plot_mata_kuliah');
         $data['plot_mata_kuliah_options'] = $this->crud->retrieve()->result();
 
-        $this->crud->use_table('m_kelompok_mata_kuliah');
-        $data['kelompok_mata_kuliah_options'] = $this->crud->retrieve()->result();
+        $this->crud->use_table('m_kelompok_matakuliah');
+        $data['kelompok_matakuliah_options'] = $this->crud->retrieve()->result();
 
         $this->crud->use_table('m_dosen');
         $data['dosen_options'] = $this->crud->retrieve()->result();
