@@ -1236,13 +1236,13 @@ $config = array(
 	 
 	 
     /* PLOT DOSEN AJAR*/
-    ), 'plot_dosen_ajar_create' => array(
+    ), 'plot_dosen_penanggung_jawab_create' => array(
 //        array(
 //            'field' => 'keterangan',
 //            'label' => 'keterangan',
 //            'rules' => 'trim|required'
 //        )
-    ), 'plot_dosen_ajar_update' => array(
+    ), 'plot_dosen_penanggung_jawab_update' => array(
 //        array(
 //            'field' => 'keterangan',
 //            'label' => 'keterangan',

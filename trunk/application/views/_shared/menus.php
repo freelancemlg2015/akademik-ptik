@@ -150,11 +150,13 @@ $icon_color = 'icon-grey';
             <div class="subnav subnav-fixed">
                 <ul class="nav nav-pills">
 
-                    <li class="dropdown <?= ($secondary_nav == 'pake_matakuliah' || $secondary_nav == 'plot_mata_kuliah' || $secondary_nav == 'plot_semester' || $secondary_nav == 'kalender_akademik') ? 'active' : ''; ?>">
+                    <li class="dropdown <?= ($secondary_nav == 'pake_matakuliah' || $secondary_nav == 'plot_mata_kuliah' || $secondary_nav == 'plot_dosen_penanggung_jawab' || $secondary_nav == 'rencana_mata_pelajaran' || $secondary_nav == 'plot_semester' || $secondary_nav == 'kalender_akademik') ? 'active' : ''; ?>">
                         <a href="#" data-toggle="dropdown" class="dropdown-toggle">Kurikulum<b class="caret"></b></a>
                         <ul class="dropdown-menu">    
                             <li class="<?= isActive($secondary_nav, 'plot_mata_kuliah'); ?>"><?= anchor('transaction/plot_mata_kuliah', 'Plot Mata kuliah'); ?></li>                  
                             <li class="<?= isActive($secondary_nav, 'paket_matakuliah'); ?>"><?= anchor('transaction/paket_matakuliah', 'Paket Matakuliah'); ?></li>
+                            <li class="<?= isActive($secondary_nav, 'plot_dosen_penanggung_jawab'); ?>"><?= anchor('transaction/plot_dosen_penanggung_jawab', 'Plot Dosen Penanggung Jawab'); ?></li>  
+                            <li class="<?= isActive($secondary_nav, 'rencana_mata_pelajaran'); ?>"><?= anchor('transaction/rencana_mata_pelajaran', 'Rencana Mata Pelajaran'); ?></li>  
                             <li class="<?= isActive($secondary_nav, 'plot_semester'); ?>"><?= anchor('transaction/plot_semester', 'Plot Semester'); ?></li>                  
 
                             <li class="<?= isActive($secondary_nav, 'kalender_akademik'); ?>"><?= anchor('transaction/kalender_akademik', 'Kalender Akademik'); ?></li>
@@ -162,11 +164,10 @@ $icon_color = 'icon-grey';
                         </ul>
                     </li>
 
-                    <li class="dropdown <?= ($secondary_nav == 'jadwal_kuliah' || $secondary_nav == 'jadwal_ujian' ||$secondary_nav == 'ujian_skripsi' || $secondary_nav == 'plot_kelas' || $secondary_nav == 'plot_dosen_ajar' || $secondary_nav == 'absensi_mahasiswa' || $secondary_nav == 'absensi_dosen') ? 'active' : ''; ?>">
+                    <li class="dropdown <?= ($secondary_nav == 'jadwal_kuliah' || $secondary_nav == 'jadwal_ujian' ||$secondary_nav == 'ujian_skripsi' || $secondary_nav == 'plot_kelas' || $secondary_nav == 'absensi_mahasiswa' || $secondary_nav == 'absensi_dosen') ? 'active' : ''; ?>">
                         <a href="#" data-toggle="dropdown" class="dropdown-toggle">Jadwal Perkuliahan<b class="caret"></b></a>
                         <ul class="dropdown-menu">     
-                            <li class="<?= isActive($secondary_nav, 'plot_kelas'); ?>"><?= anchor('transaction/plot_kelas', 'Plot Kelas'); ?></li>  
-                            <li class="<?= isActive($secondary_nav, 'plot_dosen_ajar'); ?>"><?= anchor('transaction/plot_dosen_ajar', 'Plot Dosen Ajar'); ?></li>               
+                            <li class="<?= isActive($secondary_nav, 'plot_kelas'); ?>"><?= anchor('transaction/plot_kelas', 'Plot Kelas'); ?></li>               
                             <li class="<?= isActive($secondary_nav, 'jadwal_kuliah'); ?>"><?= anchor('transaction/jadwal_kuliah', 'Jadwal Kuliah'); ?></li>
                             <li class="<?= isActive($secondary_nav, 'jadwal_ujian'); ?>"><?= anchor('transaction/jadwal_ujian', 'Jadwal Ujian'); ?></li>
                             <li class="<?= isActive($secondary_nav, 'ujian_skripsi'); ?>"><?= anchor('transaction/ujian_skripsi', 'Ujian Skripsi'); ?></li>
