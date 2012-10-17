@@ -1220,6 +1220,22 @@ $config = array(
             'rules' => 'trim|required'
         )      
  
+ 
+ 	/* PLOT SEMESTER*/
+    ), 'plot_semester_create' => array(
+        array(
+            'field' => 'angkatan_id',
+            'label' => 'angkatan_id',
+            'rules' => 'trim|required'
+        )
+    ), 'plot_semester_update' => array(
+        array(
+            'field' => 'angkatan_id',
+            'label' => 'angkatan_id',
+            'rules' => 'trim|required'
+        )    
+		
+		
 	/* STATUS PLOT KELAS */
     ), 'plot_kelas_create' => array(
         array(
