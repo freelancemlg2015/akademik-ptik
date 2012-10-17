@@ -49,7 +49,7 @@ foreach ($plot_mata_kuliah_options as $row) {
 <?= form_open($action_url, array('class' => 'form-horizontal')); ?>
 
     <div class="control-group">
-        <?= form_label('Angkatan' , 'angkatan_id', $control_label); ?>
+        <?= form_label('Angkatan' .  required(), 'angkatan_id', $control_label); ?>
         <div class="controls">
         <?= form_dropdown('angkatan_id', $angkatan_data, set_value('angkatan_id', $angkatan_id), 'id="angkatan_id" class="input-medium" prevData-selected="' . set_value('angkatan_id', $angkatan_id) . '"'); ?>
             <p class="help-block"><?php echo form_error('angkatan_id') ?></p>
@@ -86,7 +86,7 @@ foreach ($plot_mata_kuliah_options as $row) {
                     <?php
                         foreach($kelompok_matakuliah_options as $row){    
                     ?>
-                        <input <?php echo $kelompok_mata_kuliah_id == $row->id ? "checked":""?> type="checkbox" id="cek" name="kelompok_mata_kuliah_id[]" value="<?php echo $row->id; ?>">&nbsp;&nbsp;<?php echo $row->nama_kelompok_mata_kuliah; ?><br>
+                        <input <?php echo $kelompok_mata_kuliah_id == $row->id ? "checked":""?> type="checkbox" id="cek" name="kelompok_mata_kuliah_id" value="<?php echo $row->id; ?>">&nbsp;&nbsp;<?php echo $row->nama_kelompok_mata_kuliah; ?><br>
                     <?php 
                         } 
                     ?>
