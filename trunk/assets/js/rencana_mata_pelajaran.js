@@ -9,75 +9,105 @@ function cek_all(v){
     
 }
 
-function Pager(tableName, itemsPerPage) {
-    this.tableName = tableName;
-    this.itemsPerPage = itemsPerPage;
-    this.currentPage = 1;
-    this.pages = 0;
-    this.inited = false;
-    
-    this.showRecords = function(from, to) {        
-        var rows = document.getElementById(tableName).rows;
-        // i starts from 1 to skip table header row
-        for (var i = 1; i < rows.length; i++) {
-            if (i < from || i > to)  
-                rows[i].style.display = 'none';
-            else
-                rows[i].style.display = '';
-        }
-    }
-    
-    this.showPage = function(pageNumber) {
-    	if (! this.inited) {
-    		alert("not inited");
-    		return;
-    	}
+  
+$.extend( $.fn.dataTableExt.oStdClasses, {
+        "sSortAsc": "header headerSortDown",
+        "sSortDesc": "header headerSortUp",
+        "sSortable": "header"
+} );
 
-        var oldPageAnchor = document.getElementById('pg'+this.currentPage);
-        oldPageAnchor.className = 'pg-normal';
-        
-        this.currentPage = pageNumber;
-        var newPageAnchor = document.getElementById('pg'+this.currentPage);
-        newPageAnchor.className = 'pg-selected';
-        
-        var from = (pageNumber - 1) * itemsPerPage + 1;
-        var to = from + itemsPerPage - 1;
-        this.showRecords(from, to);
-    }   
-    
-    this.prev = function() {
-        if (this.currentPage > 1)
-            this.showPage(this.currentPage - 1);
-    }
-    
-    this.next = function() {
-        if (this.currentPage < this.pages) {
-            this.showPage(this.currentPage + 1);
-        }
-    }                        
-    
-    this.init = function() {
-        var rows = document.getElementById(tableName).rows;
-        var records = (rows.length - 1); 
-        this.pages = Math.ceil(records / itemsPerPage);
-        this.inited = true;
-    }
-
-    this.showPageNav = function(pagerName, positionId) {
-    	if (! this.inited) {
-    		alert("not inited");
-    		return;
-    	}
-    	var element = document.getElementById(positionId);
-    	
-    	var pagerHtml = '<span onclick="' + pagerName + '.prev();" class="pg-normal"> Prev </span> | ';
-        for (var page = 1; page <= this.pages; page++) 
-            pagerHtml += '<span id="pg' + page + '" class="pg-normal" onclick="' + pagerName + '.showPage(' + page + ');">' + page + '</span> | ';
-        pagerHtml += '<span onclick="'+pagerName+'.next();" class="pg-normal"> Next</span>';            
-        
-        element.innerHTML = pagerHtml;
-    }
+/* API method to get paging information */
+$.fn.dataTableExt.oApi.fnPagingInfo = function ( oSettings )
+{
+        return {
+                "iStart":         oSettings._iDisplayStart,
+                "iEnd":           oSettings.fnDisplayEnd(),
+                "iLength":        oSettings._iDisplayLength,
+                "iTotal":         oSettings.fnRecordsTotal(),
+                "iFilteredTotal": oSettings.fnRecordsDisplay(),
+                "iPage":          Math.ceil( oSettings._iDisplayStart / oSettings._iDisplayLength ),
+                "iTotalPages":    Math.ceil( oSettings.fnRecordsDisplay() / oSettings._iDisplayLength )
+        };
 }
+
+/* Bootstrap style pagination control */
+$.extend( $.fn.dataTableExt.oPagination, {
+        "bootstrap": {
+                "fnInit": function( oSettings, nPaging, fnDraw ) {
+                        var oLang = oSettings.oLanguage.oPaginate;
+                        var fnClickHandler = function ( e ) {
+                                if ( oSettings.oApi._fnPageChange(oSettings, e.data.action) ) {
+                                        fnDraw( oSettings );
+                                }
+                        };
+
+                        $(nPaging).addClass('pagination').append(
+                                '<ul>'+
+                                        '<li class="prev disabled"><a href="#">&larr; '+oLang.sPrevious+'</a></li>'+
+                                        '<li class="next disabled"><a href="#">'+oLang.sNext+' &rarr; </a></li>'+
+                                '</ul>'
+                        );
+                        var els = $('a', nPaging);
+                        $(els[0]).bind( 'click.DT', { action: "previous" }, fnClickHandler );
+                        $(els[1]).bind( 'click.DT', { action: "next" }, fnClickHandler );
+                },
+
+                "fnUpdate": function ( oSettings, fnDraw ) {
+                        var oPaging = oSettings.oInstance.fnPagingInfo();
+                        var an = oSettings.aanFeatures.p;
+                        var i, sClass, iStart, iEnd, iHalf=Math.floor(oPaging.iTotalPages/2);
+
+                        if ( oPaging.iTotalPages < 5) {
+                                iStart = 1;
+                                iEnd = oPaging.iTotalPages;
+                        }
+                        else if ( oPaging.iPage <= iHalf ) {
+                                iStart = 1;
+                                iEnd = 5;
+                        } else if ( oPaging.iPage >= (5-iHalf) ) {
+                                iStart = oPaging.iTotalPages - 5 + 1;
+                                iEnd = oPaging.iTotalPages;
+                        } else {
+                                iStart = oPaging.iPage - Math.ceil(5/2) + 1;
+                                iEnd = iStart + 5 - 1;
+                        }
+
+                        for ( i=0, iLen=an.length ; i<iLen ; i++ ) {
+                                // Remove the middle elements
+                                $('li:gt(0)', an[i]).filter(':not(:last)').remove();
+
+                                // Add the new list items and their event handlers
+                                for ( i=iStart ; i<=iEnd ; i++ ) {
+                                        sClass = (i==oPaging.iPage+1) ? 'class="active"' : '';
+                                        $('<li '+sClass+'><a href="#">'+i+'</a></li>')
+                                                .insertBefore('li:last', an[i])
+                                                .bind('click', function () {
+                                                        oSettings._iDisplayStart = (parseInt($('a', this).text(),10)-1) * oPaging.iLength;
+                                                        fnDraw( oSettings );
+                                                } );
+                                }
+
+                                // Add / remove disabled classes from the static elements
+                                if ( oPaging.iPage === 0 ) {
+                                        $('li:first', an[i]).addClass('disabled');
+                                } else {
+                                        $('li:first', an[i]).removeClass('disabled');
+                                }
+
+                                if ( oPaging.iPage === oPaging.iTotalPages-1 ) {
+                                        $('li:last', an[i]).addClass('disabled');
+                                } else {
+                                        $('li:last', an[i]).removeClass('disabled');
+                                }
+                        }
+
+                }
+        }
+} );
+
+
+
+
 
 
 
