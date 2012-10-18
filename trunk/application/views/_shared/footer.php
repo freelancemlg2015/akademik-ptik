@@ -28,6 +28,7 @@
 <script src="<?php echo base_url() ?>assets/js/paket_matakuliah.js"></script>
 <script src="<?php echo base_url() ?>assets/js/combobox_autocomplete.js"></script>
 <script src="<?php echo base_url() ?>assets/js/plot_mata_kuliah.js"></script>
+<script src="<?php echo base_url() ?>assets/js/plot_dosen_penanggung_jawab.js"></script>
 <script src="<?php echo base_url() ?>assets/js/rencana_mata_pelajaran.js"></script>
 <!-- <script src="<?php echo base_url() ?>assets/js/main_test.js"></script>hanya untuk test -->
 <script src="<?php echo base_url() ?>assets/js/jquery.formatCurrency-1.4.0.js"></script>

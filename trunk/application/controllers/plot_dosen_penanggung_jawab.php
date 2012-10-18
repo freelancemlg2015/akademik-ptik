@@ -252,6 +252,25 @@ class Plot_dosen_penanggung_jawab extends CI_Controller {
         $data = array_merge($data, (array) $plot_dosen_penanggung_jawab_data);
         $this->load->view('transaction/plot_dosen_penanggung_jawab_form', $data);
     }
+    
+    function dosen(){
+            $dosen_data[0] = '';
+            foreach ($dosen_options as $row) {
+                $dosen_data[$row->id] = $row->nama_dosen;
+            }
+       ?>
+    <div id="combo_dosen">
+        <fieldset>
+            <legend>Nama Dosen/Penanggung Jawab</legend>
+                <?= form_label('Dosen' , 'dosen_id', $control_label); ?>
+                <div class="controls">
+                    <?= form_dropdown('dosen_id', $dosen_data, set_value('dosen_id', $dosen_id), 'id="dosen_id" class="input-medium" prevData-selected="' . set_value('dosen_id', $dosen_id) . '"'); ?>
+                    <p class="help-block"><?php echo form_error("dosen_id") ?></p>
+                </div>
+        </fieldset>
+    </div>
+    <?php
+    }
 }
 
 ?>
