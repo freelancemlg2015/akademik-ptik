@@ -222,7 +222,7 @@ class Rencana_mata_pelajaran extends CI_Controller {
             $this->crud->update($criteria, $data_in);
             redirect('transaction/rencana_mata_pelajaran/' . $id . '/info');
         }
-        $data['action_url'] = $master_url . $id . '/' . __FUNCTION__;
+        $data['action_url'] = $transaction_url . $id . '/' . __FUNCTION__;
         $data['page_title'] = 'Update Rencana Mata Pelajaran';
         $data['tools']      = array(
             'transaction/rencana_mata_pelajaran' => 'Back'
