@@ -27,11 +27,11 @@ class Laporan_jadwal_perkuliahan extends CI_Controller {
         return date($this->config->item('log_date_format'));
     }
 
-    function index($query_id = 0, $sort_by = 'id', $sort_order = 'desc', $offset = 0) {
+    function index($query_id = 0, $sort_by = 'tanggal, jam_mulai, jam_selesai', $sort_order = 'asc', $offset = 0) {
         $this->jadwal_kuliah($query_id, $sort_by, $sort_order, $offset);
     }
 
-    function jadwal_kuliah($query_id = 0, $sort_by = 'id', $sort_order = 'desc', $offset = 0) {
+    function jadwal_kuliah($query_id = 0, $sort_by = 'tanggal, jam_mulai, jam_selesai', $sort_order = 'asc', $offset = 0) {
         $data_type = $this->input->post('data_type');
         $data['auth'] = $this->auth;
         // pagination
@@ -73,7 +73,7 @@ class Laporan_jadwal_perkuliahan extends CI_Controller {
         $data['kode_angkatan'] = $this->input->get('kode_angkatan');
 
         $data['tools'] = array(
-            'laporan/laporan_jadwal_perkuliahan/create' => 'New'
+            //'laporan/laporan_jadwal_perkuliahan/create' => 'New'
         );
 
         $this->load->view('laporan/laporan_jadwal_perkuliahan/laporan_jadwal_perkuliahan', $data);
@@ -93,15 +93,11 @@ class Laporan_jadwal_perkuliahan extends CI_Controller {
     }
 	public function report()
 	{
-	
 	    $tinggi_gambar = 25;
 	    $lebar_gambar = 25;
-
 	    $this->load->library( 'tcpdf' );
 	    $pdf = tcpdf();
-
 	    $this->load->model('jadwal_kuliah_model', 'jadwal_kuliah');
-
 	    $query_array = array(
 		    'nama_dosen' => '',
 		    'nama_ruang' => '',
@@ -114,62 +110,86 @@ class Laporan_jadwal_perkuliahan extends CI_Controller {
 		);
 
 	    $jumlah_matakuliah = $this->jadwal_kuliah->count_jadwal_kuliah($query_array);
-
-            $results = $this->jadwal_kuliah->search($query_array, $jumlah_matakuliah, 0, "hari_id", 'asc');
-
+		//function search($query_array, $limit, $offset, $sort_by='id', $sort_order) {
+		//order by tanggal, jam_mulai, jam_selesai
+		$results = $this->jadwal_kuliah->search($query_array, $jumlah_matakuliah, 0, "tanggal, jam_mulai, jam_selesai", 'asc');
 	    $dt = $results['results'];	 
 	
 	    $res = array();
-	     $res['data'] = array();
+	    $res['data'] = array();
+		$i=1;
 	    foreach ($dt->result() as $row) {
-
-		// Inisialisasi
-		if(empty($res['data'][$row->nama_hari]['nama_mata_kuliah']))
-			$res['data'][$row->nama_hari]['nama_mata_kuliah'] = '';
-		if(empty($res['data'][$row->nama_hari]['unit_ke']))
-			$res['data'][$row->nama_hari]['unit_ke'] = '';
-		if(empty($res['data'][$row->nama_hari]['jam']))
-			$res['data'][$row->nama_hari]['jam'] = '';
-		if(empty($res['data'][$row->nama_hari]['pertemuan_ke']))
-			$res['data'][$row->nama_hari]['pertemuan_ke'] = '';
-		if(empty($res['data'][$row->nama_hari]['pertemuan_dari']))
-			$res['data'][$row->nama_hari]['pertemuan_dari'] = '';
-		if(empty($res['data'][$row->nama_hari]['metode']))
-			$res['data'][$row->nama_hari]['metode'] = '';
-		if(empty($res['data'][$row->nama_hari]['nama_dosen']))
-			$res['data'][$row->nama_hari]['nama_dosen'] = '';
-		if(empty($res['data'][$row->nama_hari]['nama_ruang']))
-			$res['data'][$row->nama_hari]['nama_ruang'] = '';
-		// Insialisasi
-
-		if(!empty($row->nama_hari)){
-			$res['data'][$row->nama_hari]['hari'] = $row->nama_hari."<br/>".date('d-M-Y',strtotime($row->tanggal));
-			$res['data'][$row->nama_hari]['nama_mata_kuliah'] .= $row->nama_mata_kuliah."<br/>";
-			$res['data'][$row->nama_hari]['unit_ke'] .= $row->unit_ke."<br/>";
-			$res['data'][$row->nama_hari]['jam'] .= date('H:i',strtotime($row->tanggal." ".$row->jam_mulai))." - ".date('H:i',strtotime($row->tanggal." ".$row->jam_selesai))."<br/>";
-			$res['data'][$row->nama_hari]['pertemuan_ke'] .= $row->pertemuan_ke."<br/>";
-			$res['data'][$row->nama_hari]['pertemuan_dari'] .= $row->pertemuan_dari."<br/>";
-			$res['data'][$row->nama_hari]['metode'] .= $row->metode."<br/>";
-			$res['data'][$row->nama_hari]['nama_dosen'] .= $row->nama_dosen."<br/>";
-			$res['data'][$row->nama_hari]['nama_ruang'] .= $row->nama_ruang."<br/>";
+			// Inisialisasi
+			if(empty($res['data'][$row->nama_hari]['nama_mata_kuliah']))
+				$res['data'][$row->nama_hari]['nama_mata_kuliah'] = '';
+			if(empty($res['data'][$row->nama_hari]['unit_ke']))
+				$res['data'][$row->nama_hari]['unit_ke'] = '';
+			if(empty($res['data'][$row->nama_hari]['jam']))
+				$res['data'][$row->nama_hari]['jam'] = '';
+			if(empty($res['data'][$row->nama_hari]['pertemuan_ke']))
+				$res['data'][$row->nama_hari]['pertemuan_ke'] = '';
+			if(empty($res['data'][$row->nama_hari]['pertemuan_dari']))
+				$res['data'][$row->nama_hari]['pertemuan_dari'] = '';
+			if(empty($res['data'][$row->nama_hari]['metode']))
+				$res['data'][$row->nama_hari]['metode'] = '';
+			if(empty($res['data'][$row->nama_hari]['nama_dosen']))
+				$res['data'][$row->nama_hari]['nama_dosen'] = '';
+			if(empty($res['data'][$row->nama_hari]['nama_ruang']))
+				$res['data'][$row->nama_hari]['nama_ruang'] = '';
+			// data
+			if(!empty($row->nama_hari)){
+				if($row->kegiatan_id==0) {
+					$display_event = $row->nama_mata_kuliah;
+					$display_unit = $this->ConvertRomawi($i);
+					$i++;
+				} else {
+					$display_event = $row->nama_kegiatan;
+					$display_unit = '&nbsp;';
+				}
+				$res['data'][$row->nama_hari]['hari'] = $row->nama_hari."<br/>".date('d-M-Y',strtotime($row->tanggal));
+				$res['data'][$row->nama_hari]['nama_mata_kuliah'] .= $display_event."<br/>";
+				$res['data'][$row->nama_hari]['unit_ke'] .= $display_unit."<br/>";
+				$res['data'][$row->nama_hari]['jam'] .= date('H:i',strtotime($row->tanggal." ".$row->jam_mulai))." - ".date('H:i',strtotime($row->tanggal." ".$row->jam_selesai))."<br/>";
+				$res['data'][$row->nama_hari]['pertemuan_ke'] .= $row->pertemuan_ke."<br/>";
+				$res['data'][$row->nama_hari]['pertemuan_dari'] .= $row->pertemuan_dari."<br/>";
+				$res['data'][$row->nama_hari]['metode'] .= $row->metode_ajar."<br/>";
+				$res['data'][$row->nama_hari]['nama_dosen'] .= $row->nama_dosen."<br/>";
+				$res['data'][$row->nama_hari]['nama_ruang'] .= $row->nama_ruang."<br/>";
+			}
+			
+			$res['attribute'] = array(
+										  "kode_semester" => $this->input->post('kode_semester'),
+										  "kode_angkatan" => $this->input->post('kode_angkatan'),
+										  "minggu" => $this->input->post('minggu'),
+										  "tinggi_gambar" => $tinggi_gambar,
+										  "lebar_gambar" => $lebar_gambar
+										);
 		}
-		$res['attribute'] = array(
-								      "kode_semester" => $this->input->post('kode_semester'),
-								      "kode_angkatan" => $this->input->post('kode_angkatan'),
-								      "minggu" => $this->input->post('minggu'),
-			 					      "tinggi_gambar" => $tinggi_gambar,
-			  					      "lebar_gambar" => $lebar_gambar
-									);
-	    }   
-
-	
 	    $res['pdf'] = $pdf;
-
 	    $data = $res;
-
 	    $this->load->view("laporan/laporan_jadwal_perkuliahan/report", $data, true);
 	    //Close and output PDF document
 	    $pdf->Output('JADWAL PERKULIAHAN', 'I');
+	}
+	
+	function ConvertRomawi($n){
+		$hasil = '';
+		$iromawi = array('','I','II','III','IV','V','VI','VII','VIII','IX','X',20=>'XX',30=>'XXX',40=>'XL',50=>'L',
+			60=>'LX',70=>'LXX',80=>'LXXX',90=>'XC',100=>'C',200=>'CC',300=>'CCC',400=>'CD',500=>'D',600=>'DC',700=>'DCC',
+			800=>'DCCC',900=>'CM',1000=>'M',2000=>'MM',3000=>'MMM');
+		if(array_key_exists($n,$iromawi)){
+			$hasil = $iromawi[$n];
+		}elseif($n >= 11 && $n <= 99){
+			$i = $n % 10;
+			$hasil = $iromawi[$n-$i] . Romawi($n % 10);
+		}elseif($n >= 101 && $n <= 999){
+			$i = $n % 100;
+			$hasil = $iromawi[$n-$i] . Romawi($n % 100);
+		}else{
+			$i = $n % 1000;
+			$hasil = $iromawi[$n-$i] . Romawi($n % 1000);
+		}
+		return $hasil;
 	}
 }
 

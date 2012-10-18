@@ -38,7 +38,7 @@ $this->load->view('_shared/menus');
 <table class="table table-bordered table-striped container-full data_list" id="jadwal_kuliah" controller="transaction">
     <thead>
         <tr>
-            <th>Nama Mata Kuliah</th>
+            <th>Mata Kuliah</th>
             <th>Ruang</th>
             <th>Jenis Waktu</th>
         </tr>
@@ -46,10 +46,12 @@ $this->load->view('_shared/menus');
     <tbody>
         <?php
         foreach ($results->result() as $row) {
-            echo '<tr id="' . $row->id . '">
-              <td>' . $row->nama_mata_kuliah . '</td>  
+            $display_event = $row->nama_mata_kuliah;
+			if($row->kegiatan_id!=0) $display_event = $row->nama_kegiatan;
+			echo '<tr id="' . $row->id . '">
+              <td>' . $display_event . '</td>  
               <td>' . $row->nama_ruang . '</td>  
-              <td>' . $row->jenis_waktu . '</td>  
+              <td>' . $row->jenis_waktu . ' ('.$row->jam_normal_mulai. ' - '. $row->jam_normal_akhir  . ')</td>  
             </tr>
           ';
         }

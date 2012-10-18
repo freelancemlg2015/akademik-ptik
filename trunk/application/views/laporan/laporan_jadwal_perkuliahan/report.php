@@ -36,19 +36,18 @@
 	    $pdf->MultiCell(145, 15, "BIDANG AKADEMIK\nBAGIAN PELAKSANAAN PENDIDIKAN PENGAJARAN DAN PELATIHAN", 0, 'C', 1, 0, '', '', true, 0, false, true, 10, 'M');
 	    $pdf->MultiCell(80, 15, "", 0, 'C', 1, 0, '', '', true, 0, false, true, 10, 'M');
 	    $pdf->MultiCell(100, 15, "JADWAL MINGGUAN SEMETER KE ".$attribute['kode_semester']."\nMAHASISWA STIK-PTIK ANGKATAN KE-".$attribute['kode_angkatan']."\nMINGGU KE ".$attribute['minggu']."\nPROGRAM STUDI ADMINISTRASI KEPOLISIAN\n ", 0, 'J', 1, 1, '', '', true, 0, false, true, 24, 'B');
-
 	    $pdf->SetFont('times', '', 10);
 
 
 $table = '
-<table>
+<table cellpadding="2">
 <tr>
 	<td border = "1" rowspan = "2" align = "center" width = "80" style="vertical-align: middle;">HARI<br/>TANGGAL</td>
 	<td border = "1" rowspan = "2" align = "center" width = "45" >UNIT<br/>KE</td>
 	<td border = "1" rowspan = "2" align = "center" width = "80">WAKTU</td>
 	<td border = "1" colspan = "2" align = "center" width = "100">PERTEMUAN</td>
 	<td border = "1" rowspan = "2" align = "center" width = "320">MATA KULIAH</td>
-	<td border = "1" rowspan = "2" align = "center" width = "100">METODE</td>
+	<td border = "1" rowspan = "2" align = "center" width = "100" style="vertical-align: middle;">METODE</td>
 	<td border = "1" rowspan = "2" align = "center" width = "350">DOSEN PENGAJAR</td>
 	<td border = "1" rowspan = "2" align = "center" width = "150">TEMPAT</td>
 </tr>
@@ -76,13 +75,13 @@ $table .= '<tr>
 	<td border = "1" width = "320">
 		'.$row['nama_mata_kuliah'].'
 	</td>
-	<td border = "1" width = "100">
+	<td border = "1" width = "100" align = "center">
 		'.$row['metode'].'
 	</td>
 	<td border = "1" width = "350">
 		'.$row['nama_dosen'].'
 	</td>
-	<td border = "1" width = "150">
+	<td border = "1" width = "150" align = "center">
 		'.$row['nama_ruang'].'
 	</td>
 	
