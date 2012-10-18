@@ -10,8 +10,8 @@
 <script src="<?php echo base_url() ?>assets/js/combobox/bootstrap-combobox.js"></script>
 <script src="<?php echo base_url() ?>assets/js/combobox/bootstrap-typeahead.js"></script>
 <script src="<?php echo base_url() ?>assets/js/combobox/bootstrap-typeahead.min.js"></script>
-<script src="<?php echo base_url() ?>assets/js/pagingation/jquery.dataTables.js"></script>
-<script src="<?php echo base_url() ?>assets/js/pagingation/jquery.js"></script>
+<script src="<?php echo base_url() ?>assets/js/pagination/jquery.dataTables.js"></script>
+<script src="<?php echo base_url() ?>assets/js/pagination/jquery.js"></script>
 <script src="<?php echo base_url() ?>assets/js/bootstrap-timepicker.js"></script>
 <script src="<?php echo base_url() ?>assets/js/fn.main.js"></script>
 <script src="<?php echo base_url() ?>assets/js/shadowbox.js"></script>
