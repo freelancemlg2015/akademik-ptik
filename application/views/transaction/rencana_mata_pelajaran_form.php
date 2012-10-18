@@ -129,7 +129,7 @@ foreach ($plot_mata_kuliah_options as $row) {
 //    pager.showPageNav('pager', 'pageNavPosition'); 
 //  
    $(document).ready(function() {
-        $('#rencana_mata_pelajaran').dataTable( {
+        $('#content').dataTable( {
                 "sDom": "<'row'<'span8'l><'span8'f>r>t<'row'<'span8'i><'span8'p>>",
                 "sPaginationType": "bootstrap"
         } );
