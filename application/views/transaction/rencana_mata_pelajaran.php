@@ -19,7 +19,7 @@ $this->load->view('_shared/menus');
         'style' => 'text-transform : uppercase;',
         'placeholder' => 'Semester'
     );
-    echo form_open('transaction/paket_matakuliah/search/') .
+    echo form_open('transaction/rencana_mata_pelajaran/search/') .
     form_input($nama_angkatan_attr) . ' ' .
     form_input($semester_attr) . ' ' .
     form_submit('cari', 'CARI', 'class="btn btn-mini"') .
