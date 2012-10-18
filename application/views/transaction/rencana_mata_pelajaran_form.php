@@ -131,16 +131,3 @@ foreach ($plot_mata_kuliah_options as $row) {
 //  
    
 </script>
-<script type="text/javascript">
-    jQuery.noConflict();
-    /* Table initialisation */
-    jQuery(document).ready(function() {
-      jQuery('#rencana_mata_pelajaran').dataTable( {
-        sDom: "<'row'<'span5'l><'span8'f>r>t<'row'<'span4'i><'span8'p>>",
-        "sPaginationType": "bootstrap",
-        "oLanguage": {
-          "sLengthMenu": "_MENU_ records per page"
-        }
-      } );
-    } );
-  </script>
