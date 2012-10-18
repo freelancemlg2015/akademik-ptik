@@ -657,18 +657,30 @@ $route['transaction/plot_kelas/search'] = "plot_kelas/search";
 $route['transaction/plot_kelas/suggestion'] = "plot_kelas/suggestion";
 //END
 
+//PLOT DOSEN PENANGGUNG JAWAB
+$route['transaction/plot_dosen_penanggung_jawab'] = "plot_dosen_penanggung_jawab";
+$route['transaction/plot_dosen_penanggung_jawab/view/(:any)'] = "plot_dosen_penanggung_jawab/index/$1";
+$route['transaction/plot_dosen_penanggung_jawab/(:any)/info'] = "plot_dosen_penanggung_jawab/info/$1";
+$route['transaction/plot_dosen_penanggung_jawab/(:any)/edit'] = "plot_dosen_penanggung_jawab/edit/$1";
+$route['transaction/plot_dosen_penanggung_jawab/(:any)/delete'] = "plot_dosen_penanggung_jawab/delete/$1";
+$route['transaction/plot_dosen_penanggung_jawab/(:any)/(:any)/(:any)'] = "plot_dosen_penanggung_jawab/index/$1/$2/$3";
+$route['transaction/plot_dosen_penanggung_jawab/create/(:any)'] = "plot_dosen_penanggung_jawab/create/$1";
+$route['transaction/plot_dosen_penanggung_jawab/create'] = "plot_dosen_penanggung_jawab/create";
+$route['transaction/plot_dosen_penanggung_jawab/search'] = "plot_dosen_penanggung_jawab/search";
+$route['transaction/plot_dosen_penanggung_jawab/suggestion'] = "plot_dosen_penanggung_jawab/suggestion";
+//END
 
-//PLOT DOSEN AJAR
-$route['transaction/plot_dosen_ajar'] = "plot_dosen_ajar";
-$route['transaction/plot_dosen_ajar/view/(:any)'] = "plot_dosen_ajar/index/$1";
-$route['transaction/plot_dosen_ajar/(:any)/info'] = "plot_dosen_ajar/info/$1";
-$route['transaction/plot_dosen_ajar/(:any)/edit'] = "plot_dosen_ajar/edit/$1";
-$route['transaction/plot_dosen_ajar/(:any)/delete'] = "plot_dosen_ajar/delete/$1";
-$route['transaction/plot_dosen_ajar/(:any)/(:any)/(:any)'] = "plot_dosen_ajar/index/$1/$2/$3";
-$route['transaction/plot_dosen_ajar/create/(:any)'] = "plot_dosen_ajar/create/$1";
-$route['transaction/plot_dosen_ajar/create'] = "plot_dosen_ajar/create";
-$route['transaction/plot_dosen_ajar/search'] = "plot_dosen_ajar/search";
-$route['transaction/plot_dosen_ajar/suggestion'] = "plot_dosen_ajar/suggestion";
+//PLOT DOSEN PENANGGUNG JAWAB
+$route['transaction/rencana_mata_pelajaran'] = "rencana_mata_pelajaran";
+$route['transaction/rencana_mata_pelajaran/view/(:any)'] = "rencana_mata_pelajaran/index/$1";
+$route['transaction/rencana_mata_pelajaran/(:any)/info'] = "rencana_mata_pelajaran/info/$1";
+$route['transaction/rencana_mata_pelajaran/(:any)/edit'] = "rencana_mata_pelajaran/edit/$1";
+$route['transaction/rencana_mata_pelajaran/(:any)/delete'] = "rencana_mata_pelajaran/delete/$1";
+$route['transaction/rencana_mata_pelajaran/(:any)/(:any)/(:any)'] = "rencana_mata_pelajaran/index/$1/$2/$3";
+$route['transaction/rencana_mata_pelajaran/create/(:any)'] = "rencana_mata_pelajaran/create/$1";
+$route['transaction/rencana_mata_pelajaran/create'] = "rencana_mata_pelajaran/create";
+$route['transaction/rencana_mata_pelajaran/search'] = "rencana_mata_pelajaran/search";
+$route['transaction/rencana_mata_pelajaran/suggestion'] = "rencana_mata_pelajaran/suggestion";
 //END
 
 //ABSENSI DOSEN
