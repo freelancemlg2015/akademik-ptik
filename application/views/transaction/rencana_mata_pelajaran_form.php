@@ -129,5 +129,17 @@ foreach ($plot_mata_kuliah_options as $row) {
 //    pager.init(); 
 //    pager.showPageNav('pager', 'pageNavPosition'); 
 //  
+    
+    $(document).ready(function() {
+	$('#rencana_mata_pelajaran').dataTable( {
+		"sDom": "<'row'<'span6'l><'span6'f>r>t<'row'<'span6'i><'span6'p>>",
+		"sPaginationType": "bootstrap",
+		"oLanguage": {
+			"sLengthMenu": "_MENU_ records per page"
+		}
+	} );
+} );
+    } );
+} );
    
 </script>
