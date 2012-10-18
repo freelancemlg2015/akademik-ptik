@@ -81,7 +81,7 @@ foreach ($plot_mata_kuliah_options as $row) {
     </div>
     
     <div class="pagination pagination-centered">
-        <div id='page_navigation' class="pagination"></div>
+        <div id="pageNavPosition"></div> 
     </div>
     <table class="table table-bordered table-striped container-full"  id="rencana_mata_pelajaran" controller="transaction">
         <thead>
@@ -125,21 +125,10 @@ foreach ($plot_mata_kuliah_options as $row) {
     <?php $this->load->view('_shared/footer'); ?>
 
 <script type="text/javascript">
-//    var pager = new Pager('rencana', 9); 
-//    pager.init(); 
-//    pager.showPageNav('pager', 'pageNavPosition'); 
-//  
+    var pager = new Pager('content', 9); 
+    pager.init(); 
+    pager.showPageNav('pager', 'pageNavPosition'); 
+
     
-    $(document).ready(function() {
-	$('#rencana_mata_pelajaran').dataTable( {
-		"sDom": "<'row'<'span6'l><'span6'f>r>t<'row'<'span6'i><'span6'p>>",
-		"sPaginationType": "bootstrap",
-		"oLanguage": {
-			"sLengthMenu": "_MENU_ records per page"
-		}
-	} );
-} );
-    } );
-} );
    
 </script>
