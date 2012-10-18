@@ -81,10 +81,11 @@ foreach ($mata_kuliah_options as $row) {
     $mata_kuliah_data[$row->id] = $row->nama_mata_kuliah;
 }
 
-$dosen_data[0] = '';
-foreach ($dosen_options as $row) {
-    $dosen_data[$row->id] = $row->nama_dosen;
-}
+//$dosen_data[0] = '';
+//foreach ($dosen_options as $row) {
+//    $dosen_data[$row->id] = $row->nama_dosen;
+//}
+
 
 $kelompok_matakuliah_data[0] = '';
 foreach ($kelompok_matakuliah_options as $row) {
@@ -146,15 +147,33 @@ $plot_attr = array(
         </div>
     </div>
     
-    <div class="right->column">
+    
+    <div id="dosen" class="right->column">
+        <?php
+            $i = 1;
+            $dosen_data[0] = '';
+            foreach ($dosen_options as $row) {
+                $dosen_data[$row->id] = $row->nama_dosen;
+            }
+        ?>
         <fieldset>
             <legend>Nama Dosen/Penanggung Jawab</legend>
                 <?= form_label('Dosen' , 'dosen_id', $control_label); ?>
                 <div class="controls">
-                     <?= form_dropdown('dosen_id', $dosen_data, set_value('dosen_id', $dosen_id), 'id="dosen_id" class="input-medium" prevData-selected="' . set_value('dosen_id', $dosen_id) . '"'); ?>
-                    <p class="help-block"><?php echo form_error('dosen_id') ?></p>
+                    <?= form_dropdown('dosen_id', $dosen_data, set_value('dosen_id', $dosen_id), 'id="dosen_id" class="input-medium" prevData-selected="' . set_value('dosen_id', $dosen_id) . '"'); ?>
+                    <?php
+                        if($i == 1){
+                            echo "<a href='javascript:void(0)' onclick='dosen()' style=' color: #FFF; padding:0px;' id='button_dosen'>&nbsp;<b>&nbsp;+&nbsp;</b>&nbsp;</a>";
+                        }else{
+                            echo "<a href='javascript:void(0)' onclick='$(this).parent().parent().parent().remove()' style=' color: #FFF; padding:0px;' class='button_upload'>&nbsp;<b>&nbsp;-&nbsp;</b>&nbsp;</a>";
+                        }
+                    ?>
+                    <p class="help-block"><?php echo form_error("dosen_id") ?></p>
                 </div>
         </fieldset>
+        <?php
+            $i++;
+        ?>
     </div>
     
     <div class="form-actions well">
