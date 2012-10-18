@@ -81,7 +81,7 @@ foreach ($plot_mata_kuliah_options as $row) {
     </div>
     
     <div class="pagination pagination-centered">
-        <div id="pageNavPosition"></div> 
+        <div id="page_navigation"></div> 
     </div>
     <table class="table table-bordered table-striped container-full"  id="rencana_mata_pelajaran" controller="transaction">
         <thead>
@@ -94,7 +94,7 @@ foreach ($plot_mata_kuliah_options as $row) {
                 </th>
             </tr>
         </thead>
-        <tbody id="rencana">
+        <tbody id="content">
             <?php
                 $no = 1;
                 foreach ($mahasiswa_options as $row) {
@@ -124,8 +124,14 @@ foreach ($plot_mata_kuliah_options as $row) {
     <?php $this->load->view('_shared/footer'); ?>
 
 <script type="text/javascript">
-    var pager = new Pager('rencana', 9); 
-    pager.init(); 
-    pager.showPageNav('pager', 'pageNavPosition'); 
-    pager.showPage(1);
+//    var pager = new Pager('rencana', 9); 
+//    pager.init(); 
+//    pager.showPageNav('pager', 'pageNavPosition'); 
+//  
+   $(document).ready(function() {
+        $('#rencana_mata_pelajaran').dataTable( {
+                "sDom": "<'row'<'span8'l><'span8'f>r>t<'row'<'span8'i><'span8'p>>",
+                "sPaginationType": "bootstrap"
+        } );
+} );
 </script>
