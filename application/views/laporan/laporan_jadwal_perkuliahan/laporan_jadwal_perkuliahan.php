@@ -56,20 +56,22 @@ $this->load->view('_shared/menus');
 <table class="table table-bordered table-striped container-full data_list" id="jadwal_kuliah" controller="transaction">
     <thead>
         <tr>
-            <th>Dosen</th>
-            <th>Ruang</th>
             <th>Mata Kuliah</th>
-            <th>Jenis Waktu</th>
+			<th>Tanggal</th>
+            <th>Jam</th>
+			<th>Ruang</th>
         </tr>
     </thead>
     <tbody>
         <?php
         foreach ($results->result() as $row) {
-            echo '<tr id="' . $row->id . '">
-              <td>' . $row->nama_dosen . '</td>  
-              <td>' . $row->nama_ruang . '</td>  
-              <td>' . $row->nama_mata_kuliah . '</td>  
-              <td>' . $row->jenis_waktu . '</td>  
+            $display_event = $row->nama_kegiatan;
+			if($row->kegiatan_id==0) $display_event = $row->nama_mata_kuliah;
+			echo '<tr id="' . $row->id . '">
+              <td>' . $display_event . '</td>
+			  <td>' . $row->tanggal . '</td>
+			  <td>' . $row->jam_mulai. ' - '. $row->jam_selesai. '</td>
+			  <td>' . $row->nama_ruang . '</td>
             </tr>
           ';
         }

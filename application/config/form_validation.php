@@ -948,52 +948,142 @@ $config = array(
 
     /* JADWAL KULIAH : Fachrul */
     , 'jadwal_kuliah_create' => array(
-        /*array(
-            'field' => 'nama_ruang',
-            'label' => 'nama_ruang',
-            'rules' => 'trim|required'
-        ),*/
         array(
-            'field' => 'jenis_waktu',
-            'label' => 'jenis_waktu',
-            'rules' => 'trim|required'
+            'field' => 'angkatan_id',
+            'label' => 'angkatan',
+            'rules' => 'trim|required|greater_than[0]'
+        ),
+		array(
+            'field' => 'program_studi',
+            'label' => 'program studi',
+            'rules' => 'trim|required|greater_than[0]'
+        ),
+		/*array(
+            'field' => 'mata_kuliah',
+            'label' => 'mata kuliah',
+            'rules' => 'trim|required|greater_than[0]'
+        ),*/
+		array(
+            'field' => 'metode_ajar_id',
+            'label' => 'metode ajar',
+            'rules' => 'trim|required|greater_than[0]'
         ),
         array(
-            'field' => 'tanggal',
-            'label' => 'tanggal',
+            'field' => 'jenis_waktu',
+            'label' => 'jenis waktu',
+            'rules' => 'trim|required|greater_than[0]'
+        ),
+        array(
+            'field' => 'nama_ruang_id',
+            'label' => 'nama ruang',
+            'rules' => 'trim|required|greater_than[0]'
+        ),
+        array(
+            'field' => 'tgl_lahir',
+            'label' => 'tanggal lahir',
             'rules' => 'trim|required'
         )
     ), 'jadwal_kuliah_update' => array(
-        /*array(
-            'field' => 'nama_ruang',
-            'label' => 'nama_ruang',
-            'rules' => 'trim|required'
-        ),*/
         array(
-            'field' => 'jenis_waktu',
-            'label' => 'jenis_waktu',
-            'rules' => 'trim|required'
+            'field' => 'angkatan_id',
+            'label' => 'angkatan',
+            'rules' => 'trim|required|greater_than[0]'
+        ),
+		array(
+            'field' => 'program_studi',
+            'label' => 'program studi',
+            'rules' => 'trim|required|greater_than[0]'
+        ),
+		/*array(
+            'field' => 'mata_kuliah',
+            'label' => 'mata kuliah',
+            'rules' => 'trim|required|greater_than[0]'
+        ),*/
+		array(
+            'field' => 'metode_ajar_id',
+            'label' => 'metode ajar',
+            'rules' => 'trim|required|greater_than[0]'
         ),
         array(
-            'field' => 'tanggal',
-            'label' => 'tanggal',
+            'field' => 'jenis_waktu',
+            'label' => 'jenis waktu',
+            'rules' => 'trim|required|greater_than[0]'
+        ),
+        array(
+            'field' => 'nama_ruang_id',
+            'label' => 'nama ruang',
+            'rules' => 'trim|required|greater_than[0]'
+        ),
+        array(
+            'field' => 'tgl_lahir',
+            'label' => 'tanggal lahir',
             'rules' => 'trim|required'
         )
         
     /* JADWAL UJIAN */
     ), 'jadwal_ujian_create' => array(
         array(
-            'field' => 'unit',
-            'label' => 'unit',
-            'rules' => 'trim|required'
-        )
-    ), 'jadwal_ujian_update' => array(
+            'field' => 'angkatan_id',
+            'label' => 'angkatan',
+            'rules' => 'trim|required|greater_than[0]'
+        ),
+		array(
+            'field' => 'program_studi',
+            'label' => 'program studi',
+            'rules' => 'trim|required|greater_than[0]'
+        ),
+		array(
+            'field' => 'mata_kuliah',
+            'label' => 'mata kuliah',
+            'rules' => 'trim|required|greater_than[0]'
+        ),
+		array(
+            'field' => 'jenis_ujian_id',
+            'label' => 'jenis ujian',
+            'rules' => 'trim|required|greater_than[0]'
+        ),
         array(
-            'field' => 'unit',
-            'label' => 'unit',
+            'field' => 'nama_ruang_id',
+            'label' => 'nama ruang',
+            'rules' => 'trim|required|greater_than[0]'
+        ),
+        array(
+            'field' => 'tgl_lahir',
+            'label' => 'tanggal lahir',
             'rules' => 'trim|required'
         )
-        
+    ), 'jadwal_ujian_create' => array(
+        array(
+            'field' => 'angkatan_id',
+            'label' => 'angkatan',
+            'rules' => 'trim|required|greater_than[0]'
+        ),
+		array(
+            'field' => 'program_studi',
+            'label' => 'program studi',
+            'rules' => 'trim|required|greater_than[0]'
+        ),
+		array(
+            'field' => 'mata_kuliah',
+            'label' => 'mata kuliah',
+            'rules' => 'trim|required|greater_than[0]'
+        ),
+		array(
+            'field' => 'jenis_ujian_id',
+            'label' => 'jenis ujian',
+            'rules' => 'trim|required|greater_than[0]'
+        ),
+        array(
+            'field' => 'nama_ruang_id',
+            'label' => 'nama ruang',
+            'rules' => 'trim|required|greater_than[0]'
+        ),
+        array(
+            'field' => 'tgl_lahir',
+            'label' => 'tanggal lahir',
+            'rules' => 'trim|required'
+        )
+         
     /*UJIAN SKRIPSI*/
     ),'ujian_skripsi_create' => array(
         array(
@@ -1011,14 +1101,14 @@ $config = array(
     /* PAKET MATAKULIAH */
     ), 'paket_matakuliah_create' => array(
         array(
-            'field' => 'angkatan_id',
-            'label' => 'angkatan_id',
-            'rules' => 'trim|required|greater_than[0]'
+            'field' => 'nama_paket',
+            'label' => 'nama_paket',
+            'rules' => 'trim|required'
         )
     ), 'paket_matakuliah_update' => array(
         array(
-            'field' => 'angkatan_id',
-            'label' => 'angkatan_id',
+            'field' => 'nama_paket',
+            'label' => 'nama_paket',
             'rules' => 'trim|required'
         )
         
@@ -1220,22 +1310,6 @@ $config = array(
             'rules' => 'trim|required'
         )      
  
- 
- 	/* PLOT SEMESTER*/
-    ), 'plot_semester_create' => array(
-        array(
-            'field' => 'angkatan_id',
-            'label' => 'angkatan_id',
-            'rules' => 'trim|required'
-        )
-    ), 'plot_semester_update' => array(
-        array(
-            'field' => 'angkatan_id',
-            'label' => 'angkatan_id',
-            'rules' => 'trim|required'
-        )    
-		
-		
 	/* STATUS PLOT KELAS */
     ), 'plot_kelas_create' => array(
         array(
@@ -1252,13 +1326,13 @@ $config = array(
 	 
 	 
     /* PLOT DOSEN AJAR*/
-    ), 'plot_dosen_penanggung_jawab_create' => array(
+    ), 'plot_dosen_ajar_create' => array(
 //        array(
 //            'field' => 'keterangan',
 //            'label' => 'keterangan',
 //            'rules' => 'trim|required'
 //        )
-    ), 'plot_dosen_penanggung_jawab_update' => array(
+    ), 'plot_dosen_ajar_update' => array(
 //        array(
 //            'field' => 'keterangan',
 //            'label' => 'keterangan',

@@ -6,14 +6,14 @@
 // set document information
 	    $pdf->SetCreator(PDF_CREATOR);
 	    $pdf->SetAuthor("PTIK");
-	    $pdf->SetTitle("NILAI AKADEMIK");
-	    $pdf->SetSubject("NILAI AKADEMIK");
-	    $pdf->SetKeywords("laporan, report, NILAI AKADEMIK, ptik");
+	    $pdf->SetTitle("JADWAL UJIAN");
+	    $pdf->SetSubject("JADWAL UJIAN");
+	    $pdf->SetKeywords("laporan, report, JADWAL UJIAN, ptik");
 	    // remove default header/footer
 	    $pdf->setPrintHeader(false);
 	    $pdf->setPrintFooter(false);
 	    //set margins
-	    $pdf->SetMargins(5, 25, PDF_MARGIN_RIGHT);
+	    $pdf->SetMargins(5, 5, PDF_MARGIN_RIGHT);
 
 	    //set auto page breaks
 	    $pdf->SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
@@ -25,7 +25,7 @@
 	    $pdf->AliasNbPages();
 
 	    // add a page
-	    $pdf->AddPage('P', 'LEGAL');
+	    $pdf->AddPage('L', 'LEGAL');
 	
 	    $pdf->SetFont('helvetica', '', 11);
 	
@@ -33,75 +33,53 @@
 
 	    $pdf->SetFillColor(255, 255, 255);
 
-	    $pdf->SetXY(0,10,true);
-
-	    $pdf->Image('./assets/images/images.jpg', 43, 3, $lebar_gambar, $tinggi_gambar, 'JPG', 'http://www.tcpdf.org', '', true, 150, '', false, false, 0, false, false, false);
-	
-	    $pdf->Ln(15);		
-	
-	    $pdf->MultiCell(100, 15, "LEMBAGA PENDIDIKAN POLRI\nSEKOLAH TINGGI ILMU KEPOLISIAN", 0, 'C', 1, 0, '', '', true, 0, false, true, 15, 'M');
-	    $pdf->MultiCell(40, 15, "", 0, 'L', 1, 0, '', '', true, 0, false, true, 15, 'M');
-	    $pdf->MultiCell(80, 15, "LAMPIRAN SURAT KETUA STIK\nNOMOR  : B/      /I/2012/STIK\nTANGGAL :     JANUARI 2012", 0, 'L', 1, 0, '', '', true, 0, false, true, 15, 'M');
-	    $pdf->Ln(20);
-	    $pdf->SetFont('helvetica', 'B', 12);
-	    $pdf->MultiCell(190, 15, "JADWAL UJIAN AKHIR SEMESTER III\nMAHASISWA STIK-PTIK ANGK KE-57", 0, 'C', 1, 0, '', '', true, 0, false, true, 15, 'M');
-	    
+	    $pdf->MultiCell(145, 15, "BIDANG AKADEMIK\nBAGIAN PELAKSANAAN PENDIDIKAN PENGAJARAN DAN PELATIHAN", 0, 'C', 1, 0, '', '', true, 0, false, true, 10, 'M');
+	    $pdf->MultiCell(80, 15, "", 0, 'C', 1, 0, '', '', true, 0, false, true, 10, 'M');
+	    $pdf->MultiCell(100, 15, "JADWAL UJIAN SEMETER KE ".$attribute['kode_semester']."\nMAHASISWA STIK-PTIK ANGKATAN KE-".$attribute['kode_angkatan']."\nMINGGU KE ".$attribute['minggu']."\nPROGRAM STUDI ADMINISTRASI KEPOLISIAN\n ", 0, 'J', 1, 1, '', '', true, 0, false, true, 24, 'B');
 	    $pdf->SetFont('times', '', 10);
 
-	    $pdf->Ln(20);
 
 $table = '
-	<table border = "1">
-		<thead>
-			<tr>
-				<th align = "center" width = "30">
-					<b>NO.</b>
-				</th>
-				<th align = "center"  width = "80">
-					<b>HARI/TGL.</b>
-				</th>
-				<th align = "center" width = "90">
-					<b>JAM</b>
-				</th>
-				<th align = "center" width = "180">
-					<b>MATAKULIAH</b>
-				</th>
-				<th align = "center"  width = "330">
-					<b>DOSEN</b>
-				</th>
-			</tr>
-		</thead>';
-
-		for($i=1;$i<18;$i++){	
-
-		$table .= '<tr>
-			<td align = "center" width = "30" height = "40">
-			&nbsp;<br/>'.$i.'.
-			</td>
-			<td align = "center" height = "40" width = "80">
-			JUMAT<br/>27-01-2012
-			</td>
-			<td align = "left" width = "90" height = "40" >
-			&nbsp;<br/>08:00 - 09:45
-			</td>
-			<td align = "left" height = "40" width = "180">
-			PSIKOLOGI FORENSIK
-			</td>
-			<td align = "left" height = "40" width = "330">
-			- BRIGJEN POL (P) Prof. Dr. HR. ABDUSSALAM, SH., MH.
-			</td>
-		</tr>';
-		}
-	$table .= '</table>
-		
-';
+<table cellpadding="2">
+<tr>
+	<td border = "1" align = "center" width = "80" style="vertical-align: middle;">HARI<br/>TANGGAL</td>
+	<td border = "1" align = "center" width = "80">WAKTU</td>
+	<td border = "1" align = "center" width = "100">JENIS UJIAN</td>
+	<td border = "1" align = "center" width = "320">MATA KULIAH</td>
+	<td border = "1" align = "center" width = "350">DOSEN PENGAJAR</td>
+	<td border = "1" align = "center" width = "150">TEMPAT</td>
+</tr>';
+foreach($data as $row){
+$table .= '<tr>
+	<td border = "1" width = "80" align = "center">
+		'.$row['hari'].'
+	</td>
+	<td border = "1" width = "80"  align = "center">
+		'.$row['jam'].'
+	</td>
+	<td border = "1" align = "center">
+		'.$row['metode'].'
+	</td>
+	<td border = "1" width = "320">
+		'.$row['nama_mata_kuliah'].'
+	</td>
+	<td border = "1" width = "350">
+		'.$row['nama_dosen'].'
+	</td>
+	<td border = "1" width = "150" align = "center">
+		'.$row['nama_ruang'].'
+	</td>
+	
+</tr>';
+}
+$table .= '</table>';
 
 	    $pdf->writeHTML($table, 0, 0, true, true);
- 	$pdf->MultiCell(30, 30, "", 0, 'L', 1, 0, '', '', true, 0, false, true, 20, 'M');
-	    $pdf->MultiCell(90, 30, "", 0, 'C', 1, 0, '', '', true, 0, false, true, 20, 'M');
-	    $pdf->MultiCell(100, 30, "Jakarta,     Januari 2012\na.n. KETUA STIK LEMDIKPOL\nWAKET BIDANG AKADEMIK\nu.b\nKABAG LADIKJARLAT\n\n\n\n\nDrs. MISRAN MUSA\nKOMISARIS BESAR POLISI NRP. 56060855 ", 0, 'C', 1, 1, '', '', true, 0, false, true, 60, 'B');
 
-	     
+	     $pdf->MultiCell(145, 30, "KETERANGAN\n1. WAKTU ISTIRAHAT\n   a. JAM 09:40 - 10:00 (PERTAMA)\n   b. JAM 11:40 - 13:00 WIB (KEDUA)\n2. *) JAM CADANGAN", 0, 'L', 1, 0, '', '', true, 0, false, true, 30, 'M');
+	    $pdf->MultiCell(80, 30, "", 0, 'C', 1, 0, '', '', true, 0, false, true, 20, 'M');
+	    $pdf->MultiCell(100, 30, "Jakarta,     ".date("F Y")."\nKABAG LAKDIKLARJAT\n\n\nDrs. MISRAN MUSA\nKOMISARIS BESAR POLISI NRP. 56060855 ", 0, 'C', 1, 1, '', '', true, 0, false, true, 30, 'B');
+
 ?>
 </body>
 </html>

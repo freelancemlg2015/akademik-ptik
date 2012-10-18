@@ -453,7 +453,6 @@ $route['master/pangkat/(:any)/(:any)/(:any)'] = "pangkat/index/$1/$2/$3";
 $route['master/pangkat/create/(:any)'] = "pangkat/create/$1";
 $route['master/pangkat/create'] = "pangkat/create";
 $route['master/pangkat/search'] = "pangkat/search";
-$route['master/pangkat/suggestion'] = "pangkat/suggestion";
 //END
 
 //KESATUAN ASAL
@@ -563,6 +562,21 @@ $route['transaction/jadwal_kuliah/(:any)/(:any)/(:any)'] = "jadwal_kuliah/index/
 $route['transaction/jadwal_kuliah/create/(:any)'] = "jadwal_kuliah/create/$1";
 $route['transaction/jadwal_kuliah/create'] = "jadwal_kuliah/create";
 $route['transaction/jadwal_kuliah/search'] = "jadwal_kuliah/search";
+$route['transaction/jadwal_kuliah/getOptProgramStudi'] = "jadwal_kuliah/getOptProgramStudi";
+$route['transaction/jadwal_kuliah/getOptMataKuliah'] = "jadwal_kuliah/getOptMataKuliah";
+//END
+//JADWAL UJIAN
+$route['transaction/jadwal_ujian'] = "jadwal_ujian";
+$route['transaction/jadwal_ujian/view/(:any)'] = "jadwal_ujian/index/$1";
+$route['transaction/jadwal_ujian/(:any)/info'] = "jadwal_ujian/info/$1";
+$route['transaction/jadwal_ujian/(:any)/edit'] = "jadwal_ujian/edit/$1";
+$route['transaction/jadwal_ujian/(:any)/delete'] = "jadwal_ujian/delete/$1";
+$route['transaction/jadwal_ujian/(:any)/(:any)/(:any)'] = "jadwal_ujian/index/$1/$2/$3";
+$route['transaction/jadwal_ujian/create/(:any)'] = "jadwal_ujian/create/$1";
+$route['transaction/jadwal_ujian/create'] = "jadwal_ujian/create";
+$route['transaction/jadwal_ujian/search'] = "jadwal_ujian/search";
+$route['transaction/jadwal_ujian/getOptProgramStudi'] = "jadwal_ujian/getOptProgramStudi";
+$route['transaction/jadwal_ujian/getOptMataKuliah'] = "jadwal_ujian/getOptMataKuliah";
 //END
 
 //UJIAN SKRIPSI
@@ -614,6 +628,7 @@ $route['transaction/paket_matakuliah/(:any)/(:any)/(:any)'] = "paket_matakuliah/
 $route['transaction/paket_matakuliah/create/(:any)'] = "paket_matakuliah/create/$1";
 $route['transaction/paket_matakuliah/create'] = "paket_matakuliah/create";
 $route['transaction/paket_matakuliah/search'] = "paket_matakuliah/search";
+$route['transaction/paket_matakuliah/suggestion'] = "paket_matakuliah/suggestion";
 //END
 
 //KALENDER AKADEMIK
@@ -642,30 +657,18 @@ $route['transaction/plot_kelas/search'] = "plot_kelas/search";
 $route['transaction/plot_kelas/suggestion'] = "plot_kelas/suggestion";
 //END
 
-//PLOT DOSEN PENANGGUNG JAWAB
-$route['transaction/plot_dosen_penanggung_jawab'] = "plot_dosen_penanggung_jawab";
-$route['transaction/plot_dosen_penanggung_jawab/view/(:any)'] = "plot_dosen_penanggung_jawab/index/$1";
-$route['transaction/plot_dosen_penanggung_jawab/(:any)/info'] = "plot_dosen_penanggung_jawab/info/$1";
-$route['transaction/plot_dosen_penanggung_jawab/(:any)/edit'] = "plot_dosen_penanggung_jawab/edit/$1";
-$route['transaction/plot_dosen_penanggung_jawab/(:any)/delete'] = "plot_dosen_penanggung_jawab/delete/$1";
-$route['transaction/plot_dosen_penanggung_jawab/(:any)/(:any)/(:any)'] = "plot_dosen_penanggung_jawab/index/$1/$2/$3";
-$route['transaction/plot_dosen_penanggung_jawab/create/(:any)'] = "plot_dosen_penanggung_jawab/create/$1";
-$route['transaction/plot_dosen_penanggung_jawab/create'] = "plot_dosen_penanggung_jawab/create";
-$route['transaction/plot_dosen_penanggung_jawab/search'] = "plot_dosen_penanggung_jawab/search";
-$route['transaction/plot_dosen_penanggung_jawab/suggestion'] = "plot_dosen_penanggung_jawab/suggestion";
-//END
 
-//RENCANA MATA PELAJARAN
-$route['transaction/rencana_mata_pelajaran'] = "rencana_mata_pelajaran";
-$route['transaction/rencana_mata_pelajaran/view/(:any)'] = "rencana_mata_pelajaran/index/$1";
-$route['transaction/rencana_mata_pelajaran/(:any)/info'] = "rencana_mata_pelajaran/info/$1";
-$route['transaction/rencana_mata_pelajaran/(:any)/edit'] = "rencana_mata_pelajaran/edit/$1";
-$route['transaction/rencana_mata_pelajaran/(:any)/delete'] = "rencana_mata_pelajaran/delete/$1";
-$route['transaction/rencana_mata_pelajaran/(:any)/(:any)/(:any)'] = "rencana_mata_pelajaran/index/$1/$2/$3";
-$route['transaction/rencana_mata_pelajaran/create/(:any)'] = "rencana_mata_pelajaran/create/$1";
-$route['transaction/rencana_mata_pelajaran/create'] = "rencana_mata_pelajaran/create";
-$route['transaction/rencana_mata_pelajaran/search'] = "rencana_mata_pelajaran/search";
-$route['transaction/rencana_mata_pelajaran/suggestion'] = "rencana_mata_pelajaran/suggestion";
+//PLOT DOSEN AJAR
+$route['transaction/plot_dosen_ajar'] = "plot_dosen_ajar";
+$route['transaction/plot_dosen_ajar/view/(:any)'] = "plot_dosen_ajar/index/$1";
+$route['transaction/plot_dosen_ajar/(:any)/info'] = "plot_dosen_ajar/info/$1";
+$route['transaction/plot_dosen_ajar/(:any)/edit'] = "plot_dosen_ajar/edit/$1";
+$route['transaction/plot_dosen_ajar/(:any)/delete'] = "plot_dosen_ajar/delete/$1";
+$route['transaction/plot_dosen_ajar/(:any)/(:any)/(:any)'] = "plot_dosen_ajar/index/$1/$2/$3";
+$route['transaction/plot_dosen_ajar/create/(:any)'] = "plot_dosen_ajar/create/$1";
+$route['transaction/plot_dosen_ajar/create'] = "plot_dosen_ajar/create";
+$route['transaction/plot_dosen_ajar/search'] = "plot_dosen_ajar/search";
+$route['transaction/plot_dosen_ajar/suggestion'] = "plot_dosen_ajar/suggestion";
 //END
 
 //ABSENSI DOSEN
@@ -678,18 +681,6 @@ $route['transaction/absensi_dosen/(:any)/(:any)/(:any)'] = "absensi_dosen/index/
 $route['transaction/absensi_dosen/create/(:any)'] = "absensi_dosen/create/$1";
 $route['transaction/absensi_dosen/create'] = "absensi_dosen/create";
 $route['transaction/absensi_dosen/search'] = "absensi_dosen/search";
-//END
-
-//JADWAL UJIAN
-$route['transaction/jadwal_ujian'] = "jadwal_ujian";
-$route['transaction/jadwal_ujian/view/(:any)'] = "jadwal_ujian/index/$1";
-$route['transaction/jadwal_ujian/(:any)/info'] = "jadwal_ujian/info/$1";
-$route['transaction/jadwal_ujian/(:any)/edit'] = "jadwal_ujian/edit/$1";
-$route['transaction/jadwal_ujian/(:any)/delete'] = "jadwal_ujian/delete/$1";
-$route['transaction/jadwal_ujian/(:any)/(:any)/(:any)'] = "jadwal_ujian/index/$1/$2/$3";
-$route['transaction/jadwal_ujian/create/(:any)'] = "jadwal_ujian/create/$1";
-$route['transaction/jadwal_ujian/create'] = "jadwal_ujian/create";
-$route['transaction/jadwal_ujian/search'] = "jadwal_ujian/search";
 //END
 
 //NILAI MENTAL
@@ -794,6 +785,19 @@ $route['laporan/laporan_jadwal_perkuliahan/create/(:any)'] = "laporan_jadwal_per
 $route['laporan/laporan_jadwal_perkuliahan/create'] = "laporan_jadwal_perkuliahan/create";
 $route['laporan/laporan_jadwal_perkuliahan/search'] = "laporan_jadwal_perkuliahan/search";
 $route['laporan/laporan_jadwal_perkuliahan/report'] = "laporan_jadwal_perkuliahan/report";
+//END
+
+//LAPORAN DAFTAR JADWAL UJIAN
+$route['laporan/laporan_jadwal_ujian'] = "laporan_jadwal_ujian";
+$route['laporan/laporan_jadwal_ujian/view/(:any)'] = "laporan_jadwal_ujian/index/$1";
+$route['laporan/laporan_jadwal_ujian/(:any)/info'] = "laporan_jadwal_ujian/info/$1";
+$route['laporan/laporan_jadwal_ujian/(:any)/edit'] = "laporan_jadwal_ujian/edit/$1";
+$route['laporan/laporan_jadwal_ujian/(:any)/delete'] = "laporan_jadwal_ujian/delete/$1";
+$route['laporan/laporan_jadwal_ujian/(:any)/(:any)/(:any)'] = "laporan_jadwal_ujian/index/$1/$2/$3";
+$route['laporan/laporan_jadwal_ujian/create/(:any)'] = "laporan_jadwal_ujian/create/$1";
+$route['laporan/laporan_jadwal_ujian/create'] = "laporan_jadwal_ujian/create";
+$route['laporan/laporan_jadwal_ujian/search'] = "laporan_jadwal_ujian/search";
+$route['laporan/laporan_jadwal_ujian/report'] = "laporan_jadwal_ujian/report";
 //END
 
 //LAPORAN DAFTAR DOSEN

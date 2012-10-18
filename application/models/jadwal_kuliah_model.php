@@ -7,17 +7,21 @@ class Jadwal_kuliah_model extends CI_Model {
     }
 
     function s_jadwal_kuliah() {
-        return $this->db->select('t_jadwal_kuliah.*,m_data_ruang.nama_ruang,m_dosen.nama_dosen, m_hari.nama_hari, m_mata_kuliah.nama_mata_kuliah')
+        return 	$this->db->select('t_jadwal_kuliah.*,m_data_ruang.nama_ruang,m_dosen.nama_dosen,
+						m_jam_pelajaran.kode_jam, m_jam_pelajaran.jam_normal_mulai, m_jam_pelajaran.jam_normal_akhir, 
+						m_mata_kuliah.nama_mata_kuliah, m_metode_ajar.metode_ajar, m_kegiatan.nama_kegiatan,
+						m_hari.nama_hari')
                         ->from('t_jadwal_kuliah')
                         ->join('m_mata_kuliah', 'm_mata_kuliah.id = t_jadwal_kuliah.mata_kuliah_id and akademik_m_mata_kuliah.angkatan_id = akademik_t_jadwal_kuliah.angkatan_id and akademik_m_mata_kuliah.program_studi_id = akademik_t_jadwal_kuliah.program_studi_id', 'left')						
 						->join('m_data_ruang', 'm_data_ruang.id = t_jadwal_kuliah.nama_ruang_id', 'left')
-                        ->join('t_dosen_ajar', 't_dosen_ajar.id = t_jadwal_kuliah.dosen_ajar_id', 'left')
                         ->join('m_semester', 't_jadwal_kuliah.semester_id = m_semester.id', 'left')
-                        ->join('m_hari', 'm_hari.id = t_jadwal_kuliah.hari_id', 'left')
+                        ->join('m_jam_pelajaran', 'm_jam_pelajaran.id = t_jadwal_kuliah.jenis_waktu', 'left')
+						->join('m_metode_ajar', 'm_metode_ajar.id = t_jadwal_kuliah.metode_ajar_id', 'left')
+						->join('m_kegiatan', 'm_kegiatan.id = t_jadwal_kuliah.kegiatan_id', 'left')
                         ->join('m_angkatan', 'm_angkatan.id = t_jadwal_kuliah.angkatan_id', 'left')
+						->join('m_hari', 'm_hari.id = t_jadwal_kuliah.hari_id', 'left')
+						->join('t_dosen_ajar', 't_dosen_ajar.id = t_jadwal_kuliah.dosen_ajar_id', 'left')
                         ->join('m_dosen', 'm_dosen.id = t_dosen_ajar.dosen_id', 'left');
-						//
-						
     }
 
     function get_many($data_type = NULL, $term = array(), $limit = NULL, $offset = NULL) {
@@ -40,10 +44,9 @@ class Jadwal_kuliah_model extends CI_Model {
         }
     }
 
-    function search($query_array, $limit, $offset, $sort_by, $sort_order) {
+    function search($query_array, $limit, $offset, $sort_by='id', $sort_order) {
         $sort_order = ($sort_order == 'desc') ? 'desc' : 'asc';
-        $sort_by = 'id';
-
+        //$sort_by = 'id';
         $this->s_jadwal_kuliah()
                 ->limit($limit, $offset)
                 ->order_by($sort_by, $sort_order);
