@@ -167,12 +167,14 @@ $icon_color = 'icon-grey';
                     <li class="dropdown <?= ($secondary_nav == 'jadwal_kuliah' || $secondary_nav == 'jadwal_ujian' ||$secondary_nav == 'ujian_skripsi' || $secondary_nav == 'plot_kelas' || $secondary_nav == 'absensi_mahasiswa' || $secondary_nav == 'absensi_dosen') ? 'active' : ''; ?>">
                         <a href="#" data-toggle="dropdown" class="dropdown-toggle">Jadwal Perkuliahan<b class="caret"></b></a>
                         <ul class="dropdown-menu">     
-                            <li class="<?= isActive($secondary_nav, 'plot_kelas'); ?>"><?= anchor('transaction/plot_kelas', 'Plot Kelas'); ?></li>               
+                            <?php /*?><li class="<?= isActive($secondary_nav, 'plot_kelas'); ?>"><?= anchor('transaction/plot_kelas', 'Plot Kelas'); ?></li><?php */?>               
                             <li class="<?= isActive($secondary_nav, 'jadwal_kuliah'); ?>"><?= anchor('transaction/jadwal_kuliah', 'Jadwal Kuliah'); ?></li>
                             <li class="<?= isActive($secondary_nav, 'jadwal_ujian'); ?>"><?= anchor('transaction/jadwal_ujian', 'Jadwal Ujian'); ?></li>
-                            <li class="<?= isActive($secondary_nav, 'ujian_skripsi'); ?>"><?= anchor('transaction/ujian_skripsi', 'Ujian Skripsi'); ?></li>
+                            <li class="<?= isActive($secondary_nav, 'ujian_skripsi'); ?>"><?= anchor('transaction/ujian_skripsi', 'Jadwal Skripsi'); ?></li>
                             <li class="<?= isActive($secondary_nav, 'absensi_mahasiswa'); ?>"><?= anchor('transaction/absensi_mahasiswa', 'Absensi Mahasiswa'); ?></li>
                             <li class="<?= isActive($secondary_nav, 'absensi_dosen'); ?>"><?= anchor('transaction/absensi_dosen', 'Absensi Dosen'); ?></li>
+                            <li class="<?= isActive($secondary_nav, 'absensi_mahasiswa'); ?>"><?= anchor('transaction/absensi_mahasiswa', 'Absensi Ujian Mahasiswa'); ?></li>
+                            <li class="<?= isActive($secondary_nav, 'absensi_dosen'); ?>"><?= anchor('transaction/absensi_dosen', 'Absensi Ujian Dosen'); ?></li>
 
                         </ul>
                     </li>
@@ -219,10 +221,10 @@ $icon_color = 'icon-grey';
             ?>
             <div class="subnav subnav-fixed">           
                 <ul class="nav nav-pills">
-                    <li class="dropdown <?= ($secondary_nav == 'laporan_daftar_mata_kuliah_paket' || $secondary_nav == 'laporan_kalender_akademik') ? 'active' : ''; ?>">
+                    <li class="dropdown <?= ($secondary_nav == 'laporan_daftar_matakuliah_paket' || $secondary_nav == 'laporan_kalender_akademik') ? 'active' : ''; ?>">
                         <a href="#" data-toggle="dropdown" class="dropdown-toggle">Laporan Kurikulum<b class="caret"></b></a>
                         <ul class="dropdown-menu">                      
-                            <li class="<?= isActive($secondary_nav, 'laporan_daftar_mata_kuliah_paket'); ?>"><?= anchor('laporan/laporan_daftar_mata_kuliah_paket', 'Laporan Daftar Mata Kuliah Paket'); ?></li>
+                            <li class="<?= isActive($secondary_nav, 'laporan_daftar_matakuliah_paket'); ?>"><?= anchor('laporan/laporan_daftar_matakuliah_paket', 'Laporan Daftar Mata Kuliah Paket'); ?></li>
                             <li class="<?= isActive($secondary_nav, 'laporan_kalender_akademik'); ?>"><?= anchor('laporan/laporan_kalender_akademik', 'Laporan Kalender Akademik'); ?></li>
                         </ul>
                     </li>
@@ -242,11 +244,11 @@ $icon_color = 'icon-grey';
                         </ul>
                     </li>
 
-                    <li class="dropdown <?= ($secondary_nav == 'laporan_khs' || $secondary_nav == 'laporan_transkip_nilai' || $secondary_nav == 'laporan_peringkat_kelulusan_nilai_akhir' || $secondary_nav == 'laporan_peringkat_kelulusan_nilai_akhir' || $secondary_nav == 'laporan_ranking_per_matakuliah' || $secondary_nav == 'laporan_ip' || $secondary_nav == 'laporan_ipk') ? 'active' : ''; ?>">
+                    <li class="dropdown <?= ($secondary_nav == 'lembar_hasil_studi' || $secondary_nav == 'laporan_nilai_akademik' || $secondary_nav == 'laporan_peringkat_kelulusan_nilai_akhir' || $secondary_nav == 'laporan_peringkat_kelulusan_nilai_akhir' || $secondary_nav == 'laporan_ranking_per_matakuliah' || $secondary_nav == 'laporan_ip' || $secondary_nav == 'laporan_ipk') ? 'active' : ''; ?>">
                         <a href="#" data-toggle="dropdown" class="dropdown-toggle">Laporan Nilai<b class="caret"></b></a>
                         <ul class="dropdown-menu">                      
-                            <li class="<?= isActive($secondary_nav, 'laporan_khs'); ?>"><?= anchor('laporan/laporan_khs', 'Laporan KHS'); ?></li>
-                            <li class="<?= isActive($secondary_nav, 'laporan_transkip_nilai'); ?>"><?= anchor('laporan/laporan_transkip_nilai', 'Laporan Transkip Nilai'); ?></li>
+                            <li class="<?= isActive($secondary_nav, 'lembar_hasil_studi'); ?>"><?= anchor('laporan/lembar_hasil_studi', 'Laporan KHS'); ?></li>
+                            <li class="<?= isActive($secondary_nav, 'laporan_nilai_akademik'); ?>"><?= anchor('laporan/laporan_nilai_akademik', 'Laporan Transkip Nilai'); ?></li>
                             <li class="<?= isActive($secondary_nav, 'laporan_peringkat_kelulusan_nilai_akhir'); ?>"><?= anchor('laporan/laporan_peringkat_kelulusan_nilai_akhir', 'Laporan Peringkat Kelulusan Nilai Akhir'); ?></li>
                             <li class="<?= isActive($secondary_nav, 'laporan_peringkat_kelulusan_akademik'); ?>"><?= anchor('laporan/laporan_peringkat_kelulusan_akademik', 'Laporan Peringkat Kelulusan Akademik'); ?></li>
                             <li class="<?= isActive($secondary_nav, 'laporan_ranking_per_matakuliah'); ?>"><?= anchor('laporan/laporan_ranking_per_matakuliah', 'Laporan Ranking Per Matakuliah'); ?></li>
