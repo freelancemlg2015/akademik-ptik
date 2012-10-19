@@ -110,7 +110,7 @@ body {
      font-size: 11px !important;
     background: url("../images/bg-xy.jpg") repeat scroll 0 0 #FBFBFB;
     background : url("../img/template.jpg") no-repeat top center;*/
-	background: #007D3A url(../../img/bg_home2.jpg);
+	background: #007D3A url(../img/bg_home.jpg);
 	width:1050px;
 	padding-top:100px;
 	margin:-50px 160px;
