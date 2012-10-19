@@ -761,6 +761,20 @@ $route['laporan/template_report/search'] = "template_report/search";
 //END
 
 
+//LAPORAN TRANSKIP NILAI
+$route['laporan/laporan_nilai_akademik'] = "laporan_nilai_akademik";
+$route['laporan/laporan_nilai_akademik/view/(:any)'] = "laporan_nilai_akademik/index/$1";
+$route['laporan/laporan_nilai_akademik/(:any)/info'] = "laporan_nilai_akademik/info/$1";
+$route['laporan/laporan_nilai_akademik/(:any)/edit'] = "laporan_nilai_akademik/edit/$1";
+$route['laporan/laporan_nilai_akademik/(:any)/delete'] = "laporan_nilai_akademik/delete/$1";
+$route['laporan/laporan_nilai_akademik/(:any)/(:any)/(:any)'] = "laporan_nilai_akademik/index/$1/$2/$3";
+$route['laporan/laporan_nilai_akademik/create/(:any)'] = "laporan_nilai_akademik/create/$1";
+$route['laporan/laporan_nilai_akademik/create'] = "laporan_nilai_akademik/create";
+$route['laporan/laporan_nilai_akademik/search'] = "laporan_nilai_akademik/search";
+$route['laporan/laporan_nilai_akademik/report'] = "laporan_nilai_akademik/report";
+//END
+
+
 //LAPORAN DAFTAR MATAKULIAH PAKET
 $route['laporan/laporan_daftar_matakuliah_paket'] = "laporan_daftar_matakuliah_paket";
 $route['laporan/laporan_daftar_matakuliah_paket/view/(:any)'] = "laporan_daftar_matakuliah_paket/index/$1";
@@ -787,6 +801,19 @@ $route['laporan/laporan_daftar_mahasiswa/search'] = "laporan_daftar_mahasiswa/se
 $route['laporan/laporan_daftar_mahasiswa/report'] = "laporan_daftar_mahasiswa/report";
 //END
 
+//LAPORAN LHS
+$route['laporan/laporan/lembar_hasil_studi'] = "laporan/lembar_hasil_studi";
+$route['laporan/laporan/lembar_hasil_studi/view/(:any)'] = "laporan/lembar_hasil_studi/index/$1";
+$route['laporan/laporan/lembar_hasil_studi/(:any)/info'] = "laporan/lembar_hasil_studi/info/$1";
+$route['laporan/laporan/lembar_hasil_studi/(:any)/edit'] = "laporan/lembar_hasil_studi/edit/$1";
+$route['laporan/laporan/lembar_hasil_studi/(:any)/delete'] = "laporan/lembar_hasil_studi/delete/$1";
+$route['laporan/laporan/lembar_hasil_studi/(:any)/(:any)/(:any)'] = "laporan/lembar_hasil_studi/index/$1/$2/$3";
+$route['laporan/laporan/lembar_hasil_studi/create/(:any)'] = "laporan/lembar_hasil_studi/create/$1";
+$route['laporan/laporan/lembar_hasil_studi/create'] = "laporan/lembar_hasil_studi/create";
+$route['laporan/laporan/lembar_hasil_studi/search'] = "laporan/lembar_hasil_studi/search";
+$route['laporan/laporan/lembar_hasil_studi/report'] = "laporan/lembar_hasil_studi/report";
+//END
+
 //LAPORAN DAFTAR JADWAL PERKULIAHAN
 $route['laporan/laporan_jadwal_perkuliahan'] = "laporan_jadwal_perkuliahan";
 $route['laporan/laporan_jadwal_perkuliahan/view/(:any)'] = "laporan_jadwal_perkuliahan/index/$1";
@@ -798,6 +825,19 @@ $route['laporan/laporan_jadwal_perkuliahan/create/(:any)'] = "laporan_jadwal_per
 $route['laporan/laporan_jadwal_perkuliahan/create'] = "laporan_jadwal_perkuliahan/create";
 $route['laporan/laporan_jadwal_perkuliahan/search'] = "laporan_jadwal_perkuliahan/search";
 $route['laporan/laporan_jadwal_perkuliahan/report'] = "laporan_jadwal_perkuliahan/report";
+//END
+
+//LAPORAN KALENDER AKADEMIK
+$route['laporan/laporan_kalender_akademik'] = "laporan_kalender_akademik";
+$route['laporan/laporan_kalender_akademik/view/(:any)'] = "laporan_kalender_akademik/index/$1";
+$route['laporan/laporan_kalender_akademik/(:any)/info'] = "laporan_kalender_akademik/info/$1";
+$route['laporan/laporan_kalender_akademik/(:any)/edit'] = "laporan_kalender_akademik/edit/$1";
+$route['laporan/laporan_kalender_akademik/(:any)/delete'] = "laporan_kalender_akademik/delete/$1";
+$route['laporan/laporan_kalender_akademik/(:any)/(:any)/(:any)'] = "laporan_kalender_akademik/index/$1/$2/$3";
+$route['laporan/laporan_kalender_akademik/create/(:any)'] = "laporan_kalender_akademik/create/$1";
+$route['laporan/laporan_kalender_akademik/create'] = "laporan_kalender_akademik/create";
+$route['laporan/laporan_kalender_akademik/search'] = "laporan_kalender_akademik/search";
+$route['laporan/laporan_kalender_akademik/report'] = "laporan_kalender_akademik/report";
 //END
 
 //LAPORAN DAFTAR JADWAL UJIAN
