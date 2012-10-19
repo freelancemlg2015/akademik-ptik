@@ -1,0 +1,59 @@
+
+
+#contant{width:940px;text-align:left;height:auto;margin:0 auto;padding:0;}
+
+#main{float:left; width:940px; height:auto; padding:-15px; margin:-1px -44px;}
+.left{float:left; width:228px; height:auto; border-right:1px dashed #A0A0A0; padding:0 5px 0 0; margin:0 5px 0 0;}
+.leftbox{float:left; width:208px; border:1px solid #ddd; background:#f4f4f4; padding:10px; margin:0 0 10px 0;}
+.leftnav{float:left; background:url(../img/14_r6_c2.jpg) no-repeat; width:188px; height:20px; text-align:left; padding-left:10px; margin:0;}
+.leftn{float:left; width:208px;height:auto!important;height:170px; min-height:170px; text-align:left; padding:5px 0; margin:0; line-height:24px;}
+
+.home{float:left; width:695px; height:auto; padding:0; margin:0;}
+.homenav{float:left; width:775px; background:url(../img/14_r5_c8.jpg) no-repeat; height:27px; text-align:left; color:#fff; line-height:27px; font-size:14px; padding-left:20px; margin:0;}
+.homebox{float:left; width:675px;height:auto!important;height:150px; min-height:150px; padding:10px; margin:0; line-height:24px; text-align:left;}
+.box{float:left; width:339px; margin:0; padding:0;}
+.boxnav{float:left; background:url(../img/14_r9_c7.jpg) no-repeat; width:319px; height:31px; text-align:left; line-height:31px; padding-left:20px; margin:0;}
+.boxn{float:left; width:319px; text-align:left; height:auto; padding:10px; margin:0; line-height:24px;}
+#bottom{
+	text-align:center;
+	float:left;
+	width:100%;
+	height:10px;
+	background:url(../img/14_r11_c4.jpg) repeat-x;
+	margin:0;
+	line-height:14px;
+	padding-top: 8px;
+	padding-right: 0;
+	padding-bottom: 38px;
+	padding-left: 0;
+}
+
+
+/*n*/
+.new{float:left; width:655px; text-align:left; height:auto; margin:0; padding:0;}
+.new li{float:left;width:655px;height:24px;line-height:24px;border-bottom:1px dashed #ddd;text-align:left; background:url(../img/dot_news.gif) no-repeat left center; margin:0; padding:0 0 0 15px;}
+#ArticleTit {clear:both; font-weight:bold; font-size:18px; line-height:30px; width:640px;color:#ff0000; margin:0px auto;padding-right:15px 0;}
+#ArtFrom {clear:both;border-top:#d0d0d0 1px solid;margin: 5px auto 15px;width:640px;line-height: 25px;border-bottom: #d0d0d0 1px solid;height:25px}
+#ArtCnt {clear: both; font-size: 12px; margin: 0px auto; width: 640px; word-break:break-all; line-height:180%; text-align: left;  word-wrap: break-word;}
+
+
+A.style40:link { 
+text-decoration: none;  
+font-weight: normal; 
+color:#333333;
+} 
+A.style40:visited { 
+text-decoration: none; 
+color: #333333; 
+font-weight: normal; 
+} 
+A.style40:active { 
+text-decoration: none; 
+color: #333333; 
+font-weight: normal; 
+} 
+A.style40:hover { 
+text-decoration: underline; 
+color:#333333; 
+font-weight: normal; 
+} 
