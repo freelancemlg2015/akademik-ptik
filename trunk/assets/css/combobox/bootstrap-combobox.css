@@ -110,10 +110,6 @@
   opacity: 1;
   filter: alpha(opacity=100);
 }
-.typeahead-long {
-  max-height: 300px;
-  overflow-y: auto;
-}
 .control-group.error .combobox-container .add-on {
   color: #B94A48;
   border-color: #B94A48;
