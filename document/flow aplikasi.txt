@@ -1,0 +1,20 @@
+-PTIK dapat list mahasiswa baru dari mabes
+-Mahasiswa dapat angkatan
+		 nim
+		 matakuliah -> sms 1 gabungan
+			       sms 2 gabungan
+			       sms 3 gabungan + penjurusan
+-Plot Matakuliah   -> mengelompokkan matakuliah kedalam kelompok matakuliah
+-Paket Matakuliah  -> Menentukan kelompok matakuliah kedalam Prodi
+-Plot Dosen        -> Menentukan matakuliah dan dosen 
+-Plot Jadwal       -> Menentukan ruangan perkuliahan 
+
+-Kehadiran Mahasiswa -> Input kehadiran mahasiswa --> plot jadwal 
+-Kehadiran Dosen     -> Input kehadiran dosen--> plot jadwal - plot dosen
+
+-Nilai Ujian Akademik -> nilai uas, tugas, uts
+-Nilai Mental dan kepribadian 	
+-Nilai kesehatan dan kesamaptaan
+
+-Pengajuan Skripsi
+-Sidang
