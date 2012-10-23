@@ -12,16 +12,16 @@ $this->load->view('_shared/menus');
         'style' => 'text-transform : uppercase;',
         'placeholder' => 'Angkatan'
     );
-    $nama_dosen_attr = array(
-        'id' => 'nama_dosen',
-        'name' => 'nama_dosen',
+    $nama_semester_attr = array(
+        'id' => 'nama_semester',
+        'name' => 'nama_semester',
         'class' => 'input-medium',
         'style' => 'text-transform : uppercase;',
-        'placeholder' => 'Dosen'
+        'placeholder' => 'Semester'
     );
     echo form_open('transaction/plot_dosen_penanggung_jawab/search/') .
     form_input($nama_angkatan_attr) . ' ' .
-    form_input($nama_dosen_attr) . ' ' .
+    form_input($nama_semester_attr) . ' ' .
     form_submit('cari', 'CARI', 'class="btn btn-mini"') .
     form_close();
     ?>
@@ -43,7 +43,6 @@ $this->load->view('_shared/menus');
             <th>Semester</th>
             <th>Konsentrasi Studi</th>
             <th>Mata Kuliah</th>
-            <th>Dosen</th>
         </tr>
     </thead>
     <tbody>
@@ -57,7 +56,6 @@ $this->load->view('_shared/menus');
               <td>' . $row->nama_semester . '</td>    
               <td>' . $row->nama_kelompok_mata_kuliah . '</td>    
               <td>' . $row->nama_mata_kuliah . '</td>    
-              <td>' . $row->nama_dosen . '</td>    
             </tr>
           ';
         }

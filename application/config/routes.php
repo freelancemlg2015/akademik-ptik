@@ -667,7 +667,7 @@ $route['transaction/plot_dosen_penanggung_jawab/(:any)/(:any)/(:any)'] = "plot_d
 $route['transaction/plot_dosen_penanggung_jawab/create/(:any)'] = "plot_dosen_penanggung_jawab/create/$1";
 $route['transaction/plot_dosen_penanggung_jawab/create'] = "plot_dosen_penanggung_jawab/create";
 $route['transaction/plot_dosen_penanggung_jawab/search'] = "plot_dosen_penanggung_jawab/search";
-$route['transaction/plot_dosen_penanggung_jawab/create/dosen'] = "plot_dosen_penanggung_jawab/create/dosen";
+$route['transaction/plot_dosen_penanggung_jawab/dosen'] = "plot_dosen_penanggung_jawab/dosen";
 $route['transaction/plot_dosen_penanggung_jawab/suggestion'] = "plot_dosen_penanggung_jawab/suggestion";
 //END
 

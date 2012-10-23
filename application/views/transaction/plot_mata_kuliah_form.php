@@ -134,8 +134,10 @@ foreach ($kelompok_matakuliah_options as $row) {
         </div>
     </div>-->
 
-    <div class="pagination pagination-centered">
-        <div id="pageNavPosition"></div> 
+    <div class="container">
+        <div class="pagination pagination-centered">
+            <div id="pageNavPosition"></div> 
+        </div>
     </div>
 
     <table class="table table-bordered table-striped container-full"  id="plot_maata_kuliah" controller="transaction">

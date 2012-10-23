@@ -1101,14 +1101,14 @@ $config = array(
     /* PAKET MATAKULIAH */
     ), 'paket_matakuliah_create' => array(
         array(
-            'field' => 'nama_paket',
-            'label' => 'nama_paket',
-            'rules' => 'trim|required'
+            'field' => 'angkatan_id',
+            'label' => 'angkatan_id',
+            'rules' => 'trim|required|greater_than[0]'
         )
     ), 'paket_matakuliah_update' => array(
         array(
-            'field' => 'nama_paket',
-            'label' => 'nama_paket',
+            'field' => 'angkatan_id',
+            'label' => 'angkatan_id',
             'rules' => 'trim|required'
         )
         
@@ -1325,19 +1325,19 @@ $config = array(
         )
 	 
 	 
-    /* PLOT DOSEN AJAR*/
-    ), 'plot_dosen_ajar_create' => array(
-//        array(
-//            'field' => 'keterangan',
-//            'label' => 'keterangan',
-//            'rules' => 'trim|required'
-//        )
-    ), 'plot_dosen_ajar_update' => array(
-//        array(
-//            'field' => 'keterangan',
-//            'label' => 'keterangan',
-//            'rules' => 'trim|required'
-//        )      
+    /* PLOT DOSEN PENANGGUNG JAWAB*/
+    ), 'plot_dosen_penanggung_jawab_create' => array(
+        array(
+            'field' => 'angkatan_id',
+            'label' => 'angkatan_id',
+            'rules' => 'trim|required|greater_than[0]'
+        )
+    ), 'plot_dosen_penanggung_jawab_update' => array(
+        array(
+            'field' => 'angkatan_id',
+            'label' => 'angkatan_id',
+            'rules' => 'trim|required'
+        )      
     )
     
 );
