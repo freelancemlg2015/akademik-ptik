@@ -145,12 +145,12 @@ class Paket_matakuliah extends CI_Controller {
             if($created_id && is_array($kelompok)){
                 $this->crud->use_table('t_paket_mata_kuliah_detil');
                 for($i=0; $i< count($kelompok); $i++){
-                    
                     $data_in = array(
                         'paket_mata_kuliah_id' => $created_id,
                         'kelompok_mata_kuliah_id' => $kelompok[$i]
                     );
-                     $this->crud->create($data_in);
+             
+                    $this->crud->create($data_in);
                 }
             }
             redirect('transaction/paket_matakuliah/' . $created_id . '/info');

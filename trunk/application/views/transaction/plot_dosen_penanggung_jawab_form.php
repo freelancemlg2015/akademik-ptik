@@ -81,7 +81,7 @@ foreach ($mata_kuliah_options as $row) {
     $mata_kuliah_data[$row->id] = $row->nama_mata_kuliah;
 }
 
-$dosen_data[0] = '';
+$dosen_data[] = '';
     foreach ($dosen_options as $row) {
         $dosen_data[$row->id] = $row->nama_dosen;
 }
@@ -94,7 +94,7 @@ foreach ($kelompok_matakuliah_options as $row) {
 
 $plot_mata_kuliah_data[0] = '';
 foreach ($plot_mata_kuliah_options as $row) {
-    $plot_mata_kuliah_data[$row->id."-".$row->mata_kuliah_id] = $row->kelompok_mata_kuliah_id;
+    $plot_mata_kuliah_data[$row->id] = $row->kelompok_mata_kuliah_id;
 }
 
 $plot_attr = array(
@@ -109,7 +109,7 @@ $plot_attr = array(
 <?= form_open($action_url, array('class' => 'form-horizontal')); ?>
 
     <div class="control-group">
-        <?= form_label('Angkatan' , 'angkatan_id', $control_label); ?>
+        <?= form_label('Angkatan' .required(), 'angkatan_id', $control_label); ?>
         <div class="controls">
             <?= form_dropdown('angkatan_id', $angkatan_data, set_value('angkatan_id', $angkatan_id), 'id="angkatan_id" class="input-medium" prevData-selected="' . set_value('angkatan_id', $angkatan_id) . '"'); ?>
             <p class="help-block"><?php echo form_error('angkatan_id') ?></p>
@@ -132,9 +132,9 @@ $plot_attr = array(
     </div>
         
     <div class="control-group">
-        <?= form_label('Konsentrasi Studi' , '', $control_label); ?>
+        <?= form_label('Konsentrasi Studi' , 'plot_mata_kuliah_id', $control_label); ?>
         <div class="controls">
-            <?= form_dropdown('plot_mata_kuliah_id', $kelompok_matakuliah_data, set_value('plot_mata_kuliah_id', $plot_mata_kuliah_id), 'id="plot_mata_kuliah_id" class="input-medium" prevData-selected="' . set_value('plot_mata_kuliah_id', $plot_mata_kuliah_id) . '"'); ?>
+            <?= form_dropdown('plot_mata_kuliah_id', $plot_mata_kuliah_data, set_value('plot_mata_kuliah_id', $plot_mata_kuliah_id), 'id="plot_mata_kuliah_id" class="input-medium" prevData-selected="' . set_value('plot_mata_kuliah_id', $plot_mata_kuliah_id) . '"'); ?>
             <p class="help-block"><?php echo form_error('plot_mata_kuliah_id') ?></p>
         </div>
     </div>
@@ -146,18 +146,19 @@ $plot_attr = array(
             <p class="help-block"><?php echo form_error('mata_kuliah_id') ?></p>
         </div>
     </div>
-    
-    
-    <div id="dosen" class="right->column">
-        <fieldset>
-            <legend>Nama Dosen/Penanggung Jawab</legend>
-                <?= form_label('Dosen' , 'dosen_id', $control_label); ?>
-                <div class="controls">
-                    <?= form_dropdown('dosen_id', $dosen_data, set_value('dosen_id', $dosen_id), 'id="dosen_id" class="input-medium" prevData-selected="' . set_value('dosen_id', $dosen_id) . '"'); ?>
-                    <p class="help-block"><?php echo form_error("dosen_id") ?></p>
-                </div>
-        </fieldset>
-    </div>
+   
+    <fieldset>
+        <legend>Nama Dosen/Penanggung Jawab</legend>
+        <div class="control-group">
+            <a id="button_add_dosen" class="btn btn-mini button_add_dosen_class"><i class="icon-plus"></i></a>
+            <?= form_label('Dosen' , 'dosen_id', $control_label); ?>
+            <div class="controls">
+                <?= form_dropdown('dosen_id[]', $dosen_data, set_value('dosen_id', ''), 'id="dosen_id" class="input-medium" prevData-selected="' . set_value('dosen_id', '') . '"'); ?>
+                <p class="help-block"><?php echo form_error('dosen_id') ?></p>
+            </div>
+        </div>
+    </fieldset>
+    <div class="clear:both"></div>
     
     <div class="form-actions well">
         <button class="btn btn-small btn-primary" type="submit">Simpan</button>

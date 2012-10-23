@@ -29,10 +29,6 @@ $control_label = array(
                 <th class="span2">Mata Kuliah</th>
                 <td><?= $nama_mata_kuliah ?></td>
             </tr>
-            <tr>
-                <th class="span2">Dosen</th>
-                <td><?= $nama_dosen ?></td>
-            </tr>
         </tbody>
     </table>
 </div>
