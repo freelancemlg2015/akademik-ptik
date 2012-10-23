@@ -12,6 +12,19 @@ $tgl_lahir_attr = array(
     'value' => set_value('tgl_lahir', $tgl_lahir),
     'autocomplete' => 'off'
 );
+$pertemuan_ke_attr = array(
+    'name' => 'pertemuan_ke',
+    'class' => 'input-small',
+    'value' => set_value('pertemuan_ke', $pertemuan_ke),
+    'autocomplete' => 'off'
+);
+$pertemuan_dari_attr = array(
+    'name' => 'pertemuan_dari',
+    'class' => 'input-small',
+    'value' => set_value('pertemuan_dari', $pertemuan_dari),
+    'autocomplete' => 'off'
+);
+
 $ruang_pelajaran_data[0] = '';
 foreach ($ruang_pelajaran_options as $row) {
     $ruang_pelajaran_data[$row->id] = $row->nama_ruang;
@@ -29,20 +42,18 @@ foreach ($jam_pelajaran_options as $row) {
 	<div class="control-group">
         <?= form_label('Kegiatan', 'kegiatan_id', $control_label); ?>
         <div class="controls">
-			<?= form_dropdown('kegiatan_id', $kegiatan_options, set_value('kegiatan_id', $kegiatan_id), 'id="kegiatan_id" class="input-medium" prevData-selected="' . set_value('kegiatan_id', $kegiatan_id) . '"') . '&nbsp;&nbsp;'; ?>
+			<?= form_dropdown('kegiatan_id', $kegiatan_options, set_value('kegiatan_id', $kegiatan_id), 'id="pangkat_id" class="input-medium" prevData-selected="' . set_value('kegiatan_id', $kegiatan_id) . '"') . '&nbsp;&nbsp;'; ?>
 			(pilih disini untuk mengisi data kegiatan dan jangan mengisi mata kuliah)
             <p class="help-block"><?php echo form_error('kegiatan_id') ?></p>
         </div>
     </div>
 	<div class="control-group">
-        <?= form_label('Metode Ajar', 'metode_ajar_id', $control_label); ?>
+        <?= form_label('Minggu Ke' . required(), 'minggu_ke', $control_label); ?>
         <div class="controls">
-			<?= form_dropdown('metode_ajar_id', $metode_ajar_options, set_value('metode_ajar_id', $metode_ajar_id), 'id="metode_ajar_id" class="input-medium" prevData-selected="' . set_value('metode_ajar_id', $metode_ajar_id) . '"') . '&nbsp;&nbsp;'; ?>
-            <p class="help-block"><?php echo form_error('metode_ajar_id') ?></p>
+			<?= form_dropdown('minggu_ke', $minggu_ke_options, set_value('minggu_ke', $minggu_ke), 'id="agama_id" class="input-medium" prevData-selected="' . set_value('minggu_ke', $minggu_ke) . '"') . '&nbsp;&nbsp;'; ?>
+            <p class="help-block"><?php echo form_error('minggu_ke') ?></p>
         </div>
     </div>
-	
-	
 	<div class="control-group">
         <?= form_label('Tanggal' . required(), 'tgl_lahir', $control_label); ?>
 		<div class="controls">
@@ -50,12 +61,25 @@ foreach ($jam_pelajaran_options as $row) {
             <p class="help-block"><?php echo form_error('tgl_lahir') ?></p>
         </div>
     </div>
-	
 	<div class="control-group">
         <?= form_label('Waktu' . required(), 'jenis_waktu', $control_label); ?>
         <div class="controls">
             <?= form_dropdown('jenis_waktu', $jam_pelajaran_data, set_value('jenis_waktu', $jenis_waktu), 'id="jenis_waktu" class="input-medium" prevData-selected="' . set_value('jenis_waktu', $jenis_waktu) . '"') . '&nbsp;&nbsp;'; ?>
             <p class="help-block"><?php echo form_error('jenis_waktu') ?></p>
+        </div>
+    </div>
+	<div class="control-group">
+        <?= form_label('Pertemuan ke' . required(), 'pertemuan_ke', $control_label); ?>
+        <div class="controls">
+			<?= form_input($pertemuan_ke_attr) ?> &nbsp;&nbsp;dari&nbsp;&nbsp; <?= form_input($pertemuan_dari_attr) ?>
+            <p class="help-block"><?php echo form_error('pertemuan_ke') ?></p>
+        </div>
+    </div>
+	<div class="control-group">
+        <?= form_label('Metode Ajar', 'metode_ajar_id', $control_label); ?>
+        <div class="controls">
+			<?= form_dropdown('metode_ajar_id', $metode_ajar_options, set_value('metode_ajar_id', $metode_ajar_id), 'id="pangkat_id" class="input-medium" prevData-selected="' . set_value('metode_ajar_id', $metode_ajar_id) . '"') . '&nbsp;&nbsp;'; ?>
+            <p class="help-block"><?php echo form_error('metode_ajar_id') ?></p>
         </div>
     </div>
 	<div class="control-group">
