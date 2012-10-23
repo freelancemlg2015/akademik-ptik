@@ -2,16 +2,24 @@ $().ready(function(){
     if($('#button_add_dosen').length > 0 ){
         $('#button_add_dosen').live('click',function(){
 
-            var cloned = $("#dosen_id").html(); //<select class="input-medium" name="dosen_id" prevData-selected="">'+dosen_id+'</select>
+            var cloned = $(".dosen_id").html(); //<select class="input-medium" name="dosen_id" prevData-selected="">'+dosen_id+'</select>
 
             var elem = $(this);
             var elem_parent = elem.parents('.control-group');
             var html_to_add = '<div class="control-group">\n\
                                         <label class="control-label" for="dosen_id">Dosen</label>\n\
                                         <div class="controls">\n\
-                                                <select id="dosen_id" class="input-medium" prevdata-selected="" name="dosen_id">'+cloned+'</select>\n\
+                                            <div class="combobox-container">\n\
+                                            <input class="input-medium" type="text" autocomplete="off">\n\
+                                            <span class="add-on btn dropdown-toggle" data-dropdown="dropdown">\n\
+                                                <span class="caret"/><span class="combobox-clear"><i class="icon-remove"/>\n\
+                                                </span>\n\
+                                            </span>\n\
+                                            <select class="input-medium dosen_id" prevdata-selected="" name="dosen_id">'+cloned+'</select>\n\
+                                            </div>\n\
                                                 <span class="btn-mini-class"><a class="btn btn-mini remove-add_dosen"><i class="icon-minus"></i></a></span>\n\
-                                        </div>\n\
+                                            </div>\n\
+                                        <div class="clear:both"></div>\n\
                                     </div>';
                 elem_parent.after(html_to_add);
                 

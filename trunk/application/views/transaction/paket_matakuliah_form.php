@@ -29,20 +29,13 @@ foreach ($semester_options as $row) {
     $semester_data[$row->id] = $row->nama_semester;
 }
 
-//$mata_kuliah_data[0] = '';
-//foreach ($mata_kuliah_options as $row) {
-//    $mata_kuliah_data[$row->id] = $row->nama_mata_kuliah;
-//}
 
 $program_studi_data[0] = '';
 foreach ($program_studi_options as $row) {
     $program_studi_data[$row->id] = $row->nama_program_studi;
 }
 
-$plot_mata_kuliah_data[0] = '';
-foreach ($plot_mata_kuliah_options as $row) {
-    $plot_mata_kuliah_data[$row->id] = $row->mata_kuliah_id;
-}
+
 
 ?>
 <div class="container-full" id="paket_matakuliah">
@@ -86,7 +79,7 @@ foreach ($plot_mata_kuliah_options as $row) {
                     <?php
                         foreach($kelompok_matakuliah_options as $row){    
                     ?>
-                        <input type="checkbox" id="cek" name="kelompok_mata_kuliah_id[]" value="<?php echo $row->id ?>">&nbsp;&nbsp;<?php echo $row->nama_kelompok_mata_kuliah; ?><br> 
+                        <input type="checkbox" id="cek"  name="kelompok_mata_kuliah_id[]" value="<?php echo $row->id ?>">&nbsp;&nbsp;<?php echo $row->nama_kelompok_mata_kuliah; ?><br> 
                     <?php 
                         } 
                     ?>

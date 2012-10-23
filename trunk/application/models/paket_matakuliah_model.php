@@ -8,15 +8,13 @@ class Paket_matakuliah_model extends CI_Model {
 
     function s_paket_matakuliah() {
         return $this->db->select('t_paket_mata_kuliah.*,m_angkatan.nama_angkatan,m_tahun_akademik.tahun_ajar_mulai,m_tahun_akademik.tahun_ajar_akhir,
-                                                        m_semester.nama_semester,m_program_studi.nama_program_studi,
-                                                        m_mata_kuliah.nama_mata_kuliah')
+                                                        m_semester.nama_semester,m_program_studi.nama_program_studi')
                         ->from('t_paket_mata_kuliah')
                         ->join('m_angkatan', 'm_angkatan.id   = t_paket_mata_kuliah.angkatan_id', 'left')
                         ->join('m_tahun_akademik', 'm_tahun_akademik.id = t_paket_mata_kuliah.tahun_akademik_id', 'left')
                         ->join('m_semester', 'm_semester.id = t_paket_mata_kuliah.semester_id', 'left')
                         ->join('m_program_studi', 'm_program_studi.id = t_paket_mata_kuliah.program_studi_id', 'left')
-                        ->join('t_plot_mata_kuliah', 't_plot_mata_kuliah.id = t_paket_mata_kuliah.plot_mata_kuliah_id', 'left')
-                        ->join('m_mata_kuliah', 'm_mata_kuliah.id = t_plot_mata_kuliah.mata_kuliah_id', 'left');
+                        ->join('t_plot_mata_kuliah', 't_plot_mata_kuliah.id = t_paket_mata_kuliah.plot_mata_kuliah_id', 'left');
     }
 
     function get_many($data_type = NULL, $term = array(), $limit = NULL, $offset = NULL) {

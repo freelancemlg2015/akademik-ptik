@@ -112,7 +112,7 @@ class Plot_dosen_penanggung_jawab extends CI_Controller {
         $this->crud->update($criteria, $data_in);
         redirect('transaction/plot_dosen_penanggung_jawab');
     }
-
+    
     function create() {
         $data['auth'] = $this->auth;
         $data['action_type'] = __FUNCTION__;
@@ -132,28 +132,30 @@ class Plot_dosen_penanggung_jawab extends CI_Controller {
                 'mata_kuliah_id'     => $this->input->post('mata_kuliah_id'),
                 'plot_mata_kuliah_id'=> $this->input->post('plot_mata_kuliah_id'),
                 //'dosen_id'           => $this->input->post('dosen_id'),
-                'keterangan'         => $this->input->post('keterangan'),
-                'created_on'         => date($this->config->item('log_date_format')),
-                'created_by'         => logged_info()->on
-            );
+                'created_on'              => date($this->config->item('log_date_format')),
+                'created_by'              => logged_info()->on
+            ); 
             
             $created_id = $this->crud->create($data_in);
-            $kelompok = $this->input->post('dosen_id');
-            if($created_id && is_array($kelompok)){
+            $dosen = $this->input->post('dosen_id');
+            if($created_id && is_array($dosen)){
                 $this->crud->use_table('t_dosen_ajar_detil');
-                for($i=0; $i< count($kelompok); $i++){
+                for($i=0; $i< count($dosen); $i++){
                     $data_in = array(
                         'dosen_ajar_id' => $created_id,
-                        'dosen_id' => $kelompok[$i]
+                        'dosen_id' => $dosen[$i]
                     );
                     
-                    var_dump($data_in);exit();
-             
+                    echo '<pre>';
+                    var_dump($data_in); exit();
+                    echo '</pre>';
+                    
                     $this->crud->create($data_in);
                 }
             }
             redirect('transaction/plot_dosen_penanggung_jawab/' . $created_id . '/info');
         }
+        
         $data['action_url'] = $transaction_url . __FUNCTION__;
         $data['page_title'] = 'Create Plot Dosen Penanggung Jawab';
         $data['tools'] = array(

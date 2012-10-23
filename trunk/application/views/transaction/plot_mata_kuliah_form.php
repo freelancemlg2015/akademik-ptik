@@ -161,7 +161,7 @@ foreach ($kelompok_matakuliah_options as $row) {
                         <td>' . $row->nama_mata_kuliah . '</td>';
             ?>
                         <td style="text-align: center">
-                            <input type="checkbox" name="mata_kuliah_id[]" id="cek" value="<?php echo $row->id ?>" >   
+                            <input type="checkbox" name="mata_kuliah_id" id="cek" value="<?php echo $row->id ?>" >   
                         </td>
             <?php    
                  echo'</tr>

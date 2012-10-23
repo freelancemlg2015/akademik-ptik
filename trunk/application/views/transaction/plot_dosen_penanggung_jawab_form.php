@@ -153,7 +153,7 @@ $plot_attr = array(
             <a id="button_add_dosen" class="btn btn-mini button_add_dosen_class"><i class="icon-plus"></i></a>
             <?= form_label('Dosen' , 'dosen_id', $control_label); ?>
             <div class="controls">
-                <?= form_dropdown('dosen_id[]', $dosen_data, set_value('dosen_id', ''), 'id="dosen_id" class="input-medium" prevData-selected="' . set_value('dosen_id', '') . '"'); ?>
+                <?= form_dropdown('dosen_id', $dosen_data, set_value('dosen_id', ''), 'id="dosen_id" class="input-medium" prevData-selected="' . set_value('dosen_id', '') . '"'); ?>
                 <p class="help-block"><?php echo form_error('dosen_id') ?></p>
             </div>
         </div>
