@@ -11,7 +11,7 @@ if (!defined('BASEPATH'))
 
 class Jadwal_kuliah extends CI_Controller {
 
-    function __construct() {
+	function __construct() {
         parent::__construct();
         $this->load->helper(array('snippets_helper'));
         $this->load->model('crud_model', 'crud');
@@ -114,7 +114,7 @@ class Jadwal_kuliah extends CI_Controller {
     }
 	
 	function create() {
-        $data['auth'] = $this->auth;
+		$data['auth'] = $this->auth;
         $data['action_type'] = __FUNCTION__;
         $transaction_url = 'transaction/jadwal_kuliah/';
 
@@ -165,6 +165,9 @@ class Jadwal_kuliah extends CI_Controller {
 					'angkatan_id'	=> $this->input->post('angkatan_id'),
 					'metode_ajar_id'=> $this->input->post('metode_ajar_id'),
 					'tanggal'		=> $this->input->post('tgl_lahir'),
+					'minggu_ke'		=> $this->input->post('minggu_ke'),
+					'pertemuan_ke'	=> $this->input->post('pertemuan_ke'),
+					'pertemuan_dari'=> $this->input->post('pertemuan_dari'),
 					'mata_kuliah_id'=> $mata_kuliah_id,
 					'kegiatan_id'	=> $kegiatan_id,
 					'nama_ruang_id'	=> $this->input->post('nama_ruang_id'),
@@ -185,17 +188,24 @@ class Jadwal_kuliah extends CI_Controller {
 				redirect('transaction/jadwal_kuliah/' . $created_id . '/info');
 			}
         }
-		$data['tgl_lahir']=$this->input->post('tgl_lahir');
+		
 		$data['angkatan_id']=$this->input->post('angkatan_id');
 		$data['program_studi']=$this->input->post('program_studi');
 		$data['kegiatan_id']=$this->input->post('kegiatan_id');
-		$data['metode_ajar_id']=$this->input->post('metode_ajar_id');
 		$data['tahun_akademik_id']=$this->input->post('tahun_akademik_id');
+		$data['minggu_ke']=$this->input->post('minggu_ke');
+		
+		$data['tgl_lahir']=$this->input->post('tgl_lahir');
+		$data['pertemuan_ke']=$this->input->post('pertemuan_ke');
+		$data['pertemuan_dari']=$this->input->post('pertemuan_dari');
+		$data['metode_ajar_id']=$this->input->post('metode_ajar_id');
+		
 		$data['semester_id']=$this->input->post('semester_id');
         $data['action_url'] = $transaction_url . __FUNCTION__;
         $data['page_title'] = 'Create Jadwal Kuliah';
         $data['tools'] = array('transaction/jadwal_kuliah' => 'Back');
 		$angkatan_ids=$this->input->post('angkatan_id');
+		
 		if($angkatan_ids>0)
 		{
 			$data_program_studi=array();
@@ -231,6 +241,7 @@ class Jadwal_kuliah extends CI_Controller {
 		}
 		$this->crud->use_table('m_angkatan');
 		$angkatan_data = array();
+		$angkatan_data[0] = '';
         foreach ($this->crud->retrieve()->result() as $row) {
 			$angkatan_data[$row->id] = $row->nama_angkatan;
         }
@@ -238,6 +249,7 @@ class Jadwal_kuliah extends CI_Controller {
         
         $this->crud->use_table('m_tahun_akademik');
 		$tahun_akademik_data = array();
+		$tahun_akademik_data[0] = '';
         foreach ($this->crud->retrieve()->result() as $row) {
 			$tahun_akademik_data[$row->id] = $row->tahun_ajar_mulai.'-'.$row->tahun_ajar_akhir;
 		}
@@ -245,6 +257,7 @@ class Jadwal_kuliah extends CI_Controller {
 		
 		$this->crud->use_table('m_metode_ajar');
 		$metode_ajar_data = array();
+		$metode_ajar_data[0] = '';
         foreach ($this->crud->retrieve()->result() as $row) {
 			$metode_ajar_data[$row->id] = $row->metode_ajar;
 		}
@@ -252,6 +265,7 @@ class Jadwal_kuliah extends CI_Controller {
         
 		$this->crud->use_table('m_semester');
 		$semester_data = array();
+		$semester_data[0] = '';
 		foreach ($this->crud->retrieve()->result() as $row) {
 			$semester_data[$row->id] = $row->nama_semester;
 		}
@@ -265,6 +279,13 @@ class Jadwal_kuliah extends CI_Controller {
 			$kegiatan_data[$row->id] = $row->nama_kegiatan;
 		}
         $data['kegiatan_options'] = $kegiatan_data;
+		
+		$minggu_ke_options = array();
+		$minggu_ke_options[0] = '';
+		for ($i = 1; $i <= 5; $i++) {
+			$minggu_ke_options[$i] = $this->ConvertRomawi($i);
+		}
+		$data['minggu_ke_options'] = $minggu_ke_options;
 		
         $data['opt_program_studi_url'] = base_url() . 'transaction/jadwal_kuliah/getOptProgramStudi';//jadwal_kuliah
         $data['opt_mata_kuliah_url'] =  base_url() . 'transaction/jadwal_kuliah/getOptMataKuliah';//nilai_akademik
@@ -313,7 +334,7 @@ class Jadwal_kuliah extends CI_Controller {
 		if(($mata_kuliah_id==0) && ($kegiatan_id==0)) {$is_valid=0;}
 		if($kegiatan_id>0) $mata_kuliah_id = 0;
 		//if($is_valid==0){
-        if ($this->form_validation->run('jadwal_kuliah_create') === FALSE) {
+        if ($this->form_validation->run('jadwal_kuliah_update') === FALSE) {
             //don't do anything
         } else {
 			if($is_valid==0){
@@ -345,6 +366,9 @@ class Jadwal_kuliah extends CI_Controller {
 					'angkatan_id'	=> $this->input->post('angkatan_id'),
 					'metode_ajar_id'=> $this->input->post('metode_ajar_id'),
 					'tanggal'		=> $this->input->post('tgl_lahir'),
+					'minggu_ke'		=> $this->input->post('minggu_ke'),
+					'pertemuan_ke'	=> $this->input->post('pertemuan_ke'),
+					'pertemuan_dari'=> $this->input->post('pertemuan_dari'),
 					'mata_kuliah_id'=> $mata_kuliah_id,
 					'kegiatan_id'	=> $kegiatan_id,
 					'nama_ruang_id'	=> $this->input->post('nama_ruang_id'),
@@ -365,13 +389,18 @@ class Jadwal_kuliah extends CI_Controller {
 				redirect('transaction/jadwal_kuliah/' . $id . '/info');
 			}
         }
-		$data['tgl_lahir']=$this->input->post('tgl_lahir');
+		
 		$data['angkatan_id']=$this->input->post('angkatan_id');
 		$data['program_studi']=$this->input->post('program_studi');
 		$data['kegiatan_id']=$this->input->post('kegiatan_id');
 		$data['metode_ajar_id']=$this->input->post('metode_ajar_id');
 		$data['tahun_akademik_id']=$this->input->post('tahun_akademik_id');
 		$data['semester_id']=$this->input->post('semester_id');
+		
+		$data['minggu_ke']=$this->input->post('minggu_ke');
+		$data['tgl_lahir']=$this->input->post('tgl_lahir');
+		$data['pertemuan_ke']=$this->input->post('pertemuan_ke');
+		$data['pertemuan_dari']=$this->input->post('pertemuan_dari');
 		
         $data['action_url'] = $transaction_url . __FUNCTION__;
         $data['page_title'] = 'Update Jadwal Kuliah';
@@ -413,6 +442,12 @@ class Jadwal_kuliah extends CI_Controller {
 			$kegiatan_data[$row->id] = $row->nama_kegiatan;
 		}
         $data['kegiatan_options'] = $kegiatan_data;
+		$minggu_ke_options = array();
+		$minggu_ke_options[0] = '';
+		for ($i = 1; $i <= 5; $i++) {
+			$minggu_ke_options[$i] = $this->ConvertRomawi($i);
+		}
+		$data['minggu_ke_options'] = $minggu_ke_options;
 		
         $data['opt_program_studi_url'] 	=  base_url() . 'transaction/jadwal_kuliah/getOptProgramStudi';//jadwal_kuliah
         $data['opt_mata_kuliah_url'] 	=  base_url() . 'transaction/jadwal_kuliah/getOptMataKuliah';//nilai_akademik
@@ -483,14 +518,48 @@ class Jadwal_kuliah extends CI_Controller {
         $tahun_akademik_id = $this->input->post('tahun_akademik_id');
         $angkatan_id= $this->input->post('angkatan_id');
         $program_studi_id = $this->input->post('program_studi_id');
+		$semester_id=$this->input->post('semester_id');
+		/*
 		$sql = "select a.id, a.kode_mata_kuliah, a.nama_mata_kuliah from akademik_m_mata_kuliah a ".
 				"where a.angkatan_id=$angkatan_id and program_studi_id= $program_studi_id";
-        $query = $this->db->query($sql);
+        */
+		$sql = ("select d.id, d.kode_mata_kuliah, d.nama_mata_kuliah
+				from akademik_t_rencana_mata_pelajaran_pokok a
+				left join akademik_m_mata_kuliah d on a.mata_kuliah_id = d.id
+				where a.angkatan_id = $angkatan_id and a.program_studi_id=$program_studi_id 
+					and a.semester_id = $semester_id 
+					and a.tahun_akademik_id = $tahun_akademik_id
+					group by d.id
+					");//group by d.id
+		$query = $this->db->query($sql);
+		//echo '<pre>'.$this->db->last_query().'</pre>'; //return;
         echo '<option value=\'\' > pilih</option>';
         foreach($query->result_array() as $row){
             echo '<option value=\''.$row['id'].'\' >'.$row['kode_mata_kuliah'].'-'.$row['nama_mata_kuliah'].'</option>';
         }
     }
+	
+	function ConvertRomawi($n){
+		$hasil = '';
+		$iromawi = array('','I','II','III','IV','V','VI','VII','VIII','IX','X',20=>'XX',30=>'XXX',40=>'XL',50=>'L',
+			60=>'LX',70=>'LXX',80=>'LXXX',90=>'XC',100=>'C',200=>'CC',300=>'CCC',400=>'CD',500=>'D',600=>'DC',700=>'DCC',
+			800=>'DCCC',900=>'CM',1000=>'M',2000=>'MM',3000=>'MMM');
+		if(array_key_exists($n,$iromawi)){
+			$hasil = $iromawi[$n];
+		}elseif($n >= 11 && $n <= 99){
+			$i = $n % 10;
+			$hasil = $iromawi[$n-$i] . Romawi($n % 10);
+		}elseif($n >= 101 && $n <= 999){
+			$i = $n % 100;
+			$hasil = $iromawi[$n-$i] . Romawi($n % 100);
+		}else{
+			$i = $n % 1000;
+			$hasil = $iromawi[$n-$i] . Romawi($n % 1000);
+		}
+		return $hasil;
+	}
+	
+	
 }
 
 ?>
