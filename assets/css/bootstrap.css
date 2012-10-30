@@ -4844,7 +4844,7 @@ button.close {
   .nav-collapse .dropdown-menu:after {
     display: none;
   }
-  .nav-collapse .dropdown-menu .divider {
+  .nav-collapse .typeahead  .divider {
     display: none;
   }
   .nav-collapse .navbar-form,

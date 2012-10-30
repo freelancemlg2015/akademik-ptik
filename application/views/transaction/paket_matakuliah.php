@@ -48,10 +48,8 @@ $this->load->view('_shared/menus');
         <?php
         foreach ($results->result() as $row) {
             $tahun = $row->tahun_ajar_mulai.$row->tahun_ajar_akhir;
-            if(empty($tahun)){
-                $tahun = $row->tahun_ajar_mulai.''.$row->tahun_ajar_akhir;
-            }else{
-                $tahun = $row->tahun_ajar_mulai.''.$row->tahun_ajar_akhir;
+            if(!empty($tahun)){
+                $tahun = $row->tahun_ajar_mulai.'-'.$row->tahun_ajar_akhir;
             }
             echo '<tr id="' . $row->id . '">
               <td>' . $row->nama_angkatan . '</td>

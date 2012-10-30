@@ -85,9 +85,9 @@ foreach ($kelompok_matakuliah_options as $row) {
 ?>
 <div class="container-full" id="plot_mata_kuliah">
 <?= form_open($action_url, array('class' => 'form-horizontal')); ?>
-
+    
     <div class="control-group">
-        <?= form_label('Angkatan' , 'angkatan_id', $control_label); ?>
+        <?= form_label('Angkatan' . required(), 'angkatan_id', $control_label); ?>
         <div class="controls">
             <?= form_dropdown('angkatan_id', $angkatan_data, set_value('angkatan_id', $angkatan_id), 'id="angkatan_id" class="input-medium" prevData-selected="' . set_value('angkatan_id', $angkatan_id) . '"'); ?>
             <p class="help-block"><?php echo form_error('angkatan_id') ?></p>
@@ -151,19 +151,24 @@ foreach ($kelompok_matakuliah_options as $row) {
                 </th>
             </tr>
         </thead>
-        <tbody id="plot">
-            <?php
+        <tbody>
+            <?php                                           
                 $no = 1;
                 foreach ($mata_kuliah_options as $row) {
                 echo '<tr id="' . $row->id . '">
                         <td style="text-align: center">' . $no . '</td>    
                         <td>' . $row->kode_mata_kuliah . '</td>    
                         <td>' . $row->nama_mata_kuliah . '</td>';
-            ?>
-                        <td style="text-align: center">
-                            <input type="checkbox" name="mata_kuliah_id" id="cek" value="<?php echo $row->id ?>" >   
-                        </td>
-            <?php    
+                        @$checked = in_array($row->id, $get_matakuliah_detil_options) ? "checked='checked'" : "";
+                        if(empty($checked)){
+                            echo "<td style='text-align: center'>
+                                    <input type='checkbox' name='mata_kuliah_id[]' id='cek' value='$row->id' >   
+                                </td>"; 
+                        }else{
+                            echo "<td style='text-align: center'>
+                                    <input type='checkbox' $checked name='mata_kuliah_id[]' id='cek' value='$row->id' >   
+                                </td>"; 
+                        }
                  echo'</tr>
                 ';
                 $no++;                    
@@ -181,7 +186,7 @@ foreach ($kelompok_matakuliah_options as $row) {
     <?php $this->load->view('_shared/footer'); ?>
 
 <script type="text/javascript">
-    var pager = new Pager('plot', 10); 
+    var pager = new Pager('plot_maata_kuliah', 10); 
     pager.init(); 
     pager.showPageNav('pager', 'pageNavPosition'); 
     pager.showPage(1);

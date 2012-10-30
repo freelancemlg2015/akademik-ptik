@@ -130,8 +130,6 @@ class Rencana_mata_pelajaran extends CI_Controller {
                 'tahun_akademik_id'  => $this->input->post('tahun_akademik_id'),
                 'semester_id'        => $this->input->post('semester_id'),
                 'program_studi_id'   => $this->input->post('program_studi_id'),
-                'mahasiswa_id'       => $this->input->post('mahasiswa_id'),
-                'mata_kuliah_id'     => $this->input->post('mata_kuliah_id'),
                 'keterangan'         => $this->input->post('keterangan'),
                 'created_on'         => date($this->config->item('log_date_format')),
                 'created_by'         => logged_info()->on
@@ -142,6 +140,21 @@ class Rencana_mata_pelajaran extends CI_Controller {
 //              echo '</pre>';
              
             $created_id = $this->crud->create($data_in);
+            
+            $mahasiswa = $this->input->post('mahasiswa_id');
+            if($created_id && is_array($mahasiswa)){
+                $this->crud->use_table('t_rencana_mata_pelajaran_pokok_detil');
+                for($i=0; $i< count($mahasiswa); $i++){
+                    $data_in = array(
+                            'rencana_mata_pelajaran_id' => $created_id,
+                            'mahasiswa_id'              => $mahasiswa[$i],
+                            'modified_on'               => date($this->config->item('log_date_format')),
+                            'modified_by'               => logged_info()->on,
+                            'active'                    => 1   
+                        );
+                    $this->crud->create($data_in);  
+                }
+            }
             redirect('transaction/rencana_mata_pelajaran/' . $created_id . '/info');
         }
         $data['action_url'] = $transaction_url . __FUNCTION__;
@@ -174,6 +187,11 @@ class Rencana_mata_pelajaran extends CI_Controller {
         $this->crud->use_table('m_mata_kuliah');
         $data['mata_kuliah_options'] = $this->crud->retrieve()->result();
         
+        $this->crud->use_table('t_rencana_mata_pelajaran_pokok_detil');
+        $data['rencana_mata_pelajaran_detil_options'] = $this->crud->retrieve()->result();
+        
+        $data['rencana_mata_pelajaran_options'] = '';
+        
         $this->load->model('rencana_mata_pelajaran_model', 'rencana_mata_pelajaran');
         $data = array_merge($data, $this->rencana_mata_pelajaran->set_default()); //merge dengan arr data dengan default
         
@@ -190,7 +208,7 @@ class Rencana_mata_pelajaran extends CI_Controller {
     function edit() {
         $data['auth']        = $this->auth;
         $data['action_type'] = __FUNCTION__;
-        $master_url          = 'transaction/rencana_mata_pelajaran/';
+        $transaction_url     = 'transaction/rencana_mata_pelajaran/';
         $id                  = $this->uri->segment(3);
 
         $this->load->library(array('form_validation', 'table'));
@@ -220,6 +238,38 @@ class Rencana_mata_pelajaran extends CI_Controller {
 //              echo '</pre>';
             
             $this->crud->update($criteria, $data_in);
+            
+            $mahasiswa = $this->input->post('mahasiswa_id');
+            if(is_array($mahasiswa)){
+                $this->crud->use_table('t_rencana_mata_pelajaran_pokok_detil');
+                
+                $this->load->model('rencana_mata_pelajaran_model');
+                $this->rencana_mata_pelajaran_model->get_update($id, array('active' => 0));
+                
+                for($i=0; $i< count($mahasiswa); $i++){
+                    $this->load->model('rencana_mata_pelajaran_model');
+                    $paket_id = $this->rencana_mata_pelajaran_model->get_rencana_pelajaran_update($id, $mahasiswa[$i]); 
+                    if($paket_id == 1){
+                        $data_in = array(
+                            'rencana_mata_pelajaran_id'=> $id,
+                            'mahasiswa_id'             => $mahasiswa[$i],
+                            'modified_on'              => date($this->config->item('log_date_format')),
+                            'modified_by'              => logged_info()->on,
+                            'active'                   => 1  
+                        );
+                        $this->rencana_mata_pelajaran_model->get_update($id, $data_in );
+                    }else{
+                        $data_in = array(
+                            'rencana_mata_pelajaran_id'=> $id,
+                            'mahasiswa_id'             => $mahasiswa[$i],
+                            'modified_on'              => date($this->config->item('log_date_format')),
+                            'modified_by'              => logged_info()->on,
+                            'active'                   => 1   
+                        );
+                    $this->crud->create($data_in);                
+                    }    
+                }
+            }
             redirect('transaction/rencana_mata_pelajaran/' . $id . '/info');
         }
         $data['action_url'] = $transaction_url . $id . '/' . __FUNCTION__;
@@ -254,6 +304,12 @@ class Rencana_mata_pelajaran extends CI_Controller {
         
         $this->crud->use_table('m_mata_kuliah');
         $data['mata_kuliah_options'] = $this->crud->retrieve()->result();
+                                                                         
+        $this->crud->use_table('t_rencana_mata_pelajaran_pokok_detil');
+        $data['rencana_mata_pelajaran_detil_options'] = $this->crud->retrieve()->result();
+        
+        $this->load->model('rencana_mata_pelajaran_model');
+        $data['rencana_mata_pelajaran_options'] = $this->rencana_mata_pelajaran_model->get_rencana_pelajaran_detil($id);
         
         $this->load->model('rencana_mata_pelajaran_model', 'rencana_mata_pelajaran');
         $data = array_merge($data, $this->rencana_mata_pelajaran->set_default()); //merge dengan arr data dengan default

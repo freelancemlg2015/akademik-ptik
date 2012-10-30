@@ -42,26 +42,22 @@ $this->load->view('_shared/menus');
             <th>Tahun Akademik</th>
             <th>Semester</th>
             <th>Program Studi</th>
-            <th>Mata Kuliah</th>
-            <th>Mahasiswa</th>
+            <th>Mata Kuliah</th> 
         </tr>
     </thead>
     <tbody>
         <?php
         foreach ($results->result() as $row) {
             $tahun = $row->tahun_ajar_mulai.$row->tahun_ajar_akhir;
-            if(empty($tahun)){
-                $tahun = $row->tahun_ajar_mulai.''.$row->tahun_ajar_akhir;
-            }else{
-                $tahun = $row->tahun_ajar_mulai.''.$row->tahun_ajar_akhir;
+            if(!empty($tahun)){
+                $tahun = $row->tahun_ajar_mulai.'-'.$row->tahun_ajar_akhir;
             }
             echo '<tr id="' . $row->id . '">
               <td>' . $row->nama_angkatan . '</td>
               <td>' . $tahun . '</td>    
               <td>' . $row->nama_semester . '</td>    
               <td>' . $row->nama_program_studi . '</td>      
-              <td>' . $row->nama_mata_kuliah . '</td>      
-              <td>' . $row->nama . '</td>      
+              <td>' . $row->nama_mata_kuliah . '</td>     
             </tr>
           ';
         }

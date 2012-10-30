@@ -18,9 +18,7 @@ $control_label = array(
                 <td>
                     <?php
                         $tahun = $tahun_ajar_mulai.$tahun_ajar_akhir;
-                        if(empty($tahun)){
-                            
-                        }else{
+                        if(!empty($tahun)){
                             echo $tahun = $tahun_ajar_mulai.'-'.$tahun_ajar_akhir; 
                         }
                     ?>
