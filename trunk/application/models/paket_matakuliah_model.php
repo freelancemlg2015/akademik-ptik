@@ -13,8 +13,7 @@ class Paket_matakuliah_model extends CI_Model {
                         ->join('m_angkatan', 'm_angkatan.id   = t_paket_mata_kuliah.angkatan_id', 'left')
                         ->join('m_tahun_akademik', 'm_tahun_akademik.id = t_paket_mata_kuliah.tahun_akademik_id', 'left')
                         ->join('m_semester', 'm_semester.id = t_paket_mata_kuliah.semester_id', 'left')
-                        ->join('m_program_studi', 'm_program_studi.id = t_paket_mata_kuliah.program_studi_id', 'left')
-                        ->join('t_plot_mata_kuliah', 't_plot_mata_kuliah.id = t_paket_mata_kuliah.plot_mata_kuliah_id', 'left');
+                        ->join('m_program_studi', 'm_program_studi.id = t_paket_mata_kuliah.program_studi_id', 'left');
     }
 
     function get_many($data_type = NULL, $term = array(), $limit = NULL, $offset = NULL) {
@@ -29,7 +28,7 @@ class Paket_matakuliah_model extends CI_Model {
         //[debug]echo $this->db->last_query();
         if ($data_type == 'json') {
             foreach ($query->result() as $row) {
-                $options[$row->id] = $row->nama_paket;
+                $options[$row->id] = $row->nama_angkatan;
             }
             echo json_encode($options);
         } else {
@@ -57,13 +56,13 @@ class Paket_matakuliah_model extends CI_Model {
             $this->db->where('t_paket_mata_kuliah.active', $query_array['active']);
         }
 
-        if (isset($query_array['tgl_ujian_start']) && $query_array['tgl_ujian_start'] != 0 && isset($query_array['tgl_ujian_akhir']) && $query_array['tgl_ujian_akhir'] != 0) {
+        /*if (isset($query_array['tgl_ujian_start']) && $query_array['tgl_ujian_start'] != 0 && isset($query_array['tgl_ujian_akhir']) && $query_array['tgl_ujian_akhir'] != 0) {
             $date = new DateTime();
             $format = 'Y-m-j';
             $tgl_start_ujian = $query_array['tgl_ujian_start'];
             $tgl_akhir_ujian = $query_array['tgl_ujian_akhir'];
             $this->db->where("(( akademik_t_ujian_skripsi.tgl_ujian >= '" . $tgl_start_ujian . "' AND akademik_t_ujian_skripsi.tgl_ujian <='" . $tgl_akhir_ujian . "'))");
-        }
+        }*/
 
         $q = $this->db->get();
         //debug echo $this->db->last_query();
@@ -88,13 +87,13 @@ class Paket_matakuliah_model extends CI_Model {
             $this->db->where('t_paket_mata_kuliah.active', $query_array['active']);
         }
         
-        if (isset($query_array['tgl_ujian_start']) && $query_array['tgl_ujian_start'] != 0 && isset($query_array['tgl_ujian_akhir']) && $query_array['tgl_ujian_akhir'] != 0) {
+        /*if (isset($query_array['tgl_ujian_start']) && $query_array['tgl_ujian_start'] != 0 && isset($query_array['tgl_ujian_akhir']) && $query_array['tgl_ujian_akhir'] != 0) {
             $date = new DateTime();
             $format = 'Y-m-j';
             $tgl_start_ujian = $query_array['tgl_ujian_start'];
             $tgl_akhir_ujian = $query_array['tgl_ujian_akhir'];
             $this->db->where("(( akademik_t_ujian_skripsi.tgl_ujian >= '" . $tgl_start_ujian . "' AND akademik_t_ujian_skripsi.tgl_ujian <='" . $tgl_akhir_ujian . "'))");
-        }
+        }*/
 
         return $this->db->count_all_results();
     }
@@ -106,8 +105,29 @@ class Paket_matakuliah_model extends CI_Model {
         }
         return $data;
     }
-
-   
-
+    
+    function get_matakuliah_detil($id=null){
+       $this->db->select('a.kelompok_mata_kuliah_id');
+       $this->db->from('t_paket_mata_kuliah_detil as a');
+       if ($id) $this->db->where('a.paket_mata_kuliah_id', $id);
+                 $this->db->where('active', 1);
+        $Q = $this->db->get();
+        foreach ($Q->result_array() as $row) $data[] = $row['kelompok_mata_kuliah_id'];
+        return @$data;
+    }
+    
+    function get_matakuliah_update($paket_mata_kuliah_id, $kelompok_mata_kuliah_id){
+        $this->db->select('a.id');
+        $this->db->from('t_paket_mata_kuliah_detil as a');
+        $this->db->where('a.paket_mata_kuliah_id',$paket_mata_kuliah_id);
+        $this->db->where('a.kelompok_mata_kuliah_id', $kelompok_mata_kuliah_id);
+        $Q = $this->db->get();
+        foreach ($Q->result_array() as $row) return $row['id'];
+    }
+    
+    function get_update($id, $data){
+        $this->db->where('paket_mata_kuliah_id', $id);
+        $this->db->update('t_paket_mata_kuliah_detil', $data);
+    }
 }
 

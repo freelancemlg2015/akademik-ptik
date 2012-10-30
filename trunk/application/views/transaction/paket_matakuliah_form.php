@@ -76,11 +76,11 @@ foreach ($program_studi_options as $row) {
         <fieldset>
             <legend>Pilih Kelompok Mata Kuliah</legend>
                 <div class="controls">
-                    <?php
-                        foreach($kelompok_matakuliah_options as $row){    
-                    ?>
-                        <input type="checkbox" id="cek"  name="kelompok_mata_kuliah_id[]" value="<?php echo $row->id ?>">&nbsp;&nbsp;<?php echo $row->nama_kelompok_mata_kuliah; ?><br> 
-                    <?php 
+                    <?php                                  
+                        foreach($kelompok_matakuliah_options as $row){
+                            @$checked = in_array($row->id, $matakuliah_detil_options) ? "checked='checked'" : "";
+                            echo"<input type='checkbox' id='cek' $checked name='kelompok_mata_kuliah_id[]' value='$row->id' >&nbsp;&nbsp; $row->nama_kelompok_mata_kuliah<br>";
+
                         } 
                     ?>
                 </div>

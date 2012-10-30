@@ -39,9 +39,9 @@ foreach ($program_studi_options as $row) {
     $program_studi_data[$row->id] = $row->nama_program_studi;
 }
 
-$plot_mata_kuliah_data[0] = '';
-foreach ($plot_mata_kuliah_options as $row) {
-    $plot_mata_kuliah_data[$row->id] = $row->mata_kuliah_id;
+$mata_kuliah_data[0] = '';
+foreach ($mata_kuliah_options as $row) {
+    $mata_kuliah_data[$row->id] = $row->nama_mata_kuliah;
 }
 
 ?>
@@ -83,7 +83,7 @@ foreach ($plot_mata_kuliah_options as $row) {
     <div class="pagination pagination-centered">
         <div id="pageNavPosition"></div> 
     </div>
-    <table class="table table-bordered table-striped container-full"  id="rencana_mata_pelajaran" controller="transaction">
+    <table class="table table-bordered table-striped container-full"  id="rencana" controller="transaction">
         <thead>
             <tr>
                 <th width="20">No</th>
@@ -94,24 +94,29 @@ foreach ($plot_mata_kuliah_options as $row) {
                 </th>
             </tr>
         </thead>
-        <tbody id="content">
-            <?php
+        
+        <tbody>
+            <?php                                        
                 $no = 1;
                 foreach ($mahasiswa_options as $row) {
                 echo '<tr id="' . $row->id . '">
                         <td style="text-align: center">' . $no . '</td>    
                         <td>' . $row->nim . '</td>    
                         <td>' . $row->nama . '</td>';
-            ?>
-                        <td style="text-align: center">
-                            <input type="checkbox" name="mata_kuliah_id" id="cek" value="<?php echo $row->id ?>" >   
-                        </td>
-            <?php    
+                        @$checked = in_array($row->id, $rencana_mata_pelajaran_options) ? "checked='checked'" : "";
+                        if(empty($checked)){
+                            echo "<td style='text-align: center'>
+                                    <input type='checkbox' name='mahasiswa_id[]' id='cek' value='$row->id' >   
+                                </td>"; 
+                        }else{
+                            echo "<td style='text-align: center'>
+                                    <input type='checkbox' $checked name='mahasiswa_id[]' id='cek' value='$row->id' >   
+                                </td>"; 
+                        }
                  echo'</tr>
                 ';
                 $no++;                    
                 }
-                
             ?>
         </tbody>
     </table>
@@ -125,10 +130,8 @@ foreach ($plot_mata_kuliah_options as $row) {
     <?php $this->load->view('_shared/footer'); ?>
 
 <script type="text/javascript">
-    var pager = new Pager('content', 9); 
+    var pager = new Pager('rencana', 10); 
     pager.init(); 
     pager.showPageNav('pager', 'pageNavPosition'); 
-
-    
-   
+    pager.showPage(1);
 </script>

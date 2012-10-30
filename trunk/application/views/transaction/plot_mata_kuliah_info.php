@@ -15,7 +15,14 @@ $control_label = array(
             </tr>
             <tr>
                 <th class="span2">Tahun Akademik</th>
-                <td><?= $tahun_ajar_mulai.'-'.$tahun_ajar_akhir ?></td>
+                <td>
+                    <?php
+                        $tahun = $tahun_ajar_mulai.$tahun_ajar_akhir ; 
+                        if(!empty($tahun)){
+                           echo $tahun_ajar_mulai.'-'.$tahun_ajar_akhir ; 
+                        }
+                    ?>
+                </td>
             </tr>
             <tr>
                 <th class="span2">Semester</th>
@@ -26,10 +33,15 @@ $control_label = array(
                 <td><?= $nama_kelompok_mata_kuliah ?></td>
             </tr>
             <tr>
-                <th class="span2">Mata Kuliah</th>
-                <td><?= $nama_mata_kuliah ?></td>
+                <th class="span2">Matakuliah</th>
+                <td>
+                    <?php
+                        foreach($matakuliah as $row){
+                            $nama_mata_kuliah;
+                        }
+                    ?>
+                </td><br/>
             </tr>
-            <tr>
         </tbody>
     </table>
 </div>

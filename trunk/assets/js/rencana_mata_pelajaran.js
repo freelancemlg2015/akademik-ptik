@@ -77,7 +77,7 @@ function Pager(tableName, itemsPerPage) {
         
         element.innerHTML = pagerHtml;
     }
-}
+} 
 
 
 

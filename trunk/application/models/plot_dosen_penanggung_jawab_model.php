@@ -8,8 +8,7 @@ class Plot_dosen_penanggung_jawab_model extends CI_Model {
 
     function s_plot_dosen_penanggung_jawab() {
         return $this->db->select('t_dosen_ajar.*,m_angkatan.nama_angkatan,m_tahun_akademik.tahun_ajar_mulai,
-                                                 m_tahun_akademik.tahun_ajar_akhir,m_semester.nama_semester,m_mata_kuliah.nama_mata_kuliah,
-                                                 t_plot_mata_kuliah.kelompok_mata_kuliah_id,m_kelompok_matakuliah.nama_kelompok_mata_kuliah')
+                                                 m_tahun_akademik.tahun_ajar_akhir,m_semester.nama_semester,m_mata_kuliah.nama_mata_kuliah,m_kelompok_matakuliah.nama_kelompok_mata_kuliah')
                         ->from('t_dosen_ajar')
                         ->join('m_angkatan', 'm_angkatan.id = t_dosen_ajar.angkatan_id', 'left')
                         ->join('m_tahun_akademik', 'm_tahun_akademik.id = t_dosen_ajar.tahun_akademik_id', 'left')
@@ -91,6 +90,42 @@ class Plot_dosen_penanggung_jawab_model extends CI_Model {
             $data[$field] = '';
         }
         return $data;
+    }
+    
+    function get_kelompok(){
+        $data = array();
+        $this->db->select('a.id, b.nama_kelompok_mata_kuliah');
+        $this->db->from('t_plot_mata_kuliah as a');
+        $this->db->join('m_kelompok_matakuliah as b','a.kelompok_mata_kuliah_id = b.id','left');
+        $this->db->order_by('b.nama_kelompok_mata_kuliah', 'asc');
+        $Q = $this->db->get();
+        foreach ($Q->result_array() as $row) $data[] = $row;
+        return $data;
+    }
+    
+    function get_dosen($id=null){
+        $this->db->select('a.dosen_id, b.nama_dosen');
+        $this->db->from('t_dosen_ajar_detil as a');
+        $this->db->join('m_dosen as b', 'a.dosen_id = b.id', 'left');
+        if ($id) $this->db->where('a.dosen_ajar_id', $id);
+                 $this->db->where('a.active', 1);     
+        $Q = $this->db->get();
+        foreach ($Q->result_array() as $row) $data[] = $row;
+        return @$data;
+    }
+    
+    function get_dosen_update($dosen_ajar_id, $dosen_id){
+        $this->db->select('a.id');
+        $this->db->from('t_dosen_ajar_detil as a');
+        $this->db->where('a.dosen_ajar_id',$dosen_ajar_id);
+        $this->db->where('a.dosen_id', $dosen_id);
+        $Q = $this->db->get();
+        foreach ($Q->result_array() as $row) return $row['id'];
+    }
+    
+    function get_update($id, $data){
+        $this->db->where('dosen_ajar_id', $id);
+        $this->db->update('t_dosen_ajar_detil', $data);
     }
 }
 

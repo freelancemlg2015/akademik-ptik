@@ -1301,7 +1301,7 @@ $config = array(
         array(
             'field' => 'angkatan_id',
             'label' => 'angkatan_id',
-            'rules' => 'trim|required'
+            'rules' => 'trim|required|greater_than[0]'
         )
     ), 'plot_mata_kuliah_update' => array(
         array(
@@ -1333,6 +1333,20 @@ $config = array(
             'rules' => 'trim|required|greater_than[0]'
         )
     ), 'plot_dosen_penanggung_jawab_update' => array(
+        array(
+            'field' => 'angkatan_id',
+            'label' => 'angkatan_id',
+            'rules' => 'trim|required'
+        )   
+        
+    /* RENCANA MATA PELAJARAN*/       
+    ), 'rencana_mata_pelajaran_create' => array(
+        array(
+            'field' => 'angkatan_id',
+            'label' => 'angkatan_id',
+            'rules' => 'trim|required|greater_than[0]'
+        )
+    ), 'rencana_mata_pelajaran_update' => array(
         array(
             'field' => 'angkatan_id',
             'label' => 'angkatan_id',

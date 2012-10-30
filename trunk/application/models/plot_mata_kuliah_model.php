@@ -8,13 +8,11 @@ class Plot_mata_kuliah_model extends CI_Model {
 
     function s_plot_mata_kuliah() {
         return $this->db->select('t_plot_mata_kuliah.*,m_angkatan.nama_angkatan,m_tahun_akademik.tahun_ajar_mulai,
-                                                 m_tahun_akademik.tahun_ajar_akhir,m_semester.nama_semester,m_kelompok_matakuliah.nama_kelompok_mata_kuliah,
-                                                 m_mata_kuliah.nama_mata_kuliah')
+                                                 m_tahun_akademik.tahun_ajar_akhir,m_semester.nama_semester,m_kelompok_matakuliah.nama_kelompok_mata_kuliah')
                         ->from('t_plot_mata_kuliah')
                         ->join('m_angkatan', 'm_angkatan.id = t_plot_mata_kuliah.angkatan_id', 'left')
                         ->join('m_tahun_akademik', 'm_tahun_akademik.id = t_plot_mata_kuliah.tahun_akademik_id', 'left')
                         ->join('m_semester', 'm_semester.id = t_plot_mata_kuliah.semester_id', 'left')
-                        ->join('m_mata_kuliah', 'm_mata_kuliah.id = t_plot_mata_kuliah.mata_kuliah_id', 'left')
                         ->join('m_kelompok_matakuliah', 'm_kelompok_matakuliah.id = t_plot_mata_kuliah.kelompok_mata_kuliah_id', 'left');
     }
 
@@ -50,8 +48,8 @@ class Plot_mata_kuliah_model extends CI_Model {
             $this->db->like('m_angkatan.nama_angkatan', $query_array['nama_angkatan']);
         }
         
-        if ($query_array['nama_kelompok_mata_kuliah'] != '') {
-            $this->db->like('m_kelompok_matakuliah.nama_kelompok_mata_kuliah', $query_array['nama_kelompok_mata_kuliah']);
+        if ($query_array['nama_semester'] != '') {
+            $this->db->like('m_semester.nama_semester', $query_array['nama_semester']);
         }
         
         if ($query_array['active'] != '') {
@@ -73,8 +71,8 @@ class Plot_mata_kuliah_model extends CI_Model {
             $this->db->like('m_angkatan.nama_angkatan', $query_array['nama_angkatan']);
         }
         
-        if ($query_array['nama_kelompok_mata_kuliah'] != '') {
-            $this->db->like('m_kelompok_matakuliah.nama_kelompok_mata_kuliah', $query_array['nama_kelompok_mata_kuliah']);
+        if ($query_array['nama_semester'] != '') {
+            $this->db->like('m_semester.nama_semester', $query_array['nama_semester']);
         }
 
         if ($query_array['active'] != '') {
@@ -90,6 +88,35 @@ class Plot_mata_kuliah_model extends CI_Model {
             $data[$field] = '';
         }
         return $data;
+    }
+         
+    function get_matakuliah_detil($id=null){
+        $this->db->select('a.mata_kuliah_id');
+        $this->db->from('t_plot_mata_kuliah_detil as a');
+        if ($id) $this->db->where('a.plot_mata_kuliah_id', $id);
+                 $this->db->where('active', 1);
+        $Q = $this->db->get();
+        foreach ($Q->result_array() as $row) $data[] = $row['mata_kuliah_id'];
+        return @$data;
+    }
+    
+//    function get_update($id, $data){
+//        $this->db->where('detil_id', $id);
+//        $this->db->update('t_plot_mata_kuliah_detil', $data);
+//    }
+    
+    function get_matakuliah_update($plot_mata_kuliah_id, $mata_kuliah_id){
+        $this->db->select('a.id');
+        $this->db->from('t_plot_mata_kuliah_detil as a');
+        $this->db->where('a.plot_mata_kuliah_id',$plot_mata_kuliah_id);
+        $this->db->where('a.mata_kuliah_id', $mata_kuliah_id);
+        $Q = $this->db->get();
+        foreach ($Q->result_array() as $row) return $row['id'];
+    }
+    
+    function get_update($id, $data){
+        $this->db->where('plot_mata_kuliah_id', $id);
+        $this->db->update('t_plot_mata_kuliah_detil', $data);
     }
 }
 

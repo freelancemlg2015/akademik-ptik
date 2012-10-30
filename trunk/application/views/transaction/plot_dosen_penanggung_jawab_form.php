@@ -81,12 +81,6 @@ foreach ($mata_kuliah_options as $row) {
     $mata_kuliah_data[$row->id] = $row->nama_mata_kuliah;
 }
 
-$dosen_data[] = '';
-    foreach ($dosen_options as $row) {
-        $dosen_data[$row->id] = $row->nama_dosen;
-}
-
-
 $kelompok_matakuliah_data[0] = '';
 foreach ($kelompok_matakuliah_options as $row) {
     $kelompok_matakuliah_data[$row->id] = $row->nama_kelompok_mata_kuliah;
@@ -94,15 +88,20 @@ foreach ($kelompok_matakuliah_options as $row) {
 
 $plot_mata_kuliah_data[0] = '';
 foreach ($plot_mata_kuliah_options as $row) {
-    $plot_mata_kuliah_data[$row->id] = $row->kelompok_mata_kuliah_id;
+    $plot_mata_kuliah_data[$row['id']] = $row['nama_kelompok_mata_kuliah'];
 }
 
-$plot_attr = array(
-    'name' => 'span_pangkat',
-    'class' => 'input-medium',
-    'value' => set_value('span_pangkat', ''),
-    'autocomplete' => 'off'
-);
+$dosen_data[0] = '';
+foreach ($dosen_options as $row) {
+    $dosen_data[$row->id] = $row->nama_dosen;
+}
+
+//$plot_attr = array(
+//    'name' => 'span_pangkat',
+//    'class' => 'input-medium',
+//    'value' => set_value('span_pangkat', ''),
+//    'autocomplete' => 'off'
+//);
 
 ?>
 <div class="container-full" id="plot_dosen_penanggung_jawab">
@@ -153,8 +152,17 @@ $plot_attr = array(
             <a id="button_add_dosen" class="btn btn-mini button_add_dosen_class"><i class="icon-plus"></i></a>
             <?= form_label('Dosen' , 'dosen_id', $control_label); ?>
             <div class="controls">
-                <?= form_dropdown('dosen_id', $dosen_data, set_value('dosen_id', ''), 'id="dosen_id" class="input-medium" prevData-selected="' . set_value('dosen_id', '') . '"'); ?>
-                <p class="help-block"><?php echo form_error('dosen_id') ?></p>
+                <?php                            
+                    if (!empty($dosen_options_edit)){
+                        foreach($dosen_options_edit as $row):    
+                        echo form_dropdown('dosen_id[]', $dosen_data, set_value('dosen_id', $row['dosen_id']), 'id="dosen_id" class="input-medium" prevData-selected="' . set_value('dosen_id', $row['dosen_id']) . '"');
+                        endforeach;
+                    }
+                    else {
+                        echo form_dropdown('dosen_id[]', $dosen_data, set_value('dosen_id', $dosen_id), 'id="dosen_id" class="input-medium" prevData-selected="' . set_value('dosen_id', $dosen_id) . '"');
+                    }
+                ?>
+                <p class="help-block"><?php echo form_error('dosen_id') ?></p>                 
             </div>
         </div>
     </fieldset>
