@@ -36,9 +36,9 @@ $control_label = array(
                 <th class="span2">Matakuliah</th>
                 <td>
                     <?php
-                        foreach($matakuliah as $row){
-                            $nama_mata_kuliah;
-                        }
+                        //foreach($matakuliah as $row){
+                          //  $nama_mata_kuliah;
+                        //}
                     ?>
                 </td><br/>
             </tr>
