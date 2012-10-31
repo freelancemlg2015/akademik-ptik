@@ -7,8 +7,9 @@ class Angkatan_model extends CI_Model {
     }
 
     function s_angkatan() {
-        return $this->db->select('m_angkatan.*')
-                        ->from('m_angkatan');
+        return $this->db->select('m_angkatan.*,m_tahun_akademik.tahun_ajar_mulai,m_tahun_akademik.tahun_ajar_akhir')
+                        ->from('m_angkatan')
+                        ->join('m_tahun_akademik', 'm_tahun_akademik.id = m_angkatan.id', 'left');
     }
 
     function get_many($data_type = NULL, $term = array(), $limit = NULL, $offset = NULL) {

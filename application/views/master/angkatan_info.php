@@ -17,6 +17,17 @@ $control_label = array(
                 <th class="span2">Nama Angkatan</th>
                 <td><?= $nama_angkatan ?></td>
             </tr>
+            <tr>
+                <th class="span2">Tahun</th>
+                <td>    
+                    <?php
+                        $tahun = $tahun_ajar_mulai.$tahun_ajar_akhir ; 
+                        if(!empty($tahun)){
+                           echo $tahun_ajar_mulai.'-'.$tahun_ajar_akhir ; 
+                        }
+                    ?>
+                </td>
+            </tr>
         </tbody>
     </table>
 </div>

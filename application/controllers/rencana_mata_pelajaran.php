@@ -269,7 +269,7 @@ class Rencana_mata_pelajaran extends CI_Controller {
                     $this->crud->create($data_in);                
                     }    
                 }
-            }
+            } \Admin::
             redirect('transaction/rencana_mata_pelajaran/' . $id . '/info');
         }
         $data['action_url'] = $transaction_url . $id . '/' . __FUNCTION__;
