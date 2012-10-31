@@ -40,14 +40,20 @@ $this->load->view('_shared/menus');
         <tr>
             <th>Kode Angkatan</th>
             <th>Nama Angkatan</th>
+            <th>Tahun</th>
         </tr>
     </thead>
     <tbody>
         <?php
         foreach ($results->result() as $row) {
+            $tahun = $row->tahun_ajar_mulai.$row->tahun_ajar_akhir;
+            if(!empty($tahun)){
+                $tahun = $row->tahun_ajar_mulai.'-'.$row->tahun_ajar_akhir;                
+            }
             echo '<tr id="' . $row->id . '">
               <td>' . $row->kode_angkatan . '</td>
-              <td>' . $row->nama_angkatan . '</td>    
+              <td>' . $row->nama_angkatan . '</td>
+              <td>' . $tahun . '</td>    
             </tr>
           ';
         }

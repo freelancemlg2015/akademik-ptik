@@ -20,6 +20,12 @@ $nama_angkatan_attr = array(
     'value' => set_value('nama_angkatan', $nama_angkatan),
     'autocomplete' => 'off'
 );
+
+$tahun_akademik_data[0] = '';
+foreach ($tahun_akademik_options as $row) {
+    $tahun_akademik_data[$row->id] = $row->tahun_ajar_mulai.'-'.$row->tahun_ajar_akhir;
+}
+
 ?>
 <div class="container-full" id="angkatan">
     <?= form_open($action_url, array('class' => 'form-horizontal')); ?>
@@ -40,6 +46,13 @@ $nama_angkatan_attr = array(
         </div>
     </div>
 
+        <div class="control-group">
+        <?= form_label('Tahun Akademik' , 'tahun_akademik_id', $control_label); ?>
+        <div class="controls">
+             <?= form_dropdown('tahun_akademik_id', $tahun_akademik_data, set_value('tahun_akademik_id', $tahun_akademik_id), 'id="tahun_akademik_id" class="input-medium" prevData-selected="' . set_value('tahun_akademik_id', $tahun_akademik_id) . '"'); ?>
+            <p class="help-block"><?php echo form_error('tahun_ajar') ?></p>
+        </div>
+    </div>
 
     <div class="form-actions well">
         <button class="btn btn-small btn-primary" type="submit">Simpan</button>

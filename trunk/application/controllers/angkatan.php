@@ -126,6 +126,7 @@ class Angkatan extends CI_Controller {
         } else {
             $this->crud->use_table('m_angkatan');
             $data_in = array(
+                'tahun_akademik_id' => $this->input->post('tahun_akademik_id'),
                 'kode_angkatan' => $this->input->post('kode_angkatan'),
                 'nama_angkatan' => $this->input->post('nama_angkatan'),
                 'created_on' => date($this->config->item('log_date_format')),
@@ -144,6 +145,9 @@ class Angkatan extends CI_Controller {
         $data['tools'] = array(
             'master/angkatan' => 'Back'
         );
+        
+        $this->crud->use_table('m_tahun_akademik');
+        $data['tahun_akademik_options'] = $this->crud->retrieve()->result();
 
         $this->load->model('angkatan_model', 'angkatan');
         $data = array_merge($data, $this->angkatan->set_default()); //merge dengan arr data dengan default
@@ -183,6 +187,9 @@ class Angkatan extends CI_Controller {
 
         $this->crud->use_table('m_angkatan');
         $angkatan_data = $this->crud->retrieve(array('id' => $id))->row();
+        
+        $this->crud->use_table('m_tahun_akademik');
+        $data['tahun_akademik_options'] = $this->crud->retrieve()->result();
 
         $this->load->model('angkatan_model', 'angkatan');
         $data = array_merge($data, $this->angkatan->set_default()); //merge dengan arr data dengan default
