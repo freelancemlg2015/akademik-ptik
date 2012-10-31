@@ -61,9 +61,9 @@ $icon_color = 'icon-grey';
                     <li class="dropdown <?= ($secondary_nav == 'program_studi' || $secondary_nav == 'tahun_akademik' || $secondary_nav == 'kelompok_matakuliah' || $secondary_nav == 'matakuliah' || $secondary_nav == 'jenjang_studi' || $secondary_nav == 'frekuensi_pemutakhiran' || $secondary_nav == 'pelaksana_pemutakhiran' || $secondary_nav == 'angkatan') ? 'active' : ''; ?>">
                         <a href="#" data-toggle="dropdown" class="dropdown-toggle">Kurikulum<b class="caret"></b></a>
                         <ul class="dropdown-menu">
+                            <li class="<?= isActive($secondary_nav, 'tahun_akademik'); ?>"><?= anchor('master/tahun_akademik', 'Tahun Akademik'); ?></li>
                             <li class="<?= isActive($secondary_nav, 'angkatan'); ?>"><?= anchor('master/angkatan', 'Angkatan'); ?></li>
                             <li class="<?= isActive($secondary_nav, 'program_studi'); ?>"><?= anchor('master/program_studi', 'Program Studi'); ?></li>
-                            <li class="<?= isActive($secondary_nav, 'tahun_akademik'); ?>"><?= anchor('master/tahun_akademik', 'Tahun Akademik'); ?></li>
                             <li class="<?= isActive($secondary_nav, 'mata_kuliah'); ?>"><?= anchor('master/mata_kuliah', 'Mata kuliah'); ?></li>
                             <li class="<?= isActive($secondary_nav, 'jenjang_studi'); ?>"><?= anchor('master/jenjang_studi', 'Jenjang Studi'); ?></li>
 <!--                        <li class="<?//= isActive($secondary_nav, 'konsentrasi_studi'); ?>"><?//= anchor('master/konsentrasi_studi', 'Konsentrasi Studi'); ?></li>                           
