@@ -32,16 +32,6 @@ $control_label = array(
                 <th class="span2">Kelompok Matakuliah</th>
                 <td><?= $nama_kelompok_mata_kuliah ?></td>
             </tr>
-            <tr>
-                <th class="span2">Matakuliah</th>
-                <td>
-                    <?php
-                        //foreach($matakuliah as $row){
-                          //  $nama_mata_kuliah;
-                        //}
-                    ?>
-                </td><br/>
-            </tr>
         </tbody>
     </table>
 </div>
