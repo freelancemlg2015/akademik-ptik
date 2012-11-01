@@ -7,52 +7,6 @@ $control_label = array(
     'class' => 'control-label'
 );
 
-//$nama_angkatan_attr = array(
-//    'id'    => 'nama_angkatan',
-//    'name'  => 'nama_angkatan',
-//    'class' => 'input-medium',
-//    'value' => set_value('nama_angkatan', $nama_angkatan),
-//    'autocomplete' => 'off'
-//);
-//
-//$attributes = array('class' => 'angkatan_id', 'id' => 'myform');
-//
-//$tahun_ajar_attr = array(
-//    'id'    => 'tahun_ajar',
-//    'name'  => 'tahun_ajar',
-//    'class' => 'input-medium',
-//    'value' => set_value('tahun_ajar', $tahun_ajar),
-//    'autocomplete' => 'off',
-//);
-//
-//$attributes = array('class' => 'tahun_akademik_id', 'id' => 'myform');
-//
-//$nama_mata_kuliah_attr = array(
-//    'name' => 'nama_mata_kuliah',
-//    'class' => 'input-medium',
-//    'value' => set_value('nama_mata_kuliah', $nama_mata_kuliah),
-//    'autocomplete' => 'off'    
-//);
-//
-//$attributes = array('class' => 'mata_kuliah_id', 'id' => 'myform');
-//
-//$nama_dosen_attr = array(
-//    'name' => 'nama_dosen',
-//    'class' => 'input-medium',
-//    'value' => set_value('nama_dosen', $nama_dosen),
-//    'autocomplete' => 'off'    
-//);
-//
-//$attributes = array('class' => 'dosen_id', 'id' => 'myform');
-//
-//$nama_mahasiswa_attr = array(
-//    'name' => 'nama',
-//    'class' => 'input-medium',
-//    'value' => set_value('nama', $nama_mahasiswa),
-//    'autocomplete' => 'off'    
-//);
-//
-//$attributes = array('class' => 'mahasiswa_id', 'id' => 'myform');
 
 $keterangan_attr = array(
     'name' => 'keterangan',
@@ -63,13 +17,19 @@ $keterangan_attr = array(
 
 $angkatan_data[0] = '';
 foreach ($angkatan_options as $row) {
-    $angkatan_data[$row->id] = $row->nama_angkatan;
+    $angkatan_data[$row->id.'-'.$row->tahun_akademik_id] = $row->nama_angkatan;
 }
 
-$tahun_akademik_data[0] = '';
-foreach ($tahun_akademik_options as $row) {
-    $tahun_akademik_data[$row->id] = $row->tahun_ajar_mulai.'-'.$row->tahun_ajar_akhir;
+$pangkat_data[0] = '';
+if (isset($m_tahun_akademik)){
+    foreach ($m_tahun_akademik as $row) {
+        $pangkat_data[$row['id']] = $row['tahun_ajar_mulai'].'-'.$row['tahun_ajar_akhir'];
+    }    
 }
+else {
+    $pangkat_data[''] = '';
+}
+
 
 $semester_data[0] = '';
 foreach ($semester_options as $row) {
@@ -81,6 +41,13 @@ foreach ($kelompok_matakuliah_options as $row) {
     $kelompok_matakuliah_data[$row->id] = $row->nama_kelompok_mata_kuliah;
 }
 
+if (isset($m_angkatan->tahun_akademik_id)){
+    $thn_akademik_id = $m_angkatan->tahun_akademik_id;
+}
+else {
+    $thn_akademik_id = '';
+}
+                 
 
 ?>
 <div class="container-full" id="plot_mata_kuliah">
@@ -89,7 +56,7 @@ foreach ($kelompok_matakuliah_options as $row) {
     <div class="control-group">
         <?= form_label('Angkatan' . required(), 'angkatan_id', $control_label); ?>
         <div class="controls">
-            <?= form_dropdown('angkatan_id', $angkatan_data, set_value('angkatan_id', $angkatan_id), 'id="angkatan_id" class="input-medium" prevData-selected="' . set_value('angkatan_id', $angkatan_id) . '"'); ?>
+            <?= form_dropdown('angkatan_id', $angkatan_data, set_value('angkatan_id', $angkatan_id."-".$thn_akademik_id), 'id="angkatan_id" class="input-medium" prevData-selected="' . set_value('angkatan_id', $angkatan_id) . '"'); ?>
             <p class="help-block"><?php echo form_error('angkatan_id') ?></p>
         </div>
     </div>
@@ -97,7 +64,7 @@ foreach ($kelompok_matakuliah_options as $row) {
     <div class="control-group">
         <?= form_label('Tahun Akademik' , 'tahun_akademik_id', $control_label); ?>
         <div class="controls">
-             <?= form_dropdown('tahun_akademik_id', $tahun_akademik_data, set_value('tahun_akademik_id', $tahun_akademik_id), 'id="tahun_akademik_id" class="input-medium" prevData-selected="' . set_value('tahun_akademik_id', $tahun_akademik_id) . '"'); ?>
+            <?= form_dropdown('span_pangkat', $pangkat_data, set_value('thn_akademik_id', $angkatan_id), 'id="thn_akademik_id" class="input-medium" prevData-selected="' . set_value('thn_akademik_id', $angkatan_id) . '"'); ?>
             <p class="help-block"><?php echo form_error('tahun_ajar') ?></p>
         </div>
     </div>
@@ -117,22 +84,6 @@ foreach ($kelompok_matakuliah_options as $row) {
             <p class="help-block"><?php echo form_error('kelompok_matakuliah_id') ?></p>
         </div>
     </div>
-        
-<!--    <div class="control-group">
-        <?//= form_label('Mata Kuliah' , 'mata_kuliah_id', $control_label); ?>
-        <div class="controls">
-            <?//= form_dropdown('mata_kuliah_id', $mata_kuliah_data, set_value('mata_kuliah_id', $mata_kuliah_id), 'id="mata_kuliah_id" class="input-medium" prevData-selected="' . set_value('mata_kuliah_id', $mata_kuliah_id) . '"'); ?>
-            <p class="help-block"><?php //echo form_error('mata_kuliah_id') ?></p>
-        </div>
-    </div>
-    
-    <div class="control-group">
-        <?//= form_label('Keterangan' , 'keterangan', $control_label); ?>
-        <div class="controls">
-        <?//= form_textarea($keterangan_attr) ?>
-            <p class="help-block"><?php //echo form_error('keterangan') ?></p>
-        </div>
-    </div>-->
 
     <div class="container">
         <div class="pagination pagination-centered">
@@ -190,4 +141,14 @@ foreach ($kelompok_matakuliah_options as $row) {
     pager.init(); 
     pager.showPageNav('pager', 'pageNavPosition'); 
     pager.showPage(1);
+    $("#angkatan_id").change(function(){
+        var value = ($(this).val()).split("-");
+        $.post('<?php echo base_url(); ?>plot_mata_kuliah/getOptTahunAkademik', {angkatan_id: value[1]},
+        function(data){
+            $("select[name='span_pangkat']").closest("div.controls").append("<select name='span_pangkat'></select>");
+            $("select[name='span_pangkat']").closest("div.combobox-container").remove();
+            $("select[name='span_pangkat']").html(data).combobox();
+        });
+    })
+    $("select[name='span_pangkat']").combobox();
 </script>

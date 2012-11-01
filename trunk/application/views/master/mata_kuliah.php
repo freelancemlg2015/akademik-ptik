@@ -38,10 +38,10 @@ $this->load->view('_shared/menus');
 <table class="table table-bordered table-striped container-full data_list" id="mata_kuliah" controller="master">
     <thead>
         <tr>
-            <th>Angkatan</th>
+<!--        <th>Angkatan</th>
             <th>Tahun Akademik</th>
             <th>Program Studi</th>
-            <th>Semester</th>
+            <th>Semester</th>-->
             <th>Kode Matakuliah</th>
             <th>Nama Matakuliah</th>
             <th>SKS Matakuliah</th>
@@ -50,13 +50,7 @@ $this->load->view('_shared/menus');
     <tbody>
         <?php
         foreach ($results->result() as $row) {
-            $tahun = $row->tahun_ajar_mulai.$row->tahun_ajar_akhir;
-            if(strrpos($tahun,'-')<1)$tahun = $row->tahun_ajar_mulai.'-'.$row->tahun_ajar_akhir;
             echo '<tr id="' . $row->id . '">
-              <td>' . $row->nama_angkatan . '</td>
-              <td>' . $tahun . '</td>
-              <td>' . $row->nama_program_studi . '</td>
-              <td>' . $row->nama_semester . '</td>
               <td>' . $row->kode_mata_kuliah . '</td>
               <td>' . $row->nama_mata_kuliah . '</td>
               <td>' . $row->sks_mata_kuliah . '</td>

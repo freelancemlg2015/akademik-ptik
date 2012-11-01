@@ -1301,12 +1301,12 @@ $config = array(
         array(
             'field' => 'angkatan_id',
             'label' => 'angkatan_id',
-            'rules' => 'trim|required|greater_than[0]'
+            'rules' => 'trim|required'
         )
     ), 'plot_mata_kuliah_update' => array(
         array(
-            'field' => 'tahun_akademik_id',
-            'label' => 'tahun_akademik_id',
+            'field' => 'angkatan_id',
+            'label' => 'angkatan_id',
             'rules' => 'trim|required'
         )      
  

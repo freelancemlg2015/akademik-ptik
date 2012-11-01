@@ -35,17 +35,17 @@ $control_label = array(
             <tr>
                 <th class="span2">Mata Kuliah</th>
                 <td><?= $nama_mata_kuliah ?></td>
-            </tr><!--
+            </tr>
             <tr>
                 <th class="span2">Dosen</th>
                 <td> 
                     <?php 
-                        //foreach($dosen_options_edit as $row){
-                           //echo $row['nama_dosen']."<br/>";                             
-                        //}
+                        foreach($dosen_options_edit as $row){
+                           echo $row['nama_dosen']."<br/>";                             
+                        }
                     ?>
                 </td>
-            </tr>-->
+            </tr>
         </tbody>
     </table>
 </div>
