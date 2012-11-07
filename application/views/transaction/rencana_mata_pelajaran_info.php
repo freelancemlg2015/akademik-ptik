@@ -39,6 +39,31 @@ $control_label = array(
             </tr> 
         </tbody>
     </table>
+    
+    <table class="table table-bordered table-striped container-full"  id="rencana_mata_pelajaran" controller="transaction">
+        <thead>
+            <tr>
+                <th width="20">No</th>
+                <th>Nim</th>
+                <th>Mahasiswa</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php         
+                $no = 1;
+                if(isset($mahasiswa_detil_options)){
+                    foreach ($mahasiswa_detil_options As $row) {
+                    echo '<tr>
+                            <td style="text-align: center">' . $no . '</td>    
+                            <td>' . $row['nim'] . '</td>    
+                            <td>' . $row['nama'] . '</td>
+                        </tr>';
+                    $no++;                    
+                    }
+                }
+            ?>
+        </tbody>
+    </table>
 </div>
 
 <?php $this->load->view('_shared/footer'); ?>

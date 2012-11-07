@@ -94,7 +94,6 @@ class Plot_mata_kuliah extends CI_Controller {
         $this->load->model('plot_mata_kuliah_model');
         $data['matakuliah_options_edit'] = $this->plot_mata_kuliah_model->get_matakuliah($id);
                                                           
-        
         $data['tools'] = array(
             'transaction/plot_mata_kuliah' => 'Back',
             'transaction/plot_mata_kuliah/' . $id . '/edit' => 'Edit',
@@ -165,12 +164,9 @@ class Plot_mata_kuliah extends CI_Controller {
         $data['tools'] = array(
             'transaction/plot_mata_kuliah' => 'Back'
         );
-        
+                                               
         $this->crud->use_table('m_angkatan');
-        $data['angkatan_options'] = $this->crud->retrieve()->result();
-        
-        $this->crud->use_table('m_tahun_akademik');
-        $data['tahun_akademik_options'] = $this->crud->retrieve()->result();
+        $data['angkatan_options'] = $this->crud->retrieve()->result();      
 
         $this->crud->use_table('m_semester');
         $data['semester_options'] = $this->crud->retrieve()->result();
@@ -184,8 +180,11 @@ class Plot_mata_kuliah extends CI_Controller {
         $this->crud->use_table('t_plot_mata_kuliah_detil');
         $data['plot_mata_kuliah_detil_options'] = $this->crud->retrieve()->result();
         
-        $data['get_matakuliah_detil_options'] = '';
+        $this->load->model('plot_mata_kuliah_model');
+        $data['get_matakuliah_detil_options'] = $this->plot_mata_kuliah_model->get_detail();
         
+        $data['detail_options'] = '';
+                
         $this->load->model('plot_mata_kuliah_model', 'plot_mata_kuliah');
         $data = array_merge($data, $this->plot_mata_kuliah->set_default()); //merge dengan arr data dengan default
         $this->load->view('transaction/plot_mata_kuliah_form', $data);
@@ -225,24 +224,7 @@ class Plot_mata_kuliah extends CI_Controller {
             );
             
             $this->crud->update($criteria, $data_in);
-            /*$mata_kuliah = $this->input->post('mata_kuliah_id');
-            if(is_array($mata_kuliah)){
-                $this->crud->use_table('t_plot_mata_kuliah_detil');
-                for($i=0; $i< count($mata_kuliah); $i++){
-                    $criteria = array(
-                        'plot_mata_kuliah_id' => $id
-                    );
-                    $data_in = array(
-                        'mata_kuliah_id'      => $mata_kuliah[$i],
-                        'modified_on'         => date($this->config->item('log_date_format')),
-                        'modified_by'         => logged_info()->on
-                    );
-                       var_dump($criteria, $data_in);
-                    $this->crud->update($criteria, $data_in);
-                  //var_dump($test);
-                }
-            }*/
-            
+
             $mata_kuliah = $this->input->post('mata_kuliah_id');
             if(is_array($mata_kuliah)){
                 $this->crud->use_table('t_plot_mata_kuliah_detil');
@@ -273,7 +255,8 @@ class Plot_mata_kuliah extends CI_Controller {
                         $this->crud->create($data_in);                
                     }    
                 }
-            }                                 
+            } 
+                        
             redirect('transaction/plot_mata_kuliah/' . $id . '/info');
         }
         $data['action_url'] = $transaction_url . $id . '/' . __FUNCTION__;
@@ -287,7 +270,7 @@ class Plot_mata_kuliah extends CI_Controller {
         
         $this->crud->use_table('m_angkatan');
         $data['angkatan_options'] = $this->crud->retrieve()->result();
-
+                                                                              
         $this->crud->use_table('m_semester');
         $data['semester_options'] = $this->crud->retrieve()->result();
         
@@ -298,11 +281,14 @@ class Plot_mata_kuliah extends CI_Controller {
         $data['mata_kuliah_options'] = $this->crud->retrieve()->result();
                 
         $this->load->model('plot_mata_kuliah_model');
-        $data['get_matakuliah_detil_options'] = $this->plot_mata_kuliah_model->get_matakuliah_detil($id);
+        $data['detail_options'] = $this->plot_mata_kuliah_model->get_matakuliah_detil($id);
                 
         $this->load->model('plot_mata_kuliah_model');
+        $data['get_matakuliah_detil_options'] = $this->plot_mata_kuliah_model->get_detail();
+               
+        $this->load->model('plot_mata_kuliah_model');
         $data['teesting_options'] = $this->plot_mata_kuliah_model->get_tahun_angkatan($id);
-        
+                                                                           
         $this->crud->use_table('t_plot_mata_kuliah_detil');
         $plot_mata_kuliah_detil_data = $this->crud->retrieve(array('plot_mata_kuliah_id' => $id))->row();
         
@@ -325,7 +311,7 @@ class Plot_mata_kuliah extends CI_Controller {
         echo '<option value="" ></option>';
         foreach($data as $row){
             echo '<option value=\''.$row['id'].'\' >'.$row['tahun_ajar_mulai'].'-'.$row['tahun_ajar_akhir'].'</option>';
-        }
+        } 
     }
     
 }

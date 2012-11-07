@@ -1330,7 +1330,7 @@ $config = array(
         array(
             'field' => 'angkatan_id',
             'label' => 'angkatan_id',
-            'rules' => 'trim|required|greater_than[0]'
+            'rules' => 'trim|required'
         )
     ), 'plot_dosen_penanggung_jawab_update' => array(
         array(
@@ -1344,7 +1344,7 @@ $config = array(
         array(
             'field' => 'angkatan_id',
             'label' => 'angkatan_id',
-            'rules' => 'trim|required|greater_than[0]'
+            'rules' => 'trim|required'
         )
     ), 'rencana_mata_pelajaran_update' => array(
         array(

@@ -90,7 +90,11 @@ class Paket_matakuliah extends CI_Controller {
         foreach ($result_keys as $result_key) {
             $data[$result_key] = $result[$result_key];
         }
-
+        
+        $this->load->model('paket_matakuliah_model');
+        $data['paket_detil_options'] = $this->paket_matakuliah_model->get_paket_matakuliah_detil($id);
+        
+        
         $data['tools'] = array(
             'transaction/paket_matakuliah' => 'Back',
             'transaction/paket_matakuliah/' . $id . '/edit' => 'Edit',
@@ -127,16 +131,12 @@ class Paket_matakuliah extends CI_Controller {
             $this->crud->use_table('t_paket_mata_kuliah');
             $data_in = array(
                 'angkatan_id'             => $this->input->post('angkatan_id'),
-                'tahun_akademik_id'       => $this->input->post('tahun_akademik_id'),
+                //'tahun_akademik_id'       => $this->input->post('tahun_akademik_id'),
                 'semester_id'             => $this->input->post('semester_id'),
                 'program_studi_id'        => $this->input->post('program_studi_id'),
                 'created_on'              => date($this->config->item('log_date_format')),
                 'created_by'              => logged_info()->on
             ); 
-            
-//              echo '<pre>';
-//              var_dump($data_in);
-//              echo '</pre>';
              
             $created_id = $this->crud->create($data_in);
 
@@ -147,10 +147,9 @@ class Paket_matakuliah extends CI_Controller {
                     $data_in = array(
                             'paket_mata_kuliah_id'    => $created_id,
                             'kelompok_mata_kuliah_id' => $kelompok[$i],
-                            'modified_on'             => date($this->config->item('log_date_format')),
-                            'modified_by'             => logged_info()->on,
-                            'active'                  => 1   
-                        );
+                            'created_on'              => date($this->config->item('log_date_format')),
+                            'created_by'              => logged_info()->on 
+                    );
                     $this->crud->create($data_in);  
                 }
             }
@@ -164,12 +163,16 @@ class Paket_matakuliah extends CI_Controller {
         
         $this->crud->use_table('m_angkatan');
         $data['angkatan_options'] = $this->crud->retrieve()->result();
+                                                                                   
+        $this->load->model('paket_matakuliah_model');
+        $data['plot_mata_kuliah_options'] = $this->paket_matakuliah_model->get_kelompok();
         
-        $this->crud->use_table('m_tahun_akademik');
-        $data['tahun_akademik_options'] = $this->crud->retrieve()->result();
+        $this->load->model('paket_matakuliah_model');
+        $kelompok_id = $this->input->post('plot_mata_kuliah_id');
+        $data['plot_kelompok_options'] = $this->paket_matakuliah_model->get_plot_matakuliah($kelompok_id);
         
-        $this->crud->use_table('m_semester');
-        $data['semester_options'] = $this->crud->retrieve()->result();
+        $this->load->model('paket_matakuliah_model');
+        $data['plot_options'] = $this->paket_matakuliah_model->plot_matakuliah();
         
         $this->crud->use_table('m_program_studi');
         $data['program_studi_options'] = $this->crud->retrieve()->result();
@@ -187,13 +190,6 @@ class Paket_matakuliah extends CI_Controller {
         
         $this->load->view('transaction/paket_matakuliah_form', $data);
     }
-
-//1. Model
-//2. Controller
-//3. View
-//4. Form Validation
-//5. Routes
-//6. Menus
 
     function edit() {
         $data['auth']        = $this->auth;
@@ -213,7 +209,7 @@ class Paket_matakuliah extends CI_Controller {
             );
             $data_in = array(
                 'angkatan_id'             => $this->input->post('angkatan_id'),
-                'tahun_akademik_id'       => $this->input->post('tahun_akademik_id'),
+                //'tahun_akademik_id'       => $this->input->post('tahun_akademik_id'),
                 'semester_id'             => $this->input->post('semester_id'),
                 'program_studi_id'        => $this->input->post('program_studi_id'),
                 'keterangan'              => $this->input->post('keterangan'),
@@ -221,43 +217,25 @@ class Paket_matakuliah extends CI_Controller {
                 'modified_by'             => logged_info()->on
             );
             
-//              echo '<pre>';
-//              var_dump($data_in);
-//              echo '</pre>';
-            
             $this->crud->update($criteria, $data_in);
             
             $kelompok = $this->input->post('kelompok_mata_kuliah_id');
             if(is_array($kelompok)){
                 $this->crud->use_table('t_paket_mata_kuliah_detil');
-                
-                $this->load->model('paket_matakuliah_model');
-                $this->paket_matakuliah_model->get_update($id, array('active' => 0));
-                
                 for($i=0; $i< count($kelompok); $i++){
+                    $data_in = array(
+                        'paket_mata_kuliah_id'    => $id,
+                        'kelompok_mata_kuliah_id' => $kelompok[$i],
+                        'modified_on'             => date($this->config->item('log_date_format')),
+                        'modified_by'             => logged_info()->on,
+                    );
+                    var_dump($data_in);
                     $this->load->model('paket_matakuliah_model');
-                    $paket_id = $this->paket_matakuliah_model->get_matakuliah_update($id, $kelompok[$i]); 
-                    if($paket_id == 1){
-                        $data_in = array(
-                            'paket_mata_kuliah_id'    => $id,
-                            'kelompok_mata_kuliah_id' => $kelompok[$i],
-                            'modified_on'             => date($this->config->item('log_date_format')),
-                            'modified_by'             => logged_info()->on,
-                            'active'                  => 1  
-                        );
-                        $this->paket_matakuliah_model->get_update($id, $data_in );
-                    }else{
-                        $data_in = array(
-                            'paket_mata_kuliah_id'    => $id,
-                            'kelompok_mata_kuliah_id' => $kelompok[$i],
-                            'modified_on'             => date($this->config->item('log_date_format')),
-                            'modified_by'             => logged_info()->on,
-                            'active'                  => 1   
-                        );
-                    $this->crud->create($data_in);                
-                    }    
+                    $test = $this->paket_matakuliah_model->get_update($id, $data_in);
+                    var_dump($test);exit();
                 }
             }
+            
             redirect('transaction/paket_matakuliah/' . $id . '/info');
         }
         $data['action_url'] = $master_url . $id . '/' . __FUNCTION__;
@@ -271,12 +249,9 @@ class Paket_matakuliah extends CI_Controller {
         
         $this->crud->use_table('m_angkatan');
         $data['angkatan_options'] = $this->crud->retrieve()->result();
-        
-        $this->crud->use_table('m_tahun_akademik');
-        $data['tahun_akademik_options'] = $this->crud->retrieve()->result();
-        
-        $this->crud->use_table('m_semester');
-        $data['semester_options'] = $this->crud->retrieve()->result();
+                                                                           
+        $this->load->model('paket_matakuliah_model');
+        $data['plot_mata_kuliah_options'] = $this->paket_matakuliah_model->get_kelompok();
         
         $this->crud->use_table('m_program_studi');
         $data['program_studi_options'] = $this->crud->retrieve()->result();
@@ -296,7 +271,44 @@ class Paket_matakuliah extends CI_Controller {
         $this->load->model('paket_matakuliah_model', 'paket_matakuliah');
         $data = array_merge($data, $this->paket_matakuliah->set_default()); //merge dengan arr data dengan default
         $data = array_merge($data, (array) $paket_matakuliah_data);
+        if (!(empty($id))){
+            $this->crud->use_table('m_angkatan');
+            $data['m_angkatan'] = $this->crud->retrieve(array('id' => $data['angkatan_id']))->row();
+            $this->load->model('paket_matakuliah_model');
+            $data['m_tahun_akademik'] = $this->paket_matakuliah_model->get_tahun_angkatan($data['m_angkatan']->tahun_akademik_id);
+        }
         $this->load->view('transaction/paket_matakuliah_form', $data);
+    }
+    
+    function getOptTahunAkademik(){
+        $this->load->model('paket_matakuliah_model');
+        $angkatan_id= $this->input->post('angkatan_id');
+        $data = $this->paket_matakuliah_model->get_tahun_angkatan($angkatan_id);
+        echo '<option value="" ></option>';
+        foreach($data as $row){
+            echo '<option value=\''.$row['tahun_akademik_id'].'\' >'.$row['tahun_ajar_mulai'].'-'.$row['tahun_ajar_akhir'].'</option>';
+        } 
+    }
+    
+//    function getOptPlotmatakuliah(){
+//        $this->load->model('paket_matakuliah_model');
+//        $kelompok_mata_kuliah_id= $this->input->post('plot_mata_kuliah_id');
+//        $data = $this->paket_matakuliah_model->get_plot_matakuliah($kelompok_mata_kuliah_id);
+//        echo '<option value="" ></option>';
+//        foreach($data as $row){
+//            echo '<option value=\''.$row['semester_id'].'\' >'.$row['nama_kelompok_mata_kuliah'].'</option>';
+//        } 
+//    }
+    
+    function getOptPlotmatakuliah(){
+        $this->load->model('paket_matakuliah_model');
+        $kelompok_mata_kuliah_id= $this->input->post('plot_mata_kuliah_id');
+        $data = $this->paket_matakuliah_model->get_plot_matakuliah($kelompok_mata_kuliah_id);
+        //echo '<input type="checkbox" value="" >';
+        foreach($data as $row){
+            echo '<input type="checkbox" name="kelompok_mata_kuliah_id[]" value\''.$row['semester_id'].'\'>'.$row['nama_kelompok_mata_kuliah'];
+            //echo"<input type= checkbox id='cek' $checked name='kelompok_mata_kuliah_id[]' value='$row->id' >&nbsp;&nbsp; $row->nama_kelompok_mata_kuliah<br>";
+        } 
     }
 }
 

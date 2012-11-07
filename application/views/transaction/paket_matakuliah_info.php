@@ -35,6 +35,32 @@ $control_label = array(
             </tr>
         </tbody>
     </table>
+    
+    <table class="table table-bordered table-striped container-full"  id="paket_mata_kuliah" controller="transaction">
+        <thead>
+            <tr>
+                <th width="20">No</th>
+                <th>Kode Kelompok</th>
+                <th>Nama Kelompok</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php         
+                $no = 1;
+                if(isset($paket_detil_options)){
+                    foreach ($paket_detil_options As $row) {
+                    echo '<tr>
+                            <td style="text-align: center">' . $no . '</td>    
+                            <td>' . $row['kode_kelompok'] . '</td>    
+                            <td>' . $row['nama_kelompok_mata_kuliah'] . '</td>
+                        </tr>';
+                    $no++;                    
+                    }
+                }
+            ?>
+        </tbody>
+    </table>
+
 </div>
 
 <?php $this->load->view('_shared/footer'); ?>

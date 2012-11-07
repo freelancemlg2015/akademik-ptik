@@ -35,7 +35,7 @@ $control_label = array(
         </tbody>
     </table>
 
-    <table class="table table-bordered table-striped container-full"  id="plot_maata_kuliah" controller="transaction">
+    <table class="table table-bordered table-striped container-full"  id="plot_mata_kuliah" controller="transaction">
         <thead>
             <tr>
                 <th width="20">No</th>
@@ -44,7 +44,7 @@ $control_label = array(
             </tr>
         </thead>
         <tbody>
-            <?php                                           
+            <?php         
                 $no = 1;
                 if(isset($matakuliah_options_edit)){
                     foreach ($matakuliah_options_edit As $row) {
