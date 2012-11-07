@@ -90,6 +90,9 @@ class Rencana_mata_pelajaran extends CI_Controller {
         foreach ($result_keys as $result_key) {
             $data[$result_key] = $result[$result_key];
         }
+        
+        $this->load->model('rencana_mata_pelajaran_model');
+        $data['mahasiswa_detil_options'] = $this->rencana_mata_pelajaran_model->get_mahasiswa_detil($id);
 
         $data['tools'] = array(
             'transaction/rencana_mata_pelajaran' => 'Back',
@@ -269,7 +272,7 @@ class Rencana_mata_pelajaran extends CI_Controller {
                     $this->crud->create($data_in);                
                     }    
                 }
-            } \Admin::
+            } 
             redirect('transaction/rencana_mata_pelajaran/' . $id . '/info');
         }
         $data['action_url'] = $transaction_url . $id . '/' . __FUNCTION__;

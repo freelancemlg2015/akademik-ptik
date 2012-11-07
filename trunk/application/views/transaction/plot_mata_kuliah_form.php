@@ -20,14 +20,14 @@ foreach ($angkatan_options as $row) {
     $angkatan_data[$row->id.'-'.$row->tahun_akademik_id] = $row->nama_angkatan;
 }
 
-$pangkat_data[0] = '';
+$tahun_data[0] = '';
 if (isset($m_tahun_akademik)){
     foreach ($m_tahun_akademik as $row) {
-        $pangkat_data[$row['id']] = $row['tahun_ajar_mulai'].'-'.$row['tahun_ajar_akhir'];
+        $tahun_data[$row['id']] = $row['tahun_ajar_mulai'].'-'.$row['tahun_ajar_akhir'];
     }    
-}
+} 
 else {
-    $pangkat_data[''] = '';
+    $tahun_data[''] = '';
 }
 
 
@@ -62,10 +62,10 @@ else {
     </div>
 
     <div class="control-group">
-        <?= form_label('Tahun Akademik' , 'tahun_akademik_id', $control_label); ?>
+        <?= form_label('Tahun Akademik' , 'thn_akademik_id', $control_label); ?>
         <div class="controls">
-            <?= form_dropdown('span_pangkat', $pangkat_data, set_value('thn_akademik_id', $angkatan_id), 'id="thn_akademik_id" class="input-medium" prevData-selected="' . set_value('thn_akademik_id', $angkatan_id) . '"'); ?>
-            <p class="help-block"><?php echo form_error('tahun_ajar') ?></p>
+            <?= form_dropdown('span_tahun', $tahun_data, set_value('thn_akademik_id', $angkatan_id), 'id="thn_akademik_id" class="input-medium" prevData-selected="' . set_value('thn_akademik_id', $angkatan_id) . '"'); ?>
+            <p class="help-block"><?php echo form_error('thn_akademik_id') ?></p>
         </div>
     </div>
     
@@ -103,25 +103,16 @@ else {
             </tr>
         </thead>
         <tbody>
-            <?php                                           
+            <?php
                 $no = 1;
-                foreach ($mata_kuliah_options as $row) {
-                echo '<tr id="' . $row->id . '">
+                foreach ($get_matakuliah_detil_options as $row) {                              
+                @$checked = in_array($row['id'], $detail_options) ? "checked='checked'" : "";    
+                echo '<tr id="' . $row['id'] . '">
                         <td style="text-align: center">' . $no . '</td>    
-                        <td>' . $row->kode_mata_kuliah . '</td>    
-                        <td>' . $row->nama_mata_kuliah . '</td>';
-                        @$checked = in_array($row->id, $get_matakuliah_detil_options) ? "checked='checked'" : "";
-                        if(empty($checked)){
-                            echo "<td style='text-align: center'>
-                                    <input type='checkbox' name='mata_kuliah_id[]' id='cek' value='$row->id' >   
-                                </td>"; 
-                        }else{
-                            echo "<td style='text-align: center'>
-                                    <input type='checkbox' $checked name='mata_kuliah_id[]' id='cek' value='$row->id' >   
-                                </td>"; 
-                        }
-                 echo'</tr>
-                ';
+                        <td>' . $row['kode_mata_kuliah'] . '</td>    
+                        <td>' . $row['nama_mata_kuliah'] . '</td>
+                        <td style="text-align: center">' . "<input type='hidden' name='detail_id' id='cek' value=".$row['id']." ><input type='checkbox'". $checked ." name='mata_kuliah_id[]' id='cek' value=".$row['id']." >" . '</td>
+                      </tr>';
                 $no++;                    
                 }
                 
@@ -141,14 +132,15 @@ else {
     pager.init(); 
     pager.showPageNav('pager', 'pageNavPosition'); 
     pager.showPage(1);
+    
     $("#angkatan_id").change(function(){
         var value = ($(this).val()).split("-");
         $.post('<?php echo base_url(); ?>plot_mata_kuliah/getOptTahunAkademik', {angkatan_id: value[1]},
-        function(data){
-            $("select[name='span_pangkat']").closest("div.controls").append("<select name='span_pangkat'></select>");
-            $("select[name='span_pangkat']").closest("div.combobox-container").remove();
-            $("select[name='span_pangkat']").html(data).combobox();
+        function(data){                                                                 
+            $("select[name='span_tahun']").closest("div.controls").append("<select name='span_tahun'></select>");
+            $("select[name='span_tahun']").closest("div.combobox-container").remove();
+            $("select[name='span_tahun']").html(data).combobox();
         });
-    })
-    $("select[name='span_pangkat']").combobox();
+    })                                         
+    $("select[name='span_tahun']").combobox();
 </script>
