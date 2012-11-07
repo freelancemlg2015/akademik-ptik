@@ -12,7 +12,8 @@ class Plot_dosen_penanggung_jawab_model extends CI_Model {
                         ->from('t_dosen_ajar')
                         ->join('m_angkatan', 'm_angkatan.id = t_dosen_ajar.angkatan_id', 'left')
                         ->join('m_tahun_akademik', 'm_tahun_akademik.id = m_angkatan.tahun_akademik_id', 'left')
-                        ->join('t_plot_mata_kuliah', 't_plot_mata_kuliah.id = t_dosen_ajar.plot_mata_kuliah_id', 'left')
+                        ->join('t_paket_mata_kuliah', 't_paket_mata_kuliah.id = t_dosen_ajar.paket_mata_kuliah_id', 'left')
+                        ->join('t_plot_mata_kuliah', 't_plot_mata_kuliah.id = t_paket_mata_kuliah.plot_mata_kuliah_id', 'left')
                         ->join('m_semester', 'm_semester.id = t_plot_mata_kuliah.semester_id', 'left')
                         ->join('m_kelompok_matakuliah', 'm_kelompok_matakuliah.id = t_plot_mata_kuliah.kelompok_mata_kuliah_id', 'left');
     }
@@ -165,12 +166,13 @@ class Plot_dosen_penanggung_jawab_model extends CI_Model {
     }
     
     function get_plot_matakuliah($id=NULL){
-        $this->db->select('t_plot_mata_kuliah.semester_id, m_semester.nama_semester, m_kelompok_matakuliah.nama_kelompok_mata_kuliah');
-        $this->db->from('t_plot_mata_kuliah');
+        $this->db->select('t_paket_mata_kuliah.*,t_plot_mata_kuliah.semester_id, m_semester.nama_semester, m_kelompok_matakuliah.nama_kelompok_mata_kuliah');
+        $this->db->from('t_paket_mata_kuliah');
+        $this->db->join('t_plot_mata_kuliah', 't_plot_mata_kuliah.id = t_paket_mata_kuliah.plot_mata_kuliah_id', 'left');
         $this->db->join('m_semester','m_semester.id = t_plot_mata_kuliah.semester_id','left');
         $this->db->join('m_kelompok_matakuliah','m_kelompok_matakuliah.id = t_plot_mata_kuliah.kelompok_mata_kuliah_id','left');
-        $this->db->where('t_plot_mata_kuliah.semester_id', $id);
-        $this->db->where('t_plot_mata_kuliah.active', 1);
+        $this->db->where('t_paket_mata_kuliah.plot_mata_kuliah_id', $id);
+        $this->db->where('t_paket_mata_kuliah.active', 1);
         $this->db->order_by('m_kelompok_matakuliah.nama_kelompok_mata_kuliah', 'asc');
         $Q = $this->db->get();
         foreach ($Q->result_array() as $row) $data[] = $row;

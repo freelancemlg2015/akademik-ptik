@@ -7,29 +7,23 @@ $control_label = array(
     'class' => 'control-label'
 );
 
-
-$keterangan_attr = array(
-    'name' => 'keterangan',
-    'class' => 'span3',
-    'value' => set_value('keterangan', $keterangan),
-    'autocomplete' => 'off'    
-);
-
 $angkatan_data[0] = '';
 foreach ($angkatan_options as $row) {
     $angkatan_data[$row->id.'-'.$row->tahun_akademik_id] = $row->nama_angkatan;
 }
 
 $tahun_data[0] = '';
-if (isset($m_tahun_akademik)){
-    foreach ($m_tahun_akademik as $row) {
+foreach ($m_tahun_akademik as $row) {
+        //$tahun_data = $row['tahun_ajar_mulai'].'-'.$row['tahun_ajar_akhir'];
         $tahun_data[$row['id']] = $row['tahun_ajar_mulai'].'-'.$row['tahun_ajar_akhir'];
-    }    
-} 
-else {
-    $tahun_data[''] = '';
 }
 
+if (isset($m_angkatan->tahun_akademik_id)){
+    $thn_akademik_id = $m_angkatan->tahun_akademik_id;
+}
+else {
+    $thn_akademik_id = '';
+}
 
 $semester_data[0] = '';
 foreach ($semester_options as $row) {
@@ -41,13 +35,15 @@ foreach ($kelompok_matakuliah_options as $row) {
     $kelompok_matakuliah_data[$row->id] = $row->nama_kelompok_mata_kuliah;
 }
 
-if (isset($m_angkatan->tahun_akademik_id)){
-    $thn_akademik_id = $m_angkatan->tahun_akademik_id;
-}
-else {
-    $thn_akademik_id = '';
-}
-                 
+$thn_akademik_id_attr = array(
+    'id' => 'thn_akademik_id_attr',
+    'name' => 'tahun_akademik_id',
+    'class' => 'input-small',
+    'readonly' => 'readonly',
+    'value' => set_value('tahun_akademik_id', $thn_akademik_id_attr),
+    'autocomplete' => 'off'
+);
+
 
 ?>
 <div class="container-full" id="plot_mata_kuliah">
@@ -56,15 +52,15 @@ else {
     <div class="control-group">
         <?= form_label('Angkatan' . required(), 'angkatan_id', $control_label); ?>
         <div class="controls">
-            <?= form_dropdown('angkatan_id', $angkatan_data, set_value('angkatan_id', $angkatan_id."-".$thn_akademik_id), 'id="angkatan_id" class="input-medium" prevData-selected="' . set_value('angkatan_id', $angkatan_id) . '"'); ?>
+            <?= form_dropdown('angkatan_id', $angkatan_data, set_value('angkatan_id', $angkatan_id."-".$thn_akademik_id), 'onChange="changeAngkatan()" id="angkatan_id" class="input-medium" prevData-selected="' . set_value('angkatan_id', $angkatan_id) . '"'); ?>
             <p class="help-block"><?php echo form_error('angkatan_id') ?></p>
         </div>
     </div>
-
+    
     <div class="control-group">
         <?= form_label('Tahun Akademik' , 'thn_akademik_id', $control_label); ?>
         <div class="controls">
-            <?= form_dropdown('span_tahun', $tahun_data, set_value('thn_akademik_id', $angkatan_id), 'id="thn_akademik_id" class="input-medium" prevData-selected="' . set_value('thn_akademik_id', $angkatan_id) . '"'); ?>
+            <?= form_input($thn_akademik_id_attr); ?>
             <p class="help-block"><?php echo form_error('thn_akademik_id') ?></p>
         </div>
     </div>
@@ -111,7 +107,7 @@ else {
                         <td style="text-align: center">' . $no . '</td>    
                         <td>' . $row['kode_mata_kuliah'] . '</td>    
                         <td>' . $row['nama_mata_kuliah'] . '</td>
-                        <td style="text-align: center">' . "<input type='hidden' name='detail_id' id='cek' value=".$row['id']." ><input type='checkbox'". $checked ." name='mata_kuliah_id[]' id='cek' value=".$row['id']." >" . '</td>
+                        <td style="text-align: center">' . "<input type='hidden' name='id' id='cek' value=".$row['id']." ><input type='checkbox'". $checked ." name='mata_kuliah_id[]' id='cek' value=".$row['id']." >" . '</td>
                       </tr>';
                 $no++;                    
                 }
@@ -133,14 +129,12 @@ else {
     pager.showPageNav('pager', 'pageNavPosition'); 
     pager.showPage(1);
     
-    $("#angkatan_id").change(function(){
-        var value = ($(this).val()).split("-");
-        $.post('<?php echo base_url(); ?>plot_mata_kuliah/getOptTahunAkademik', {angkatan_id: value[1]},
-        function(data){                                                                 
-            $("select[name='span_tahun']").closest("div.controls").append("<select name='span_tahun'></select>");
-            $("select[name='span_tahun']").closest("div.combobox-container").remove();
-            $("select[name='span_tahun']").html(data).combobox();
+    function changeAngkatan(){
+        var angkatan_id = ($('#angkatan_id').val()).split("-");;
+		//alert(angkatan_id);
+	$.post('<?php echo base_url(); ?>plot_mata_kuliah/getOptTahunAkademik', {angkatan_id: angkatan_id[1]},
+        function(data){
+            $('#thn_akademik_id_attr').val(data);
         });
-    })                                         
-    $("select[name='span_tahun']").combobox();
+    }   
 </script>
