@@ -167,6 +167,9 @@ class Plot_mata_kuliah extends CI_Controller {
                                                
         $this->crud->use_table('m_angkatan');
         $data['angkatan_options'] = $this->crud->retrieve()->result();      
+                                               
+        $this->crud->use_table('m_tahun_akademik');
+        $data['tahun_akademik_options'] = $this->crud->retrieve()->result();      
 
         $this->crud->use_table('m_semester');
         $data['semester_options'] = $this->crud->retrieve()->result();
@@ -184,6 +187,8 @@ class Plot_mata_kuliah extends CI_Controller {
         $data['get_matakuliah_detil_options'] = $this->plot_mata_kuliah_model->get_detail();
         
         $data['detail_options'] = '';
+        
+        $data['opt_angkatan_url'] = base_url() . 'plot_mata_kuliah/getOptTahunAkademik';
                 
         $this->load->model('plot_mata_kuliah_model', 'plot_mata_kuliah');
         $data = array_merge($data, $this->plot_mata_kuliah->set_default()); //merge dengan arr data dengan default
@@ -268,6 +273,18 @@ class Plot_mata_kuliah extends CI_Controller {
         $this->crud->use_table('t_plot_mata_kuliah');
         $plot_mata_kuliah_data = $this->crud->retrieve(array('id' => $id))->row();
         
+        $this->crud->use_table('m_tahun_akademik');
+        $tahun_akademik_data = array();
+        $criteria = array(
+            'id' => $plot_mata_kuliah_data->angkatan_id
+        );
+        $data['thn_akademik_id_attr'] = '';
+        foreach ($this->crud->retrieve($criteria)->result() as $row) {
+                $data['thn_akademik_id_attr'] =$row->tahun_ajar_mulai.'-'.$row->tahun_ajar_akhir;
+                $tahun_akademik_data[$row->id] = $row->tahun_ajar_mulai.'-'.$row->tahun_ajar_akhir;
+        }
+        $data['tahun_akademik_options'] = $tahun_akademik_data;
+        
         $this->crud->use_table('m_angkatan');
         $data['angkatan_options'] = $this->crud->retrieve()->result();
                                                                               
@@ -284,11 +301,11 @@ class Plot_mata_kuliah extends CI_Controller {
         $data['detail_options'] = $this->plot_mata_kuliah_model->get_matakuliah_detil($id);
                 
         $this->load->model('plot_mata_kuliah_model');
-        $data['get_matakuliah_detil_options'] = $this->plot_mata_kuliah_model->get_detail();
-               
+        $data['get_matakuliah_detil_options'] = $this->plot_mata_kuliah_model->get_detail();    
+                
         $this->load->model('plot_mata_kuliah_model');
-        $data['teesting_options'] = $this->plot_mata_kuliah_model->get_tahun_angkatan($id);
-                                                                           
+        $data['tahun_options'] = $this->plot_mata_kuliah_model->get_tahun_angkatan($id);    
+        
         $this->crud->use_table('t_plot_mata_kuliah_detil');
         $plot_mata_kuliah_detil_data = $this->crud->retrieve(array('plot_mata_kuliah_id' => $id))->row();
         
@@ -304,14 +321,27 @@ class Plot_mata_kuliah extends CI_Controller {
         $this->load->view('transaction/plot_mata_kuliah_form', $data);
     }
     
-    function getOptTahunAkademik(){
-        $this->load->model('plot_mata_kuliah_model');
+//   function getOptTahunAkademik(){
+//        $angkatan_id= $this->input->post('angkatan_id');
+//		$sql = "select a.tahun_ajar_mulai, a.tahun_ajar_akhir from akademik_m_tahun_akademik a ".
+//				" left join akademik_m_angkatan b on b.tahun_akademik_id=a.id ".
+//				"where a.active ='1' and b.id='$angkatan_id'";
+//        $query = $this->db->query($sql);
+//        foreach($query as $row){
+//            echo $row['tahun_ajar_mulai'].'-'.$row['tahun_ajar_akhir'];
+//        } 
+//    }
+    
+    function getOptTahunAkademik() {
         $angkatan_id= $this->input->post('angkatan_id');
-        $data = $this->plot_mata_kuliah_model->get_tahun_angkatan($angkatan_id);
-        echo '<option value="" ></option>';
-        foreach($data as $row){
-            echo '<option value=\''.$row['id'].'\' >'.$row['tahun_ajar_mulai'].'-'.$row['tahun_ajar_akhir'].'</option>';
-        } 
+		$sql = "select distinct a.tahun_ajar_mulai, a.tahun_ajar_akhir from akademik_m_tahun_akademik a ".
+				" left join akademik_m_angkatan b on b.tahun_akademik_id=a.id ".
+				"where a.active ='1' and b.tahun_akademik_id='$angkatan_id'";
+        $query = $this->db->query($sql);
+		//echo  '<pre>'.$this->db->last_query().'</pre><br>';
+        foreach($query->result_array() as $row){
+            echo $row['tahun_ajar_mulai'].'-'.$row['tahun_ajar_akhir'];
+        }
     }
     
 }

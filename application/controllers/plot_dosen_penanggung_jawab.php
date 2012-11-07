@@ -291,11 +291,6 @@ class Plot_dosen_penanggung_jawab extends CI_Controller {
             $this->load->model('plot_dosen_penanggung_jawab_model');
             $data['m_tahun_akademik'] = $this->plot_dosen_penanggung_jawab_model->get_tahun_angkatan($data['m_angkatan']->tahun_akademik_id);
             
-            $this->crud->use_table('t_plot_mata_kuliah');
-            $data['t_plot_mata_kuliah'] = $this->crud->retrieve(array('id' => $data['plot_mata_kuliah_id']))->row();
-            $this->load->model('plot_dosen_penanggung_jawab_model');
-            $data['m_semester'] = $this->plot_dosen_penanggung_jawab_model->get_plot_matakuliah($data['t_plot_mata_kuliah']->semester_id);
-            
         }
         $this->load->view('transaction/plot_dosen_penanggung_jawab_form', $data);
     }
@@ -312,11 +307,11 @@ class Plot_dosen_penanggung_jawab extends CI_Controller {
     
     function getOptPlotmatakuliah(){
         $this->load->model('plot_dosen_penanggung_jawab_model');
-        $kelompok_mata_kuliah_id= $this->input->post('plot_mata_kuliah_id');
+        $kelompok_mata_kuliah_id= $this->input->post('paket_mata_kuliah_id');
         $data = $this->plot_dosen_penanggung_jawab_model->get_plot_matakuliah($kelompok_mata_kuliah_id);
         echo '<option value="" ></option>';
         foreach($data as $row){
-            echo '<option value=\''.$row['semester_id'].'\' >'.$row['nama_kelompok_mata_kuliah'].'</option>';
+            echo '<option value=\''.$row['plot_mata_kuliah_id'].'\' >'.$row['nama_kelompok_mata_kuliah'].'</option>';
         } 
     }
     

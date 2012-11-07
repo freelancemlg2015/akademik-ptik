@@ -171,9 +171,6 @@ class Paket_matakuliah extends CI_Controller {
         $kelompok_id = $this->input->post('plot_mata_kuliah_id');
         $data['plot_kelompok_options'] = $this->paket_matakuliah_model->get_plot_matakuliah($kelompok_id);
         
-        $this->load->model('paket_matakuliah_model');
-        $data['plot_options'] = $this->paket_matakuliah_model->plot_matakuliah();
-        
         $this->crud->use_table('m_program_studi');
         $data['program_studi_options'] = $this->crud->retrieve()->result();
         
@@ -229,10 +226,8 @@ class Paket_matakuliah extends CI_Controller {
                         'modified_on'             => date($this->config->item('log_date_format')),
                         'modified_by'             => logged_info()->on,
                     );
-                    var_dump($data_in);
                     $this->load->model('paket_matakuliah_model');
-                    $test = $this->paket_matakuliah_model->get_update($id, $data_in);
-                    var_dump($test);exit();
+                    $this->paket_matakuliah_model->get_update($id, $data_in);
                 }
             }
             
@@ -280,7 +275,19 @@ class Paket_matakuliah extends CI_Controller {
         $this->load->view('transaction/paket_matakuliah_form', $data);
     }
     
-    function getOptTahunAkademik(){
+    function getOptTahunAkademik() {
+        $angkatan_id= $this->input->post('angkatan_id');
+		$sql = "select distinct a.tahun_ajar_mulai, a.tahun_ajar_akhir from akademik_m_tahun_akademik a ".
+				" left join akademik_m_angkatan b on b.tahun_akademik_id=a.id ".
+				"where a.active ='1' and b.tahun_akademik_id='$angkatan_id'";
+        $query = $this->db->query($sql);
+		//echo  '<pre>'.$this->db->last_query().'</pre><br>';
+        foreach($query->result_array() as $row){
+            echo $row['tahun_ajar_mulai'].'-'.$row['tahun_ajar_akhir'];
+        }
+    }
+    
+    /*function getOptTahunAkademik(){
         $this->load->model('paket_matakuliah_model');
         $angkatan_id= $this->input->post('angkatan_id');
         $data = $this->paket_matakuliah_model->get_tahun_angkatan($angkatan_id);
@@ -288,28 +295,27 @@ class Paket_matakuliah extends CI_Controller {
         foreach($data as $row){
             echo '<option value=\''.$row['tahun_akademik_id'].'\' >'.$row['tahun_ajar_mulai'].'-'.$row['tahun_ajar_akhir'].'</option>';
         } 
-    }
-    
-//    function getOptPlotmatakuliah(){
-//        $this->load->model('paket_matakuliah_model');
-//        $kelompok_mata_kuliah_id= $this->input->post('plot_mata_kuliah_id');
-//        $data = $this->paket_matakuliah_model->get_plot_matakuliah($kelompok_mata_kuliah_id);
-//        echo '<option value="" ></option>';
-//        foreach($data as $row){
-//            echo '<option value=\''.$row['semester_id'].'\' >'.$row['nama_kelompok_mata_kuliah'].'</option>';
-//        } 
-//    }
+    }*/
     
     function getOptPlotmatakuliah(){
         $this->load->model('paket_matakuliah_model');
         $kelompok_mata_kuliah_id= $this->input->post('plot_mata_kuliah_id');
         $data = $this->paket_matakuliah_model->get_plot_matakuliah($kelompok_mata_kuliah_id);
-        //echo '<input type="checkbox" value="" >';
+        echo '<option value="" ></option>';
         foreach($data as $row){
-            echo '<input type="checkbox" name="kelompok_mata_kuliah_id[]" value\''.$row['semester_id'].'\'>'.$row['nama_kelompok_mata_kuliah'];
-            //echo"<input type= checkbox id='cek' $checked name='kelompok_mata_kuliah_id[]' value='$row->id' >&nbsp;&nbsp; $row->nama_kelompok_mata_kuliah<br>";
+            echo '<option value=\''.$row['semester_id'].'\' >'.$row['nama_kelompok_mata_kuliah'].'</option>';
         } 
     }
+    
+    /*function getOptPlotmatakuliah(){
+        $this->load->model('paket_matakuliah_model');
+        $kelompok_mata_kuliah_id= $this->input->post('plot_mata_kuliah_id');
+        $data = $this->paket_matakuliah_model->get_plot_matakuliah($kelompok_mata_kuliah_id);
+        //echo '<input type="checkbox" value="" >';
+        foreach($data as $row){
+            echo '<input type="text" name="kelompok_mata_kuliah_id[]" value\''.$row['semester_id'].'\'>'.$row['nama_kelompok_mata_kuliah'].'<br>';
+        } 
+    }*/
 }
 
 ?>

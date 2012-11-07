@@ -91,7 +91,7 @@ class Plot_mata_kuliah_model extends CI_Model {
     }
          
     function get_matakuliah_detil($id=null){
-        $this->db->select('a.detail_id, a.mata_kuliah_id');
+        $this->db->select('a.id, a.mata_kuliah_id');
         $this->db->from('t_plot_mata_kuliah_detil as a');
         if ($id) $this->db->where('a.plot_mata_kuliah_id', $id);
                  $this->db->where('a.active', 1);
@@ -99,7 +99,7 @@ class Plot_mata_kuliah_model extends CI_Model {
         foreach ($Q->result_array() as $row) $data[] = $row['mata_kuliah_id'];
         return @$data;
     }
-         
+    
     function get_matakuliah($id=null){
         $this->db->select('a.mata_kuliah_id, b.kode_mata_kuliah, b.nama_mata_kuliah');
         $this->db->from('t_plot_mata_kuliah_detil as a');
@@ -122,12 +122,12 @@ class Plot_mata_kuliah_model extends CI_Model {
     }
     
     function get_matakuliah_update($plot_mata_kuliah_id, $mata_kuliah_id){
-        $this->db->select('a.detail_id');
+        $this->db->select('a.id');
         $this->db->from('t_plot_mata_kuliah_detil as a');
         $this->db->where('a.plot_mata_kuliah_id',$plot_mata_kuliah_id);
         $this->db->where('a.mata_kuliah_id', $mata_kuliah_id);
         $Q = $this->db->get();
-        foreach ($Q->result_array() as $row) return $row['detail_id'];
+        foreach ($Q->result_array() as $row) return $row['id'];
     }
         
     function get_mtkuliah(){
@@ -142,21 +142,18 @@ class Plot_mata_kuliah_model extends CI_Model {
     }
     
     function get_tahun_angkatan($id=NULL){
+        $this->db->distinct();
         $this->db->select('m_angkatan.*,m_angkatan.tahun_akademik_id, m_tahun_akademik.tahun_ajar_mulai, m_tahun_akademik.tahun_ajar_akhir');
         $this->db->from('m_angkatan');
         $this->db->join('m_tahun_akademik','m_tahun_akademik.id = m_angkatan.tahun_akademik_id','left');
-        if ($id) $this->db->where('m_angkatan.tahun_akademik_id', $id);
-                 $this->db->where('m_angkatan.active', 1);
+        $this->db->where('m_angkatan.id', $id);
+        $this->db->where('m_angkatan.active', 1);
         $Q = $this->db->get();
-        foreach ($Q->result_array() as $row) $data[] = $row;
+        foreach ($Q->result_array() as $row) $data[] = $row['id'];
+        //echo $this->db->last_query();
         return @$data;
     }
     
-    //function get_update($id, $data){
-//        $this->db->where('plot_mata_kuliah_id', $id);
-//        $this->db->update('t_plot_mata_kuliah_detil', $data);
-//    }
-       
     function get_update($id, $data) {  
         $this->db->where('plot_mata_kuliah_id', $id);
         $this->db->update('t_plot_mata_kuliah_detil', $data);

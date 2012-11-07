@@ -181,7 +181,7 @@ class Paket_matakuliah_model extends CI_Model {
     }
     
     function get_plot_matakuliah($id=NULL){
-        $this->db->select('t_plot_mata_kuliah.*, m_semester.nama_semester, m_kelompok_matakuliah.nama_kelompok_mata_kuliah');
+        $this->db->select('t_plot_mata_kuliah.semester_id, t_plot_mata_kuliah.kelompok_mata_kuliah_id, m_semester.nama_semester, m_kelompok_matakuliah.nama_kelompok_mata_kuliah');
         $this->db->from('t_plot_mata_kuliah');
         $this->db->join('m_semester','m_semester.id = t_plot_mata_kuliah.semester_id','left');
         $this->db->join('m_kelompok_matakuliah','m_kelompok_matakuliah.id = t_plot_mata_kuliah.kelompok_mata_kuliah_id','left');
@@ -190,7 +190,7 @@ class Paket_matakuliah_model extends CI_Model {
         $this->db->order_by('m_kelompok_matakuliah.nama_kelompok_mata_kuliah', 'asc');
         $Q = $this->db->get();
         foreach ($Q->result_array() as $row) $data[] = $row;
-        //echo $this->db->last_query();
+    //    echo $this->db->last_query();
         return @$data;
     }
     
