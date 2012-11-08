@@ -350,7 +350,7 @@ and m.semester_id = $semester_id and m.mata_kuliah_id = $mata_kuliah_id");
 					from akademik_t_jadwal_ujian m
 					left join akademik_t_jadwal_ujian_pengawas_dosen_detil d on m.id = d.jadwal_ujian_id and d.active=1 
 					left join akademik_m_dosen ds on d.dosen_id = ds.id  
-					left join akademik_t_absensi_ujian_dosen a on d.jadwal_ujian_id=a.jadwal_ujian_id and d.dosen_id=a.dosen_id  and d.active=1 
+					left join akademik_t_absensi_pengawas_ujian_dosen a on d.jadwal_ujian_id=a.jadwal_ujian_id and d.dosen_id=a.dosen_id  and d.active=1 
 					left join akademik_m_absensi k on a.absensi_id = k.id
 					where m.angkatan_id = $angkatan_id and m.program_studi_id=$program_studi_id 
 					and m.semester_id = $semester_id and m.mata_kuliah_id = $mata_kuliah_id
