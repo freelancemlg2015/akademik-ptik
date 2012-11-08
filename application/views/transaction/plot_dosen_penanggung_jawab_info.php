@@ -34,15 +34,7 @@ $control_label = array(
             </tr>
             <tr>
                 <th class="span2">Mata Kuliah</th>
-                <td>
-                    <?php
-                        if(isset($plot_detil_options)){
-                            foreach($plot_detil_options as $row){
-                                echo $row['nama_mata_kuliah'];
-                            }
-                        }
-                    ?>
-                </td>
+                <td><?= $nama_kelompok_mata_kuliah ?></td>
             </tr>
         </tbody>
     </table>

@@ -63,6 +63,15 @@ foreach ($dosen_options as $row) {
     $dosen_data[$row->id] = $row->nama_dosen;
 }
 
+$thn_akademik_id_attr = array(
+    'id' => 'thn_akademik_id_attr',
+    'name' => 'tahun_akademik_id',
+    'class' => 'input-small',
+    'readonly' => 'readonly',
+    'value' => set_value('tahun_akademik_id', ''),
+    'autocomplete' => 'off'
+);
+
 ?>
 <div class="container-full" id="plot_dosen_penanggung_jawab">
 <?= form_open($action_url, array('class' => 'form-horizontal')); ?>
@@ -70,15 +79,23 @@ foreach ($dosen_options as $row) {
     <div class="control-group">
         <?= form_label('Angkatan' . required(), 'angkatan_id', $control_label); ?>
         <div class="controls">
-            <?= form_dropdown('angkatan_id', $angkatan_data, set_value('angkatan_id', $angkatan_id."-".$thn_akademik_id), 'id="angkatan_id" class="input-medium" prevData-selected="' . set_value('angkatan_id', $angkatan_id) . '"'); ?>
+            <?= form_dropdown('angkatan_id', $angkatan_data, set_value('angkatan_id', $angkatan_id."-".$thn_akademik_id), 'onChange="changeAngkatan()" id="angkatan_id" class="input-medium" prevData-selected="' . set_value('angkatan_id', $angkatan_id) . '"'); ?>
             <p class="help-block"><?php echo form_error('angkatan_id') ?></p>
         </div>
     </div>
 
+    <!--<div class="control-group">
+        <?//= form_label('Tahun Akademik' , 'thn_akademik_id', $control_label); ?>
+        <div class="controls">
+            <?//= form_dropdown('span_tahun', $tahun_data, set_value('thn_akademik_id', $angkatan_id), 'id="thn_akademik_id" class="input-medium" prevData-selected="' . set_value('thn_akademik_id', $angkatan_id) . '"'); ?>
+            <p class="help-block"><?php //echo form_error('thn_akademik_id') ?></p>
+        </div>
+    </div>-->
+    
     <div class="control-group">
         <?= form_label('Tahun Akademik' , 'thn_akademik_id', $control_label); ?>
         <div class="controls">
-            <?= form_dropdown('span_tahun', $tahun_data, set_value('thn_akademik_id', $angkatan_id), 'id="thn_akademik_id" class="input-medium" prevData-selected="' . set_value('thn_akademik_id', $angkatan_id) . '"'); ?>
+            <?= form_input($thn_akademik_id_attr); ?>
             <p class="help-block"><?php echo form_error('thn_akademik_id') ?></p>
         </div>
     </div>
@@ -137,16 +154,24 @@ foreach ($dosen_options as $row) {
     <?php $this->load->view('_shared/footer'); ?>
 
 <script type="text/javascript">
-    $("#angkatan_id").change(function(){
-        var value = ($(this).val()).split("-");
-        $.post('<?php echo base_url(); ?>plot_dosen_penanggung_jawab/getOptTahunAkademik', {angkatan_id: value[1]},
-        function(data){                                                                 
-            $("select[name='span_tahun']").closest("div.controls").append("<select name='span_tahun'></select>");
-            $("select[name='span_tahun']").closest("div.combobox-container").remove();
-            $("select[name='span_tahun']").html(data).combobox();
+    function changeAngkatan(){
+        var angkatan_id = ($('#angkatan_id').val()).split("-");;
+        //alert(angkatan_id);
+        $.post('<?php echo base_url(); ?>plot_dosen_penanggung_jawab/getOptTahunAkademik', {angkatan_id: angkatan_id[1]},
+        function(data){
+            $('#thn_akademik_id_attr').val(data);
         });
-    })                                         
-    $("select[name='span_tahun']").combobox();
+    }
+    //$("#angkatan_id").change(function(){
+//        var value = ($(this).val()).split("-");
+//        $.post('<?php //echo base_url(); ?>plot_dosen_penanggung_jawab/getOptTahunAkademik', {angkatan_id: value[1]},
+//        function(data){                                                                 
+//            $("select[name='span_tahun']").closest("div.controls").append("<select name='span_tahun'></select>");
+//            $("select[name='span_tahun']").closest("div.combobox-container").remove();
+//            $("select[name='span_tahun']").html(data).combobox();
+//        });
+//    })                                         
+//    $("select[name='span_tahun']").combobox();
     
     $("#plot_mata_kuliah_id").change(function(){
         var value = ($(this).val()).split("-");

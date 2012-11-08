@@ -297,7 +297,7 @@ class Paket_matakuliah extends CI_Controller {
         } 
     }*/
     
-    function getOptPlotmatakuliah(){
+    /*function getOptPlotmatakuliah(){
         $this->load->model('paket_matakuliah_model');
         $kelompok_mata_kuliah_id= $this->input->post('plot_mata_kuliah_id');
         $data = $this->paket_matakuliah_model->get_plot_matakuliah($kelompok_mata_kuliah_id);
@@ -305,17 +305,17 @@ class Paket_matakuliah extends CI_Controller {
         foreach($data as $row){
             echo '<option value=\''.$row['semester_id'].'\' >'.$row['nama_kelompok_mata_kuliah'].'</option>';
         } 
-    }
+    }*/
     
-    /*function getOptPlotmatakuliah(){
+    function getOptPlotmatakuliah(){
         $this->load->model('paket_matakuliah_model');
         $kelompok_mata_kuliah_id= $this->input->post('plot_mata_kuliah_id');
         $data = $this->paket_matakuliah_model->get_plot_matakuliah($kelompok_mata_kuliah_id);
         //echo '<input type="checkbox" value="" >';
         foreach($data as $row){
-            echo '<input type="text" name="kelompok_mata_kuliah_id[]" value\''.$row['semester_id'].'\'>'.$row['nama_kelompok_mata_kuliah'].'<br>';
+            echo "<p>".$row['nama_kelompok_mata_kuliah']."</p>"."<br>";
         } 
-    }*/
+    }
 }
 
 ?>
