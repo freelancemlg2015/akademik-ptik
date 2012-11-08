@@ -946,7 +946,7 @@ $config = array(
         )
     )
 
-    /* JADWAL KULIAH : Fachrul */
+    /* JADWAL KULIAH */
     , 'jadwal_kuliah_create' => array(
         array(
             'field' => 'angkatan_id',
@@ -954,7 +954,7 @@ $config = array(
             'rules' => 'trim|required|greater_than[0]'
         ),
 		array(
-            'field' => 'program_studi',
+            'field' => 'program_studi_id',
             'label' => 'program studi',
             'rules' => 'trim|required|greater_than[0]'
         ),
@@ -976,6 +976,22 @@ $config = array(
         array(
             'field' => 'nama_ruang_id',
             'label' => 'nama ruang',
+            'rules' => 'trim|required|greater_than[0]'
+        ),
+        array(
+            'field' => 'minggu_ke',
+            'label' => 'Minggu ke',
+            'rules' => 'trim|required|greater_than[0]'
+        ),
+        array(
+            'field' => 'pertemuan_ke',
+            'label' => 'pertemuan ke',
+            'rules' => 'trim|required|greater_than[0]'
+        ),
+		
+        array(
+            'field' => 'pertemuan_dari',
+            'label' => 'pertemuan dari',
             'rules' => 'trim|required|greater_than[0]'
         ),
         array(
@@ -990,7 +1006,7 @@ $config = array(
             'rules' => 'trim|required|greater_than[0]'
         ),
 		array(
-            'field' => 'program_studi',
+            'field' => 'program_studi_id',
             'label' => 'program studi',
             'rules' => 'trim|required|greater_than[0]'
         ),
@@ -1012,6 +1028,21 @@ $config = array(
         array(
             'field' => 'nama_ruang_id',
             'label' => 'nama ruang',
+            'rules' => 'trim|required|greater_than[0]'
+        ),
+		array(
+            'field' => 'minggu_ke',
+            'label' => 'Minggu ke',
+            'rules' => 'trim|required|greater_than[0]'
+        ),
+        array(
+            'field' => 'pertemuan_ke',
+            'label' => 'pertemuan ke',
+            'rules' => 'trim|required|greater_than[0]'
+        ),
+        array(
+            'field' => 'pertemuan_dari',
+            'label' => 'pertemuan dari',
             'rules' => 'trim|required|greater_than[0]'
         ),
         array(
@@ -1028,12 +1059,12 @@ $config = array(
             'rules' => 'trim|required|greater_than[0]'
         ),
 		array(
-            'field' => 'program_studi',
+            'field' => 'program_studi_id',
             'label' => 'program studi',
             'rules' => 'trim|required|greater_than[0]'
         ),
 		array(
-            'field' => 'mata_kuliah',
+            'field' => 'mata_kuliah_id',
             'label' => 'mata kuliah',
             'rules' => 'trim|required|greater_than[0]'
         ),
@@ -1052,19 +1083,19 @@ $config = array(
             'label' => 'tanggal lahir',
             'rules' => 'trim|required'
         )
-    ), 'jadwal_ujian_create' => array(
+    ), 'jadwal_ujian_update' => array(
         array(
             'field' => 'angkatan_id',
             'label' => 'angkatan',
             'rules' => 'trim|required|greater_than[0]'
         ),
 		array(
-            'field' => 'program_studi',
+            'field' => 'program_studi_id',
             'label' => 'program studi',
             'rules' => 'trim|required|greater_than[0]'
         ),
 		array(
-            'field' => 'mata_kuliah',
+            'field' => 'mata_kuliah_id',
             'label' => 'mata kuliah',
             'rules' => 'trim|required|greater_than[0]'
         ),
@@ -1083,7 +1114,34 @@ $config = array(
             'label' => 'tanggal lahir',
             'rules' => 'trim|required'
         )
-         
+    /* ABSENSI MAHASISWA */
+    ), 'absensi_mahasiswa_create' => array(
+        array(
+            'field' => 'angkatan_id',
+            'label' => 'angkatan',
+            'rules' => 'trim|required|greater_than[0]'
+        )
+	/* ABSENSI DOSEN */
+    ), 'absensi_dosen_create' => array(
+        array(
+            'field' => 'angkatan_id',
+            'label' => 'angkatan',
+            'rules' => 'trim|required|greater_than[0]'
+        )	
+	/* ABSENSI ujian MAHASISWA */
+    ), 'absensi_ujian_mahasiswa_create' => array(
+        array(
+            'field' => 'angkatan_id',
+            'label' => 'angkatan',
+            'rules' => 'trim|required|greater_than[0]'
+        )		
+	/* ABSENSI ujain dosen */
+    ), 'absensi_ujian_dosen_create' => array(
+        array(
+            'field' => 'angkatan_id',
+            'label' => 'angkatan',
+            'rules' => 'trim|required|greater_than[0]'
+        )		
     /*UJIAN SKRIPSI*/
     ),'ujian_skripsi_create' => array(
         array(
@@ -1101,14 +1159,14 @@ $config = array(
     /* PAKET MATAKULIAH */
     ), 'paket_matakuliah_create' => array(
         array(
-            'field' => 'angkatan_id',
-            'label' => 'angkatan_id',
-            'rules' => 'trim|required|greater_than[0]'
+            'field' => 'nama_paket',
+            'label' => 'nama_paket',
+            'rules' => 'trim|required'
         )
     ), 'paket_matakuliah_update' => array(
         array(
-            'field' => 'angkatan_id',
-            'label' => 'angkatan_id',
+            'field' => 'nama_paket',
+            'label' => 'nama_paket',
             'rules' => 'trim|required'
         )
         
@@ -1325,6 +1383,21 @@ $config = array(
         )
 	 
 	 
+
+    /* PLOT DOSEN AJAR*/
+    ), 'plot_dosen_ajar_create' => array(
+//        array(
+//            'field' => 'keterangan',
+//            'label' => 'keterangan',
+//            'rules' => 'trim|required'
+//        )
+    ), 'plot_dosen_ajar_update' => array(
+//        array(
+//            'field' => 'keterangan',
+//            'label' => 'keterangan',
+//            'rules' => 'trim|required'
+//        )      
+
     /* PLOT DOSEN PENANGGUNG JAWAB*/
     ), 'plot_dosen_penanggung_jawab_create' => array(
         array(
@@ -1352,6 +1425,7 @@ $config = array(
             'label' => 'angkatan_id',
             'rules' => 'trim|required'
         )      
+
     )
     
 );
