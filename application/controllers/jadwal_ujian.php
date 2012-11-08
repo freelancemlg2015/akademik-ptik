@@ -37,7 +37,6 @@ class Jadwal_ujian extends CI_Controller {
             'nama_ruang' => $this->input->get('nama_ruang'),
             'active' => 1
         );
-
         $this->load->model('jadwal_ujian_model', 'jadwal_ujian');
         $results = $this->jadwal_ujian->search($query_array, $limit, $offset, $sort_by, $sort_order);
         //echo get_instance()->db->last_query();
