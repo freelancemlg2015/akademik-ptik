@@ -49,14 +49,6 @@ $icon_color = 'icon-grey';
             ?>
             <div class="subnav subnav-fixed">
                 <ul class="nav nav-pills">
-<!--
-                    <li class="dropdown <?//= ($secondary_nav == 'direktorat' || $secondary_nav == 'subdirektorat') ? 'active' : ''; ?>">
-                        <a href="#" data-toggle="dropdown" class="dropdown-toggle">Akademik<b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            <li class="<?//= isActive($secondary_nav, 'direktorat'); ?>"><?//= anchor('master/direktorat', 'Direktorat'); ?></li>
-                            <li class="<?//= isActive($secondary_nav, 'subdirektorat'); ?>"><?//= anchor('master/subdirektorat', 'Sub Direktorat'); ?></li>
-                        </ul>
-                    </li>-->
 
                     <li class="dropdown <?= ($secondary_nav == 'program_studi' || $secondary_nav == 'tahun_akademik' || $secondary_nav == 'kelompok_matakuliah' || $secondary_nav == 'matakuliah' || $secondary_nav == 'jenjang_studi' || $secondary_nav == 'frekuensi_pemutakhiran' || $secondary_nav == 'pelaksana_pemutakhiran' || $secondary_nav == 'angkatan') ? 'active' : ''; ?>">
                         <a href="#" data-toggle="dropdown" class="dropdown-toggle">Kurikulum<b class="caret"></b></a>
@@ -127,11 +119,14 @@ $icon_color = 'icon-grey';
 
                     <li class="dropdown <?= ($secondary_nav == 'jenis_kelamin' || $secondary_nav == 'provinsi' || $secondary_nav == 'kategori_pejabat' || $secondary_nav == 'status_akreditasi' || $secondary_nav == 'status_aktivitas_dosen' || $secondary_nav == 'status_kerja_dosen' || $secondary_nav == 'status_dosen_penasehat' || $secondary_nav == 'status_mata_kuliah' || $secondary_nav == 'direktorat' || $secondary_nav == 'subdirektorat' ) ? 'active' : ''; ?>">
                         <a href="#" data-toggle="dropdown" class="dropdown-toggle">Utilitas<b class="caret"></b></a>
+
                         <ul class="dropdown-menu">
                             <li class="<?= isActive($secondary_nav, 'direktorat'); ?>"><?= anchor('master/direktorat', 'Direktorat'); ?></li>
                             <li class="<?= isActive($secondary_nav, 'subdirektorat'); ?>"><?= anchor('master/subdirektorat', 'Sub Direktorat'); ?></li>
                             <li class="<?= isActive($secondary_nav, 'jenis_kelamin'); ?>"><?= anchor('master/jenis_kelamin', 'Jenis Kelamin'); ?></li>
                             <li class="<?= isActive($secondary_nav, 'provinsi'); ?>"><?= anchor('master/provinsi', 'Provinsi'); ?></li>
+                            <li class="<?= isActive($secondary_nav, 'direktorat'); ?>"><?= anchor('master/direktorat', 'Direktorat'); ?></li>
+                            <li class="<?= isActive($secondary_nav, 'subdirektorat'); ?>"><?= anchor('master/subdirektorat', 'Sub Direktorat'); ?></li>
                             <li class="<?= isActive($secondary_nav, 'kategori_pejabat'); ?>"><?= anchor('master/kategori_pejabat', 'Kategori Pejabat'); ?></li>
                             <li class="<?= isActive($secondary_nav, 'pejabat_tanda_tangan'); ?>"><?= anchor('master/pejabat_tanda_tangan', 'Tanda Tangan Pejabat'); ?></li>
                             <li class="<?= isActive($secondary_nav, 'status_akreditasi'); ?>"><?= anchor('master/status_akreditasi', 'Status Akreditasi'); ?></li>
@@ -175,8 +170,8 @@ $icon_color = 'icon-grey';
                             <li class="<?= isActive($secondary_nav, 'ujian_skripsi'); ?>"><?= anchor('transaction/ujian_skripsi', 'Jadwal Skripsi'); ?></li>
                             <li class="<?= isActive($secondary_nav, 'absensi_mahasiswa'); ?>"><?= anchor('transaction/absensi_mahasiswa', 'Absensi Mahasiswa'); ?></li>
                             <li class="<?= isActive($secondary_nav, 'absensi_dosen'); ?>"><?= anchor('transaction/absensi_dosen', 'Absensi Dosen'); ?></li>
-                            <li class="<?= isActive($secondary_nav, 'absensi_mahasiswa'); ?>"><?= anchor('transaction/absensi_mahasiswa', 'Absensi Ujian Mahasiswa'); ?></li>
-                            <li class="<?= isActive($secondary_nav, 'absensi_dosen'); ?>"><?= anchor('transaction/absensi_dosen', 'Absensi Ujian Dosen'); ?></li>
+                            <li class="<?= isActive($secondary_nav, 'absensi_ujian_mahasiswa'); ?>"><?= anchor('transaction/absensi_ujian_mahasiswa', 'Absensi Ujian Mahasiswa'); ?></li>
+                            <li class="<?= isActive($secondary_nav, 'absensi_ujian_dosen'); ?>"><?= anchor('transaction/absensi_ujian_dosen', 'Absensi Ujian Dosen'); ?></li>
 
                         </ul>
                     </li>
