@@ -12,11 +12,11 @@ foreach ($angkatan_options as $row) {
     $angkatan_data[$row->id.'-'.$row->tahun_akademik_id] = $row->nama_angkatan;
 }
 
-$tahun_data[0] = '';
-foreach ($m_tahun_akademik as $row) {
+//$tahun_data[0] = '';
+//foreach ($m_tahun_akademik as $row) {
         //$tahun_data = $row['tahun_ajar_mulai'].'-'.$row['tahun_ajar_akhir'];
-        $tahun_data[$row['id']] = $row['tahun_ajar_mulai'].'-'.$row['tahun_ajar_akhir'];
-}
+//        $tahun_data[$row['id']] = $row['tahun_ajar_mulai'].'-'.$row['tahun_ajar_akhir'];
+//}
 
 if (isset($m_angkatan->tahun_akademik_id)){
     $thn_akademik_id = $m_angkatan->tahun_akademik_id;
@@ -40,7 +40,7 @@ $thn_akademik_id_attr = array(
     'name' => 'tahun_akademik_id',
     'class' => 'input-small',
     'readonly' => 'readonly',
-    'value' => set_value('tahun_akademik_id', $thn_akademik_id_attr),
+    'value' => set_value('tahun_akademik_id', ''),
     'autocomplete' => 'off'
 );
 

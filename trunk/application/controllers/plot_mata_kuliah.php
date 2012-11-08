@@ -312,7 +312,7 @@ class Plot_mata_kuliah extends CI_Controller {
         $this->load->model('plot_mata_kuliah_model', 'plot_mata_kuliah');
         $data = array_merge($data, $this->plot_mata_kuliah->set_default()); //merge dengan arr data dengan default        
         $data = array_merge($data, (array) $plot_mata_kuliah_data);
-        if (!(empty($id))){
+        if (!empty($id)){
             $this->crud->use_table('m_angkatan');
             $data['m_angkatan'] = $this->crud->retrieve(array('id' => $data['angkatan_id']))->row();
             $this->load->model('plot_mata_kuliah_model');
