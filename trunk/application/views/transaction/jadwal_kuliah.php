@@ -40,7 +40,7 @@ $this->load->view('_shared/menus');
         <tr>
             <th>Mata Kuliah</th>
             <th>Ruang</th>
-            <th>Jenis Waktu</th>
+            <th>Waktu</th>
         </tr>
     </thead>
     <tbody>
@@ -51,7 +51,7 @@ $this->load->view('_shared/menus');
 			echo '<tr id="' . $row->id . '">
               <td>' . $display_event . '</td>  
               <td>' . $row->nama_ruang . '</td>  
-              <td>' . $row->jenis_waktu . ' ('.$row->jam_normal_mulai. ' - '. $row->jam_normal_akhir  . ')</td>  
+              <td>' . $row->tanggal . ' ('.$row->jam_normal_mulai. ' - '. $row->jam_normal_akhir  . ')</td>  
             </tr>
           ';
         }

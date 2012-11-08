@@ -50,12 +50,12 @@ $control_label = array(
         </div>
     </div>
     <?php echo form_close() ?>
-    <?= form_open($action_url, array('class' => 'form-horizontal', 'id' => 'formNilai')); ?>            
-    <input type="hidden" id="tahun_akademik_id" name="tahun_akademik_id" />
-    <input type="hidden" id="angkatan_id" name="angkatan_id" />
-    <input type="hidden" id="semester_id" name="semester_id" />
-    <input type="hidden" id="program_studi_id" name="program_studi_id" />
-    <input type="hidden" id="mata_kuliah_id" name="mata_kuliah_id" />
+    <?= form_open($action_url, array('class' => 'form-horizontal', 'id' => 'formNilai')); ?> 
+    <input type="hidden" id="tahun_akademik_ids" name="tahun_akademik_ids" />
+    <input type="hidden" id="angkatan_ids" name="angkatan_ids" />
+    <input type="hidden" id="semester_ids" name="semester_ids" />
+    <input type="hidden" id="program_studi_ids" name="program_studi_ids" />
+    <input type="hidden" id="mata_kuliah_ids" name="mata_kuliah_ids" />
     <table class="table table-bordered table-striped container-full data_list" >
         <thead class="table table-bordered span4">
             <tr class="table-bordered span4">
@@ -118,11 +118,11 @@ $control_label = array(
         var tahun_akademik_id= $('#tahun_akademik').val();
 		var semester_id = $('#semester').val();
 		
-		$('#tahun_akademik_id').val(tahun_akademik_id)
-		$('#angkatan_id').val(angkatan_id)
-		$('#semester_id').val(semester_id)
-		$('#program_studi_id').val(program_studi_id)
-		$('#mata_kuliah_id').val(mata_kuliah_id)
+		$('#tahun_akademik_ids').val(tahun_akademik_id)
+		$('#angkatan_ids').val(angkatan_id)
+		$('#semester_ids').val(semester_id)
+		$('#program_studi_ids').val(program_studi_id)
+		$('#mata_kuliah_ids').val(mata_kuliah_id)
         if(mata_kuliah_id!='' & angkatan_id!='' & program_studi_id !='' & tahun_akademik_id !='' ) $.post('<?php echo $Mahasiswa_list_url; ?>',{program_studi_id: program_studi_id,angkatan_id: angkatan_id, mata_kuliah_id :mata_kuliah_id,tahun_akademik_id: tahun_akademik_id },
         function(data){
             $('#listMahasiswa').html(data);

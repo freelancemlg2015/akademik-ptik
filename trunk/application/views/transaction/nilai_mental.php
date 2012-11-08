@@ -1,66 +1,124 @@
 <?php
 $this->load->view('_shared/header');
 $this->load->view('_shared/menus');
+
+//label
+$control_label = array(
+    'class' => 'control-label'
+);
 ?>
+<?= form_open('#', array('class' => 'form-horizontal')); ?>      
+<div class="container-full" id="nilai_akademik">    
+    <div class="control-group">
+        <?= form_label('Angkatan', 'angkatan', $control_label); ?>
+        <div class="controls">
+            <?= form_dropdown('angkatan', $angkatans, '', ' id="angkatan" onChange=\'changeAngkatan()\''); ?>
+            <p class="help-block"><?php echo form_error('angkatan') ?></p>
+        </div>
+    </div>  
 
-<div class="container-fluid form-inline well" id="nilai_mental-search">
-    <?php
-    $nim_attr = array(
-        'id' => 'nim',
-        'name' => 'nim',
-        'class' => 'input-medium',
-        'style' => 'text-transform : uppercase;',
-        'placeholder' => 'Nim'
-    );
-    $nilai_mental_attr = array(
-        'id' => 'nilai_mental',
-        'name' => 'nilai_mental',
-        'class' => 'input-medium',
-        'style' => 'text-transform : uppercase;',
-        'placeholder' => 'Nilai Mental'
-    );
-    echo form_open('transaction/nilai_mental/search/') .
-    form_input($nim_attr) . ' ' .
-    form_input($nilai_mental_attr) . ' ' .
-    form_submit('cari', 'CARI', 'class="btn btn-mini"') .
-    form_close();
-    ?>
-</div>
 
-<?php if ($pagination): ?>
-    <div class="container">
-        <div class="pagination pagination-centered">
-            <?php echo $pagination; ?>
+    <div class="control-group">
+        <?= form_label('Tahun Akademik', 'tahun_akademik', $control_label); ?>
+        <div class="controls">
+            <?= form_dropdown('tahun_akademik', $opt_tahun_akademik, '', 'id="tahun_akademik" ') ?>
+            <p class="help-block"><?php echo form_error('tahun_akademik') ?></p>
         </div>
     </div>
-<?php endif; ?>
 
-<table class="table table-bordered table-striped container-full data_list" id="nilai_mental" controller="transaction">
-    <thead>
-        <tr>
-            <th>Nim</th>
-            <th>Nilai Mental</th>
-        </tr>
-    </thead>
-    <tbody>
-        <?php
-        foreach ($results->result() as $row) {
-            echo '<tr id="' . $row->id . '">
-              <td>' . $row->nim . '</td>
-              <td>' . $row->nilai_mental . '</td>    
+    <div class="control-group">
+        <?= form_label('Semester', 'semester', $control_label); ?>
+        <div class="controls">
+            <?= form_dropdown('semester', $opt_semester, '', 'id="semester" onChange=\'semesterChange()\'') ?>
+            <p class="help-block"><?php echo form_error('semester') ?></p>
+        </div>
+    </div>
+	<div class="control-group">
+        <?= form_label('Program Studi', 'program_studi', $control_label); ?>
+        <div class="controls">
+            <?= form_dropdown('program_studi', array(), '', 'id="program_studi" onChange=\'programStudiChange()\''); ?>
+            <p class="help-block"><?php echo form_error('program_studi') ?></p>
+        </div>
+    </div>
+    <?php echo form_close() ?>
+    <?= form_open('#', array('class' => 'form-horizontal', 'id' => 'formNilai')); ?>            
+    <table class="table table-bordered table-striped container-full data_list" >
+        <thead class="table table-bordered span4">
+            <tr class="table-bordered span4">
+                <th style="width:20px">No.</th>
+                <th style="width:80px">NIM</th>
+                <th>Nama</th>
+                <th style="width:80px">Nilai</th>
+
             </tr>
-          ';
-        }
-        ?>
-    </tbody>
-</table>
-
-<?php if ($pagination): ?>
-    <div class="container">
-        <div class="pagination pagination-centered">
-            <?php echo $pagination; ?>
-        </div>
+        </thead>
+        <tbody id="listMahasiswa">
+			<tr><td colspan="4">&nbsp;</td></tr>
+        </tbody>
+    </table>
+    <?php echo form_close() ?>
+	<div class="form-actions well">
+        <button class="btn btn-small btn-primary" onClick="submitNilai(); return false;">Simpan</button>
     </div>
-<?php endif; ?>
-
+</div>
+<script>
+    function changeTahunAkademik(){
+        var tahun_akademik = $('#tahun_akademik').val();
+        var angkatan_id = $('#angkatan').val();
+        $.post('<?php echo $opt_program_studi_url; ?>',{tahun_akademik_id: tahun_akademik,angkatan_id: angkatan_id },
+        function(data){
+            $('#program_studi').html(data);
+            
+        });
+    }
+    
+    function changeAngkatan(){
+        var tahun_akademik = $('#tahun_akademik').val();
+        var angkatan_id = $('#angkatan').val();
+		//alert(angkatan_id);
+        $.post('<?php echo $opt_program_studi_url; ?>',{tahun_akademik_id: tahun_akademik,angkatan_id: angkatan_id },
+        function(data){
+            $('#program_studi').html(data);
+            
+        });
+    }
+	
+	function semesterChange(){
+		getMahasiswa();
+	}
+    
+    function programStudiChange(){
+        getMahasiswa();
+    }
+    
+    function getMahasiswa(){
+        var angkatan_id = $('#angkatan').val();
+        var program_studi_id = $('#program_studi').val();
+        var tahun_akademik_id= $('#tahun_akademik').val();
+		var semester_id = $('#semester').val();
+		
+		$('#tahun_akademik_id').val(tahun_akademik_id)
+		$('#angkatan_id').val(angkatan_id)
+		$('#semester_id').val(semester_id)
+		$('#program_studi_id').val(program_studi_id)
+        if( angkatan_id!='' & program_studi_id !='' & tahun_akademik_id !='' & semester_id !='') $.post('<?php echo $Mahasiswa_list_url; ?>',{program_studi_id: program_studi_id,angkatan_id: angkatan_id, tahun_akademik_id: tahun_akademik_id, semester : semester_id, mode : 'view' },
+        function(data){
+            $('#listMahasiswa').html(data);
+            /*$('#formNilai').submit(function(){
+				return false;
+			})*/
+        });
+    }
+	
+	function submitNilai(){
+		var data_nilai = $('#formNilai').serializeArray();
+		$.post('<?php echo $submit_url; ?>',data_nilai,function(data){
+			
+		});
+		//alert('formNilai submit');
+		return false;
+	}
+	
+    
+</script>
 <?php $this->load->view('_shared/footer'); ?>
