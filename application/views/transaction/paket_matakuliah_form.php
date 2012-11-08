@@ -95,13 +95,12 @@ $thn_akademik_id_attr = array(
     
    <div class="control-group">
         <fieldset>
-            <legend>Pilih Kelompok Mata Kuliah</legend>
-            <label class="control-label" for=""></label>
-            <div class="controls">
-                <?//= form_hidden('span_kelompok') ?>
+            <legend>Pilih Kelompok Mata Kuliah</legend>  
+            <div id="listMahasiswa" class="controls">
+                
             </div>
         </fieldset>
-    </div>
+    </div> 
     
     <div class="form-actions well">
         <button class="btn btn-small btn-primary" type="submit">Simpan</button>
@@ -110,52 +109,24 @@ $thn_akademik_id_attr = array(
 </div>
     <?php $this->load->view('_shared/footer'); ?>
 
-<script type="text/javascript">
-    /*$("#angkatan_id").change(function(){
-        var value = ($(this).val()).split("-");
-        $.post('<?php //echo base_url(); ?>paket_matakuliah/getOptTahunAkademik', {angkatan_id: value[1]},
-        function(data){                                                                 
-            $("select[name='span_tahun']").closest("div.controls").append("<select name='span_tahun'></select>");
-            $("select[name='span_tahun']").closest("div.combobox-container").remove();
-            $("select[name='span_tahun']").html(data).combobox();
-        });
-    })                                         
-    $("select[name='span_tahun']").combobox();*/
-
+<script type="text/javascript">                     
     function changeAngkatan(){
-        var angkatan_id = ($('#angkatan_id').val()).split("-");;
-		//alert(angkatan_id);
-	$.post('<?php echo base_url(); ?>paket_matakuliah/getOptTahunAkademik', {angkatan_id: angkatan_id[1]},
+        var angkatan_id = ($('#angkatan_id').val()).split("-");
+		$.post('<?php echo base_url(); ?>paket_matakuliah/getOptTahunAkademik', {angkatan_id: angkatan_id[1]},
         function(data){
             $('#thn_akademik_id_attr').val(data);
         });
     }
-    
-    function changeKelompok(){                                     
-        alert('test');
-    }   
-
-    /*$("#plot_mata_kuliah_id").change(function(){
-        var value = ($(this).val()).split("-");
-        $.post('<?php// echo base_url(); ?>paket_matakuliah/getOptPlotmatakuliah', {plot_mata_kuliah_id: value[1]},
-        function(data){                                                                 
-            $("select[name='span_kelompok']").closest("div.controls").append("<select name='span_kelompok'></select>");
-            $("select[name='span_kelompok']").closest("div.combobox-container").remove();
-            $("select[name='span_kelompok']").html(data).combobox();
+                    
+    function changeKelompok(){
+        $('#listMahasiswa').hide();
+        if($('#plot_mata_kuliah_id').val()<=0) return;     
+        var plot_mata_kuliah_id = ($('#plot_mata_kuliah_id').val()).split("-");
+        var mode = 'view';      
+        $.post('<?php echo base_url(); ?>paket_matakuliah/getOptPlotmatakuliah', {plot_mata_kuliah_id: plot_mata_kuliah_id[1]},
+        function(data){
+            $('#listMahasiswa').html(data);
+            $('#listMahasiswa').show();
         });
-    })                                         
-    $("select[name='span_kelompok']").combobox();
-    */
-    
-    //$("#plot_mata_kuliah_id").change(function(){
-//        var value = ($(this).val()).split("-");
-//        $.post('<?php //echo base_url(); ?>paket_matakuliah/getOptPlotmatakuliah', {plot_mata_kuliah_id: value[1]},
-//        function(data){
-//              $("input[name='span_kelompok']").closest("div.controls").append("<input type='checkbox' name='span_kelompok'>");
-              //$("input[name='span_kelompok']").closest("div.controls").remove();
-//              $("input[name='span_kelompok']").html(data);
-//        });
-//    })
-    
-    
+    }   
 </script>
