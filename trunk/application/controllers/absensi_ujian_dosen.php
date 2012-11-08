@@ -229,7 +229,7 @@ class Absensi_ujian_dosen extends CI_Controller {
 					from akademik_t_jadwal_ujian m
 					left join akademik_t_jadwal_ujian_pengawas_dosen_detil d on m.id = d.jadwal_ujian_id and d.active=1 
 					left join akademik_m_dosen ds on d.dosen_id = ds.id  
-					left join akademik_t_absensi_ujian_dosen a on d.jadwal_ujian_id=a.jadwal_ujian_id and d.dosen_id=a.dosen_id  and d.active=1 
+					left join akademik_t_absensi_pengawas_ujian_dosen a on d.jadwal_ujian_id=a.jadwal_ujian_id and d.dosen_id=a.dosen_id  and d.active=1 
 					left join akademik_m_absensi k on a.absensi_id = k.id
 					where m.angkatan_id = $angkatan_id and m.program_studi_id=$program_studi_id 
 					and m.semester_id = $semester_id and m.mata_kuliah_id = $mata_kuliah_id
@@ -260,11 +260,11 @@ class Absensi_ujian_dosen extends CI_Controller {
 								$parm['jadwal_ujian_id'] =  $jadwal_kuliah_id;
 								//$parm['pertemuan'] =  $jadwal_kuliah_id;
 								$parm['dosen_id'] = $row['pengawas_id'];
-								$this->db->insert('akademik_t_absensi_ujian_dosen',$parm);
+								$this->db->insert('akademik_t_absensi_pengawas_ujian_dosen',$parm);
 							}else{
 								$this->db->where('id',$row['row_pos_id']);
 								$parm['absensi_id'] = $absensi_id;
-								$this->db->update('akademik_t_absensi_ujian_dosen',$parm);
+								$this->db->update('akademik_t_absensi_pengawas_ujian_dosen',$parm);
 							}
 						} else {
 							if($row['row_pos_id']==''){
