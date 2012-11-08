@@ -7,18 +7,19 @@ class Jadwal_ujian_model extends CI_Model {
     }
 
     function s_jadwal_ujian() {
-        return 	$this->db->select('t_jadwal_ujian.*,m_data_ruang.nama_ruang,m_dosen.nama_dosen,
+        //m_dosen.nama_dosen,
+		return 	$this->db->select('t_jadwal_ujian.*,m_data_ruang.nama_ruang,
 						m_mata_kuliah.nama_mata_kuliah, m_jenis_ujian.kode_ujian,
 						m_hari.nama_hari')
                         ->from('t_jadwal_ujian')
                         ->join('m_mata_kuliah', 'm_mata_kuliah.id = t_jadwal_ujian.mata_kuliah_id and akademik_m_mata_kuliah.angkatan_id = akademik_t_jadwal_ujian.angkatan_id and akademik_m_mata_kuliah.program_studi_id = akademik_t_jadwal_ujian.program_studi_id', 'left')						
 						->join('m_data_ruang', 'm_data_ruang.id = t_jadwal_ujian.nama_ruang_id', 'left')
 						->join('m_jenis_ujian', 'm_jenis_ujian.id = t_jadwal_ujian.jenis_ujian_id', 'left')
-                        ->join('t_dosen_ajar', 't_dosen_ajar.id = t_jadwal_ujian.dosen_ajar_id', 'left')
+                        //->join('t_dosen_ajar_detil', 't_dosen_ajar_detil.dosen_ajar_id = t_jadwal_ujian.dosen_ajar_id', 'left')
                         ->join('m_semester', 't_jadwal_ujian.semester_id = m_semester.id', 'left')
                         ->join('m_angkatan', 'm_angkatan.id = t_jadwal_ujian.angkatan_id', 'left')
-						->join('m_hari', 'm_hari.id = t_jadwal_ujian.hari_id', 'left')
-                        ->join('m_dosen', 'm_dosen.id = t_dosen_ajar.dosen_id', 'left');
+						->join('m_hari', 'm_hari.id = t_jadwal_ujian.hari_id', 'left');
+                        //->join('m_dosen', 'm_dosen.id = t_dosen_ajar_detil.dosen_id', 'left');
 	}
 
     function get_many($data_type = NULL, $term = array(), $limit = NULL, $offset = NULL) {
