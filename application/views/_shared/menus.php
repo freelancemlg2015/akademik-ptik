@@ -161,10 +161,11 @@ $icon_color = 'icon-grey';
                         </ul>
                     </li>
 
-                    <li class="dropdown <?= ($secondary_nav == 'jadwal_kuliah' || $secondary_nav == 'jadwal_ujian' ||$secondary_nav == 'ujian_skripsi' || $secondary_nav == 'plot_kelas' || $secondary_nav == 'absensi_mahasiswa' || $secondary_nav == 'absensi_dosen') ? 'active' : ''; ?>">
+                    <li class="dropdown <?= ($secondary_nav == 'jadwal_induk' || $secondary_nav == 'jadwal_kuliah' || $secondary_nav == 'jadwal_ujian' ||$secondary_nav == 'ujian_skripsi' || $secondary_nav == 'plot_kelas' || $secondary_nav == 'absensi_mahasiswa' || $secondary_nav == 'absensi_dosen') ? 'active' : ''; ?>">
                         <a href="#" data-toggle="dropdown" class="dropdown-toggle">Jadwal Perkuliahan<b class="caret"></b></a>
                         <ul class="dropdown-menu">     
-                            <?php /*?><li class="<?= isActive($secondary_nav, 'plot_kelas'); ?>"><?= anchor('transaction/plot_kelas', 'Plot Kelas'); ?></li><?php */?>               
+                            <?php /*?><li class="<?= isActive($secondary_nav, 'plot_kelas'); ?>"><?= anchor('transaction/plot_kelas', 'Plot Kelas'); ?></li><?php */?>  
+ 			    <li class="<?= isActive($secondary_nav, 'jadwal_induk'); ?>"><?= anchor('transaction/jadwal_induk', 'Jadwal Induk'); ?></li>             
                             <li class="<?= isActive($secondary_nav, 'jadwal_kuliah'); ?>"><?= anchor('transaction/jadwal_kuliah', 'Jadwal Kuliah'); ?></li>
                             <li class="<?= isActive($secondary_nav, 'jadwal_ujian'); ?>"><?= anchor('transaction/jadwal_ujian', 'Jadwal Ujian'); ?></li>
                             <li class="<?= isActive($secondary_nav, 'ujian_skripsi'); ?>"><?= anchor('transaction/ujian_skripsi', 'Jadwal Skripsi'); ?></li>
@@ -196,7 +197,7 @@ $icon_color = 'icon-grey';
                     </li>
 
                     <li class="<?= isActive($secondary_nav, 'penasehat_akademik'); ?>"><?= anchor('transaction/penasehat_akademik', 'Penasehat Akademik'); ?></li>
-                    <li class="<?= isActive($secondary_nav, 'jadwal_yudisium'); ?>"><?= anchor('transaction/jadwal_yudisium', 'Jadwal Yudisium'); ?></li>
+                    <?php /*?><li class="<?= isActive($secondary_nav, 'jadwal_yudisium'); ?>"><?= anchor('transaction/jadwal_yudisium', 'Jadwal Yudisium'); ?></li><?php */?>
 
                 </ul>
             </div>
