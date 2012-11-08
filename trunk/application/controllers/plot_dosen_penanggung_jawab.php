@@ -295,7 +295,7 @@ class Plot_dosen_penanggung_jawab extends CI_Controller {
         $this->load->view('transaction/plot_dosen_penanggung_jawab_form', $data);
     }
     
-    function getOptTahunAkademik(){
+    /*function getOptTahunAkademik(){
         $this->load->model('plot_dosen_penanggung_jawab_model');
         $angkatan_id= $this->input->post('angkatan_id');
         $data = $this->plot_dosen_penanggung_jawab_model->get_tahun_angkatan($angkatan_id);
@@ -303,12 +303,24 @@ class Plot_dosen_penanggung_jawab extends CI_Controller {
         foreach($data as $row){
             echo '<option value=\''.$row['id'].'\' >'.$row['tahun_ajar_mulai'].'-'.$row['tahun_ajar_akhir'].'</option>';
         } 
+    }*/
+    
+    function getOptTahunAkademik() {
+        $angkatan_id= $this->input->post('angkatan_id');
+        $sql = "select distinct a.tahun_ajar_mulai, a.tahun_ajar_akhir from akademik_m_tahun_akademik a ".
+                " left join akademik_m_angkatan b on b.tahun_akademik_id=a.id ".
+                "where a.active ='1' and b.tahun_akademik_id='$angkatan_id'";
+        $query = $this->db->query($sql);
+        foreach($query->result_array() as $row){
+            echo $row['tahun_ajar_mulai'].'-'.$row['tahun_ajar_akhir'];
+        }
     }
     
     function getOptPlotmatakuliah(){
         $this->load->model('plot_dosen_penanggung_jawab_model');
-        $kelompok_mata_kuliah_id= $this->input->post('paket_mata_kuliah_id');
+        $kelompok_mata_kuliah_id= $this->input->post('plot_mata_kuliah_id');
         $data = $this->plot_dosen_penanggung_jawab_model->get_plot_matakuliah($kelompok_mata_kuliah_id);
+        //var_dump($data);
         echo '<option value="" ></option>';
         foreach($data as $row){
             echo '<option value=\''.$row['plot_mata_kuliah_id'].'\' >'.$row['nama_kelompok_mata_kuliah'].'</option>';
@@ -321,7 +333,7 @@ class Plot_dosen_penanggung_jawab extends CI_Controller {
         $data = $this->plot_dosen_penanggung_jawab_model->get_plot_matakuliah_detil($plot_mata_kuliah_id);
         echo '<option value="" ></option>';
         foreach($data as $row){
-            echo '<option value=\''.$row['id'].'\' >'.$row['nama_mata_kuliah'].'</option>';
+            echo '<option value=\''.$row['plot_mata_kuliah_id'].'\' >'.$row['nama_mata_kuliah'].'</option>';
         } 
     }
 }
