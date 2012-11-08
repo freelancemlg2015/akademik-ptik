@@ -18,7 +18,7 @@ $control_label = array(
                 <td><?= $nama_ruang ?></td>
             </tr>
              <tr>
-                <th class="span2">Jensi Ruang</th>
+                <th class="span2">Jenis Ruang</th>
                 <td><?= $jenis_ruang ?></td>
             </tr>
             <tr>

@@ -107,8 +107,8 @@ textarea {
 body {
   margin: 0;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 13px;
-  line-height: 18px;
+  font-size: 11px;
+  line-height: 10px;
   color: #333333;
   background-color: #ffffff;
 }
@@ -286,8 +286,8 @@ a:hover {
 p {
   margin: 0 0 9px;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 13px;
-  line-height: 18px;
+  font-size: 11px;
+  line-height: 14px;
 }
 p small {
   font-size: 11px;
@@ -297,7 +297,7 @@ p small {
   margin-bottom: 18px;
   font-size: 20px;
   font-weight: 200;
-  line-height: 27px;
+  line-height: 20px;
 }
 h1,
 h2,
@@ -328,7 +328,7 @@ h1 small {
 }
 h2 {
   font-size: 24px;
-  line-height: 36px;
+  line-height: 30px;
 }
 h2 small {
   font-size: 18px;
@@ -1652,7 +1652,7 @@ table .span12 {
   min-height: 25px;
   padding: 19px;
   margin-bottom: 20px;
-  background-color: #f6f3ca;
+  background-color: #bfd7fb;
   border: 1px solid #eee;
   border: 1px solid rgba(0, 0, 0, 0.05);
   -webkit-border-radius: 4px;

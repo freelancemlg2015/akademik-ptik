@@ -198,10 +198,10 @@ class Nilai_akademik extends CI_Controller {
     }
     
     function submit_nilai(){
-		$angkatan_id= $this->input->post('angkatan_id');
-        $program_studi_id = $this->input->post('program_studi_id');
-        $mata_kuliah_id  = $this->input->post('mata_kuliah_id');
-        $tahun_akademik_id = $this->input->post('tahun_akademik_id');
+		$angkatan_id= $this->input->post('angkatan_ids');
+        $program_studi_id = $this->input->post('program_studi_ids');
+        $mata_kuliah_id  = $this->input->post('mata_kuliah_ids');
+        $tahun_akademik_id = $this->input->post('tahun_akademik_ids');
 		$query = $this->db->query("select a.id as rencana_mata_pelajaran_pokok_id, a.mahasiswa_id,b.id as akademik_t_nilai_akademik_id , c.nama as nama_mhs, c.nim, a.mata_kuliah_id, b.nilai_nts, b.nilai_tgs, b.nilai_nas, b.nilai_prb, b.nilai_prb, b.nilai_akhir , d.sks_mata_kuliah
             from akademik_t_rencana_mata_pelajaran_pokok a
             left join akademik_t_nilai_akademik b on a.id = b.rencana_mata_pelajaran_pokok_id

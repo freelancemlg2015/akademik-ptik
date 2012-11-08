@@ -29,7 +29,7 @@ class Jadwal_kuliah extends CI_Controller {
         $data_type = $this->input->post('data_type');
         $data['auth'] = $this->auth;
         // pagination
-        $limit = 20;
+        $limit = 5;
         $this->load->library(array('form_validation', 'table', 'pagination'));
         $this->input->load_query($query_id);
         $query_array = array(
@@ -126,16 +126,16 @@ class Jadwal_kuliah extends CI_Controller {
 		//echo 'dosen_ajar_id:'.$dosen_ajar_id;
 		$is_valid=1;
 		if($this->input->post('angkatan_id')<=0) {$is_valid=0;}
-		if($this->input->post('program_studi')<=0) {$is_valid=0;}
+		if($this->input->post('program_studi_id')<=0) {$is_valid=0;}
 		
 		if($this->input->post('semester_id')<=0) {$is_valid=0;}
-		//if($this->input->post('mata_kuliah')<=0) {$is_valid=0;}
-		if($this->input->post('tahun_akademik_id')<=0) {$is_valid=0;}
+		//if($this->input->post('mata_kuliah_id')<=0) {$is_valid=0;}
+
 		if($this->input->post('tgl_lahir')=='') {$is_valid=0;}
 		
 		if($this->input->post('nama_ruang_id')<=0) {$is_valid=0;}
 		if($this->input->post('jenis_waktu')<=0) {$is_valid=0;}
-		$mata_kuliah_id=(int)$this->input->post('mata_kuliah');
+		$mata_kuliah_id=(int)$this->input->post('mata_kuliah_id');
 		$kegiatan_id=$this->input->post('kegiatan_id');
 		//echo $mata_kuliah_id;
 		if(($mata_kuliah_id==0) && ($kegiatan_id==0)) {$is_valid=0;}
@@ -160,7 +160,7 @@ class Jadwal_kuliah extends CI_Controller {
 				$hari_id = date("w",strtotime($hari_ids."w"));
 				$this->crud->use_table('t_jadwal_kuliah');
 				$data_in = array(
-					'program_studi_id'=> $this->input->post('program_studi'),
+					'program_studi_id'=> $this->input->post('program_studi_id'),
 					'semester_id'	=> $this->input->post('semester_id'),
 					'angkatan_id'	=> $this->input->post('angkatan_id'),
 					'metode_ajar_id'=> $this->input->post('metode_ajar_id'),
@@ -178,21 +178,20 @@ class Jadwal_kuliah extends CI_Controller {
 					'created_on'   => date($this->config->item('log_date_format')),
 					'created_by'   => logged_info()->on
 				);
-			   /*       
+			   /*      
 				  echo '<pre>';
 				  var_dump($data_in);
 				  echo '</pre>';
 				  return;
-				 */
+				*/
 				$created_id = $this->crud->create($data_in);
 				redirect('transaction/jadwal_kuliah/' . $created_id . '/info');
 			}
         }
 		
 		$data['angkatan_id']=$this->input->post('angkatan_id');
-		$data['program_studi']=$this->input->post('program_studi');
+		$data['program_studi']=$this->input->post('program_studi_id');
 		$data['kegiatan_id']=$this->input->post('kegiatan_id');
-		$data['tahun_akademik_id']=$this->input->post('tahun_akademik_id');
 		$data['minggu_ke']=$this->input->post('minggu_ke');
 		
 		$data['tgl_lahir']=$this->input->post('tgl_lahir');
@@ -204,6 +203,7 @@ class Jadwal_kuliah extends CI_Controller {
         $data['action_url'] = $transaction_url . __FUNCTION__;
         $data['page_title'] = 'Create Jadwal Kuliah';
         $data['tools'] = array('transaction/jadwal_kuliah' => 'Back');
+		$data['tahun_akademik_id_attr'] = '';
 		$angkatan_ids=$this->input->post('angkatan_id');
 		
 		if($angkatan_ids>0)
@@ -211,7 +211,7 @@ class Jadwal_kuliah extends CI_Controller {
 			$data_program_studi=array();
 			$query = $this->db->query("select a.id, a.nama_program_studi, a.kode_program_studi from akademik_m_program_studi a where a.active ='1' and a.angkatan_id='$angkatan_ids';");
 			foreach($query->result_array() as $row){
-				if($this->input->post('program_studi')==$row['id']) {
+				if($this->input->post('program_studi_id')==$row['id']) {
 					$data_program_studi[$row['id']] = '<option selected value=\''.$row['id'].'\' >'.$row['kode_program_studi'].'-'.$row['nama_program_studi'].'</option>';
 				} else {
 					$data_program_studi[$row['id']] = '<option value=\''.$row['id'].'\' >'.$row['kode_program_studi'].'-'.$row['nama_program_studi'].'</option>';
@@ -222,7 +222,7 @@ class Jadwal_kuliah extends CI_Controller {
 		} else {
 			$data['data_program_studi']=array();
 		}
-		$mata_kuliahs=$this->input->post('mata_kuliah');
+		$mata_kuliahs=$this->input->post('mata_kuliah_id');
 		if($mata_kuliahs>0)
 		{
 			$data_mata_kuliah = array();
@@ -287,8 +287,9 @@ class Jadwal_kuliah extends CI_Controller {
 		}
 		$data['minggu_ke_options'] = $minggu_ke_options;
 		
-        $data['opt_program_studi_url'] = base_url() . 'transaction/jadwal_kuliah/getOptProgramStudi';//jadwal_kuliah
-        $data['opt_mata_kuliah_url'] =  base_url() . 'transaction/jadwal_kuliah/getOptMataKuliah';//nilai_akademik
+        $data['opt_angkatan_url'] = base_url() . 'transaction/select_data_form/getOptAngkatan';
+		$data['opt_program_studi_url'] = base_url() . 'transaction/select_data_form/getOptProgramStudi';
+        $data['opt_mata_kuliah_url'] =  base_url() . 'transaction/select_data_form/getOptMataKuliah';
         
         $this->crud->use_table('m_dosen');
         $data['nama_dosen_options'] = $this->crud->retrieve()->result();
@@ -318,17 +319,17 @@ class Jadwal_kuliah extends CI_Controller {
         $this->form_validation->set_error_delimiters('<span class="notice">', '</span>');
 		$is_valid=1;
 		if($this->input->post('angkatan_id')<=0) {$is_valid=0;}
-		if($this->input->post('program_studi')<=0) {$is_valid=0;}
+		if($this->input->post('program_studi_id')<=0) {$is_valid=0;}
 		
 		if($this->input->post('semester_id')<=0) {$is_valid=0;}
-		//if($this->input->post('mata_kuliah')<=0) {$is_valid=0;}
-		if($this->input->post('tahun_akademik_id')<=0) {$is_valid=0;}
+		//if($this->input->post('mata_kuliah_id')<=0) {$is_valid=0;}
+		//if($this->input->post('tahun_akademik_id')<=0) {$is_valid=0;}
 		if($this->input->post('tgl_lahir')=='') {$is_valid=0;}
 		
 		if($this->input->post('nama_ruang_id')<=0) {$is_valid=0;}
 		if($this->input->post('jenis_waktu')<=0) {$is_valid=0;}
 		
-		$mata_kuliah_id=(int)$this->input->post('mata_kuliah');
+		$mata_kuliah_id=(int)$this->input->post('mata_kuliah_id');
 		$kegiatan_id=$this->input->post('kegiatan_id');
 		//echo $mata_kuliah_id;
 		if(($mata_kuliah_id==0) && ($kegiatan_id==0)) {$is_valid=0;}
@@ -358,10 +359,10 @@ class Jadwal_kuliah extends CI_Controller {
 				$hari_ids = $this->input->post('tgl_lahir');
 				$hari_id = date("w",strtotime($hari_ids."w"));
 				
-				$data['angkatan_options']=$angkatan_data;
+				//$data['angkatan_options']=$angkatan_data;
 				$this->crud->use_table('t_jadwal_kuliah');
 				$data_in = array(
-					'program_studi_id'=> $this->input->post('program_studi'),
+					'program_studi_id'=> $this->input->post('program_studi_id'),
 					'semester_id'	=> $this->input->post('semester_id'),
 					'angkatan_id'	=> $this->input->post('angkatan_id'),
 					'metode_ajar_id'=> $this->input->post('metode_ajar_id'),
@@ -391,7 +392,7 @@ class Jadwal_kuliah extends CI_Controller {
         }
 		
 		$data['angkatan_id']=$this->input->post('angkatan_id');
-		$data['program_studi']=$this->input->post('program_studi');
+		$data['program_studi']=$this->input->post('program_studi_id');
 		$data['kegiatan_id']=$this->input->post('kegiatan_id');
 		$data['metode_ajar_id']=$this->input->post('metode_ajar_id');
 		$data['tahun_akademik_id']=$this->input->post('tahun_akademik_id');
@@ -406,20 +407,28 @@ class Jadwal_kuliah extends CI_Controller {
         $data['page_title'] = 'Update Jadwal Kuliah';
         $data['tools'] = array('transaction/jadwal_kuliah' => 'Back');
 		
+		$this->crud->use_table('t_jadwal_kuliah');
+		$jadwal_kuliah_data = $this->crud->retrieve(array('id' => $id))->row();
+		
 		$this->crud->use_table('m_angkatan');
 		$angkatan_data = array();
         foreach ($this->crud->retrieve()->result() as $row) {
 			$angkatan_data[$row->id] = $row->nama_angkatan;
         }
 		$data['angkatan_options']=$angkatan_data;
-        
-        $this->crud->use_table('m_tahun_akademik');
-		$tahun_akademik_data = array();
-        foreach ($this->crud->retrieve()->result() as $row) {
-			$tahun_akademik_data[$row->id] = $row->tahun_ajar_mulai.'-'.$row->tahun_ajar_akhir;
-		}
-        $data['tahun_akademik_options'] = $tahun_akademik_data;
-        
+        $data['tahun_akademik_id_attr'] = ''; $data['tahun_akademik_options'] = '';
+		$tahun_akademik_datas='';
+		$sql = "select a.tahun_ajar_mulai, a.tahun_ajar_akhir from akademik_m_tahun_akademik a ".
+				" left join akademik_m_angkatan b on b.tahun_akademik_id=a.id ".
+				"where a.active ='1' and b.id=".$jadwal_kuliah_data->angkatan_id;
+        $query = $this->db->query($sql);
+		//echo $sql; return;
+		//echo  '<pre>'.$this->db->last_query().'</pre><br>'; return;
+        foreach($query->result_array() as $row){
+            $tahun_akademik_datas = $row['tahun_ajar_mulai'].'-'.$row['tahun_ajar_akhir'];
+        }
+		$data['tahun_akademik_id_attr'] = $tahun_akademik_datas;
+		
 		$this->crud->use_table('m_metode_ajar');
 		$metode_ajar_data = array();
         foreach ($this->crud->retrieve()->result() as $row) {
@@ -449,8 +458,9 @@ class Jadwal_kuliah extends CI_Controller {
 		}
 		$data['minggu_ke_options'] = $minggu_ke_options;
 		
-        $data['opt_program_studi_url'] 	=  base_url() . 'transaction/jadwal_kuliah/getOptProgramStudi';//jadwal_kuliah
-        $data['opt_mata_kuliah_url'] 	=  base_url() . 'transaction/jadwal_kuliah/getOptMataKuliah';//nilai_akademik
+        $data['opt_angkatan_url'] = base_url() . 'transaction/select_data_form/getOptAngkatan';
+		$data['opt_program_studi_url'] = base_url() . 'transaction/select_data_form/getOptProgramStudi';
+        $data['opt_mata_kuliah_url'] =  base_url() . 'transaction/select_data_form/getOptMataKuliah';
         
         $this->crud->use_table('m_dosen');
         $data['nama_dosen_options'] = $this->crud->retrieve()->result();
@@ -460,11 +470,7 @@ class Jadwal_kuliah extends CI_Controller {
 		
 		$this->crud->use_table('m_jam_pelajaran');
         $data['jam_pelajaran_options'] = $this->crud->retrieve()->result();
-		
-		$this->crud->use_table('t_jadwal_kuliah');
-		//echo $id; return;
-        $jadwal_kuliah_data = $this->crud->retrieve(array('id' => $id))->row();
-		
+				
 		$data_program_studi = array();
 		$angkatan_ids=$jadwal_kuliah_data->angkatan_id;
 		$data['tgl_lahir']=$jadwal_kuliah_data->tanggal;
@@ -499,44 +505,6 @@ class Jadwal_kuliah extends CI_Controller {
 		//print_r($jadwal_kuliah_data);
         $this->load->view('transaction/jadwal_kuliah_form', $data);
 		//echo '<pre>'. $data['action_url'].'</pre>';
-    }
-	
-	function getOptProgramStudi() {
-        $tahun_akademik_id = $this->input->post('tahun_akademik_id');
-        $angkatan_id= $this->input->post('angkatan_id');
-		$sql = "select a.id, a.nama_program_studi, a.kode_program_studi from akademik_m_program_studi a ".
-				"where a.active ='1' and a.angkatan_id='$angkatan_id'";
-        $query = $this->db->query($sql);
-//        echo  $this->db->last_query();
-        echo '<option value=\'\' > pilih</option>';
-        foreach($query->result_array() as $row){
-            echo '<option value=\''.$row['id'].'\' >'.$row['kode_program_studi'].'-'.$row['nama_program_studi'].'</option>';
-        }
-    }
-	
-	function getOptMataKuliah(){
-        $tahun_akademik_id = $this->input->post('tahun_akademik_id');
-        $angkatan_id= $this->input->post('angkatan_id');
-        $program_studi_id = $this->input->post('program_studi_id');
-		$semester_id=$this->input->post('semester_id');
-		/*
-		$sql = "select a.id, a.kode_mata_kuliah, a.nama_mata_kuliah from akademik_m_mata_kuliah a ".
-				"where a.angkatan_id=$angkatan_id and program_studi_id= $program_studi_id";
-        */
-		$sql = ("select d.id, d.kode_mata_kuliah, d.nama_mata_kuliah
-				from akademik_t_rencana_mata_pelajaran_pokok a
-				left join akademik_m_mata_kuliah d on a.mata_kuliah_id = d.id
-				where a.angkatan_id = $angkatan_id and a.program_studi_id=$program_studi_id 
-					and a.semester_id = $semester_id 
-					and a.tahun_akademik_id = $tahun_akademik_id
-					group by d.id
-					");//group by d.id
-		$query = $this->db->query($sql);
-		//echo '<pre>'.$this->db->last_query().'</pre>'; //return;
-        echo '<option value=\'\' > pilih</option>';
-        foreach($query->result_array() as $row){
-            echo '<option value=\''.$row['id'].'\' >'.$row['kode_mata_kuliah'].'-'.$row['nama_mata_kuliah'].'</option>';
-        }
     }
 	
 	function ConvertRomawi($n){

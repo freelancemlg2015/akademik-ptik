@@ -19,7 +19,7 @@ $jam_normal_mulai_attr = array(
     'class' => 'input-mini',
     'value' => set_value('jam_normal_mulai', $jam_normal_mulai),
     'autocomplete' => 'off'
-);
+);  
 
 
 $jam_normal_akhir_attr = array(
