@@ -243,10 +243,10 @@ class Paket_matakuliah extends CI_Controller {
         $paket_matakuliah_data = $this->crud->retrieve(array('id' => $id))->row();
         
         $this->crud->use_table('m_angkatan');
-        $data['angkatan_options'] = $this->crud->retrieve()->result();
-                                                                           
+        $data['angkatan_options'] = $this->crud->retrieve()->result();                  
+
         $this->load->model('paket_matakuliah_model');
-        $data['plot_mata_kuliah_options'] = $this->paket_matakuliah_model->get_kelompok();
+        $data['plot_mata_kuliah_options'] = $this->paket_matakuliah_model->get_kelompok($id);
         
         $this->crud->use_table('m_program_studi');
         $data['program_studi_options'] = $this->crud->retrieve()->result();
@@ -311,9 +311,10 @@ class Paket_matakuliah extends CI_Controller {
         $this->load->model('paket_matakuliah_model');
         $kelompok_mata_kuliah_id= $this->input->post('plot_mata_kuliah_id');
         $data = $this->paket_matakuliah_model->get_plot_matakuliah($kelompok_mata_kuliah_id);
-        //echo '<input type="checkbox" value="" >';
         foreach($data as $row){
-            echo "<p>".$row['nama_kelompok_mata_kuliah']."</p>"."<br>";
+            echo "<tr>
+                       <td><input type='checkbox' name='kelompok_mata_kuliah_id[]'>"."&nbsp;&nbsp;".$row['nama_kelompok_mata_kuliah']."</td>
+                  </tr>";
         } 
     }
 }
