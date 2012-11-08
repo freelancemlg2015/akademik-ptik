@@ -562,8 +562,6 @@ $route['transaction/jadwal_kuliah/(:any)/(:any)/(:any)'] = "jadwal_kuliah/index/
 $route['transaction/jadwal_kuliah/create/(:any)'] = "jadwal_kuliah/create/$1";
 $route['transaction/jadwal_kuliah/create'] = "jadwal_kuliah/create";
 $route['transaction/jadwal_kuliah/search'] = "jadwal_kuliah/search";
-$route['transaction/jadwal_kuliah/getOptProgramStudi'] = "jadwal_kuliah/getOptProgramStudi";
-$route['transaction/jadwal_kuliah/getOptMataKuliah'] = "jadwal_kuliah/getOptMataKuliah";
 //END
 //JADWAL UJIAN
 $route['transaction/jadwal_ujian'] = "jadwal_ujian";
@@ -575,8 +573,6 @@ $route['transaction/jadwal_ujian/(:any)/(:any)/(:any)'] = "jadwal_ujian/index/$1
 $route['transaction/jadwal_ujian/create/(:any)'] = "jadwal_ujian/create/$1";
 $route['transaction/jadwal_ujian/create'] = "jadwal_ujian/create";
 $route['transaction/jadwal_ujian/search'] = "jadwal_ujian/search";
-$route['transaction/jadwal_ujian/getOptProgramStudi'] = "jadwal_ujian/getOptProgramStudi";
-$route['transaction/jadwal_ujian/getOptMataKuliah'] = "jadwal_ujian/getOptMataKuliah";
 //END
 
 //UJIAN SKRIPSI
@@ -667,7 +663,6 @@ $route['transaction/plot_dosen_penanggung_jawab/(:any)/(:any)/(:any)'] = "plot_d
 $route['transaction/plot_dosen_penanggung_jawab/create/(:any)'] = "plot_dosen_penanggung_jawab/create/$1";
 $route['transaction/plot_dosen_penanggung_jawab/create'] = "plot_dosen_penanggung_jawab/create";
 $route['transaction/plot_dosen_penanggung_jawab/search'] = "plot_dosen_penanggung_jawab/search";
-$route['transaction/plot_dosen_penanggung_jawab/dosen'] = "plot_dosen_penanggung_jawab/dosen";
 $route['transaction/plot_dosen_penanggung_jawab/suggestion'] = "plot_dosen_penanggung_jawab/suggestion";
 //END
 
@@ -696,6 +691,57 @@ $route['transaction/absensi_dosen/create'] = "absensi_dosen/create";
 $route['transaction/absensi_dosen/search'] = "absensi_dosen/search";
 //END
 
+//ABSENSI MAHASISWA
+$route['transaction/absensi_mahasiswa'] = "absensi_mahasiswa";
+$route['transaction/absensi_mahasiswa/view/(:any)'] = "absensi_mahasiswa/index/$1";
+$route['transaction/absensi_mahasiswa/(:any)/info'] = "absensi_mahasiswa/info/$1";
+$route['transaction/absensi_mahasiswa/(:any)/edit'] = "absensi_mahasiswa/edit/$1";
+$route['transaction/absensi_mahasiswa/(:any)/delete'] = "absensi_mahasiswa/delete/$1";
+$route['transaction/absensi_mahasiswa/(:any)/(:any)/(:any)'] = "absensi_mahasiswa/index/$1/$2/$3";
+$route['transaction/absensi_mahasiswa/create/(:any)'] = "absensi_mahasiswa/create/$1";
+$route['transaction/absensi_mahasiswa/create'] = "absensi_mahasiswa/create";
+$route['transaction/absensi_mahasiswa/search'] = "absensi_mahasiswa/search";
+//END
+
+//ABSENSI Ujian MAHASISWA
+$route['transaction/absensi_ujian_mahasiswa'] = "absensi_ujian_mahasiswa";
+$route['transaction/absensi_ujian_mahasiswa/view/(:any)'] = "absensi_ujian_mahasiswa/index/$1";
+$route['transaction/absensi_ujian_mahasiswa/(:any)/info'] = "absensi_ujian_mahasiswa/info/$1";
+$route['transaction/absensi_ujian_mahasiswa/(:any)/edit'] = "absensi_ujian_mahasiswa/edit/$1";
+$route['transaction/absensi_ujian_mahasiswa/(:any)/delete'] = "absensi_ujian_mahasiswa/delete/$1";
+$route['transaction/absensi_ujian_mahasiswa/(:any)/(:any)/(:any)'] = "absensi_ujian_mahasiswa/index/$1/$2/$3";
+$route['transaction/absensi_ujian_mahasiswa/create/(:any)'] = "absensi_ujian_mahasiswa/create/$1";
+$route['transaction/absensi_ujian_mahasiswa/create'] = "absensi_ujian_mahasiswa/create";
+$route['transaction/absensi_ujian_mahasiswa/search'] = "absensi_ujian_mahasiswa/search";
+//END
+
+//ABSENSI Ujian Dosen
+$route['transaction/absensi_ujian_dosen'] = "absensi_ujian_dosen";
+$route['transaction/absensi_ujian_dosen/view/(:any)'] = "absensi_ujian_dosen/index/$1";
+$route['transaction/absensi_ujian_dosen/(:any)/info'] = "absensi_ujian_dosen/info/$1";
+$route['transaction/absensi_ujian_dosen/(:any)/edit'] = "absensi_ujian_dosen/edit/$1";
+$route['transaction/absensi_ujian_dosen/(:any)/delete'] = "absensi_ujian_dosen/delete/$1";
+$route['transaction/absensi_ujian_dosen/(:any)/(:any)/(:any)'] = "absensi_ujian_dosen/index/$1/$2/$3";
+$route['transaction/absensi_ujian_dosen/create/(:any)'] = "absensi_ujian_dosen/create/$1";
+$route['transaction/absensi_ujian_dosen/create'] = "absensi_ujian_dosen/create";
+$route['transaction/absensi_ujian_dosen/search'] = "absensi_ujian_dosen/search";
+//END
+
+//select_data_form
+$route['transaction/select_data_form'] = "select_data_form";
+$route['transaction/select_data_form/getOptAngkatan'] = "select_data_form/getOptAngkatan";
+$route['transaction/select_data_form/getOptProgramStudi'] = "select_data_form/getOptProgramStudi";
+$route['transaction/select_data_form/getOptMataKuliah'] = "select_data_form/getOptMataKuliah";
+$route['transaction/select_data_form/getOptDataSubForm'] = "select_data_form/getOptDataSubForm";
+$route['transaction/select_data_form/getOptDataDosenForm'] = "select_data_form/getOptDataDosenForm";
+$route['transaction/select_data_form/getOptDataJadwal'] = "select_data_form/getOptDataJadwal";
+$route['transaction/select_data_form/getOptDataJadwalUjian'] = "select_data_form/getOptDataJadwalUjian";
+$route['transaction/select_data_form/getOptDataMahasiswaUjian'] = "select_data_form/getOptDataMahasiswaUjian";
+$route['transaction/select_data_form/getOptDataDosenUjian'] = "select_data_form/getOptDataDosenUjian";
+
+
+
+
 //NILAI MENTAL
 $route['transaction/nilai_mental'] = "nilai_mental";
 $route['transaction/nilai_mental/view/(:any)'] = "nilai_mental/index/$1";
@@ -706,6 +752,8 @@ $route['transaction/nilai_mental/(:any)/(:any)/(:any)'] = "nilai_mental/index/$1
 $route['transaction/nilai_mental/create/(:any)'] = "nilai_mental/create/$1";
 $route['transaction/nilai_mental/create'] = "nilai_mental/create";
 $route['transaction/nilai_mental/search'] = "nilai_mental/search";
+$route['transaction/nilai_mental/getMahasiswa'] = "nilai_mental/getMahasiswa";
+$route['transaction/nilai_mental/submit_nilai'] = "nilai_mental/submit_nilai";
 //END
 
 //NILAI FISIK
@@ -718,6 +766,8 @@ $route['transaction/nilai_fisik/(:any)/(:any)/(:any)'] = "nilai_fisik/index/$1/$
 $route['transaction/nilai_fisik/create/(:any)'] = "nilai_fisik/create/$1";
 $route['transaction/nilai_fisik/create'] = "nilai_fisik/create";
 $route['transaction/nilai_fisik/search'] = "nilai_fisik/search";
+$route['transaction/nilai_fisik/getMahasiswa'] = "nilai_fisik/getMahasiswa";
+$route['transaction/nilai_fisik/submit_nilai'] = "nilai_fisik/submit_nilai";
 //END
 
 //PENASEHAT AKADEMIK
@@ -761,20 +811,6 @@ $route['laporan/template_report/search'] = "template_report/search";
 //END
 
 
-//LAPORAN TRANSKIP NILAI
-$route['laporan/laporan_nilai_akademik'] = "laporan_nilai_akademik";
-$route['laporan/laporan_nilai_akademik/view/(:any)'] = "laporan_nilai_akademik/index/$1";
-$route['laporan/laporan_nilai_akademik/(:any)/info'] = "laporan_nilai_akademik/info/$1";
-$route['laporan/laporan_nilai_akademik/(:any)/edit'] = "laporan_nilai_akademik/edit/$1";
-$route['laporan/laporan_nilai_akademik/(:any)/delete'] = "laporan_nilai_akademik/delete/$1";
-$route['laporan/laporan_nilai_akademik/(:any)/(:any)/(:any)'] = "laporan_nilai_akademik/index/$1/$2/$3";
-$route['laporan/laporan_nilai_akademik/create/(:any)'] = "laporan_nilai_akademik/create/$1";
-$route['laporan/laporan_nilai_akademik/create'] = "laporan_nilai_akademik/create";
-$route['laporan/laporan_nilai_akademik/search'] = "laporan_nilai_akademik/search";
-$route['laporan/laporan_nilai_akademik/report'] = "laporan_nilai_akademik/report";
-//END
-
-
 //LAPORAN DAFTAR MATAKULIAH PAKET
 $route['laporan/laporan_daftar_matakuliah_paket'] = "laporan_daftar_matakuliah_paket";
 $route['laporan/laporan_daftar_matakuliah_paket/view/(:any)'] = "laporan_daftar_matakuliah_paket/index/$1";
@@ -801,19 +837,6 @@ $route['laporan/laporan_daftar_mahasiswa/search'] = "laporan_daftar_mahasiswa/se
 $route['laporan/laporan_daftar_mahasiswa/report'] = "laporan_daftar_mahasiswa/report";
 //END
 
-//LAPORAN LHS
-$route['laporan/laporan/lembar_hasil_studi'] = "laporan/lembar_hasil_studi";
-$route['laporan/laporan/lembar_hasil_studi/view/(:any)'] = "laporan/lembar_hasil_studi/index/$1";
-$route['laporan/laporan/lembar_hasil_studi/(:any)/info'] = "laporan/lembar_hasil_studi/info/$1";
-$route['laporan/laporan/lembar_hasil_studi/(:any)/edit'] = "laporan/lembar_hasil_studi/edit/$1";
-$route['laporan/laporan/lembar_hasil_studi/(:any)/delete'] = "laporan/lembar_hasil_studi/delete/$1";
-$route['laporan/laporan/lembar_hasil_studi/(:any)/(:any)/(:any)'] = "laporan/lembar_hasil_studi/index/$1/$2/$3";
-$route['laporan/laporan/lembar_hasil_studi/create/(:any)'] = "laporan/lembar_hasil_studi/create/$1";
-$route['laporan/laporan/lembar_hasil_studi/create'] = "laporan/lembar_hasil_studi/create";
-$route['laporan/laporan/lembar_hasil_studi/search'] = "laporan/lembar_hasil_studi/search";
-$route['laporan/laporan/lembar_hasil_studi/report'] = "laporan/lembar_hasil_studi/report";
-//END
-
 //LAPORAN DAFTAR JADWAL PERKULIAHAN
 $route['laporan/laporan_jadwal_perkuliahan'] = "laporan_jadwal_perkuliahan";
 $route['laporan/laporan_jadwal_perkuliahan/view/(:any)'] = "laporan_jadwal_perkuliahan/index/$1";
@@ -825,19 +848,6 @@ $route['laporan/laporan_jadwal_perkuliahan/create/(:any)'] = "laporan_jadwal_per
 $route['laporan/laporan_jadwal_perkuliahan/create'] = "laporan_jadwal_perkuliahan/create";
 $route['laporan/laporan_jadwal_perkuliahan/search'] = "laporan_jadwal_perkuliahan/search";
 $route['laporan/laporan_jadwal_perkuliahan/report'] = "laporan_jadwal_perkuliahan/report";
-//END
-
-//LAPORAN KALENDER AKADEMIK
-$route['laporan/laporan_kalender_akademik'] = "laporan_kalender_akademik";
-$route['laporan/laporan_kalender_akademik/view/(:any)'] = "laporan_kalender_akademik/index/$1";
-$route['laporan/laporan_kalender_akademik/(:any)/info'] = "laporan_kalender_akademik/info/$1";
-$route['laporan/laporan_kalender_akademik/(:any)/edit'] = "laporan_kalender_akademik/edit/$1";
-$route['laporan/laporan_kalender_akademik/(:any)/delete'] = "laporan_kalender_akademik/delete/$1";
-$route['laporan/laporan_kalender_akademik/(:any)/(:any)/(:any)'] = "laporan_kalender_akademik/index/$1/$2/$3";
-$route['laporan/laporan_kalender_akademik/create/(:any)'] = "laporan_kalender_akademik/create/$1";
-$route['laporan/laporan_kalender_akademik/create'] = "laporan_kalender_akademik/create";
-$route['laporan/laporan_kalender_akademik/search'] = "laporan_kalender_akademik/search";
-$route['laporan/laporan_kalender_akademik/report'] = "laporan_kalender_akademik/report";
 //END
 
 //LAPORAN DAFTAR JADWAL UJIAN

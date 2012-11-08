@@ -57,7 +57,7 @@ class Jam_pelajaran extends CI_Controller {
         $data['sort_by'] = $sort_by;
         $data['sort_order'] = $sort_order;
 
-        $data['page_title'] = 'Jam Pelajaran';
+        $data['page_title'] = 'Jam Kuliah';
 
         $data['tools'] = array(
             'master/jam_pelajaran/create' => 'New'
@@ -141,7 +141,7 @@ class Jam_pelajaran extends CI_Controller {
             redirect('master/jam_pelajaran/' . $created_id . '/info');
         }
         $data['action_url'] = $master_url . __FUNCTION__;
-        $data['page_title'] = 'Create Jam Pelajaran';
+        $data['page_title'] = 'Tambah Jam Kuliah';
         $data['tools'] = array(
             'master/jam_pelajaran' => 'Back'
         );
@@ -180,7 +180,7 @@ class Jam_pelajaran extends CI_Controller {
             redirect('master/jam_pelajaran/' . $id . '/info');
         }
         $data['action_url'] = $master_url . $id . '/' . __FUNCTION__;
-        $data['page_title'] = 'Update Jam Pelajaran';
+        $data['page_title'] = 'Edit Jam Kuliah';
         $data['tools'] = array(
             'master/jam_pelajaran' => 'Back'
         );

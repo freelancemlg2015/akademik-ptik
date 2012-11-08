@@ -12,35 +12,13 @@ $this->load->view('_shared/menus');
         <div class="leftn"> <marquee direction="up"  height="160" scrollamount="2"  onMouseOver="this.stop()" onMouseOut="this.start()">
 	   Ini konten kiri
 		</a>
-<?php
-$this->load->view('_shared/header');
-$this->load->view('_shared/menus');
-?>
-
-<p><p>
-<div id="contant">
-  <div id="main">
-     <div class="left">
-      <div class="leftbox">
-        <div class="leftnav"><strong>Pengumuman</strong></div>
-        <div class="leftn"> <marquee direction="up"  height="160" scrollamount="2"  onMouseOver="this.stop()" onMouseOut="this.start()">
-	   Ini konten kiri
-		</a>
 
 					</marquee></div>
       </div>
       <div class="leftbox">
         <div class="leftnav"><strong>Support</strong></div>
         <div class="leftn">
-        
-        
-        <br />PTIK
-		<br />eqweq 
-		<br />eqweq
-        <br />2027-88888888
-        <br />2027-88888888</div>
-		
-		<table class="" style="margin-left:35px;">
+<table class="" style="margin-left:35px;">
 			<tbody>
 			<tr class="warning">
 				<td>
@@ -51,7 +29,7 @@ $this->load->view('_shared/menus');
 			</tr>
 			<tr>
 				<td>
-					<center>Letnan. Fachrul Rozi</center>
+					<center>Admin 1</center>
 				</td>
 			</tr>
 			<tr>
@@ -64,12 +42,14 @@ $this->load->view('_shared/menus');
 			</tr>
 			<tr>
 				<td>
-					<center>Letnan. Sofi Hadi</center>
+					<center>Admin 2</center>
 				</td>
 			</tr>
 			</tbody>
 		</table>
+</div>
 		
+	
 	  </div>
     </div>
 	
@@ -77,53 +57,22 @@ $this->load->view('_shared/menus');
       <div class="home">
         <div class="homenav"><strong>Berita</strong></div>
         <div class="homebox"> 
-
-        
+            <h1>Wisuda angkatan 58</h1>
+    		<div><strong>Jakarta, stik-ptik. </strong>Berdasarkan   pengumuman nomor 4793/UN37/DT/2012 tentang Upacara Wisuda bagi Lulusan   STIK-PTIK Angkatan 58 Tahun 2010-2012 yang diaksanakan pada tanggal 16 dan 17 Oktober   2012, dengan ini kami sampaikan  jadwal wisuda tersebut sebagai   berikut:
+    		    <p> <strong>1. Selasa, 16 Oktober 2012</strong> (Jadwal wisuda. Gladi bersih hari Senin, 15 Oktober 2012 pukul 15.00 )<br />
+  		      </p>
+    		  <p> Demikian atas perhatian dan kerja samanya disampaikan terima kasih.</p>
+    		  <p> 10 Oktober 2012 <br />
+    		    a.n Rektor<br />
+    		    Pembantu Rektor Bidang Akademik, <br />
+    		  </p>
         </div>
 		</div>
       </div>
 
     </div>
   </div>
-   <div id="bottom">Akademik STIK-PTIK<br />
-  E-mail:111111@yahoo.com.cn&nbsp;&nbsp;</div>
-</div>
-
-
-<?php $this->load->view('_shared/footer'); ?>
-					</marquee></div>
-      </div>
-      <div class="leftbox">
-        <div class="leftnav"><strong>ewwew</strong></div>
-        <div class="leftn">
-        
-        
-        <br />PTIK
-		<br />eqweq 
-		<br />eqweq
-        <br />2027-88888888
-        <br />2027-88888888</div>
-      </div>
-    </div>
-    <div class="home">
-      <div class="home">
-        <div class="homenav"><strong>Berita</strong></div>
-        <div class="homebox"> 
-            <h1>Bootstrap starter template</h1>
-    		<p>
-       			 Use this document as a way to quick start any new project.
-       		 <br>
-        		All you get is this message and a barebones HTML document.
-    		</p>
-        
-        </div>
-		</div>
-      </div>
-
-    </div>
-  </div>
-   <div id="bottom">Akademik STIK-PTIK<br />
-  E-mail:111111@yahoo.com.cn&nbsp;&nbsp;</div>
+   <div id="bottom">Akademik STIK-PTIK<br /></div>
 </div>
 
 

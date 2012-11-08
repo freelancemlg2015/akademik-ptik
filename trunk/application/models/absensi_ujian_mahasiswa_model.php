@@ -1,6 +1,6 @@
 <?php
 
-class Jadwal_ujian_model extends CI_Model {
+class Absensi_ujian_mahasiswa_model extends CI_Model {
 
     function __construct() {
         parent::__construct();
@@ -115,28 +115,6 @@ class Jadwal_ujian_model extends CI_Model {
             $data[$field] = '';
         }
         return $data;
-    }
-	function get_dosen_ujian($id=null){
-        $this->db->select('a.dosen_id, b.nama_dosen');
-        $this->db->from('t_jadwal_ujian_pengawas_dosen_detil as a');
-        $this->db->join('m_dosen as b', 'a.dosen_id = b.id', 'left');
-		$this->db->order_by('a.id', 'asc');
-        if ($id) $this->db->where('a.jadwal_ujian_id', $id);
-                 $this->db->where('a.active', 1);     
-        $Q = $this->db->get();
-        foreach ($Q->result_array() as $row) $data[] = $row;
-        return @$data;
-    }
-	function get_pegawai_ujian($id=null){
-        $this->db->select('a.pegawai_id, b.nama_pegawai');
-        $this->db->from('t_jadwal_ujian_pengawas_pegawai_detil as a');
-        $this->db->join('m_pegawai as b', 'a.pegawai_id = b.id', 'left');
-		$this->db->order_by('a.id', 'asc');
-        if ($id) $this->db->where('a.jadwal_ujian_id', $id);
-                 $this->db->where('a.active', 1);     
-        $Q = $this->db->get();
-        foreach ($Q->result_array() as $row) $data[] = $row;
-        return @$data;
     }
 }
 

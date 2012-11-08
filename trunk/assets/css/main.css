@@ -408,6 +408,12 @@ input, textarea, select, .uneditable-input {
     margin-right: 630px;
 }
 
+.button_add_pegawai_class{
+    float: right;
+    margin-top: 4px;
+    margin-right: 630px;
+}
+
 span.btn-mini-class{
     float: right;
     margin-top: -29px;
