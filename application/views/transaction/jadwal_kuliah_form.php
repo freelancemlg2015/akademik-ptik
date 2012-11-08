@@ -42,15 +42,15 @@ foreach ($jam_pelajaran_options as $row) {
 	<div class="control-group">
         <?= form_label('Kegiatan', 'kegiatan_id', $control_label); ?>
         <div class="controls">
-			<?= form_dropdown('kegiatan_id', $kegiatan_options, set_value('kegiatan_id', $kegiatan_id), 'id="pangkat_id" class="input-medium" prevData-selected="' . set_value('kegiatan_id', $kegiatan_id) . '"') . '&nbsp;&nbsp;'; ?>
-			(pilih disini untuk mengisi data kegiatan dan jangan mengisi mata kuliah)
+			<?= form_dropdown('kegiatan_id', $kegiatan_options, set_value('kegiatan_id', $kegiatan_id), 'id="pangkat_id" class="input-medium" prevData-selected="' . set_value('kegiatan_id', $kegiatan_id) . '"'); ?>
+			(<b>jika mengisi kegiatan</b>, maka proses yang disimpan adalah <b>data kegiatan</b> bukan mata kuliah)
             <p class="help-block"><?php echo form_error('kegiatan_id') ?></p>
         </div>
     </div>
 	<div class="control-group">
         <?= form_label('Minggu Ke' . required(), 'minggu_ke', $control_label); ?>
         <div class="controls">
-			<?= form_dropdown('minggu_ke', $minggu_ke_options, set_value('minggu_ke', $minggu_ke), 'id="agama_id" class="input-medium" prevData-selected="' . set_value('minggu_ke', $minggu_ke) . '"') . '&nbsp;&nbsp;'; ?>
+			<?= form_dropdown('minggu_ke', $minggu_ke_options, set_value('minggu_ke', $minggu_ke), 'id="agama_id" class="input-medium" prevData-selected="' . set_value('minggu_ke', $minggu_ke) . '"'); ?>
             <p class="help-block"><?php echo form_error('minggu_ke') ?></p>
         </div>
     </div>
@@ -64,28 +64,35 @@ foreach ($jam_pelajaran_options as $row) {
 	<div class="control-group">
         <?= form_label('Waktu' . required(), 'jenis_waktu', $control_label); ?>
         <div class="controls">
-            <?= form_dropdown('jenis_waktu', $jam_pelajaran_data, set_value('jenis_waktu', $jenis_waktu), 'id="jenis_waktu" class="input-medium" prevData-selected="' . set_value('jenis_waktu', $jenis_waktu) . '"') . '&nbsp;&nbsp;'; ?>
+            <?= form_dropdown('jenis_waktu', $jam_pelajaran_data, set_value('jenis_waktu', $jenis_waktu), 'id="jenis_waktu" class="input-medium" prevData-selected="' . set_value('jenis_waktu', $jenis_waktu) . '"'); ?>
             <p class="help-block"><?php echo form_error('jenis_waktu') ?></p>
         </div>
     </div>
 	<div class="control-group">
         <?= form_label('Pertemuan ke' . required(), 'pertemuan_ke', $control_label); ?>
         <div class="controls">
-			<?= form_input($pertemuan_ke_attr) ?> &nbsp;&nbsp;dari&nbsp;&nbsp; <?= form_input($pertemuan_dari_attr) ?>
+			<?= form_input($pertemuan_ke_attr) ?>
             <p class="help-block"><?php echo form_error('pertemuan_ke') ?></p>
+        </div>
+    </div>
+	<div class="control-group">
+        <?= form_label('Pertemuan dari' . required(), 'pertemuan_dari', $control_label); ?>
+        <div class="controls">
+			<?= form_input($pertemuan_dari_attr) ?>
+            <p class="help-block"><?php echo form_error('pertemuan_dari') ?></p>
         </div>
     </div>
 	<div class="control-group">
         <?= form_label('Metode Ajar', 'metode_ajar_id', $control_label); ?>
         <div class="controls">
-			<?= form_dropdown('metode_ajar_id', $metode_ajar_options, set_value('metode_ajar_id', $metode_ajar_id), 'id="pangkat_id" class="input-medium" prevData-selected="' . set_value('metode_ajar_id', $metode_ajar_id) . '"') . '&nbsp;&nbsp;'; ?>
+			<?= form_dropdown('metode_ajar_id', $metode_ajar_options, set_value('metode_ajar_id', $metode_ajar_id), 'id="pangkat_id" class="input-medium" prevData-selected="' . set_value('metode_ajar_id', $metode_ajar_id) . '"'); ?>
             <p class="help-block"><?php echo form_error('metode_ajar_id') ?></p>
         </div>
     </div>
 	<div class="control-group">
         <?= form_label('Ruang' . required(), 'nama_ruang_id', $control_label); ?>
         <div class="controls">
-            <?= form_dropdown('nama_ruang_id', $ruang_pelajaran_data, set_value('nama_ruang_id', $nama_ruang_id), 'id="nama_ruang_id" class="input-medium" prevData-selected="' . set_value('nama_ruang_id', $nama_ruang_id) . '"') . '&nbsp;&nbsp;'; ?>
+            <?= form_dropdown('nama_ruang_id', $ruang_pelajaran_data, set_value('nama_ruang_id', $nama_ruang_id), 'id="nama_ruang_id" class="input-medium" prevData-selected="' . set_value('nama_ruang_id', $nama_ruang_id) . '"'); ?>
             <p class="help-block"><?php echo form_error('nama_ruang_id') ?></p>
         </div>
     </div>

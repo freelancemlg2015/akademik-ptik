@@ -30,6 +30,14 @@ $ruang_pelajaran_data[0] = '';
 foreach ($ruang_pelajaran_options as $row) {
     $ruang_pelajaran_data[$row->id] = $row->nama_ruang;
 }
+$dosen_data[] = '';
+    foreach ($dosen_options as $row) {
+        $dosen_data[$row->id] = $row->nama_dosen;
+}
+$pegawai_data[] = '';
+    foreach ($pegawai_options as $row) {
+        $pegawai_data[$row->id] = $row->nama_pegawai;
+}
 //print_r($nama_dosen_data);
 ?>
 <div class="container-full" id="jadwal_kuliah">
@@ -67,6 +75,61 @@ foreach ($ruang_pelajaran_options as $row) {
             <p class="help-block"><?php echo form_error('nama_ruang_id') ?></p>
         </div>
     </div>
+	
+	<fieldset>
+        <legend><b>Pengawas Ujian</b></legend>
+        <div class="control-group">
+            <a id="button_add_dosen" class="btn btn-mini button_add_dosen_class"><i class="icon-plus"></i></a>
+            <?= form_label('<b>Dosen</b>' , 'dosen_id', $control_label); ?>
+            <div class="controls">
+                <?php                            
+                    //echo form_dropdown('dosen_id[]', $dosen_data, set_value('dosen_id', ''), 'id="dosen_id" class="input-medium" prevData-selected="' . set_value('dosen_id', '') . '"');
+					if (!empty($dosen_options_edit)){
+						$i=0;
+                        foreach($dosen_options_edit as $row) {    
+							//form_label('<b>dosen_id</b>' , 'dosen_id', $control_label);
+							//if($i>0) echo  '<label class="control-label" for="dosen_id">Dosen</label>';
+							echo form_dropdown('dosen_id[]', $dosen_data, set_value('dosen_id', $row['dosen_id']), 'id="dosen_id" class="input-medium" prevData-selected="' . set_value('dosen_id', $row['dosen_id']) . '"');
+							if($i>0) {
+								echo '<span class="btn-mini-class"><a class="btn btn-mini remove-add_dosen"><i class="icon-minus"></i></a></span>';
+							}
+							$i++;
+                        };
+                    }
+                    else {
+                        echo form_dropdown('dosen_id[]', $dosen_data, set_value('dosen_id', ''), 'id="dosen_id" class="input-medium" prevData-selected="' . set_value('dosen_id', '') . '"');
+                    }
+                ?>
+                <p class="help-block"><?php echo form_error('dosen_id') ?></p>
+            </div>
+        </div>
+		<div class="clear:both"></div>
+		<div class="control-group">
+			<a id="button_add_pegawai" class="btn btn-mini button_add_pegawai_class"><i class="icon-plus"></i></a>
+            <?= form_label('<b>Pegawai</b>' , 'pegawai_id', $control_label); ?>
+            <div class="controls">
+                <?php                            
+                   // echo form_dropdown('pegawai_id[]', $pegawai_data, set_value('pegawai_id', ''), 'id="pegawai_id" class="input-medium" prevData-selected="' . set_value('pegawai_id', '') . '"');
+					if (!empty($pegawai_options_edit)){
+                        $i=0;
+						foreach($pegawai_options_edit as $row) {    
+							echo form_dropdown('pegawai_id[]', $pegawai_data, set_value('pegawai_id', $row['pegawai_id']), 'id="pegawai_id" class="input-medium" prevData-selected="' . set_value('pegawai_id', $row['pegawai_id']) . '"');
+							if($i>0) {
+								echo '<span class="btn-mini-class"><a class="btn btn-mini remove-add_pegawai"><i class="icon-minus"></i></a></span>';
+							}
+							$i++;
+						};
+                    }
+                    else {
+                        echo form_dropdown('pegawai_id[]', $pegawai_data, set_value('pegawai_id', ''), 'id="pegawai_id" class="input-medium" prevData-selected="' . set_value('pegawai_id', '') . '"');
+                    }
+                ?>
+                <p class="help-block"><?php echo form_error('pegawai_id') ?></p>
+            </div>
+        </div>
+    </fieldset>
+    <div class="clear:both"></div>
+	
     <div class="form-actions well">
         <button class="btn btn-small btn-primary" type="submit">Simpan</button>
     </div>
