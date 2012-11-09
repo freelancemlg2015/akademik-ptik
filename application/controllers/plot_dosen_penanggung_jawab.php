@@ -146,7 +146,7 @@ class Plot_dosen_penanggung_jawab extends CI_Controller {
             $dosen = $this->input->post('dosen_id');
             //print_r($_POST);
             if($created_id && is_array($dosen)){
-                $this->crud->use_table('t_dosen_ajar_detil');
+                $this->crud->use_table('t_dosen_ajar_detail');
                 for($i=0; $i< count($dosen); $i++){
                     $data_in = array(
                         'dosen_ajar_id' => $created_id,
@@ -177,10 +177,11 @@ class Plot_dosen_penanggung_jawab extends CI_Controller {
         $this->crud->use_table('m_dosen');
         $data['dosen_options'] = $this->crud->retrieve()->result();
                         
-        $this->crud->use_table('t_dosen_ajar_detil');
+        $this->crud->use_table('t_dosen_ajar_detail');
         $data['dosen_ajar_detil_options'] = $this->crud->retrieve()->result();
         
         $data['dosen_options_edit'] = '';
+        $data['thn_akademik_id_attr'] = '';
         
         $this->load->model('plot_dosen_penanggung_jawab_model', 'plot_dosen_penanggung_jawab');
         $data = array_merge($data, $this->plot_dosen_penanggung_jawab->set_default()); //merge dengan arr data dengan default
@@ -227,7 +228,7 @@ class Plot_dosen_penanggung_jawab extends CI_Controller {
             
             $dosen = $this->input->post('dosen_id');
             if(is_array($dosen)){
-                $this->crud->use_table('t_dosen_ajar_detil');
+                $this->crud->use_table('t_dosen_ajar_detail');
                 
                 $this->load->model('plot_dosen_penanggung_jawab_model');
                 $this->plot_dosen_penanggung_jawab_model->get_update($id, array('active' => 0));
@@ -279,6 +280,9 @@ class Plot_dosen_penanggung_jawab extends CI_Controller {
         $this->crud->use_table('m_dosen');
         $data['dosen_options'] = $this->crud->retrieve()->result();
         
+        $this->crud->use_table('t_dosen_ajar_detail');
+        $data['dosen_ajar_detil_options'] = $this->crud->retrieve()->result();
+        
         $this->load->model('plot_dosen_penanggung_jawab_model');
         $data['dosen_options_edit'] = $this->plot_dosen_penanggung_jawab_model->get_dosen($id);
         
@@ -291,6 +295,11 @@ class Plot_dosen_penanggung_jawab extends CI_Controller {
             $this->load->model('plot_dosen_penanggung_jawab_model');
             $data['m_tahun_akademik'] = $this->plot_dosen_penanggung_jawab_model->get_tahun_angkatan($data['m_angkatan']->tahun_akademik_id);
             
+            $thn_akademik_id_attr = '';
+            foreach ($data['m_tahun_akademik'] as $row) {
+                $thn_akademik_id_attr = $row['tahun_ajar_mulai'].'-'.$row['tahun_ajar_akhir'];
+            }                
+            $data['thn_akademik_id_attr'] = $thn_akademik_id_attr;
         }
         $this->load->view('transaction/plot_dosen_penanggung_jawab_form', $data);
     }
