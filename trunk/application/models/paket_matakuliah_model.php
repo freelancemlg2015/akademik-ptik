@@ -11,8 +11,9 @@ class Paket_matakuliah_model extends CI_Model {
                                                         m_semester.nama_semester,m_program_studi.nama_program_studi')
                         ->from('t_paket_mata_kuliah')
                         ->join('m_angkatan', 'm_angkatan.id   = t_paket_mata_kuliah.angkatan_id', 'left')
-                        ->join('m_tahun_akademik', 'm_tahun_akademik.id = t_paket_mata_kuliah.tahun_akademik_id', 'left')
-                        ->join('m_semester', 'm_semester.id = t_paket_mata_kuliah.semester_id', 'left')
+                        ->join('m_tahun_akademik', 'm_tahun_akademik.id = m_angkatan.tahun_akademik_id', 'left')
+                        ->join('t_plot_mata_kuliah', 't_plot_mata_kuliah.id = t_paket_mata_kuliah.plot_mata_kuliah_id', 'left')
+                        ->join('m_semester', 'm_semester.id = t_plot_mata_kuliah.semester_id', 'left')
                         ->join('m_program_studi', 'm_program_studi.id = t_paket_mata_kuliah.program_studi_id', 'left');
     }
 
@@ -104,37 +105,37 @@ class Paket_matakuliah_model extends CI_Model {
             $data[$field] = '';
         }
         return $data;
-    }
+    }                                 
     
     function get_kelompok(){
         $data = array();
         $this->db->select('a.*, a.id, b.nama_semester');
         $this->db->from('t_plot_mata_kuliah as a');
-        $this->db->join('m_semester as b','a.semester_id = b.id','left');
+        $this->db->join('m_semester as b','a.semester_id = b.id','left'); 
         $this->db->order_by('b.nama_semester', 'asc');
         $this->db->group_by('b.nama_semester');
         $Q = $this->db->get();
         foreach ($Q->result_array() as $row) $data[] = $row;
-        //echo $this->db->last_query();
         return $data;
     }
-        
+    
     function get_matakuliah_detil($id=null){
        $this->db->select('a.kelompok_mata_kuliah_id');
-       $this->db->from('t_paket_mata_kuliah_detil as a');
+       $this->db->from('t_paket_mata_kuliah_detail as a');
        if ($id) $this->db->where('a.paket_mata_kuliah_id', $id);
                  $this->db->where('active', 1);
         $Q = $this->db->get();
         foreach ($Q->result_array() as $row) $data[] = $row['kelompok_mata_kuliah_id'];
+        //echo $this->db->last_query();
         return @$data;
     }
     
     function get_paket_matakuliah_detil($id=null){
         $this->db->select('a.paket_mata_kuliah_id, b.kode_kelompok, b.nama_kelompok_mata_kuliah');
-        $this->db->from('t_paket_mata_kuliah_detil as a');
+        $this->db->from('t_paket_mata_kuliah_detail as a');
         $this->db->join('m_kelompok_matakuliah as b','b.id = a.kelompok_mata_kuliah_id','left');
         $this->db->where('a.paket_mata_kuliah_id', $id);
-        $this->db->where('a.active', 1);
+        $this->db->where('a.active',1);
         $Q = $this->db->get();
         foreach ($Q->result_array() as $row) $data[] = $row;
         return @$data;
@@ -142,7 +143,7 @@ class Paket_matakuliah_model extends CI_Model {
     
     function get_matakuliah_update($paket_mata_kuliah_id, $kelompok_mata_kuliah_id){
         $this->db->select('a.id');
-        $this->db->from('t_paket_mata_kuliah_detil as a');
+        $this->db->from('t_paket_mata_kuliah_detail as a');
         $this->db->where('a.paket_mata_kuliah_id',$paket_mata_kuliah_id);
         $this->db->where('a.kelompok_mata_kuliah_id', $kelompok_mata_kuliah_id);
         $Q = $this->db->get();
@@ -151,7 +152,7 @@ class Paket_matakuliah_model extends CI_Model {
     
     function get_update($id=null, $data){
         $this->db->where('paket_mata_kuliah_id', $id);
-        $this->db->update('t_paket_mata_kuliah_detil', $data);
+        $this->db->update('t_paket_mata_kuliah_detail', $data);
     }
     
     function get_tahun_angkatan($id=NULL){
@@ -180,7 +181,7 @@ class Paket_matakuliah_model extends CI_Model {
        
     }
     
-    function get_plot_matakuliah($id=NULL){
+    function get_plot_matakuliah($id=null){
         $this->db->select('t_plot_mata_kuliah.semester_id, t_plot_mata_kuliah.kelompok_mata_kuliah_id, m_semester.nama_semester, m_kelompok_matakuliah.nama_kelompok_mata_kuliah');
         $this->db->from('t_plot_mata_kuliah');
         $this->db->join('m_semester','m_semester.id = t_plot_mata_kuliah.semester_id','left');
@@ -191,14 +192,15 @@ class Paket_matakuliah_model extends CI_Model {
         $this->db->order_by('m_kelompok_matakuliah.nama_kelompok_mata_kuliah', 'asc');
         $Q = $this->db->get();
         foreach ($Q->result_array() as $row) $data[] = $row;
+        //echo $this->db->last_query();
         return @$data;
     }
     
     function get_plot_matakuliah_detil($id=NULL){
-        $this->db->select('t_plot_mata_kuliah_detil.mata_kuliah_id, m_mata_kuliah.nama_mata_kuliah, t_plot_mata_kuliah_detil.plot_mata_kuliah_id, t_plot_mata_kuliah.id, t_plot_mata_kuliah.semester_id, m_kelompok_matakuliah.nama_kelompok_mata_kuliah');
-        $this->db->from('t_plot_mata_kuliah_detil');
-        $this->db->join('m_mata_kuliah','m_mata_kuliah.id = t_plot_mata_kuliah_detil.mata_kuliah_id','left');
-        $this->db->join('t_plot_mata_kuliah','t_plot_mata_kuliah.id = t_plot_mata_kuliah_detil.plot_mata_kuliah_id','left');
+        $this->db->select('t_plot_mata_kuliah_detail.mata_kuliah_id, m_mata_kuliah.nama_mata_kuliah, t_plot_mata_kuliah_detail.plot_mata_kuliah_id, t_plot_mata_kuliah.id, t_plot_mata_kuliah.semester_id, m_kelompok_matakuliah.nama_kelompok_mata_kuliah');
+        $this->db->from('t_plot_mata_kuliah_detail');
+        $this->db->join('m_mata_kuliah','m_mata_kuliah.id = t_plot_mata_kuliah_detail.mata_kuliah_id','left');
+        $this->db->join('t_plot_mata_kuliah','t_plot_mata_kuliah.id = t_plot_mata_kuliah_detail.plot_mata_kuliah_id','left');
         $this->db->join('m_semester','m_semester.id = t_plot_mata_kuliah.semester_id','left');
         $this->db->join('m_kelompok_matakuliah','m_kelompok_matakuliah.id = t_plot_mata_kuliah.kelompok_mata_kuliah_id','left');
         $this->db->where('t_plot_mata_kuliah.semester_id', $id);

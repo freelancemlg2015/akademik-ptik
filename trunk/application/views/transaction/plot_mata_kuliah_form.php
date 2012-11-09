@@ -12,11 +12,18 @@ foreach ($angkatan_options as $row) {
     $angkatan_data[$row->id.'-'.$row->tahun_akademik_id] = $row->nama_angkatan;
 }
 
-//$tahun_data[0] = '';
-//foreach ($m_tahun_akademik as $row) {
-        //$tahun_data = $row['tahun_ajar_mulai'].'-'.$row['tahun_ajar_akhir'];
-//        $tahun_data[$row['id']] = $row['tahun_ajar_mulai'].'-'.$row['tahun_ajar_akhir'];
-//}
+$tahun_data[0] = '';
+if (isset($m_tahun_akademik)){
+    foreach ($m_tahun_akademik as $row) {
+        $tahun_data[$row['id']] = $row['tahun_ajar_mulai'].'-'.$row['tahun_ajar_akhir'];
+    }    
+} 
+else {
+    $tahun_data[''] = '';
+}
+
+
+
 
 if (isset($m_angkatan->tahun_akademik_id)){
     $thn_akademik_id = $m_angkatan->tahun_akademik_id;
@@ -40,10 +47,9 @@ $thn_akademik_id_attr = array(
     'name' => 'tahun_akademik_id',
     'class' => 'input-small',
     'readonly' => 'readonly',
-    'value' => set_value('tahun_akademik_id', ''),
+    'value' => set_value('tahun_akademik_id', $thn_akademik_id_attr),
     'autocomplete' => 'off'
 );
-
 
 ?>
 <div class="container-full" id="plot_mata_kuliah">

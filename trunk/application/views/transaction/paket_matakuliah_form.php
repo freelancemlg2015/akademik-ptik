@@ -29,6 +29,8 @@ else {
     $tahun_data[''] = '';
 }
 
+                                                   
+
 if (isset($m_angkatan->tahun_akademik_id)){
     $thn_akademik_id = $m_angkatan->tahun_akademik_id;
 }
@@ -41,6 +43,13 @@ foreach ($plot_mata_kuliah_options as $row) {
     $plot_mata_kuliah_data[$row['id'].'-'.$row['semester_id']] = $row['nama_semester'];
 }
 
+if (isset($t_plot_mata_kuliah->semester_id)){
+    $plot_semester_id = $t_plot_mata_kuliah->semester_id;
+}
+else {
+    $plot_semester_id = '';
+}
+ 
 $program_studi_data[0] = '';
 foreach ($program_studi_options as $row) {
     $program_studi_data[$row->id] = $row->nama_program_studi;
@@ -51,7 +60,7 @@ $thn_akademik_id_attr = array(
     'name' => 'tahun_akademik_id',
     'class' => 'input-small',
     'readonly' => 'readonly',
-    'value' => set_value('tahun_akademik_id', ''),
+    'value' => set_value('tahun_akademik_id', $thn_akademik_id_attr),
     'autocomplete' => 'off'
 );
 
@@ -80,7 +89,7 @@ $thn_akademik_id_attr = array(
     <div class="control-group">
         <?= form_label('Semester' , 'plot_mata_kuliah_id', $control_label); ?>
         <div class="controls">
-            <?= form_dropdown('plot_mata_kuliah_id', $plot_mata_kuliah_data, set_value('plot_mata_kuliah_id', $plot_mata_kuliah_id), 'onChange="changeKelompok()" id="plot_mata_kuliah_id" class="input-medium" prevData-selected="' . set_value('plot_mata_kuliah_id', $plot_mata_kuliah_id) . '"'); ?>
+            <?= form_dropdown('plot_mata_kuliah_id', $plot_mata_kuliah_data, set_value('plot_mata_kuliah_id', $plot_mata_kuliah_id."-".$plot_semester_id), 'onChange="changeKelompok()" id="plot_mata_kuliah_id" class="input-medium" prevData-selected="' . set_value('plot_mata_kuliah_id', $plot_mata_kuliah_id."-".$plot_semester_id) . '"'); ?>
             <p class="help-block"><?php echo form_error('plot_mata_kuliah_id') ?></p>
         </div>
     </div>
@@ -97,7 +106,11 @@ $thn_akademik_id_attr = array(
         <fieldset>
             <legend>Pilih Kelompok Mata Kuliah</legend>  
             <div id="listMahasiswa" class="controls">
-                
+            <?php           
+                if(isset($plot_detail_checked)){
+                    echo $plot_detail_checked;                    
+                }        
+            ?>    
             </div>
         </fieldset>
     </div> 

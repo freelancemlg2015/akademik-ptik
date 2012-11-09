@@ -136,7 +136,7 @@ class Plot_dosen_penanggung_jawab extends CI_Controller {
                 'tahun_akademik_id'  => $this->input->post('tahun_akademik_id'),
                 'semester_id'        => $this->input->post('semester_id'),
                 'mata_kuliah_id'     => $this->input->post('mata_kuliah_id'),
-                'plot_mata_kuliah_id'=> $this->input->post('plot_mata_kuliah_id'),
+                'paket_mata_kuliah_id'=> $this->input->post('paket_mata_kuliah_id'),
                 //'dosen_id'           => $this->input->post('dosen_id'),
                 'created_on'              => date($this->config->item('log_date_format')),
                 'created_by'              => logged_info()->on
@@ -216,7 +216,7 @@ class Plot_dosen_penanggung_jawab extends CI_Controller {
                 'tahun_akademik_id'  => $this->input->post('tahun_akademik_id'),
                 'semester_id'        => $this->input->post('semester_id'),
                 'mata_kuliah_id'     => $this->input->post('mata_kuliah_id'),
-                'plot_mata_kuliah_id'=> $this->input->post('plot_mata_kuliah_id'),
+                'paket_mata_kuliah_id'=> $this->input->post('paket_mata_kuliah_id'),
                 //'dosen_id'           => $this->input->post('dosen_id'),
                 'modified_on'        => date($this->config->item('log_date_format')),
                 'modified_by'        => logged_info()->on

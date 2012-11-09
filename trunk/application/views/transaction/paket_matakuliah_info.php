@@ -45,10 +45,10 @@ $control_label = array(
             </tr>
         </thead>
         <tbody>
-            <?php         
+            <?php                                       
                 $no = 1;
                 if(isset($paket_detil_options)){
-                    foreach ($paket_detil_options As $row) {
+                    foreach ($paket_detil_options as $row) {     
                     echo '<tr>
                             <td style="text-align: center">' . $no . '</td>    
                             <td>' . $row['kode_kelompok'] . '</td>    
