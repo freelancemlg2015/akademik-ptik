@@ -41,6 +41,14 @@ foreach ($plot_mata_kuliah_options as $row) {
     $plot_mata_kuliah_data[$row['id'].'-'.$row['semester_id']] = $row['nama_semester'];
 }
 
+if (isset($t_plot_mata_kuliah->semester_id)){
+    $plot_semester_id = $t_plot_mata_kuliah->semester_id;
+}
+else {
+    $plot_semester_id = '';
+}
+ 
+
 $dosen_data[0] = '';
 foreach ($dosen_options as $row) {
     $dosen_data[$row->id] = $row->nama_dosen;
@@ -51,7 +59,7 @@ $thn_akademik_id_attr = array(
     'name' => 'tahun_akademik_id',
     'class' => 'input-small',
     'readonly' => 'readonly',
-    'value' => set_value('tahun_akademik_id', ''),
+    'value' => set_value('tahun_akademik_id', $thn_akademik_id_attr),
     'autocomplete' => 'off'
 );
 
@@ -145,17 +153,18 @@ $thn_akademik_id_attr = array(
             $('#thn_akademik_id_attr').val(data);
         });
     }
-    //$("#angkatan_id").change(function(){
-//        var value = ($(this).val()).split("-");
-//        $.post('<?php //echo base_url(); ?>plot_dosen_penanggung_jawab/getOptTahunAkademik', {angkatan_id: value[1]},
-//        function(data){                                                                 
-//            $("select[name='span_tahun']").closest("div.controls").append("<select name='span_tahun'></select>");
-//            $("select[name='span_tahun']").closest("div.combobox-container").remove();
-//            $("select[name='span_tahun']").html(data).combobox();
-//        });
-//    })                                         
-//    $("select[name='span_tahun']").combobox();
-    
+/*
+    $("#angkatan_id").change(function(){
+       var value = ($(this).val()).split("-");
+        $.post('<?php //echo base_url(); ?>plot_dosen_penanggung_jawab/getOptTahunAkademik', {angkatan_id: value[1]},
+        function(data){                                                                 
+            $("select[name='span_tahun']").closest("div.controls").append("<select name='span_tahun'></select>");
+            $("select[name='span_tahun']").closest("div.combobox-container").remove();
+            $("select[name='span_tahun']").html(data).combobox();
+        });
+    })                                         
+    $("select[name='span_tahun']").combobox();
+*/    
     $("#plot_mata_kuliah_id").change(function(){
         var value = ($(this).val()).split("-");
         $.post('<?php echo base_url(); ?>plot_dosen_penanggung_jawab/getOptPlotmatakuliah', {plot_mata_kuliah_id: value[1]},

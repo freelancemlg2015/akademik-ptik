@@ -14,7 +14,7 @@ class Plot_dosen_penanggung_jawab_model extends CI_Model {
                         ->join('m_angkatan', 'm_angkatan.id = t_dosen_ajar.angkatan_id', 'left')
                         ->join('m_tahun_akademik', 'm_tahun_akademik.id = m_angkatan.tahun_akademik_id', 'left')
                         ->join('t_paket_mata_kuliah', 't_paket_mata_kuliah.id = t_dosen_ajar.paket_mata_kuliah_id', 'left')
-                        ->join('t_plot_mata_kuliah_detil', 't_plot_mata_kuliah_detil.plot_mata_kuliah_id = t_paket_mata_kuliah.plot_mata_kuliah_id','left')
+                        ->join('t_plot_mata_kuliah_detail', 't_plot_mata_kuliah_detail.plot_mata_kuliah_id = t_paket_mata_kuliah.plot_mata_kuliah_id','left')
                         ->join('t_plot_mata_kuliah', 't_plot_mata_kuliah.id = t_paket_mata_kuliah.plot_mata_kuliah_id', 'left')
                         ->join('m_semester', 'm_semester.id = t_plot_mata_kuliah.semester_id', 'left')
                         ->join('m_kelompok_matakuliah', 'm_kelompok_matakuliah.id = t_plot_mata_kuliah.kelompok_mata_kuliah_id', 'left');                                 
@@ -96,7 +96,7 @@ class Plot_dosen_penanggung_jawab_model extends CI_Model {
     
     function get_matakuliah_detil($id){
         $this->db->select('a.plot_mata_kuliah_id, c.nama_mata_kuliah');
-        $this->db->from('t_plot_mata_kuliah_detil as a');
+        $this->db->from('t_plot_mata_kuliah_detail as a');
         $this->db->join('t_plot_mata_kuliah as b','b.id = a.plot_mata_kuliah_id','left');
         $this->db->join('m_mata_kuliah as c','c.id = a.mata_kuliah_id','left');
         $this->db->where('a.mata_kuliah_id', $id);
@@ -121,7 +121,7 @@ class Plot_dosen_penanggung_jawab_model extends CI_Model {
     
     function get_dosen($id=null){
         $this->db->select('a.dosen_id, b.nama_dosen');
-        $this->db->from('t_dosen_ajar_detil as a');
+        $this->db->from('t_dosen_ajar_detail as a');
         $this->db->join('m_dosen as b', 'a.dosen_id = b.id', 'left');
         if ($id) $this->db->where('a.dosen_ajar_id', $id);
                  $this->db->where('a.active', 1);     
@@ -132,7 +132,7 @@ class Plot_dosen_penanggung_jawab_model extends CI_Model {
     
     function get_dosen_detil($id=null){
         $this->db->select('a.dosen_ajar_id, b.no_karpeg_dosen, b.no_dosen_fakultas, b.no_dosen_dikti, b.nama_dosen');
-        $this->db->from('t_dosen_ajar_detil as a');
+        $this->db->from('t_dosen_ajar_detail as a');
         $this->db->join('m_dosen as b','b.id = a.dosen_id','left');
         $this->db->where('a.dosen_ajar_id', $id);
         $this->db->where('a.active', 1);
@@ -143,7 +143,7 @@ class Plot_dosen_penanggung_jawab_model extends CI_Model {
     
     function get_dosen_update($dosen_ajar_id, $dosen_id){
         $this->db->select('a.id');
-        $this->db->from('t_dosen_ajar_detil as a');
+        $this->db->from('t_dosen_ajar_detail as a');
         $this->db->where('a.dosen_ajar_id',$dosen_ajar_id);
         $this->db->where('a.dosen_id', $dosen_id);
         $Q = $this->db->get();
@@ -152,7 +152,7 @@ class Plot_dosen_penanggung_jawab_model extends CI_Model {
     
     function get_update($id, $data){
         $this->db->where('dosen_ajar_id', $id);
-        $this->db->update('t_dosen_ajar_detil', $data);
+        $this->db->update('t_dosen_ajar_detail', $data);
     }
     
     function get_tahun_angkatan($id=NULL){
@@ -184,14 +184,14 @@ class Plot_dosen_penanggung_jawab_model extends CI_Model {
         $this->db->select('t_paket_mata_kuliah.plot_mata_kuliah_id,t_plot_mata_kuliah.semester_id, t_plot_mata_kuliah.kelompok_mata_kuliah_id,
                            m_semester.nama_semester, m_kelompok_matakuliah.nama_kelompok_mata_kuliah, m_mata_kuliah.nama_mata_kuliah');
         $this->db->from('t_paket_mata_kuliah');
-        $this->db->join('t_plot_mata_kuliah_detil', 't_plot_mata_kuliah_detil.plot_mata_kuliah_id = t_paket_mata_kuliah.plot_mata_kuliah_id', 'left');
-        $this->db->join('m_mata_kuliah', 'm_mata_kuliah.id = t_plot_mata_kuliah_detil.mata_kuliah_id', 'left');
+        $this->db->join('t_plot_mata_kuliah_detail', 't_plot_mata_kuliah_detail.plot_mata_kuliah_id = t_paket_mata_kuliah.plot_mata_kuliah_id', 'left');
+        $this->db->join('m_mata_kuliah', 'm_mata_kuliah.id = t_plot_mata_kuliah_detail.mata_kuliah_id', 'left');
         $this->db->join('t_plot_mata_kuliah', 't_plot_mata_kuliah.id = t_paket_mata_kuliah.plot_mata_kuliah_id', 'left');
         $this->db->join('m_semester', 'm_semester.id = t_plot_mata_kuliah.semester_id');
         $this->db->join('m_kelompok_matakuliah', 'm_kelompok_matakuliah.id = t_plot_mata_kuliah.kelompok_mata_kuliah_id', 'left');                
         $this->db->where('t_plot_mata_kuliah.semester_id', $id);
         $this->db->where('t_plot_mata_kuliah.active', 1);
-        $this->db->group_by('m_mata_kuliah.nama_mata_kuliah');
+        $this->db->group_by('m_mata_kuliah.nama_mata_kuliah');      
         $this->db->order_by('m_mata_kuliah.nama_mata_kuliah', 'asc');
         $Q = $this->db->get();
         foreach ($Q->result_array() as $row) $data[] = $row;
