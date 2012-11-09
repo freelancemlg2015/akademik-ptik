@@ -211,5 +211,10 @@ class Paket_matakuliah_model extends CI_Model {
         //echo $this->db->last_query();
         return @$data;
     }
+    
+    function insert($data){          
+        $this->db->insert('t_paket_mata_kuliah_detail', $data);
+        return $this->db->insert_id();
+    }
 }
 

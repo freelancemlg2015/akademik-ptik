@@ -149,8 +149,8 @@ class Paket_matakuliah extends CI_Controller {
                             'kelompok_mata_kuliah_id' => $kelompok[$i],
                             'created_on'              => date($this->config->item('log_date_format')),
                             'created_by'              => logged_info()->on 
-                    );
-                    $this->crud->create($data_in);                    
+                    );                 
+                    $this->crud->create($data_in);
                 }
             }                                     
             redirect('transaction/paket_matakuliah/' . $created_id . '/info');
