@@ -319,7 +319,7 @@ class Paket_matakuliah extends CI_Controller {
             
             $plot_opt = '';
             foreach($detail_plot as $row){
-                $checked = in_array($row['kelompok_mata_kuliah_id'], $matakuliah_detil_options) ? "checked='checked'" : "";
+                @$checked = in_array($row['kelompok_mata_kuliah_id'], $matakuliah_detil_options) ? "checked='checked'" : "";
                 $plot_opt .= "<tr>
                        <td><input type='checkbox' $checked name='kelompok_mata_kuliah_id[]' value=".$row['kelompok_mata_kuliah_id'].">"."&nbsp;&nbsp;".$row['nama_kelompok_mata_kuliah']."</td><br>
                   </tr>";
