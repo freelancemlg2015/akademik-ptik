@@ -1159,14 +1159,14 @@ $config = array(
     /* PAKET MATAKULIAH */
     ), 'paket_matakuliah_create' => array(
         array(
-            'field' => 'nama_paket',
-            'label' => 'nama_paket',
+            'field' => 'angkatan_id',
+            'label' => 'angkatan_id',
             'rules' => 'trim|required'
         )
     ), 'paket_matakuliah_update' => array(
         array(
-            'field' => 'nama_paket',
-            'label' => 'nama_paket',
+            'field' => 'angkatan_id',
+            'label' => 'angkatan_id',
             'rules' => 'trim|required'
         )
         

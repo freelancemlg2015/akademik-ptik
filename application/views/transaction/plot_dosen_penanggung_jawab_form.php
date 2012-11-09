@@ -41,23 +41,6 @@ foreach ($plot_mata_kuliah_options as $row) {
     $plot_mata_kuliah_data[$row['id'].'-'.$row['semester_id']] = $row['nama_semester'];
 }
 
-//$plot_data[0] = '';
-//if (isset($m_semester)){
-//    foreach ($m_semester as $row) {
-//        $tahun_data[$row['$m_semester']] = $row['nama_semester'];
-//    }    
-//} 
-//else {
-//    $plot_data[''] = '';
-//}
-//
-//if (isset($t_plot_mata_kuliah->semester_id)){
-//    $smster_id = $t_plot_mata_kuliah->semester_id;
-//}
-//else {
-//    $smster_id = '';
-//}
-
 $dosen_data[0] = '';
 foreach ($dosen_options as $row) {
     $dosen_data[$row->id] = $row->nama_dosen;
