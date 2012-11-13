@@ -3,25 +3,11 @@ $this->load->view('_shared/header');
 $this->load->view('_shared/menus');
 ?>
 
-<div class="container-fluid form-inline well" id="plot_semester-search">
+<div class="container-fluid form-inline well" id="jadwal_kuliah-search">
     <?php
-    $no_karpeg_dosen_attr = array(
-        'id' => 'no_karpeg_dosen',
-        'name' => 'no_karpeg_dosen',
-        'class' => 'input-medium',
-        'style' => 'text-transform : uppercase;',
-        'placeholder' => 'No Karpeg Dosen'
-    );
-    $nama_dosen_attr = array(
-        'id' => 'nama_dosen',
-        'name' => 'nama_dosen',
-        'class' => 'input-medium',
-        'style' => 'text-transform : uppercase;',
-        'placeholder' => 'Nama Dosen'
-    );
-    echo form_open('transaction/plot_semester/search/') .
-    form_input($no_karpeg_dosen_attr) . ' ' .
-    form_input($nama_dosen_attr) . ' ' .
+    echo form_open('transaction/jadwal_kuliah/search/') .
+    //form_input($nama_dosen_attr) . ' ' .
+   // form_input($nama_ruang_attr) . ' ' .
     form_submit('cari', 'CARI', 'class="btn btn-mini"') .
     form_close();
     ?>
@@ -35,7 +21,7 @@ $this->load->view('_shared/menus');
     </div>
 <?php endif; ?>
 
-<table class="table table-bordered table-striped container-full data_list" id="plot_semester" controller="transaction">
+<table class="table table-bordered table-striped container-full data_list" id="jadwal_kuliah" controller="transaction">
     <thead>
         <tr>
             <th>Angkatan</th>
@@ -48,12 +34,14 @@ $this->load->view('_shared/menus');
     <tbody>
         <?php
         foreach ($results->result() as $row) {
-            echo '<tr id="' . $row->id . '">
-              <td>' . $row->angkatan_id . '</td>
-              <td>' . $row->no_dosen_fakultas . '</td>
-              <td>' . $row->nama_dosen . '</td>
-              <td>' . $row->tgl_lahir . '</td>
-              <td>' . $row->tgl_lahir . '</td> 
+            //$display_event = $row->nama_mata_kuliah;
+			//if($row->kegiatan_id!=0) $display_event = $row->nama_kegiatan;
+			echo '<tr id="' . $row->id . '">
+              <td>' . $row->nama_angkatan . '</td>
+              <td>' . $row->tahun_ajar_mulai .'-'. $row->tahun_ajar_akhir . '</td>
+              <td>' . $row->nama_semester . '</td>
+              <td>' . $row->tgl_kalender_mulai . '</td>
+              <td>' . $row->tgl_kalender_akhir . '</td> 
             </tr>
           ';
         }
