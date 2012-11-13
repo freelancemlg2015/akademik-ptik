@@ -114,7 +114,7 @@ $silabus_attr = array(
 
 $status_matakuliah_data[0] = '';
 foreach ($status_matakuliah_options as $row) {
-    $status_matakuliah_data[$row->id] = $row->nama_matakuliah;
+    $status_matakuliah_data[$row->id] = $row->status_mata_kuliah;
 }
 ?>
 <div class="container-full" id="angkatan">
@@ -147,7 +147,7 @@ foreach ($status_matakuliah_options as $row) {
     <div class="control-group">
         <?= form_label('Status MataKuliah', 'status_mata_kuliah_id', $control_label); ?>
         <div class="controls">
-            <?= form_dropdown('status_mata_kuliah_id', $status_matakuliah_data, set_value('status_mata_kuliah_id', $status_mata_kuliah_id), 'id="status_mata_kuliah_id" class="input-medium" prevData-selected="' . set_value('status_mata_kuliah_id', $status_mata_kuliah_id) . '"') . '&nbsp;&nbsp;'; ?>
+            <?= form_dropdown('status_mata_kuliah_id', $status_matakuliah_data, set_value('status_mata_kuliah_id', @$status_mata_kuliah_id), 'id="status_mata_kuliah_id" class="input-medium" prevData-selected="' . set_value('status_mata_kuliah_id', @$status_mata_kuliah_id) . '"') . '&nbsp;&nbsp;'; ?>
             <p class="help-block"><?php echo form_error('status_mata_kuliah_id') ?></p>
         </div>
     </div>

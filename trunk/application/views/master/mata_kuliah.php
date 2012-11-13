@@ -44,7 +44,8 @@ $this->load->view('_shared/menus');
             <th>Semester</th>-->
             <th>Kode Matakuliah</th>
             <th>Nama Matakuliah</th>
-            <th>SKS Matakuliah</th>
+            <th>SKS</th>
+            <th>Status</th>
         </tr>
     </thead>
     <tbody>
@@ -54,6 +55,7 @@ $this->load->view('_shared/menus');
               <td>' . $row->kode_mata_kuliah . '</td>
               <td>' . $row->nama_mata_kuliah . '</td>
               <td>' . $row->sks_mata_kuliah . '</td>
+			  <td>' . $row->status_mata_kuliah . '</td>
             </tr>
           ';
         }
