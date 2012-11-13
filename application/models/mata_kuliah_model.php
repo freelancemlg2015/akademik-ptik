@@ -9,7 +9,7 @@ class Mata_kuliah_model extends CI_Model {
     function s_mata_kuliah() {
         return $this->db->select('m_mata_kuliah.*,m_angkatan.nama_angkatan,m_program_studi.nama_program_studi,
                                   m_jenjang_studi.jenjang_studi,m_tahun_akademik.tahun_ajar_mulai,m_tahun_akademik.tahun_ajar_akhir,
-                                  m_semester.nama_semester,m_status_matakuliah.nama_matakuliah')
+                                  m_semester.nama_semester,m_status_matakuliah.status_mata_kuliah')
                         ->from('m_mata_kuliah')
                         ->join('m_angkatan', 'm_angkatan.id = m_mata_kuliah.angkatan_id','left')
                         ->join('m_program_studi', 'm_program_studi.id = m_mata_kuliah.program_studi_id','left')
