@@ -115,7 +115,7 @@ class Paket_matakuliah extends CI_Controller {
         $this->crud->update($criteria, $data_in);
         redirect('transaction/paket_matakuliah');
     }
-
+    
     function create() {
         $data['auth'] = $this->auth;
         $data['action_type'] = __FUNCTION__;
@@ -130,13 +130,13 @@ class Paket_matakuliah extends CI_Controller {
             $this->crud->use_table('t_paket_mata_kuliah');
             $data_in = array(
                 'angkatan_id'             => $this->input->post('angkatan_id'),
-                //'tahun_akademik_id'       => $this->input->post('tahun_akademik_id'),
-                //'semester_id'             => $this->input->post('semester_id'),
                 'program_studi_id'        => $this->input->post('program_studi_id'),
                 'plot_mata_kuliah_id'     => $this->input->post('plot_mata_kuliah_id'),
                 'created_on'              => date($this->config->item('log_date_format')),
                 'created_by'              => logged_info()->on
-            );                             
+            );
+            print_r($_POST);
+            exit();
             $created_id = $this->crud->create($data_in);
 
             $kelompok = $this->input->post('kelompok_mata_kuliah_id');
@@ -148,7 +148,8 @@ class Paket_matakuliah extends CI_Controller {
                             'kelompok_mata_kuliah_id' => $kelompok[$i],
                             'created_on'              => date($this->config->item('log_date_format')),
                             'created_by'              => logged_info()->on 
-                    );                 
+                    );
+                    
                     $this->crud->create($data_in);
                 }
             }                                     
