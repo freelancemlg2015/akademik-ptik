@@ -110,7 +110,7 @@ body {
      font-size: 11px !important;
     background: url("../images/bg-xy.jpg") repeat scroll 0 0 #FBFBFB;
     background : url("../img/template.jpg") no-repeat top center;*/
-	background: #007D3A url(../img/bg_home.jpg);
+	background: #007D3A url(../img/bg.jpg);
 	width:1050px;
 	padding-top:100px;
 	margin:-50px 160px;
@@ -375,6 +375,12 @@ input, textarea, select, .uneditable-input {
 
 .loa_preview div{
     font-size: 12px !important;
+}
+
+.button_add_pegawai_class{
+    float: right;
+    margin-top: 4px;
+    margin-right: 630px;
 }
 
 .modal12 {

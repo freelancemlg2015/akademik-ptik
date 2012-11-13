@@ -3,7 +3,7 @@
 <div id="login" class="modal hide fade span4">
     <?php echo form_open('login'); ?>
     <div class="modal-header">
-        <h3 style="text-align: center;">SISTEM INFORMASI AKADEMIK SEKOLAH TINGGI ILMU KEPOLISIAN</h3>
+        <h3 style="text-align: center;"><img src="<?= base_url() ?>assets/img/login.jpg"></h3>
     </div>
     <div class="modal-body">
         <?php

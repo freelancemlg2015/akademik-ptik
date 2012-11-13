@@ -17,7 +17,7 @@ $icon_color = 'icon-grey';
 <div class="navbar navbar-fixed-top">
     <div class="navbar-inner">
         <div class="container">
-            <a href="#" class="brand">STIK-PTIK AKADEMIK App&trade;</a>
+            <a href="#" class="brand">STIK-PTIK AKADEMIK</a>
             <ul class="nav">
 
                 <li class="<?= isActive($primary_nav, 'home') ?>"><?= anchor('home', isIconActive($primary_nav, 'home', 'icon-home')) ?></li>
@@ -64,19 +64,18 @@ $icon_color = 'icon-grey';
                         </ul>
                     </li>
 
-                    <li class="dropdown <?= ($secondary_nav == 'jam_pelajaran' || $secondary_nav == 'ruang_pelajaran' || $secondary_nav == 'jenis_ruang' || $secondary_nav == 'semester' || $secondary_nav == 'semester_mulai_aktivitas' || $secondary_nav == 'akta_mengajar' || $secondary_nav == 'bobot_nilai' || $secondary_nav == 'golongan' || $secondary_nav == 'jabatan_akademik' || $secondary_nav == 'jabatan_tertinggi') ? 'active' : ''; ?>">
+                    <li class="dropdown <?= ($secondary_nav == 'jam_pelajaran' || $secondary_nav == 'ruang_pelajaran' || $secondary_nav == 'jenis_ruang' || $secondary_nav == 'semester' || $secondary_nav == 'semester_mulai_aktivitas' || $secondary_nav == 'akta_mengajar' || $secondary_nav == 'bobot_nilai') ? 'active' : ''; ?>">
                         <a href="#" data-toggle="dropdown" class="dropdown-toggle">Perkuliahan<b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li class="<?= isActive($secondary_nav, 'jam_pelajaran'); ?>"><?= anchor('master/jam_pelajaran', 'Jam Pelajaran'); ?></li>
-                            <li class="<?= isActive($secondary_nav, 'ruang_pelajaran'); ?>"><?= anchor('master/ruang_pelajaran', 'Ruang Pelajaran'); ?></li>
+                            <li class="<?= isActive($secondary_nav, 'jam_pelajaran'); ?>"><?= anchor('master/jam_pelajaran', 'Jam Kuliah'); ?></li>
                             <li class="<?= isActive($secondary_nav, 'jenis_ruang'); ?>"><?= anchor('master/jenis_ruang', 'Jenis Ruang'); ?></li>
+                            <li class="<?= isActive($secondary_nav, 'ruang_pelajaran'); ?>"><?= anchor('master/ruang_pelajaran', 'Ruang Kelas'); ?></li>
+
                             <li class="<?= isActive($secondary_nav, 'semester'); ?>"><?= anchor('master/semester', 'Semester'); ?></li>
 <!--                        <li class="<?//= isActive($secondary_nav, 'semester_mulai_aktivitas'); ?>"><?//= anchor('master/semester_mulai_aktivitas', 'Semester Mulai Aktivitas'); ?></li>  
                             <li class="<?//= isActive($secondary_nav, 'akta_mengajar'); ?>"><?//= anchor('master/akta_mengajar', 'Akta Mengajar'); ?></li>-->
                             <li class="<?= isActive($secondary_nav, 'bobot_nilai'); ?>"><?= anchor('master/bobot_nilai', 'Bobot Nilai'); ?></li>
-                            <li class="<?= isActive($secondary_nav, 'golongan'); ?>"><?= anchor('master/golongan', 'Golongan'); ?></li>
-                            <li class="<?= isActive($secondary_nav, 'jabatan_akademik'); ?>"><?= anchor('master/jabatan_akademik', 'Jabatan Akademik'); ?></li>
-                            <li class="<?= isActive($secondary_nav, 'jabatan_tertinggi'); ?>"><?= anchor('master/jabatan_tertinggi', 'Jabatan Tertinggi'); ?></li>
+                            
                         </ul>
                     </li>
 
@@ -100,6 +99,12 @@ $icon_color = 'icon-grey';
                         </ul>
                     </li>
 
+					<li class="dropdown <?= ($secondary_nav == 'pegawai') ? 'active' : ''; ?>">
+                        <a href="#" data-toggle="dropdown" class="dropdown-toggle">Pegawai<b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li class="<?= isActive($secondary_nav, 'pegawai'); ?>"><?= anchor('master/pegawai', 'Data Pegawai'); ?></li>
+                        </ul>
+                    </li>
                     <li class="dropdown <?= ($secondary_nav == 'mahasiswa' || $secondary_nav == 'nilai' || $secondary_nav == 'pangkat' || $secondary_nav == 'kesatuan_asal') ? 'active' : ''; ?>">
                         <a href="#" data-toggle="dropdown" class="dropdown-toggle">Mahasiswa<b class="caret"></b></a>
                         <ul class="dropdown-menu">
@@ -110,25 +115,26 @@ $icon_color = 'icon-grey';
                         </ul>
                     </li>
 
-                    <li class="dropdown <?= ($secondary_nav == 'surat_ijin_mengajar') ? 'active' : ''; ?>">
+                    <li class="dropdown <?= ($secondary_nav == 'surat_ijin_mengajar' || $secondary_nav == 'direktorat' || $secondary_nav == 'subdirektorat' || $secondary_nav == 'kategori_pejabat' || $secondary_nav == 'pejabat_tanda_tangan') ? 'active' : ''; ?>">
                         <a href="#" data-toggle="dropdown" class="dropdown-toggle">Surat<b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li class="<?= isActive($secondary_nav, 'surat_ijin_mengajar'); ?>"><?= anchor('master/surat_ijin_mengajar', 'Surat Ijin Mengajar'); ?></li>
-                        </ul>
-                    </li>
-
-                    <li class="dropdown <?= ($secondary_nav == 'jenis_kelamin' || $secondary_nav == 'provinsi' || $secondary_nav == 'kategori_pejabat' || $secondary_nav == 'status_akreditasi' || $secondary_nav == 'status_aktivitas_dosen' || $secondary_nav == 'status_kerja_dosen' || $secondary_nav == 'status_dosen_penasehat' || $secondary_nav == 'status_mata_kuliah' || $secondary_nav == 'direktorat' || $secondary_nav == 'subdirektorat' ) ? 'active' : ''; ?>">
-                        <a href="#" data-toggle="dropdown" class="dropdown-toggle">Utilitas<b class="caret"></b></a>
-
-                        <ul class="dropdown-menu">
-                            <li class="<?= isActive($secondary_nav, 'direktorat'); ?>"><?= anchor('master/direktorat', 'Direktorat'); ?></li>
-                            <li class="<?= isActive($secondary_nav, 'subdirektorat'); ?>"><?= anchor('master/subdirektorat', 'Sub Direktorat'); ?></li>
-                            <li class="<?= isActive($secondary_nav, 'jenis_kelamin'); ?>"><?= anchor('master/jenis_kelamin', 'Jenis Kelamin'); ?></li>
-                            <li class="<?= isActive($secondary_nav, 'provinsi'); ?>"><?= anchor('master/provinsi', 'Provinsi'); ?></li>
                             <li class="<?= isActive($secondary_nav, 'direktorat'); ?>"><?= anchor('master/direktorat', 'Direktorat'); ?></li>
                             <li class="<?= isActive($secondary_nav, 'subdirektorat'); ?>"><?= anchor('master/subdirektorat', 'Sub Direktorat'); ?></li>
                             <li class="<?= isActive($secondary_nav, 'kategori_pejabat'); ?>"><?= anchor('master/kategori_pejabat', 'Kategori Pejabat'); ?></li>
                             <li class="<?= isActive($secondary_nav, 'pejabat_tanda_tangan'); ?>"><?= anchor('master/pejabat_tanda_tangan', 'Tanda Tangan Pejabat'); ?></li>
+            <?php /*?><li class="<?= isActive($secondary_nav, 'surat_ijin_mengajar'); ?>"><?= anchor('master/surat_ijin_mengajar', 'Surat Ijin Mengajar'); ?></li><?php */?>
+                        </ul>
+                    </li>
+
+                    <li class="dropdown <?= ($secondary_nav == 'jenis_kelamin' || $secondary_nav == 'provinsi'  || $secondary_nav == 'status_akreditasi' || $secondary_nav == 'status_aktivitas_dosen' || $secondary_nav == 'status_kerja_dosen' || $secondary_nav == 'status_dosen_penasehat' || $secondary_nav == 'status_mata_kuliah' || $secondary_nav == 'golongan' || $secondary_nav == 'jabatan_akademik' || $secondary_nav == 'jabatan_tertinggi' ) ? 'active' : ''; ?>">
+                        <a href="#" data-toggle="dropdown" class="dropdown-toggle">Utilitas<b class="caret"></b></a>
+
+                        <ul class="dropdown-menu">
+                            <li class="<?= isActive($secondary_nav, 'golongan'); ?>"><?= anchor('master/golongan', 'Golongan'); ?></li>
+                            <li class="<?= isActive($secondary_nav, 'jabatan_akademik'); ?>"><?= anchor('master/jabatan_akademik', 'Jabatan Akademik'); ?></li>
+                            <li class="<?= isActive($secondary_nav, 'jabatan_tertinggi'); ?>"><?= anchor('master/jabatan_tertinggi', 'Jabatan Tertinggi'); ?></li>
+                            <li class="<?= isActive($secondary_nav, 'jenis_kelamin'); ?>"><?= anchor('master/jenis_kelamin', 'Jenis Kelamin'); ?></li>
+                            <li class="<?= isActive($secondary_nav, 'provinsi'); ?>"><?= anchor('master/provinsi', 'Provinsi'); ?></li>
                             <li class="<?= isActive($secondary_nav, 'status_akreditasi'); ?>"><?= anchor('master/status_akreditasi', 'Status Akreditasi'); ?></li>
                             <li class="<?= isActive($secondary_nav, 'status_aktivitas_dosen'); ?>"><?= anchor('master/status_aktivitas_dosen', 'Status Aktivitas Dosen'); ?></li>
                             <li class="<?= isActive($secondary_nav, 'status_kerja_dosen'); ?>"><?= anchor('master/status_kerja_dosen', 'Status Kerja Dosen'); ?></li>
@@ -191,7 +197,6 @@ $icon_color = 'icon-grey';
                         <a href="#" data-toggle="dropdown" class="dropdown-toggle">Skripsi<b class="caret"></b></a>
                         <ul class="dropdown-menu">                      
                             <li class="<?= isActive($secondary_nav, 'pengajuan_skripsi'); ?>"><?= anchor('transaction/pengajuan_skripsi', 'Pengajuan Skripsi'); ?></li>
-                            <li class="<?= isActive($secondary_nav, 'jadwal_ujian_skripsi'); ?>"><?= anchor('transaction/jadwal_ujian_skripsi', 'Jadwal Ujian Skripsi'); ?></li>
                             <li class="<?= isActive($secondary_nav, 'nilai_skripsi'); ?>"><?= anchor('transaction/nilai_skripsi', 'Nilai Skripsi'); ?></li>
                         </ul>
                     </li>

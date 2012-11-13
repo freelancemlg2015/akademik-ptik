@@ -261,6 +261,20 @@ $route['master/jenis_ruang/create'] = "jenis_ruang/create";
 $route['master/jenis_ruang/search'] = "jenis_ruang/search";
 //END
 
+//DATA PEGAWAI
+$route['master/pegawai'] = "pegawai";
+$route['master/pegawai/view/(:any)'] = "pegawai/index/$1";
+$route['master/pegawai/(:any)/info'] = "pegawai/info/$1";
+$route['master/pegawai/(:any)/edit'] = "pegawai/edit/$1";
+$route['master/pegawai/(:any)/delete'] = "pegawai/delete/$1";
+$route['master/pegawai/(:any)/(:any)/(:any)'] = "pegawai/index/$1/$2/$3";
+$route['master/pegawai/create/(:any)'] = "pegawai/create/$1";
+$route['master/pegawai/create'] = "pegawai/create"; 
+$route['master/pegawai/search'] = "pegawai/search";
+$route['master/pegawai/suggestion'] = "pegawai/suggestion";
+//END
+
+
 //STATUS AKREDITASI
 $route['master/status_akreditasi'] = "status_akreditasi";
 $route['master/status_akreditasi/view/(:any)'] = "status_akreditasi/index/$1";

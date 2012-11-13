@@ -862,6 +862,23 @@ $config = array(
             'label' => 'nama_dosen',
             'rules' => 'trim|required'
         )
+		
+		
+    /* DATA PEGAWAI */
+    ), 'pegawai_create' => array(
+        array(
+            'field' => 'nama_pegawai',
+            'label' => 'nama_pegawai',
+            'rules' => 'trim|required'
+        )
+    ), 'pegawai_update' => array(
+        array(
+            'field' => 'nama_pegawai',
+            'label' => 'nama_pegawai',
+            'rules' => 'trim|required'
+        )
+
+
 
     /* MATA KULIAH */
     ), 'mata_kuliah_create' => array(
