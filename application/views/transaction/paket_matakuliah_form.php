@@ -105,7 +105,7 @@ $thn_akademik_id_attr = array(
    <div class="control-group">
         <fieldset>
             <legend>Pilih Kelompok Mata Kuliah</legend>  
-            <div id="listMahasiswa" class="controls">
+            <div id="listkelompok" class="controls">
             <?php           
                 if(isset($plot_detail_checked)){
                     echo $plot_detail_checked;                    
@@ -132,14 +132,14 @@ $thn_akademik_id_attr = array(
     }
                     
     function changeKelompok(){
-        $('#listMahasiswa').hide();
+        $('#listkelompok').hide();
         if($('#plot_mata_kuliah_id').val()<=0) return;     
         var plot_mata_kuliah_id = ($('#plot_mata_kuliah_id').val()).split("-");
         var mode = 'view';      
         $.post('<?php echo base_url(); ?>paket_matakuliah/getOptPlotmatakuliah', {plot_mata_kuliah_id: plot_mata_kuliah_id[1]},
         function(data){
-            $('#listMahasiswa').html(data);
-            $('#listMahasiswa').show();
+            $('#listkelompok').html(data);
+            $('#listkelompok').show();
         });
     }   
 </script>

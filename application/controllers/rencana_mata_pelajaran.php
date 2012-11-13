@@ -133,6 +133,7 @@ class Rencana_mata_pelajaran extends CI_Controller {
                 'tahun_akademik_id'  => $this->input->post('tahun_akademik_id'),
                 'semester_id'        => $this->input->post('semester_id'),
                 'program_studi_id'   => $this->input->post('program_studi_id'),
+                'paket_mata_kuliah_id'=> $this->input->post('paket_mata_kuliah_id'),
                 'keterangan'         => $this->input->post('keterangan'),
                 'created_on'         => date($this->config->item('log_date_format')),
                 'created_by'         => logged_info()->on
@@ -172,6 +173,9 @@ class Rencana_mata_pelajaran extends CI_Controller {
         $this->crud->use_table('m_tahun_akademik');
         $data['tahun_akademik_options'] = $this->crud->retrieve()->result();
         
+        $this->load->model('rencana_mata_pelajaran_model');
+        $data['plot_mata_kuliah_options'] = $this->rencana_mata_pelajaran_model->get_kelompok();
+        
         $this->crud->use_table('m_semester');
         $data['semester_options'] = $this->crud->retrieve()->result();
         
@@ -180,9 +184,6 @@ class Rencana_mata_pelajaran extends CI_Controller {
         
         $this->crud->use_table('m_kelompok_matakuliah');
         $data['kelompok_matakuliah_options'] = $this->crud->retrieve()->result();
-        
-        $this->crud->use_table('t_plot_mata_kuliah');
-        $data['plot_mata_kuliah_options'] = $this->crud->retrieve()->result();
         
         $this->crud->use_table('m_mahasiswa');
         $data['mahasiswa_options'] = $this->crud->retrieve()->result();
@@ -229,8 +230,7 @@ class Rencana_mata_pelajaran extends CI_Controller {
                 'tahun_akademik_id'  => $this->input->post('tahun_akademik_id'),
                 'semester_id'        => $this->input->post('semester_id'),
                 'program_studi_id'   => $this->input->post('program_studi_id'),
-                'mahasiswa_id'       => $this->input->post('mahasiswa_id'),
-                'mata_kuliah_id'     => $this->input->post('mata_kuliah_id'),
+                'paket_mata_kuliah_id'=> $this->input->post('paket_mata_kuliah_id'),
                 'keterangan'         => $this->input->post('keterangan'),
                 'modified_on'        => date($this->config->item('log_date_format')),
                 'modified_by'        => logged_info()->on
@@ -318,6 +318,58 @@ class Rencana_mata_pelajaran extends CI_Controller {
         $data = array_merge($data, $this->rencana_mata_pelajaran->set_default()); //merge dengan arr data dengan default
         $data = array_merge($data, (array) $rencana_mata_pelajaran_data);
         $this->load->view('transaction/rencana_mata_pelajaran_form', $data);
+    }
+    
+    function getOptTahunAkademik() {
+        $angkatan_id= $this->input->post('angkatan_id');
+		$sql = "select distinct a.tahun_ajar_mulai, a.tahun_ajar_akhir from akademik_m_tahun_akademik a ".
+				" left join akademik_m_angkatan b on b.tahun_akademik_id=a.id".
+                                " where a.active ='1' and b.tahun_akademik_id='$angkatan_id'";
+        $query = $this->db->query($sql);
+		//echo  '<pre>'.$this->db->last_query().'</pre><br>';
+        foreach($query->result_array() as $row){
+            echo $row['tahun_ajar_mulai'].'-'.$row['tahun_ajar_akhir'];
+        }
+    }
+    
+    function getOptPlotmatakuliah(){
+        $this->load->model('rencana_mata_pelajaran_model');
+        $kelompok_mata_kuliah_id= $this->input->post('paket_mata_kuliah_id');
+        $data = $this->rencana_mata_pelajaran_model->get_plot_matakuliah($kelompok_mata_kuliah_id);
+        //var_dump($data);
+        echo '<option value="" ></option>';
+        foreach($data as $row){
+            echo '<option value=\''.$row['program_studi_id'].'\' >'.$row['nama_program_studi'].'</option>';
+        } 
+    }
+    
+    function getOptPlotmatakuliahDetil(){
+        $this->load->model('rencana_mata_pelajaran_model');
+        $plot_mata_kuliah_id = $this->input->post('paket_mata_kuliah_id');
+        $data = $this->rencana_mata_pelajaran_model->get_plot_matakuliah_detil($plot_mata_kuliah_id);
+        echo '<option value="" ></option>';
+        foreach($data as $row){
+            echo '<option value=\''.$row['program_studi_id'].'\' >'.$row['nama_mata_kuliah'].'</option>';
+        } 
+    }
+    
+    function getOptMahasiswa(){
+        $this->load->model('rencana_mata_pelajaran_model');
+        $mahasiswa = $this->input->post('angkatan_id');
+        $data = $this->rencana_mata_pelajaran_model->get_angkatan_mahasiswa($mahasiswa);
+        $no = 1;
+        foreach($data as $row){
+            @$checked = in_array($row['kelompok_mata_kuliah_id'], $mata_detil_options) ? "checked='checked'" : "";
+            echo "<tr>
+                   <td>".$no."</td>
+                   <td>".$row['nim']."</td>
+                   <td>".$row['nama']."</td>
+                   <td style='text-align: center'>
+                        <input type='checkbox' $checked name='mahasiswa_id[]' id='cek' value='$row->id' >   
+                    </td>    
+              </tr>";
+            $no++;            
+        }
     }
 }
 

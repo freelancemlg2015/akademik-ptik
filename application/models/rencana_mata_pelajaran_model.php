@@ -8,13 +8,15 @@ class Rencana_mata_pelajaran_model extends CI_Model {
 
     function s_rencana_mata_pelajaran() {
         return $this->db->select('t_rencana_mata_pelajaran_pokok.*,m_angkatan.nama_angkatan,m_tahun_akademik.tahun_ajar_mulai,m_tahun_akademik.tahun_ajar_akhir,
-                                                        m_semester.nama_semester,m_program_studi.nama_program_studi,m_mata_kuliah.nama_mata_kuliah')
+                                                        m_program_studi.nama_program_studi,m_mata_kuliah.nama_mata_kuliah')
                         ->from('t_rencana_mata_pelajaran_pokok')
                         ->join('m_angkatan', 'm_angkatan.id   = t_rencana_mata_pelajaran_pokok.angkatan_id', 'left')
-                        ->join('m_tahun_akademik', 'm_tahun_akademik.id = t_rencana_mata_pelajaran_pokok.tahun_akademik_id', 'left')
-                        ->join('m_semester', 'm_semester.id = t_rencana_mata_pelajaran_pokok.semester_id', 'left')
+                        ->join('m_tahun_akademik', 'm_tahun_akademik.id = m_angkatan.tahun_akademik_id', 'left')
+                        ->join('m_mahasiswa', 'm_mahasiswa.angkatan_id = m_angkatan.id', 'left')
                         ->join('m_program_studi', 'm_program_studi.id = t_rencana_mata_pelajaran_pokok.program_studi_id', 'left') 
-                        ->join('m_mata_kuliah', 'm_mata_kuliah.id = t_rencana_mata_pelajaran_pokok.mata_kuliah_id', 'left');
+                        ->join('t_paket_mata_kuliah', 't_paket_mata_kuliah.id = t_rencana_mata_pelajaran_pokok.paket_mata_kuliah_id', 'left')
+                        ->join('t_plot_mata_kuliah_detail', 't_plot_mata_kuliah_detail.plot_mata_kuliah_id = t_paket_mata_kuliah.plot_mata_kuliah_id')
+                        ->join('m_mata_kuliah', 'm_mata_kuliah.id = t_plot_mata_kuliah_detail.mata_kuliah_id');
     }
 
     function get_many($data_type = NULL, $term = array(), $limit = NULL, $offset = NULL) {
@@ -141,5 +143,59 @@ class Rencana_mata_pelajaran_model extends CI_Model {
         $this->db->where('rencana_mata_pelajaran_id', $id);
         $this->db->update('t_rencana_mata_pelajaran_pokok_detil', $data);
     }
+    
+    function get_kelompok(){
+        $data = array();
+        $this->db->select('');
+        $this->db->from('t_paket_mata_kuliah');
+        $this->db->join('t_plot_mata_kuliah', 't_plot_mata_kuliah.id = t_paket_mata_kuliah.plot_mata_kuliah_id', 'left');
+        $this->db->join('m_semester', 'm_semester.id = t_plot_mata_kuliah.semester_id', 'left');
+        $Q = $this->db->get();
+        foreach ($Q->result_array() as $row) $data[] = $row;
+        return $data;
+    }
+    
+    function get_plot_matakuliah($id=NULL){                                                
+        $this->db->select('t_paket_mata_kuliah.plot_mata_kuliah_id,t_plot_mata_kuliah.semester_id,t_paket_mata_kuliah.program_studi_id,m_semester.nama_semester,m_program_studi.nama_program_studi');
+        $this->db->from('t_paket_mata_kuliah');
+        $this->db->join('t_plot_mata_kuliah', 't_paket_mata_kuliah.plot_mata_kuliah_id = t_plot_mata_kuliah.id', 'left');
+        $this->db->join('m_semester', 't_plot_mata_kuliah.semester_id = m_semester.id', 'left');
+        $this->db->join('m_program_studi', 't_paket_mata_kuliah.program_studi_id = m_program_studi.id', 'left');
+        $this->db->where('t_plot_mata_kuliah.semester_id',$id);
+        $this->db->where('t_plot_mata_kuliah.active', 1);
+        $Q = $this->db->get();
+        foreach ($Q->result_array() as $row) $data[] = $row;
+        return @$data;
+    }
+    
+    function get_plot_matakuliah_detil($id=NULL){                                                                                   
+        $this->db->select('t_paket_mata_kuliah.plot_mata_kuliah_id,t_plot_mata_kuliah.semester_id, t_paket_mata_kuliah.program_studi_id,
+                           m_semester.nama_semester, m_program_studi.nama_program_studi, m_mata_kuliah.nama_mata_kuliah');
+        $this->db->from('t_paket_mata_kuliah');
+        $this->db->join('t_plot_mata_kuliah_detail', 't_plot_mata_kuliah_detail.plot_mata_kuliah_id = t_paket_mata_kuliah.plot_mata_kuliah_id', 'left');
+        $this->db->join('m_mata_kuliah', 'm_mata_kuliah.id = t_plot_mata_kuliah_detail.mata_kuliah_id', 'left');
+        $this->db->join('t_plot_mata_kuliah', 't_plot_mata_kuliah.id = t_paket_mata_kuliah.plot_mata_kuliah_id', 'left');
+        $this->db->join('m_semester', 'm_semester.id = t_plot_mata_kuliah.semester_id', 'left');
+        $this->db->join('m_program_studi', 'm_program_studi.id = t_paket_mata_kuliah.program_studi_id', 'left');                
+        $this->db->where('t_plot_mata_kuliah.semester_id', $id);
+        $this->db->where('t_plot_mata_kuliah.active', 1);
+        $this->db->group_by('m_mata_kuliah.nama_mata_kuliah');      
+        $this->db->order_by('m_mata_kuliah.nama_mata_kuliah', 'asc');
+        $Q = $this->db->get();
+        foreach ($Q->result_array() as $row) $data[] = $row;
+        return @$data;
+    }
+        
+    function get_angkatan_mahasiswa($id=null){
+        $this->db->select('m_mahasiswa.angkatan_id,m_mahasiswa.angkatan_id,m_angkatan.nama_angkatan,m_mahasiswa.nama ');
+        $this->db->from('m_angkatan');
+        $this->db->join('m_mahasiswa', 'm_mahasiswa.angkatan_id = m_angkatan.id');
+        $this->db->where('m_angkatan.id', $id);
+        $this->db->where('m_mahasiswa.active', 1);
+        $Q = $this->db->get();
+        foreach ($Q->result_array() as $row) $data[] = $row;
+        return @$data;
+    }
+    
 }
 

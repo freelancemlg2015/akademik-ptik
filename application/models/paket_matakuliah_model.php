@@ -110,9 +110,9 @@ class Paket_matakuliah_model extends CI_Model {
     function get_kelompok(){
         $data = array();
         $this->db->select('a.*, a.id, b.nama_semester');
-        $this->db->from('t_plot_mata_kuliah as a');
+        $this->db->from('t_plot_mata_kuliah as a');          
         $this->db->join('m_semester as b','a.semester_id = b.id','left'); 
-        $this->db->order_by('b.nama_semester', 'asc');
+        $this->db->order_by('b.nama_semester', 'asc'); 
         $this->db->group_by('b.nama_semester');
         $Q = $this->db->get();
         foreach ($Q->result_array() as $row) $data[] = $row;
@@ -120,13 +120,13 @@ class Paket_matakuliah_model extends CI_Model {
     }
     
     function get_matakuliah_detil($id=null){
-       $this->db->select('a.kelompok_mata_kuliah_id');
+       $this->db->select('a.kelompok_mata_kuliah_id,b.kode_kelompok, b.nama_kelompok_mata_kuliah');
        $this->db->from('t_paket_mata_kuliah_detail as a');
+       $this->db->join('m_kelompok_matakuliah as b', 'a.kelompok_mata_kuliah_id = b.id', 'left');
        if ($id) $this->db->where('a.paket_mata_kuliah_id', $id);
-                 $this->db->where('active', 1);
+                 $this->db->where('a.active', 1);
         $Q = $this->db->get();
         foreach ($Q->result_array() as $row) $data[] = $row['kelompok_mata_kuliah_id'];
-        //echo $this->db->last_query();
         return @$data;
     }
     
@@ -164,7 +164,7 @@ class Paket_matakuliah_model extends CI_Model {
         $Q = $this->db->get();
         foreach ($Q->result_array() as $row) $data[] = $row;
         return @$data;
-    }
+    }                                 
     
     function plot_matakuliah(){
         $data = array();
@@ -210,8 +210,8 @@ class Paket_matakuliah_model extends CI_Model {
         foreach ($Q->result_array() as $row) $data[] = $row;
         //echo $this->db->last_query();
         return @$data;
-    }
-    
+    }     
+          
     function insert($data){          
         $this->db->insert('t_paket_mata_kuliah_detail', $data);
         return $this->db->insert_id();
