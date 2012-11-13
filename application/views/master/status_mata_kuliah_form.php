@@ -78,30 +78,6 @@ $bobot_tgs_attr = array(
     <?= form_open($action_url, array('class' => 'form-horizontal')); ?>
 
     <div class="control-group">
-        <?= form_label('Angkatan' , 'angkatan_id', $control_label); ?>
-        <div class="controls">
-            <?= form_dropdown('angkatan_id', $angkatan_data, set_value('angkatan_id', $angkatan_id), 'id="angkatan_id" class="input-medium" prevData-selected="' . set_value('angkatan_id', $angkatan_id) . '"'); ?>
-            <p class="help-block"><?php echo form_error('angkatan_id') ?></p>
-        </div>
-    </div>
-
-    <div class="control-group">
-        <?= form_label('Kode Dik Angkatan' , 'kode_dikang', $control_label); ?>
-        <div class="controls">
-            <?= form_input($kode_dikang_attr) ?>
-            <p class="help-block"><?php echo form_error('kode_dikang') ?></p>
-        </div>
-    </div>
-
-    <div class="control-group">
-        <?= form_label('Kode Matakuliah' .required(), 'kode_matakuliah', $control_label); ?>
-        <div class="controls">
-            <?= form_input($kode_matakuliah_attr) ?>
-            <p class="help-block"><?php echo form_error('kode_matakuliah') ?></p>
-        </div>
-    </div>
-
-    <div class="control-group">
         <?= form_label('Nama Matakuliah' .required(), 'nama_matakuliah', $control_label); ?>
         <div class="controls">
             <?= form_input($nama_matakuliah_attr) ?>
@@ -124,15 +100,7 @@ $bobot_tgs_attr = array(
             <p class="help-block"><?php echo form_error('jml_sks') ?></p>
         </div>
     </div>
-    
-    <div class="control-group">
-        <?= form_label('Konsentrasi Studi' , 'kons_studi_id', $control_label); ?>
-        <div class="controls">
-            <?= form_dropdown('kons_studi_id', $konsentrasi_studi_data, set_value('kons_studi_id', $kons_studi_id), 'id="kons_studi_id" class="input-medium" prevData-selected="' . set_value('kons_studi_id', $kons_studi_id) . '"'); ?>
-            <p class="help-block"><?php echo form_error('kons_studi_id') ?></p>
-        </div>
-    </div>
-    
+       
     <div class="control-group">
         <?= form_label('Bobot NTS' , 'bobot_nts', $control_label); ?>
         <div class="controls">

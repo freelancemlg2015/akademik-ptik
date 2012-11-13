@@ -38,25 +38,15 @@ $this->load->view('_shared/menus');
 <table class="table table-bordered table-striped container-full data_list" id="status_mata_kuliah" controller="master">
     <thead>
         <tr>
-            <th>Kode Dik</th>
-            <th>Angkatan</th>
-<!--            <th>Kode Dik Angkatan</th>-->
-            <th>Kode Matakuliah</th>
-            <th>Nama Matakuliah</th>
             <th>Status Matakuliah</th>
-            <th>Jumlah SKS</th>
         </tr>
     </thead>
     <tbody>
         <?php
         foreach ($results->result() as $row) {
             echo '<tr id="' . $row->id . '"> 
-              <td>' . $row->nama_angkatan . '</td>   
-              <td>' . $row->kode_dikang . '</td>   
-              <td>' . $row->kode_matakuliah . '</td>   
-              <td>' . $row->nama_matakuliah . '</td>   
+
               <td>' . $row->status_mata_kuliah . '</td>   
-              <td>' . $row->jml_sks . '</td>   
             </tr>
           ';
         }
