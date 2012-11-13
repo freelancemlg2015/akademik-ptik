@@ -161,7 +161,7 @@ $nama_pangkat_attr = array(
 
 $pangkat_data[0] = '';
 foreach ($pangkat_options as $row) {
-    $pangkat_data[$row->id."-".$row->nama_pangkat] = $row->kode_pangkat;
+    $pangkat_data[$row->id."-".$row->nama_pangkat] = $row->kode_pangkat .'|'. $row->nama_pangkat;
 }
 
 $program_studi_data[0] = '';
@@ -229,30 +229,6 @@ foreach ($golongan_options as $row) {
     <?= form_open_multipart($action_url, array('class' => 'form-horizontal')); ?>
 
     <div class="control-group">
-        <?= form_label('Angkatan' . required(), 'angkatan_id', $control_label); ?>
-        <div class="controls">
-            <?= form_dropdown('angkatan_id', $angkatan_data, set_value('angkatan_id', $angkatan_id), 'id="angkatan_id" class="input-medium" prevData-selected="' . set_value('angkatan_id', $angkatan_id) . '"'); ?>
-            <p class="help-block"><?php echo form_error('angkatan_id') ?></p>
-        </div>
-    </div>
-    
-    <div class="control-group">
-        <?= form_label('Program Studi', 'program_studi_id', $control_label); ?>
-        <div class="controls">
-            <?= form_dropdown('program_studi_id', $program_studi_data, set_value('program_studi_id', $program_studi_id), 'id="program_studi_id" class="input-medium" prevData-selected="' . set_value('program_studi_id', $program_studi_id) . '"'); ?>
-            <p class="help-block"><?php echo form_error('program_studi_id') ?></p>
-        </div>
-    </div>
-    
-    <div class="control-group">
-        <?= form_label('Jenjang Studi', 'jenjang_studi_id', $control_label); ?>
-        <div class="controls">
-            <?= form_dropdown('jenjang_studi_id', $jenjang_studi_data, set_value('jenjang_studi_id', $program_studi_id), 'id="jenjang_studi_id" class="input-medium" prevData-selected="' . set_value('jenjang_studi_id', $jenjang_studi_id) . '"'); ?>
-            <p class="help-block"><?php echo form_error('jenjang_studi_id') ?></p>
-        </div>
-    </div>
-    
-    <div class="control-group">
         <?= form_label('Pangkat', 'pangkat_id', $control_label); ?>
         <div class="controls">
             <?= form_dropdown('pangkat_id', $pangkat_data, set_value('pangkat_id', $pangkat_id), 'id="pangkat_id" class="input-medium" prevData-selected="' . set_value('pangkat_id', $pangkat_id) . '"'); ?>  
@@ -260,13 +236,13 @@ foreach ($golongan_options as $row) {
         </div>
     </div>
     
-    <div class="control-group">
+<?php /*?>    <div class="control-group">
         <?= form_label('Nama Pangkat', 'nama_pangkat', $control_label); ?>
         <div class="controls">
              <?=form_input($nama_pangkat_attr) ?>
             <p class="help-block"><?php echo form_error('nama_pangkat') ?></p>
         </div>
-    </div>
+    </div><?php */?>
 
     <div class="control-group">
         <?= form_label('No Karpeg Dosen' , 'no_karpeg_dosen', $control_label); ?>

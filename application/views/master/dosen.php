@@ -49,7 +49,7 @@ $this->load->view('_shared/menus');
         <?php
         foreach ($results->result() as $row) {
             $nama = $row->gelar_depan.$row->nama_dosen.$row->gelar_belakang;
-            if(strrpos($nama,'. ')<1) $nama = $row->gelar_depan.'. '. $row->nama_dosen.'. '. $row->gelar_belakang;
+            if(strrpos($nama,'. ')<1) $nama = $row->gelar_depan.' '. $row->nama_dosen.' '. $row->gelar_belakang;
             echo '<tr id="' . $row->id . '">
               <td>' . $row->no_karpeg_dosen . '</td>
               <td>' . $row->no_dosen_fakultas . '</td>
