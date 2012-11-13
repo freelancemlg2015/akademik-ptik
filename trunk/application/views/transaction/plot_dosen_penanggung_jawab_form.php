@@ -35,20 +35,30 @@ if (isset($m_angkatan->tahun_akademik_id)){
 else {
     $thn_akademik_id = '';
 }
-
+                          
 $plot_mata_kuliah_data[0] = '';
 foreach ($plot_mata_kuliah_options as $row) {
     $plot_mata_kuliah_data[$row['id'].'-'.$row['semester_id']] = $row['nama_semester'];
 }
+          
+$mata_data[0] = '';
+if (isset($t_plot_mata_kuliah)){
+    foreach ($t_plot_mata_kuliah as $row) {
+        $mata_data[$row['id']] = $row['nama_semester'];
+    }    
+} 
+else {
+    $mata_data[''] = '';
+}
 
-if (isset($t_plot_mata_kuliah->semester_id)){
-    $plot_semester_id = $t_plot_mata_kuliah->semester_id;
+if (isset($paket_mata_kuliah->plot_mata_kuliah_id)){
+    $plot_semester_id = $paket_mata_kuliah->plot_mata_kuliah_id;
 }
 else {
     $plot_semester_id = '';
 }
+                         
  
-
 $dosen_data[0] = '';
 foreach ($dosen_options as $row) {
     $dosen_data[$row->id] = $row->nama_dosen;
@@ -56,12 +66,13 @@ foreach ($dosen_options as $row) {
 
 $thn_akademik_id_attr = array(
     'id' => 'thn_akademik_id_attr',
-    'name' => 'tahun_akademik_id',
+    'name' => 'thn_akademik_id_attr',
     'class' => 'input-small',
     'readonly' => 'readonly',
     'value' => set_value('tahun_akademik_id', $thn_akademik_id_attr),
     'autocomplete' => 'off'
 );
+                                                      
 
 ?>
 <div class="container-full" id="plot_dosen_penanggung_jawab">
@@ -94,7 +105,7 @@ $thn_akademik_id_attr = array(
     <div class="control-group">
         <?= form_label('Semester' , 'paket_mata_kuliah_id', $control_label); ?>
         <div class="controls">
-            <?= form_dropdown('paket_mata_kuliah_id', $plot_mata_kuliah_data, set_value('paket_mata_kuliah_id', $paket_mata_kuliah_id), 'id="plot_mata_kuliah_id" class="input-medium" prevData-selected="' . set_value('paket_mata_kuliah_id', $paket_mata_kuliah_id) . '"'); ?>
+            <?= form_dropdown('paket_mata_kuliah_id', $plot_mata_kuliah_data, set_value('paket_mata_kuliah_id', $paket_mata_kuliah_id."-".$plot_semester_id), 'id="plot_mata_kuliah_id" class="input-medium" prevData-selected="' . set_value('paket_mata_kuliah_id', $paket_mata_kuliah_id) . '"'); ?>
             <p class="help-block"><?php echo form_error('plot_mata_kuliah_id') ?></p>
         </div>
     </div>

@@ -39,17 +39,21 @@ $this->load->view('_shared/menus');
     <thead>
         <tr>
             <th>Angkatan</th>
-            <th>Semester</th>  
-            <th>Konsentrasi Studi</th>
+            <th>Tahun</th>
+            <th>Semester</th>         
         </tr>
     </thead>
     <tbody>
         <?php             
         foreach ($results->result() as $row) {
+            $tahun = $row->tahun_ajar_mulai.$row->tahun_ajar_akhir;
+            if(!empty($tahun)){
+                $tahun = $row->tahun_ajar_mulai.'-'.$row->tahun_ajar_akhir;                
+            }
             echo '<tr id="' . $row->id . '">
-              <td>' . $row->nama_angkatan . '</td>   
-              <td>' . $row->nama_semester . '</td>    
-              <td>' . $row->nama_kelompok_mata_kuliah . '</td>     
+              <td>' . $row->nama_angkatan . '</td>
+              <td>' . $tahun . '</td>   
+              <td>' . $row->nama_semester . '</td>                 
             </tr>
           ';
         }

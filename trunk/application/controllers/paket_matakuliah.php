@@ -92,8 +92,7 @@ class Paket_matakuliah extends CI_Controller {
         }
         
         $this->load->model('paket_matakuliah_model');
-        $data['paket_detil_options'] = $this->paket_matakuliah_model->get_paket_matakuliah_detil($id); 
-        
+        $data['paket_detil_options'] = $this->paket_matakuliah_model->get_paket_matakuliah_detil($id);
         
         $data['tools'] = array(
             'transaction/paket_matakuliah' => 'Back',
@@ -166,7 +165,7 @@ class Paket_matakuliah extends CI_Controller {
                                                                                    
         $this->load->model('paket_matakuliah_model');
         $data['plot_mata_kuliah_options'] = $this->paket_matakuliah_model->get_kelompok();
-        
+                                                
         $this->load->model('paket_matakuliah_model');
         $kelompok_id = $this->input->post('plot_mata_kuliah_id');
         $data['plot_kelompok_options'] = $this->paket_matakuliah_model->get_plot_matakuliah($kelompok_id);
@@ -367,10 +366,11 @@ class Paket_matakuliah extends CI_Controller {
         $data = $this->paket_matakuliah_model->get_plot_matakuliah($kelompok_mata_kuliah_id);
         //print_r($kelompok_mata_kuliah_id);
         foreach($data as $row){
-        @$checked = in_array($row['kelompok_mata_kuliah_id'], $mata_detil_options) ? "checked='checked'" : "";
+            @$checked = in_array($row['kelompok_mata_kuliah_id'], $mata_detil_options) ? "checked='checked'" : "";
             echo "<tr>
                    <td><input type='checkbox' $checked name='kelompok_mata_kuliah_id[]' value=".$row['kelompok_mata_kuliah_id'].">"."&nbsp;&nbsp;".$row['nama_kelompok_mata_kuliah']."</td>
-              </tr>";    
+              </tr>";
+                        
         }
     }
 }
