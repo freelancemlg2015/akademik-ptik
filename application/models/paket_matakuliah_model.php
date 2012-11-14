@@ -127,7 +127,6 @@ class Paket_matakuliah_model extends CI_Model {
                 GROUP BY `b`.`nama_semester`
                 ORDER BY `id` ASC";
         $query = $this->db->query($sql);
-        echo $this->db->last_query();
         return $query->result_array();
     }
     
