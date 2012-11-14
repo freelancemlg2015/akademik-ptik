@@ -120,15 +120,15 @@ class Paket_matakuliah_model extends CI_Model {
     }
     
     function get_update_kelompok($id=NULL){
-        $sql = "SELECT CONCAT(b.id, ";", GROUP_CONCAT(a.id SEPARATOR "-"))AS id, b.nama_semester
+        $sql = "SELECT CONCAT(b.id, ';', GROUP_CONCAT(a.id SEPARATOR '-'))AS id, b.nama_semester
                 FROM (`akademik_t_plot_mata_kuliah` AS a)
                 LEFT JOIN `akademik_m_semester` AS b ON `a`.`semester_id` = `b`.`id`
-                WHERE `a`.`semester_id` =  '4'
+                WHERE `a`.`semester_id` =  '$id'
                 GROUP BY `b`.`nama_semester`
                 ORDER BY `id` ASC";
         $query = $this->db->query($sql);
-        return $query->result_array();
         echo $this->db->last_query();
+        return $query->result_array();
     }
     
     function get_matakuliah_detil($id=null){

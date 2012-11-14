@@ -326,8 +326,8 @@ class Paket_matakuliah extends CI_Controller {
             $data['t_plot_semester'] = $this->crud->retrieve(array('id' => $data['plot_mata_kuliah_id']))->row();
             $this->load->model('paket_matakuliah_model');
             $data['plot_semester'] = $this->paket_matakuliah_model->get_update_kelompok($data['t_plot_semester']->semester_id);
+            var_dump($data['plot_semester']);
             $data['plot_mata_kuliah_id'] = $data['plot_semester'];
-            var_dump($data['plot_mata_kuliah_id']);
         
         }   
         $this->load->view('transaction/paket_matakuliah_form', $data);
