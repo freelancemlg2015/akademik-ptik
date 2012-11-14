@@ -136,8 +136,11 @@ class Paket_matakuliah extends CI_Controller {
                         $this->crud->use_table('t_paket_mata_kuliah');
                         $data_in = array(
                                 'angkatan_id'        => $this->input->post('angkatan_id'),
+                                //'tahun_akademik_id'=> $this->input->post('tahun_akademik_id'),
+                                //'semester_id'      => $this->input->post('semester_id'),
                                 'program_studi_id'   => $this->input->post('program_studi_id'),
                                 'plot_mata_kuliah_id'=> $pt[1],
+                                'keterangan'         => $this->input->post('keterangan'),
                                 'created_on'         => date($this->config->item('log_date_format')),
                                 'created_by'         => logged_info()->on
                         );
@@ -154,7 +157,7 @@ class Paket_matakuliah extends CI_Controller {
                     /*}*/
                 }
             }
-            //redirect('transaction/paket_matakuliah/' . $created_id . '/info');
+            redirect('transaction/paket_matakuliah/' . $created_id . '/info');
         }
         $data['action_url'] = $transaction_url . __FUNCTION__;
         $data['page_title'] = 'Create Paket Mata Kuliah';
