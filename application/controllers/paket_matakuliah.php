@@ -115,7 +115,7 @@ class Paket_matakuliah extends CI_Controller {
         $this->crud->update($criteria, $data_in);
         redirect('transaction/paket_matakuliah');
     }
-    
+
     function create() {
         $data['auth'] = $this->auth;
         $data['action_type'] = __FUNCTION__;
@@ -127,33 +127,34 @@ class Paket_matakuliah extends CI_Controller {
         if ($this->form_validation->run('paket_matakuliah_create') === FALSE) {
             //don't do anything
         } else {
-            $this->crud->use_table('t_paket_mata_kuliah');
-            $data_in = array(
-                'angkatan_id'             => $this->input->post('angkatan_id'),
-                'program_studi_id'        => $this->input->post('program_studi_id'),
-                'plot_mata_kuliah_id'     => $this->input->post('plot_mata_kuliah_id'),
-                'created_on'              => date($this->config->item('log_date_format')),
-                'created_by'              => logged_info()->on
-            );
-            print_r($_POST);
-            exit();
-            $created_id = $this->crud->create($data_in);
-
-            $kelompok = $this->input->post('kelompok_mata_kuliah_id');
-            if($created_id && is_array($kelompok)){
-                $this->crud->use_table('t_paket_mata_kuliah_detail');
-                for($i=0; $i< count($kelompok); $i++){
-                    $data_in = array(
-                            'paket_mata_kuliah_id'    => $created_id,
-                            'kelompok_mata_kuliah_id' => $kelompok[$i],
-                            'created_on'              => date($this->config->item('log_date_format')),
-                            'created_by'              => logged_info()->on 
-                    );
-                    
-                    $this->crud->create($data_in);
+                                                       
+            $kelompok = $this->input->post('kelompok_mata_kuliah_id'); 
+            for($t=0; $t< count($kelompok); $t++){
+                $pt = explode('-', $kelompok[$t]);    
+                if(is_array($pt)){
+                    /*for($i=0; $i< count($pt); $i++){*/
+                        $this->crud->use_table('t_paket_mata_kuliah');
+                        $data_in = array(
+                                'angkatan_id'        => $this->input->post('angkatan_id'),
+                                'program_studi_id'   => $this->input->post('program_studi_id'),
+                                'plot_mata_kuliah_id'=> $pt[1],
+                                'created_on'         => date($this->config->item('log_date_format')),
+                                'created_by'         => logged_info()->on
+                        );
+                        $created_id = $this->crud->create($data_in);
+                        
+                        $this->crud->use_table('t_paket_mata_kuliah_detail');
+                        $data_in_query = array(
+                                'paket_mata_kuliah_id'    => $created_id,
+                                'kelompok_mata_kuliah_id' => $pt[0],
+                                'created_on'              => date($this->config->item('log_date_format')),
+                                'created_by'              => logged_info()->on 
+                        );                                 
+                        $this->crud->create($data_in_query);
+                    /*}*/
                 }
-            }                                     
-            redirect('transaction/paket_matakuliah/' . $created_id . '/info');
+            }
+            //redirect('transaction/paket_matakuliah/' . $created_id . '/info');
         }
         $data['action_url'] = $transaction_url . __FUNCTION__;
         $data['page_title'] = 'Create Paket Mata Kuliah';
@@ -369,7 +370,7 @@ class Paket_matakuliah extends CI_Controller {
         foreach($data as $row){
             @$checked = in_array($row['kelompok_mata_kuliah_id'], $mata_detil_options) ? "checked='checked'" : "";
             echo "<tr>
-                   <td><input type='checkbox' $checked name='kelompok_mata_kuliah_id[]' value=".$row['kelompok_mata_kuliah_id'].">"."&nbsp;&nbsp;".$row['nama_kelompok_mata_kuliah']."</td>
+                   <td><input type='checkbox' $checked name='kelompok_mata_kuliah_id[]' value=".$row['kelompok_mata_kuliah_id'].'-'.$row['id'].">"."&nbsp;&nbsp;".$row['nama_kelompok_mata_kuliah']."</td>
               </tr>";
                         
         }

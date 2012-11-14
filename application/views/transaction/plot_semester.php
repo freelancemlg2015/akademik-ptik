@@ -5,7 +5,7 @@ $this->load->view('_shared/menus');
 
 <div class="container-fluid form-inline well" id="jadwal_kuliah-search">
     <?php
-    echo form_open('transaction/jadwal_kuliah/search/') .
+    echo form_open('transaction/plot_semester/search/') .
     //form_input($nama_dosen_attr) . ' ' .
    // form_input($nama_ruang_attr) . ' ' .
     form_submit('cari', 'CARI', 'class="btn btn-mini"') .
@@ -21,7 +21,7 @@ $this->load->view('_shared/menus');
     </div>
 <?php endif; ?>
 
-<table class="table table-bordered table-striped container-full data_list" id="jadwal_kuliah" controller="transaction">
+<table class="table table-bordered table-striped container-full data_list" id="plot_semester" controller="transaction">
     <thead>
         <tr>
             <th>Angkatan</th>
