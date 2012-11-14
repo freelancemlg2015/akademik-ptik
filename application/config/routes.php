@@ -577,6 +577,19 @@ $route['transaction/jadwal_kuliah/create/(:any)'] = "jadwal_kuliah/create/$1";
 $route['transaction/jadwal_kuliah/create'] = "jadwal_kuliah/create";
 $route['transaction/jadwal_kuliah/search'] = "jadwal_kuliah/search";
 //END
+//JADWAL KULIAH induk
+$route['transaction/jadwal_kuliah_induk'] = "jadwal_kuliah_induk";
+$route['transaction/jadwal_kuliah_induk/view/(:any)'] = "jadwal_kuliah_induk/index/$1";
+$route['transaction/jadwal_kuliah_induk/(:any)/info'] = "jadwal_kuliah_induk/info/$1";
+$route['transaction/jadwal_kuliah_induk/info/(:any)'] = "jadwal_kuliah_induk/infos/$1";
+$route['transaction/jadwal_kuliah_induk/(:any)/edit'] = "jadwal_kuliah_induk/edit/$1";
+$route['transaction/jadwal_kuliah_induk/(:any)/delete'] = "jadwal_kuliah_induk/delete/$1";
+$route['transaction/jadwal_kuliah_induk/(:any)/(:any)/(:any)'] = "jadwal_kuliah_induk/index/$1/$2/$3";
+$route['transaction/jadwal_kuliah_induk/create/(:any)'] = "jadwal_kuliah_induk/create/$1";
+$route['transaction/jadwal_kuliah_induk/create'] = "jadwal_kuliah_induk/create";
+$route['transaction/jadwal_kuliah_induk/search'] = "jadwal_kuliah_induk/search";
+//END
+
 //JADWAL UJIAN
 $route['transaction/jadwal_ujian'] = "jadwal_ujian";
 $route['transaction/jadwal_ujian/view/(:any)'] = "jadwal_ujian/index/$1";

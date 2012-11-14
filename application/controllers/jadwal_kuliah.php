@@ -487,7 +487,15 @@ class Jadwal_kuliah extends CI_Controller {
 		$data['program_studi_ids']=$jadwal_kuliah_data->program_studi_id;
 		
 		$data_mata_kuliah = array();
-        $query = $this->db->query("select a.id, a.kode_mata_kuliah, a.nama_mata_kuliah from akademik_m_mata_kuliah a where a.angkatan_id =$angkatan_ids and program_studi_id= $jadwal_kuliah_data->program_studi_id");
+		$sql = ("select d.id, d.kode_mata_kuliah, d.nama_mata_kuliah
+				from akademik_t_rencana_mata_pelajaran_pokok a
+				left join akademik_m_mata_kuliah d on a.mata_kuliah_id = d.id
+				where a.angkatan_id = $angkatan_ids and a.program_studi_id=$jadwal_kuliah_data->program_studi_id 
+					and a.semester_id = $jadwal_kuliah_data->semester_id 
+					group by d.id
+					");//group by d.id
+		$query = $this->db->query($sql);
+        //$query = $this->db->query("select a.id, a.kode_mata_kuliah, a.nama_mata_kuliah from akademik_m_mata_kuliah a where a.angkatan_id =$angkatan_ids and program_studi_id= $jadwal_kuliah_data->program_studi_id");
         foreach($query->result_array() as $row){
 			if($jadwal_kuliah_data->mata_kuliah_id==$row['id']) {
 				$data_mata_kuliah[$row['id']]= '<option selected value=\''.$row['id'].'\' >'.$row['kode_mata_kuliah'].'-'.$row['nama_mata_kuliah'].'</option>';

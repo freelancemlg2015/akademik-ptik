@@ -961,10 +961,54 @@ $config = array(
             'label' => 'nilai_mental',
             'rules' => 'trim|required'
         )
-    )
+    
+
+    /* JADWAL KULIAH induk*/
+    ), 'jadwal_kuliah_induk_create' => array(
+        array(
+            'field' => 'angkatan_id',
+            'label' => 'angkatan',
+            'rules' => 'trim|required|greater_than[0]'
+        ),
+		array(
+            'field' => 'semester_id',
+            'label' => 'semester',
+            'rules' => 'trim|required|greater_than[0]'
+        ),
+		array(
+            'field' => 'program_studi_id',
+            'label' => 'program studi',
+            'rules' => 'trim|required|greater_than[0]'
+        ),
+		array(
+            'field' => 'mata_kuliah_id',
+            'label' => 'mata kuliah',
+            'rules' => 'trim|required|greater_than[0]'
+        )
+    ), 'jadwal_kuliah_induk_update' => array(
+        array(
+            'field' => 'angkatan_id',
+            'label' => 'angkatan',
+            'rules' => 'trim|required|greater_than[0]'
+        ),
+		array(
+            'field' => 'semester_id',
+            'label' => 'semester',
+            'rules' => 'trim|required|greater_than[0]'
+        ),
+		array(
+            'field' => 'program_studi_id',
+            'label' => 'program studi',
+            'rules' => 'trim|required|greater_than[0]'
+        ),
+		array(
+            'field' => 'mata_kuliah_id',
+            'label' => 'mata kuliah',
+            'rules' => 'trim|required|greater_than[0]'
+        )
 
     /* JADWAL KULIAH */
-    , 'jadwal_kuliah_create' => array(
+    ), 'jadwal_kuliah_create' => array(
         array(
             'field' => 'angkatan_id',
             'label' => 'angkatan',
@@ -1076,6 +1120,11 @@ $config = array(
             'rules' => 'trim|required|greater_than[0]'
         ),
 		array(
+            'field' => 'semester_id',
+            'label' => 'semester',
+            'rules' => 'trim|required|greater_than[0]'
+        ),
+		array(
             'field' => 'program_studi_id',
             'label' => 'program studi',
             'rules' => 'trim|required|greater_than[0]'
@@ -1104,6 +1153,11 @@ $config = array(
         array(
             'field' => 'angkatan_id',
             'label' => 'angkatan',
+            'rules' => 'trim|required|greater_than[0]'
+        ),
+		array(
+            'field' => 'semester_id',
+            'label' => 'semester',
             'rules' => 'trim|required|greater_than[0]'
         ),
 		array(
