@@ -109,7 +109,7 @@ class Paket_matakuliah_model extends CI_Model {
     
     function get_kelompok(){
         $data = array();
-        $this->db->select('a.*, a.id, b.nama_semester');
+        $this->db->select('concat(b.id,";", group_concat(a.id separator "-"))as id, b.nama_semester', false);
         $this->db->from('t_plot_mata_kuliah as a');          
         $this->db->join('m_semester as b','a.semester_id = b.id','left'); 
         $this->db->order_by('b.nama_semester', 'asc'); 
@@ -182,7 +182,7 @@ class Paket_matakuliah_model extends CI_Model {
     }
     
     function get_plot_matakuliah($id=null){
-        $this->db->select('t_plot_mata_kuliah.semester_id, t_plot_mata_kuliah.kelompok_mata_kuliah_id, m_semester.nama_semester, m_kelompok_matakuliah.nama_kelompok_mata_kuliah');
+        $this->db->select('t_plot_mata_kuliah.id, t_plot_mata_kuliah.semester_id, t_plot_mata_kuliah.kelompok_mata_kuliah_id, m_semester.nama_semester, m_kelompok_matakuliah.nama_kelompok_mata_kuliah');
         $this->db->from('t_plot_mata_kuliah');
         $this->db->join('m_semester','m_semester.id = t_plot_mata_kuliah.semester_id','left');
         $this->db->join('m_kelompok_matakuliah','m_kelompok_matakuliah.id = t_plot_mata_kuliah.kelompok_mata_kuliah_id','left');
@@ -212,7 +212,7 @@ class Paket_matakuliah_model extends CI_Model {
     }     
           
     function insert($data){          
-        $this->db->insert('t_paket_mata_kuliah_detail', $data);
+        $this->db->insert('t_paket_mata_kuliah', $data);
         return $this->db->insert_id();
     }
 }
