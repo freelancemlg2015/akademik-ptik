@@ -112,11 +112,23 @@ class Paket_matakuliah_model extends CI_Model {
         $this->db->select('concat(b.id,";", group_concat(a.id separator "-"))as id, b.nama_semester', false);
         $this->db->from('t_plot_mata_kuliah as a');          
         $this->db->join('m_semester as b','a.semester_id = b.id','left'); 
-        $this->db->order_by('b.nama_semester', 'asc'); 
+        $this->db->order_by('id', 'asc'); 
         $this->db->group_by('b.nama_semester');
         $Q = $this->db->get();
         foreach ($Q->result_array() as $row) $data[] = $row;
         return $data;
+    }
+    
+    function get_update_kelompok($id=NULL){
+        $sql = "SELECT CONCAT(b.id, ";", GROUP_CONCAT(a.id SEPARATOR "-"))AS id, b.nama_semester
+                FROM (`akademik_t_plot_mata_kuliah` AS a)
+                LEFT JOIN `akademik_m_semester` AS b ON `a`.`semester_id` = `b`.`id`
+                WHERE `a`.`semester_id` =  '4'
+                GROUP BY `b`.`nama_semester`
+                ORDER BY `id` ASC";
+        $query = $this->db->query($sql);
+        return $query->result_array();
+        echo $this->db->last_query();
     }
     
     function get_matakuliah_detil($id=null){
@@ -164,22 +176,8 @@ class Paket_matakuliah_model extends CI_Model {
         $Q = $this->db->get();
         foreach ($Q->result_array() as $row) $data[] = $row;
         return @$data;
-    }                                 
-    
-    function plot_matakuliah(){
-        $data = array();
-        $this->db->select('a.*, b.nama_semester, c.nama_kelompok_mata_kuliah');
-        $this->db->from('t_plot_mata_kuliah as a, m_semester as b, m_kelompok_matakuliah as c');
-        $this->db->where('a.semester_id = b.id');
-        $this->db->where('a.kelompok_mata_kuliah_id = c.id');
-        $this->db->where('a.active', 1);
-        $this->db->order_by('a.id', 'asc');
-        $Q = $this->db->get();
-        foreach ($Q->result_array() as $row) $data[] = $row;
-        //echo $this->db->last_query();
-        return $data;
-       
     }
+    
     
     function get_plot_matakuliah($id=null){
         $this->db->select('t_plot_mata_kuliah.id, t_plot_mata_kuliah.semester_id, t_plot_mata_kuliah.kelompok_mata_kuliah_id, m_semester.nama_semester, m_kelompok_matakuliah.nama_kelompok_mata_kuliah');
@@ -207,13 +205,7 @@ class Paket_matakuliah_model extends CI_Model {
         $this->db->order_by('m_mata_kuliah.nama_mata_kuliah', 'asc');
         $Q = $this->db->get();
         foreach ($Q->result_array() as $row) $data[] = $row;
-        //echo $this->db->last_query();
         return @$data;
-    }     
-          
-    function insert($data){          
-        $this->db->insert('t_paket_mata_kuliah', $data);
-        return $this->db->insert_id();
     }
 }
 

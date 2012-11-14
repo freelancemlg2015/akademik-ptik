@@ -43,8 +43,8 @@ foreach ($plot_mata_kuliah_options as $row) {
     $plot_mata_kuliah_data[$row['id']] = $row['nama_semester'];
 }
 
-if (isset($t_plot_mata_kuliah->semester_id)){
-    $plot_semester_id = $t_plot_mata_kuliah->semester_id;
+if (isset($t_plot_semester->semester_id)){
+    $plot_semester_id = $t_plot_semester->semester_id;
 }
 else {
     $plot_semester_id = '';
@@ -63,8 +63,6 @@ $thn_akademik_id_attr = array(
     'value' => set_value('tahun_akademik_id', $thn_akademik_id_attr),
     'autocomplete' => 'off'
 );
-
-
 
 ?>
 <div class="container-full" id="paket_matakuliah">
