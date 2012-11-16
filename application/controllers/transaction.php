@@ -12,7 +12,7 @@ class Transaction extends CI_Controller {
     }
 
     function index() {
-        redirect('transaction/jadwal_kuliah');
+        redirect('transaction/kalender_akademik');
     }
 
 }
