@@ -10,7 +10,7 @@ class Master extends CI_Controller {
     }
 
     function index() {
-        redirect('master/angkatan');
+        redirect('master/berita');
     }
 
 }
