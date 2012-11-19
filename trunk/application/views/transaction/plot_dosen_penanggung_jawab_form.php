@@ -44,13 +44,23 @@ foreach ($plot_mata_kuliah_options as $row) {
 $mata_data[0] = '';
 if (isset($t_plot_mata_kuliah)){
     foreach ($t_plot_mata_kuliah as $row) {
-        $mata_data[$row['id']] = $row['nama_semester'];
+        $mata_data[$row['plot_mata_kuliah_id']] = $row['nama_kelompok_mata_kuliah'];
     }    
 } 
 else {
     $mata_data[''] = '';
 }
 
+$matakuliah_attr_data[0] = '';
+if (isset($t_mata_kuliah)){
+    foreach ($t_mata_kuliah as $row) {
+        $matakuliah_attr_data[$row['plot_mata_kuliah_id']] = $row['nama_mata_kuliah'];
+    }    
+} 
+else {
+    $matakuliah_attr_data[''] = '';
+}
+ 
 if (isset($paket_mata_kuliah->plot_mata_kuliah_id)){
     $plot_semester_id = $paket_mata_kuliah->plot_mata_kuliah_id;
 }
@@ -71,8 +81,7 @@ $thn_akademik_id_attr = array(
     'readonly' => 'readonly',
     'value' => set_value('tahun_akademik_id', $thn_akademik_id_attr),
     'autocomplete' => 'off'
-);
-                                                      
+);                                                                                           
 
 ?>
 <div class="container-full" id="plot_dosen_penanggung_jawab">
@@ -113,7 +122,7 @@ $thn_akademik_id_attr = array(
     <div class="control-group">
         <?= form_label('Konsentrasi Studi' , 'paket_mata_kuliah_id', $control_label); ?>
         <div class="controls">
-            <?= form_dropdown('span_kelompok'); ?>
+            <?= form_dropdown('span_kelompok',$mata_data, set_value('paket_mata_kuliah_id', $kelompok_mata_kuliah_id_attr), 'class="input-medium" prevData-selected="' . set_value('paket_mata_kuliah_id', $kelompok_mata_kuliah_id_attr) . '"'); ?>
             <p class="help-block"><?php echo form_error('plot_mata_kuliah_id') ?></p>
         </div>
     </div>
@@ -121,7 +130,7 @@ $thn_akademik_id_attr = array(
     <div class="control-group">
         <?= form_label('Mata Kuliah' , 'plot_mata_kuliah_id', $control_label); ?>
         <div class="controls">
-            <?= form_dropdown('span_matakuliah'); ?>
+            <?= form_dropdown('span_matakuliah',$matakuliah_attr_data, set_value('paket_mata_kuliah_id', $mata_kuliah_id_attr), 'class="input-medium" prevData-selected="' . set_value('paket_mata_kuliah_id', $mata_kuliah_id_attr) . '"'); ?>
             <p class="help-block"><?php echo form_error('plot_mata_kuliah_id') ?></p>
         </div>
     </div>
@@ -130,12 +139,20 @@ $thn_akademik_id_attr = array(
         <legend>Nama Dosen/Penanggung Jawab</legend>
         <div class="control-group">
             <a id="button_add_dosen" class="btn btn-mini button_add_dosen_class"><i class="icon-plus"></i></a>
-            <?= form_label('Dosen' , 'dosen_id', $control_label); ?>
+            <?= form_label('Dosen Penanggung Jawab' , 'dosen_id', $control_label); ?>
             <div class="controls">
                 <?php                            
                     if (!empty($dosen_options_edit)){
-                        foreach($dosen_options_edit as $row):    
-                        echo form_dropdown('dosen_id[]', $dosen_data, set_value('dosen_id', $row['dosen_id']), 'id="dosen_id" class="input-medium" prevData-selected="' . set_value('dosen_id', $row['dosen_id']) . '"');
+                        $i = 0;
+                        foreach($dosen_options_edit as $row):
+                            if($i>0){
+                                echo '<label style="margin-left: -160px;" class="control-label" for="dosen_id">Dosen Anggota</label>';    
+                            }    
+                                echo form_dropdown('dosen_id[]', $dosen_data, set_value('dosen_id', $row['dosen_id']), 'id="dosen_id" class="input-medium" prevData-selected="' . set_value('dosen_id', $row['dosen_id']) . '"');
+                            if($i>0){
+                                echo '<span class="btn-mini-class"><a class="btn btn-mini remove-add_dosen"><i class="icon-minus"></i></a></span>';    
+                            }
+                        $i++;
                         endforeach;
                     }
                     else {

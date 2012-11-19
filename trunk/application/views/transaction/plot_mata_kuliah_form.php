@@ -82,7 +82,7 @@ $thn_akademik_id_attr = array(
     <div class="control-group">
         <?= form_label('Kelompok Matakuliah' , 'kelompok_mata_kuliah_id', $control_label); ?>
         <div class="controls">
-            <?= form_dropdown('kelompok_mata_kuliah_id', $kelompok_matakuliah_data, set_value('kelompok_mata_kuliah_id', $kelompok_mata_kuliah_id), 'id="kelompok_mata_kuliah_id" class="input-medium" prevData-selected="' . set_value('kelompok_mata_kuliah_id', $kelompok_mata_kuliah_id) . '"'); ?>
+            <?= form_dropdown('kelompok_mata_kuliah_id', $kelompok_matakuliah_data, set_value('kelompok_mata_kuliah_id', $kelompok_mata_kuliah_id), 'onChange="changeOptMatakuliah()" id="kelompok_mata_kuliah_id" class="input-medium" prevData-selected="' . set_value('kelompok_mata_kuliah_id', $kelompok_mata_kuliah_id) . '"'); ?>
             <p class="help-block"><?php echo form_error('kelompok_matakuliah_id') ?></p>
         </div>
     </div>
@@ -104,9 +104,15 @@ $thn_akademik_id_attr = array(
                 </th>
             </tr>
         </thead>
-        <tbody>
+        <tbody id="mata_kuliah">      
             <?php
-                $no = 1;
+                if(isset($plot_mata_kuliah_data)){
+                    echo $plot_mata_kuliah_data;                    
+                }
+            ?>                     
+        <?php
+                 
+                /*$no = 1;
                 foreach ($get_matakuliah_detil_options as $row) {                              
                 @$checked = in_array($row['id'], $detail_options) ? "checked='checked'" : "";    
                 echo '<tr id="' . $row['id'] . '">
@@ -116,10 +122,10 @@ $thn_akademik_id_attr = array(
                         <td style="text-align: center">' . "<input type='hidden' name='id' id='cek' value=".$row['id']." ><input type='checkbox'". $checked ." name='mata_kuliah_id[]' id='cek' value=".$row['id']." >" . '</td>
                       </tr>';
                 $no++;                    
-                }
+                } */
                 
             ?>
-        </tbody>
+        </tbody> 
     </table>
     
     <div class="form-actions well">
@@ -130,11 +136,6 @@ $thn_akademik_id_attr = array(
     <?php $this->load->view('_shared/footer'); ?>
 
 <script type="text/javascript">
-    var pager = new Pager('plot_maata_kuliah', 10); 
-    pager.init(); 
-    pager.showPageNav('pager', 'pageNavPosition'); 
-    pager.showPage(1);
-    
     function changeAngkatan(){
         var angkatan_id = ($('#angkatan_id').val()).split("-");;
 		//alert(angkatan_id);
@@ -142,5 +143,17 @@ $thn_akademik_id_attr = array(
         function(data){
             $('#thn_akademik_id_attr').val(data);
         });
+    }
+    
+    function changeOptMatakuliah(){
+        $('#mata_kuliah').hide();
+        if($('#kelompok_mata_kuliah_id').val()<=0) return;
+        var mata_kuliah_id = ($('#mata_kuliah').val());
+        var mode = 'view';      
+        $.post('<?php echo base_url(); ?>plot_mata_kuliah/getOptMatakuliah', {mata_kuliah_id: mata_kuliah_id[1]},
+        function(data){
+            $('#mata_kuliah').html(data);
+            $('#mata_kuliah').show();
+        });  
     }   
 </script>

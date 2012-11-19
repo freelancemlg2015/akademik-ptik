@@ -91,7 +91,7 @@ class Plot_mata_kuliah_model extends CI_Model {
     }
          
     function get_matakuliah_detil($id=null){
-        $this->db->select('a.id, a.mata_kuliah_id');
+        $this->db->select('a.mata_kuliah_id');
         $this->db->from('t_plot_mata_kuliah_detail as a');
         if ($id) $this->db->where('a.plot_mata_kuliah_id', $id);
                  $this->db->where('a.active', 1);
@@ -121,14 +121,14 @@ class Plot_mata_kuliah_model extends CI_Model {
         return @$data;
     }
     
-    function get_matakuliah_update($plot_mata_kuliah_id, $mata_kuliah_id){
+    /*function get_matakuliah_update($plot_mata_kuliah_id, $mata_kuliah_id){
         $this->db->select('a.id');
         $this->db->from('t_plot_mata_kuliah_detail as a');
         $this->db->where('a.plot_mata_kuliah_id',$plot_mata_kuliah_id);
         $this->db->where('a.mata_kuliah_id', $mata_kuliah_id);
         $Q = $this->db->get();
         foreach ($Q->result_array() as $row) return $row['id'];
-    }
+    }*/
         
     function get_mtkuliah(){
         $this->db->select('a.mata_kuliah_id, b.kode_mata_kuliah, b.nama_mata_kuliah');
@@ -154,10 +154,14 @@ class Plot_mata_kuliah_model extends CI_Model {
         return @$data;
     }
     
-    function get_update($id, $data) {  
+    /*function get_update($id, $data) {  
         $this->db->where('plot_mata_kuliah_id', $id);
         $this->db->update('t_plot_mata_kuliah_detail', $data);
         //echo $this->db->last_query();
+    }*/
+    
+    function delete_detail($id=null){
+        $this->db->delete('t_plot_mata_kuliah_detail', array('plot_mata_kuliah_id' => $id));
     }
 }
 

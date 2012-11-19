@@ -8,15 +8,16 @@ class Rencana_mata_pelajaran_model extends CI_Model {
 
     function s_rencana_mata_pelajaran() {
         return $this->db->select('t_rencana_mata_pelajaran_pokok.*,m_angkatan.nama_angkatan,m_tahun_akademik.tahun_ajar_mulai,m_tahun_akademik.tahun_ajar_akhir,
-                                                        m_program_studi.nama_program_studi,m_mata_kuliah.nama_mata_kuliah')
+                                                        m_program_studi.nama_program_studi,m_semester.nama_semester,m_mata_kuliah.nama_mata_kuliah')
                         ->from('t_rencana_mata_pelajaran_pokok')
                         ->join('m_angkatan', 'm_angkatan.id   = t_rencana_mata_pelajaran_pokok.angkatan_id', 'left')
                         ->join('m_tahun_akademik', 'm_tahun_akademik.id = m_angkatan.tahun_akademik_id', 'left')
-                        ->join('m_mahasiswa', 'm_mahasiswa.angkatan_id = m_angkatan.id', 'left')
-                        ->join('m_program_studi', 'm_program_studi.id = t_rencana_mata_pelajaran_pokok.program_studi_id', 'left') 
                         ->join('t_paket_mata_kuliah', 't_paket_mata_kuliah.id = t_rencana_mata_pelajaran_pokok.paket_mata_kuliah_id', 'left')
-                        ->join('t_plot_mata_kuliah_detail', 't_plot_mata_kuliah_detail.plot_mata_kuliah_id = t_paket_mata_kuliah.plot_mata_kuliah_id')
-                        ->join('m_mata_kuliah', 'm_mata_kuliah.id = t_plot_mata_kuliah_detail.mata_kuliah_id');
+                        ->join('m_program_studi', 'm_program_studi.id = t_paket_mata_kuliah.program_studi_id', 'left')
+                        ->join('t_plot_mata_kuliah', 't_plot_mata_kuliah.id = t_paket_mata_kuliah.plot_mata_kuliah_id', 'left')
+                        ->join('t_plot_mata_kuliah_detail', 't_plot_mata_kuliah_detail.plot_mata_kuliah_id = t_plot_mata_kuliah.id', 'left')
+                        ->join('m_mata_kuliah', 'm_mata_kuliah.id = t_plot_mata_kuliah_detail.mata_kuliah_id', 'left')
+                        ->join('m_semester', 'm_semester.id = t_plot_mata_kuliah.semester_id', 'left');
     }
 
     function get_many($data_type = NULL, $term = array(), $limit = NULL, $offset = NULL) {
@@ -119,6 +120,25 @@ class Rencana_mata_pelajaran_model extends CI_Model {
         return @$data;
     }
     
+    function get_detail(){
+        $this->db->select('a.id, a.nim, a.nama');
+        $this->db->from('m_mahasiswa as a');
+        $this->db->where('a.active', 1);     
+        $Q = $this->db->get();
+        foreach ($Q->result_array() as $row) $data[] = $row;
+        return @$data;
+    }
+        
+    function get_matakuliah_mahasiswa_detil($id=null){
+        $this->db->select('a.mahasiswa_id');
+        $this->db->from('t_rencana_mata_pelajaran_pokok_detil as a');
+        $this->db->where('a.rencana_mata_pelajaran_id', $id);
+        $this->db->where('a.active', 1);
+        $Q = $this->db->get();
+        foreach ($Q->result_array() as $row) $data[] = $row['mahasiswa_id'];
+        return @$data;
+    }
+    
     function get_mahasiswa_detil($id=null){
         $this->db->select('a.rencana_mata_pelajaran_id, b.nim, b.nama');
         $this->db->from('t_rencana_mata_pelajaran_pokok_detil as a');
@@ -155,6 +175,17 @@ class Rencana_mata_pelajaran_model extends CI_Model {
         return $data;
     }
     
+    function get_tahun_angkatan($id=NULL){
+        $this->db->select('m_angkatan.*,m_angkatan.tahun_akademik_id, m_tahun_akademik.tahun_ajar_mulai, m_tahun_akademik.tahun_ajar_akhir');
+        $this->db->from('m_angkatan');
+        $this->db->join('m_tahun_akademik','m_tahun_akademik.id = m_angkatan.tahun_akademik_id','left');
+        if ($id) $this->db->where('m_angkatan.tahun_akademik_id', $id);
+                 $this->db->where('m_angkatan.active', 1);
+        $Q = $this->db->get();
+        foreach ($Q->result_array() as $row) $data[] = $row;
+        return @$data;
+    }
+    
     function get_plot_matakuliah($id=NULL){                                                
         $this->db->select('t_paket_mata_kuliah.plot_mata_kuliah_id,t_plot_mata_kuliah.semester_id,t_paket_mata_kuliah.program_studi_id,m_semester.nama_semester,m_program_studi.nama_program_studi');
         $this->db->from('t_paket_mata_kuliah');
@@ -184,18 +215,6 @@ class Rencana_mata_pelajaran_model extends CI_Model {
         $Q = $this->db->get();
         foreach ($Q->result_array() as $row) $data[] = $row;
         return @$data;
-    }
-        
-    function get_angkatan_mahasiswa($id=null){
-        $this->db->select('m_mahasiswa.angkatan_id,m_mahasiswa.angkatan_id,m_angkatan.nama_angkatan,m_mahasiswa.nama ');
-        $this->db->from('m_angkatan');
-        $this->db->join('m_mahasiswa', 'm_mahasiswa.angkatan_id = m_angkatan.id');
-        $this->db->where('m_angkatan.id', $id);
-        $this->db->where('m_mahasiswa.active', 1);
-        $Q = $this->db->get();
-        foreach ($Q->result_array() as $row) $data[] = $row;
-        return @$data;
-    }
-    
+    }    
 }
 

@@ -7,7 +7,7 @@ $().ready(function(){
             var elem = $(this);
             var elem_parent = elem.parents('.control-group');
             var html_to_add = '<div class="control-group">\n\
-                                        <label class="control-label" for="dosen_id">Dosen</label>\n\
+                                        <label class="control-label" for="dosen_id">Dosen Anggota</label>\n\
                                         <div class="controls">\n\
                                             <select id="dosen_id_1" class="input-medium" prevdata-selected="" name="dosen_id[]">'+cloned+'</select>\n\
                                                 <span class="btn-mini-class"><a class="btn btn-mini remove-add_dosen"><i class="icon-minus"></i></a></span>\n\

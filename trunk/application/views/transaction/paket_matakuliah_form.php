@@ -40,14 +40,7 @@ else {
 
 $plot_mata_kuliah_data[0] = '';
 foreach ($plot_mata_kuliah_options as $row) {
-    $plot_mata_kuliah_data[$row['id']] = $row['nama_semester'];
-}
-
-if (isset($t_plot_semester->semester_id)){
-    $plot_semester_id = $t_plot_semester->semester_id;
-}
-else {
-    $plot_semester_id = '';
+    $plot_mata_kuliah_data[$row['group_id']] = $row['nama_semester'];
 }
  
 $program_studi_data[0] = '';
@@ -62,8 +55,7 @@ $thn_akademik_id_attr = array(
     'readonly' => 'readonly',
     'value' => set_value('tahun_akademik_id', $thn_akademik_id_attr),
     'autocomplete' => 'off'
-);
-
+);                                                                          
 ?>
 <div class="container-full" id="paket_matakuliah">
 <?= form_open($action_url, array('class' => 'form-horizontal')); ?>
@@ -87,7 +79,7 @@ $thn_akademik_id_attr = array(
     <div class="control-group">
         <?= form_label('Semester' , 'plot_mata_kuliah_id', $control_label); ?>
         <div class="controls">
-            <?= form_dropdown('plot_mata_kuliah_id', $plot_mata_kuliah_data, set_value('plot_mata_kuliah_id', $plot_mata_kuliah_id), 'onChange="changeKelompok()" id="plot_mata_kuliah_id" class="input-medium" prevData-selected="' . set_value('plot_mata_kuliah_id', $plot_mata_kuliah_id) . '"'); ?>
+            <?= form_dropdown('plot_mata_kuliah_id', $plot_mata_kuliah_data, set_value('plot_mata_kuliah_id', $plot_mata_kuliah_id_attr), 'onChange="changeKelompok()" id="plot_mata_kuliah_id" class="input-medium" prevData-selected="' . set_value('plot_mata_kuliah_id', $plot_mata_kuliah_id_attr) . '"'); ?>
             <p class="help-block"><?php echo form_error('plot_mata_kuliah_id') ?></p>
         </div>
     </div>
@@ -139,5 +131,5 @@ $thn_akademik_id_attr = array(
             $('#listkelompok').html(data);
             $('#listkelompok').show();
         });
-    }   
+    }
 </script>
