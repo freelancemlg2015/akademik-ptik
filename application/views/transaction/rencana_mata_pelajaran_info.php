@@ -31,11 +31,11 @@ $control_label = array(
             </tr>
             <tr>
                 <th class="span2">Program Studi</th>
-                <td><?//= $nama_program_studi ?></td>
+                <td><?= $nama_program_studi ?></td>
             </tr>
             <tr>
                 <th class="span2">Mata Kuliah</th>
-                <td><?//= $nama_kelompok_mata_kuliah ?></td>
+                <td><?= $nama_mata_kuliah ?></td>
             </tr> 
         </tbody>
     </table>

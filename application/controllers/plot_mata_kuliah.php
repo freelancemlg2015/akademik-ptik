@@ -137,11 +137,7 @@ class Plot_mata_kuliah extends CI_Controller {
                 'created_on'              => date($this->config->item('log_date_format')),
                 'created_by'              => logged_info()->on
             );
-            /*        
-              echo '<pre>';
-              var_dump($data_in);
-              echo '</pre>';
-             */
+            
             $created_id = $this->crud->create($data_in);
             
             $mata_kuliah = $this->input->post('mata_kuliah_id');
@@ -197,14 +193,7 @@ class Plot_mata_kuliah extends CI_Controller {
         $data = array_merge($data, $this->plot_mata_kuliah->set_default()); //merge dengan arr data dengan default
         $this->load->view('transaction/plot_mata_kuliah_form', $data);
     }
-
-//1. Model
-//2. Controller
-//3. View
-//4. Form Validation
-//5. Routes
-//6. Menus
-
+                
     function edit() {
         
         $data['auth']        = $this->auth;
@@ -232,8 +221,23 @@ class Plot_mata_kuliah extends CI_Controller {
             );
             
             $this->crud->update($criteria, $data_in);
-
+            $this->load->model('plot_mata_kuliah_model');
+            $this->plot_mata_kuliah_model->delete_detail($id);
+            
             $mata_kuliah = $this->input->post('mata_kuliah_id');
+            if(is_array($mata_kuliah)){
+                $this->crud->use_table('t_plot_mata_kuliah_detail');
+                for($i=0; $i< count($mata_kuliah); $i++){
+                    $data_in = array(
+                        'plot_mata_kuliah_id' => $id,
+                        'mata_kuliah_id'      => $mata_kuliah[$i],
+                        'modified_on'         => date($this->config->item('log_date_format')),
+                        'modified_by'         => logged_info()->on,
+                    );
+                    $this->crud->create($data_in);
+                }
+            }
+            /*$mata_kuliah = $this->input->post('mata_kuliah_id');
             if(is_array($mata_kuliah)){
                 $this->crud->use_table('t_plot_mata_kuliah_detail');
                 
@@ -263,8 +267,7 @@ class Plot_mata_kuliah extends CI_Controller {
                         $this->crud->create($data_in);                
                     }    
                 }
-            } 
-                        
+            }*/ 
             redirect('transaction/plot_mata_kuliah/' . $id . '/info');
         }
         $data['action_url'] = $transaction_url . $id . '/' . __FUNCTION__;
@@ -301,7 +304,7 @@ class Plot_mata_kuliah extends CI_Controller {
         $data['mata_kuliah_options'] = $this->crud->retrieve()->result();
                 
         $this->load->model('plot_mata_kuliah_model');
-        $data['detail_options'] = $this->plot_mata_kuliah_model->get_matakuliah_detil($id);
+        $detail_options = $this->plot_mata_kuliah_model->get_matakuliah_detil($id);
                 
         $this->load->model('plot_mata_kuliah_model');
         $data['get_matakuliah_detil_options'] = $this->plot_mata_kuliah_model->get_detail();    
@@ -326,7 +329,26 @@ class Plot_mata_kuliah extends CI_Controller {
                 $thn_akademik_id_attr = $row['tahun_ajar_mulai'].'-'.$row['tahun_ajar_akhir'];
             }                
             $data['thn_akademik_id_attr'] = $thn_akademik_id_attr;
-           
+            
+            $this->load->model('plot_mata_kuliah_model');
+            $get_matakuliah_detil_options = $this->plot_mata_kuliah_model->get_detail();
+            
+            $this->load->model('plot_mata_kuliah_model');
+            $detail_options = $this->plot_mata_kuliah_model->get_matakuliah_detil($id);
+                   
+            $plot_kuliah = '';
+            $no = 1;
+            foreach($get_matakuliah_detil_options as $row){
+                @$checked = in_array($row['id'], $detail_options) ? "checked='checked'" : "";
+                $plot_kuliah .= "<tr>
+                                    <td>".$no."</td>
+                                    <td>".$row['kode_mata_kuliah']."</td>
+                                    <td>".$row['nama_mata_kuliah']."</td>
+                                    <td style='text-align: center'><input type='checkbox' ".$checked." name='mata_kuliah_id[]' value=".$row['id']."></td>
+                                </tr>";
+                 $no++;                  
+            }
+            $data['plot_mata_kuliah_data'] =  $plot_kuliah;
         }
         $this->load->view('transaction/plot_mata_kuliah_form', $data);
     }
@@ -340,6 +362,24 @@ class Plot_mata_kuliah extends CI_Controller {
         //echo  '<pre>'.$this->db->last_query().'</pre><br>';
         foreach($query->result_array() as $row){
             echo $row['tahun_ajar_mulai'].'-'.$row['tahun_ajar_akhir'];
+        }
+    }
+    
+    function getOptMatakuliah(){
+        $this->load->model('plot_mata_kuliah_model');
+        $get_matakuliah_detil_options = $this->plot_mata_kuliah_model->get_detail();
+        $no = 1;
+        foreach($get_matakuliah_detil_options as $row){
+            @$checked = in_array($row['id'], $detail_options) ? "checked='checked'" : ""; 
+            echo "<tr>";
+                echo "<td>".$no."</td>";
+                echo "<td>".$row['kode_mata_kuliah']."</td>";
+                echo "<td>".$row['nama_mata_kuliah']."</td>";
+                echo "<td style='text-align: center'>
+                        <input type='checkbox' $checked name='mata_kuliah_id[]' id='cek' value=".$row['id'].">
+                      </td>";
+            echo "</tr>";          
+            $no++;  
         }
     }
 }

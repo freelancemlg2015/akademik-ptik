@@ -14,7 +14,7 @@ $this->load->view('_shared/menus');
     );
     $semester_attr = array(
         'id' => 'semester',
-        'name' => 'semester',
+        'name' => 'nama_semester',
         'class' => 'input-medium',
         'style' => 'text-transform : uppercase;',
         'placeholder' => 'Semester'

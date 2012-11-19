@@ -129,7 +129,7 @@ class Plot_dosen_penanggung_jawab extends CI_Controller {
         $this->form_validation->set_error_delimiters('<span class="notice">', '</span>');
         if ($this->form_validation->run('plot_dosen_penanggung_jawab_create') === FALSE) {
             //don't do anything
-        } else {
+        } else {   
             $this->crud->use_table('t_dosen_ajar');
             $data_in = array(
                 'angkatan_id'        => $this->input->post('angkatan_id'),
@@ -180,8 +180,10 @@ class Plot_dosen_penanggung_jawab extends CI_Controller {
         $this->crud->use_table('t_dosen_ajar_detail');
         $data['dosen_ajar_detil_options'] = $this->crud->retrieve()->result();
         
-        $data['dosen_options_edit'] = '';
+        $data['dosen_options_edit']   = '';
         $data['thn_akademik_id_attr'] = '';
+        $data['kelompok_mata_kuliah_id_attr'] = '';
+        $data['mata_kuliah_id_attr']  = '';
         
         $this->load->model('plot_dosen_penanggung_jawab_model', 'plot_dosen_penanggung_jawab');
         $data = array_merge($data, $this->plot_dosen_penanggung_jawab->set_default()); //merge dengan arr data dengan default
@@ -305,6 +307,20 @@ class Plot_dosen_penanggung_jawab extends CI_Controller {
             $data['paket_mata_kuliah'] = $this->crud->retrieve(array('id' => $data['paket_mata_kuliah_id']))->row();
             $this->load->model('plot_dosen_penanggung_jawab_model');
             $data ['t_plot_mata_kuliah'] = $this->plot_dosen_penanggung_jawab_model->get_plot_matakuliah($data['paket_mata_kuliah']->plot_mata_kuliah_id);
+            $plot_kelompok = '';
+            foreach($data ['t_plot_mata_kuliah'] as $row){
+                $plot_kelompok = $row['plot_mata_kuliah_id'];                                
+            }
+            $data['kelompok_mata_kuliah_id_attr'] = $plot_kelompok;
+            
+            $data['paket_mata_kuliah'] = $this->crud->retrieve(array('id' => $data['paket_mata_kuliah_id']))->row();
+            $this->load->model('plot_dosen_penanggung_jawab_model');
+            $data ['t_mata_kuliah'] = $this->plot_dosen_penanggung_jawab_model->get_plot_matakuliah_detil($data['paket_mata_kuliah']->plot_mata_kuliah_id);  
+            $plot_matakuliah_attr = '';
+            foreach($data ['t_mata_kuliah'] as $row){
+                $plot_matakuliah_attr = $row['plot_mata_kuliah_id'];                    
+            }
+            $data['mata_kuliah_id_attr'] = $plot_matakuliah_attr;
         }
         $this->load->view('transaction/plot_dosen_penanggung_jawab_form', $data);
     }

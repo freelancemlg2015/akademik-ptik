@@ -107,26 +107,22 @@ class Paket_matakuliah_model extends CI_Model {
         return $data;
     }                                 
     
-    function get_kelompok(){
-        $data = array();
-        $this->db->select('concat(b.id,";", group_concat(a.id separator "-"))as id, b.nama_semester', false);
-        $this->db->from('t_plot_mata_kuliah as a');          
-        $this->db->join('m_semester as b','a.semester_id = b.id','left'); 
-        $this->db->order_by('id', 'asc'); 
-        $this->db->group_by('b.nama_semester');
-        $Q = $this->db->get();
-        foreach ($Q->result_array() as $row) $data[] = $row;
-        return $data;
+    function get_kelompok(){  
+        $sql = "SELECT CONCAT(b.id, ';', GROUP_CONCAT(a.id SEPARATOR '-'))AS group_id, b.nama_semester
+                FROM (`akademik_t_plot_mata_kuliah` AS a)
+                LEFT JOIN `akademik_m_semester` AS b ON `a`.`semester_id` = `b`.`id` 
+                GROUP BY `b`.`nama_semester`";
+        $query = $this->db->query($sql); 
+        return $query->result_array();
     }
     
     function get_update_kelompok($id=NULL){
-        $sql = "SELECT CONCAT(b.id, ';', GROUP_CONCAT(a.id SEPARATOR '-'))AS id, b.nama_semester
+        $sql = "SELECT CONCAT(b.id, ';', GROUP_CONCAT(a.id SEPARATOR '-'))AS group_id, b.nama_semester
                 FROM (`akademik_t_plot_mata_kuliah` AS a)
                 LEFT JOIN `akademik_m_semester` AS b ON `a`.`semester_id` = `b`.`id`
                 WHERE `a`.`semester_id` =  '$id'
-                GROUP BY `b`.`nama_semester`
-                ORDER BY `id` ASC";
-        $query = $this->db->query($sql);
+                GROUP BY `b`.`nama_semester`";
+        $query = $this->db->query($sql); 
         return $query->result_array();
     }
     
@@ -205,6 +201,10 @@ class Paket_matakuliah_model extends CI_Model {
         $Q = $this->db->get();
         foreach ($Q->result_array() as $row) $data[] = $row;
         return @$data;
+    }
+    
+    function delete_detail($id=null){
+        $this->db->delete('t_paket_mata_kuliah_detail', array('paket_mata_kuliah_id' => $id));
     }
 }
 

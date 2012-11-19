@@ -29,36 +29,52 @@ else {
     $tahun_data[''] = '';
 }
 
-                                                   
-
 if (isset($m_angkatan->tahun_akademik_id)){
     $thn_akademik_id = $m_angkatan->tahun_akademik_id;
 }
 else {
     $thn_akademik_id = '';
 }
-
+                          
 $plot_mata_kuliah_data[0] = '';
 foreach ($plot_mata_kuliah_options as $row) {
     $plot_mata_kuliah_data[$row['id'].'-'.$row['semester_id']] = $row['nama_semester'];
 }
-
-$program_studi_data[0] = '';
-foreach ($program_studi_options as $row) {
-    $program_studi_data[$row->id] = $row->nama_program_studi;
+          
+$mata_data[0] = '';
+if (isset($t_plot_mata_kuliah)){
+    foreach ($t_plot_mata_kuliah as $row) {
+        $mata_data[$row['plot_mata_kuliah_id']] = $row['nama_program_studi'];
+    }    
+} 
+else {
+    $mata_data[''] = '';
 }
 
-$mata_kuliah_data[0] = '';
-foreach ($mata_kuliah_options as $row) {
-    $mata_kuliah_data[$row->id] = $row->nama_mata_kuliah;
+$matakuliah_attr_data[0] = '';
+if (isset($t_mata_kuliah)){
+    foreach ($t_mata_kuliah as $row) {
+        $matakuliah_attr_data[$row['plot_mata_kuliah_id']] = $row['nama_mata_kuliah'];
+    }    
+} 
+else {
+    $matakuliah_attr_data[''] = '';
 }
+ 
+if (isset($paket_mata_kuliah->plot_mata_kuliah_id)){
+    $plot_semester_id = $paket_mata_kuliah->plot_mata_kuliah_id;
+}
+else {
+    $plot_semester_id = '';
+}
+       
 
 $thn_akademik_id_attr = array(
     'id' => 'thn_akademik_id_attr',
     'name' => 'tahun_akademik_id',
     'class' => 'input-small',
     'readonly' => 'readonly',
-    'value' => set_value('tahun_akademik_id', ''),
+    'value' => set_value('tahun_akademik_id', $thn_akademik_id_attr),
     'autocomplete' => 'off'
 );
 
@@ -85,7 +101,7 @@ $thn_akademik_id_attr = array(
     <div class="control-group">
         <?= form_label('Semester' , 'paket_mata_kuliah_id', $control_label); ?>
         <div class="controls">
-            <?= form_dropdown('paket_mata_kuliah_id', $plot_mata_kuliah_data, set_value('paket_mata_kuliah_id', $paket_mata_kuliah_id), 'id="plot_mata_kuliah_id" class="input-medium" prevData-selected="' . set_value('paket_mata_kuliah_id', $paket_mata_kuliah_id) . '"'); ?>
+            <?= form_dropdown('paket_mata_kuliah_id',$plot_mata_kuliah_data, set_value('paket_mata_kuliah_id', $paket_mata_kuliah_id."-".$plot_semester_id), 'id="plot_mata_kuliah_id" class="input-medium" prevData-selected="' . set_value('paket_mata_kuliah_id', $paket_mata_kuliah_id) . '"'); ?>
             <p class="help-block"><?php echo form_error('plot_mata_kuliah_id') ?></p>
         </div>
     </div>
@@ -93,16 +109,16 @@ $thn_akademik_id_attr = array(
     <div class="control-group">
         <?= form_label('Konsentrasi Studi' , 'paket_mata_kuliah_id', $control_label); ?>
         <div class="controls">
-            <?= form_dropdown('span_kelompok'); ?>
+            <?= form_dropdown('span_kelompok',$mata_data, set_value('paket_mata_kuliah_id', $kelompok_mata_kuliah_id_attr), 'class="input-medium" prevData-selected="' . set_value('paket_mata_kuliah_id', $kelompok_mata_kuliah_id_attr) . '"'); ?>
             <p class="help-block"><?php echo form_error('plot_mata_kuliah_id') ?></p>
         </div>
     </div>
-    
+        
     <div class="control-group">
-        <?= form_label('Mata Kuliah' , 'paket_mata_kuliah_id', $control_label); ?>
+        <?= form_label('Mata Kuliah' , 'plot_mata_kuliah_id', $control_label); ?>
         <div class="controls">
-            <?= form_dropdown('span_matakuliah'); ?>
-            <p class="help-block"><?php echo form_error('paket_mata_kuliah_id') ?></p>
+            <?= form_dropdown('span_matakuliah',$matakuliah_attr_data, set_value('paket_mata_kuliah_id', $mata_kuliah_id_attr), 'class="input-medium" prevData-selected="' . set_value('paket_mata_kuliah_id', $mata_kuliah_id_attr) . '"'); ?>
+            <p class="help-block"><?php echo form_error('plot_mata_kuliah_id') ?></p>
         </div>
     </div>
     
@@ -121,9 +137,12 @@ $thn_akademik_id_attr = array(
             </tr>
         </thead>
         <tbody id="listmahasiswa">
-            <tr><td colspan="4">&nbsp;</td></tr>
+            <?php
+                if(isset($plot_mata_kuliah_id_data)){
+                    echo $plot_mata_kuliah_id_data;                    
+                }
+            ?> 
         </tbody>
-        
     </table>
     
     
@@ -133,18 +152,35 @@ $thn_akademik_id_attr = array(
 <?php form_close() ?>
 </div>
     <?php $this->load->view('_shared/footer'); ?>
+    
+<script type="text/javascript">
+    
+</script>    
 
 <script type="text/javascript">
-//    var pager = new Pager('rencana', 10); 
-//    pager.init(); 
-//    pager.showPageNav('pager', 'pageNavPosition'); 
-//    pager.showPage(1);
+    /*var pager = new Pager('recana_mata_pelajaran', 10); 
+    pager.init(); 
+    pager.showPageNav('pager', 'pageNavPosition'); 
+    pager.showPage(1); */
     
     function changeAngkatan(){
+        $('#listmahasiswa').hide();
+        if($('#angatan_id').val()<=0) return;                    
+        var mode = 'view';
         var angkatan_id = ($('#angkatan_id').val()).split("-");
         $.post('<?php echo base_url(); ?>rencana_mata_pelajaran/getOptTahunAkademik', {angkatan_id: angkatan_id[1]},
         function(data){
             $('#thn_akademik_id_attr').val(data);
+        });
+        $.post('<?php echo base_url(); ?>rencana_mata_pelajaran/getOptMahasiswa', {angkatan_id: angkatan_id[1]},
+        function(data){
+            $('#listmahasiswa').html(data);
+            $('#listmahasiswa').show();
+
+            var pager = new Pager('recana_mata_pelajaran', 10); 
+            pager.init(); 
+            pager.showPageNav('pager', 'pageNavPosition'); 
+            pager.showPage(1);
         });
     }
     
@@ -169,17 +205,5 @@ $thn_akademik_id_attr = array(
         });
     })                                         
     $("select[name='span_matakuliah']").combobox();
-    
-    function changeMahasiswa(){
-        $('#listmahasiswa').hide();
-        if($('#angatan_id').val()<=0) return;     
-        var angkatan_id = ($('#angkatan_id').val()).split("-");
-        var mode = 'view';      
-            $.post('<?php echo base_url(); ?>rencana_mata_pelajaran/getOptMahasiswa', {angkatan_id: angkatan_id[1]},
-        function(data){
-            $('#listmahasiswa').html(data);
-            $('#listmahasiswa').show();
-        });
-    } 
 </script>
 
