@@ -112,7 +112,7 @@ class Rencana_mata_pelajaran_model extends CI_Model {
     
     function get_rencana_pelajaran_detil($id=null){
        $this->db->select('a.mahasiswa_id');
-       $this->db->from('t_rencana_mata_pelajaran_pokok_detil as a');
+       $this->db->from('t_rencana_mata_pelajaran_pokok_detail as a');
        if ($id) $this->db->where('a.rencana_mata_pelajaran_id', $id);
                  $this->db->where('active', 1);
         $Q = $this->db->get();
@@ -127,17 +127,7 @@ class Rencana_mata_pelajaran_model extends CI_Model {
         $Q = $this->db->get();
         foreach ($Q->result_array() as $row) $data[] = $row;
         return @$data;
-    }
-        
-    function get_matakuliah_mahasiswa_detil($id=null){
-        $this->db->select('a.mahasiswa_id');
-        $this->db->from('t_rencana_mata_pelajaran_pokok_detil as a');
-        $this->db->where('a.rencana_mata_pelajaran_id', $id);
-        $this->db->where('a.active', 1);
-        $Q = $this->db->get();
-        foreach ($Q->result_array() as $row) $data[] = $row['mahasiswa_id'];
-        return @$data;
-    }
+    }     
     
     function get_mahasiswa_detil($id=null){
         $this->db->select('a.rencana_mata_pelajaran_id, b.nim, b.nama');

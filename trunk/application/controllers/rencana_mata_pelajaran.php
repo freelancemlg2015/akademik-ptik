@@ -400,7 +400,7 @@ class Rencana_mata_pelajaran extends CI_Controller {
     function getOptPlotmatakuliahDetil(){
         $this->load->model('rencana_mata_pelajaran_model');
         $plot_mata_kuliah_id = $this->input->post('paket_mata_kuliah_id');
-        $data = $this->rencana_mata_pelajaran_model->get_plot_matakuliah_detil($plot_mata_kuliah_id);
+        $data = $this->rencana_mata_pelajaran_model->get_rencana_pelajaran_detil($plot_mata_kuliah_id);
         echo '<option value="" ></option>';
         foreach($data as $row){
             echo '<option value=\''.$row['program_studi_id'].'\' >'.$row['nama_mata_kuliah'].'</option>';
