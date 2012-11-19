@@ -185,17 +185,23 @@ text-align:center;
 	border:1px dashed #cccccc;
 }
 
-.pg-normal 
-{
-    color: black;
-    font-weight: normal;
-    text-decoration: none;    
-    cursor: pointer;    
+span.prev, span.next {
+    width: 150%;
+    text-align: center;
+    margin-right: 10px;
+    user-select: none;
+   -o-user-select:none;
+   -moz-user-select: none;
+   -khtml-user-select: none;
+   -webkit-user-select: none;
 }
-.pg-selected 
-{
-    color: black;
-    font-weight: bold;        
-    text-decoration: underline;
+
+span.prev, span.next {
+    border: 1px solid green;
     cursor: pointer;
+}
+
+span.prev.disabled, span.next.disabled {
+    border: 1px solid red;
+    cursor: default;
 }

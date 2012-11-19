@@ -357,16 +357,14 @@ class Rencana_mata_pelajaran extends CI_Controller {
             $detail_options = $this->rencana_mata_pelajaran_model->get_matakuliah_mahasiswa_detil($id);
                    
             $plot_kuliah = '';
-            $no = 1;
             foreach($get_matakuliah_detil_options as $row){
                 @$checked = in_array($row['id'], $detail_options) ? "checked='checked'" : "";
                 $plot_kuliah .= "<tr>
-                                    <td>".$no."</td>
+                                    <td></td>
                                     <td>".$row['nim']."</td>
                                     <td>".$row['nama']."</td>
                                     <td style='text-align: center'><input type='checkbox' ".$checked." name='mahasiswa_id[]' value=".$row['id']."></td>
                                 </tr>";
-                 $no++;                  
             }
             $data['plot_mata_kuliah_id_data'] =  $plot_kuliah;
         }
@@ -422,18 +420,16 @@ class Rencana_mata_pelajaran extends CI_Controller {
                 AND `akademik_m_mahasiswa`.`active` = 1
                 ";
         $query = $this->db->query($sql);
-        $no = 1;  
         foreach($query->result_array() as $row){
             @$checked = in_array($row['id'], $mata_detil_options) ? "checked='checked'" : "";
             echo "<tr>";
-            echo "<td>".$no."</td>";         
+            echo "<td></td>";         
             echo "<td>".$row['nim']."</td>";
             echo "<td>".$row['nama']."</td>";
             echo "<td style='text-align: center'>
                     <input type='checkbox' $checked name='mahasiswa_id[]' id='cek' value=".$row['id']." >   
                 </td>";
             echo "</tr>";
-            $no++;            
         }
     }
 }
