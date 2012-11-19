@@ -143,7 +143,7 @@ class Rencana_mata_pelajaran extends CI_Controller {
             
             $mahasiswa = $this->input->post('mahasiswa_id');
             if($created_id && is_array($mahasiswa)){
-                $this->crud->use_table('t_rencana_mata_pelajaran_pokok_detil');
+                $this->crud->use_table('t_rencana_mata_pelajaran_pokok_detail');
                 for($i=0; $i< count($mahasiswa); $i++){
                     $data_in = array(
                             'rencana_mata_pelajaran_id' => $created_id,
@@ -187,7 +187,7 @@ class Rencana_mata_pelajaran extends CI_Controller {
         $this->crud->use_table('m_mata_kuliah');
         $data['mata_kuliah_options'] = $this->crud->retrieve()->result();
         
-        $this->crud->use_table('t_rencana_mata_pelajaran_pokok_detil');
+        $this->crud->use_table('t_rencana_mata_pelajaran_pokok_detail');
         $data['rencana_mata_pelajaran_detil_options'] = $this->crud->retrieve()->result();
         
         $data['rencana_mata_pelajaran_options'] = '';
@@ -243,7 +243,7 @@ class Rencana_mata_pelajaran extends CI_Controller {
             
             $mahasiswa = $this->input->post('mahasiswa_id');
             if(is_array($mahasiswa)){
-                $this->crud->use_table('t_rencana_mata_pelajaran_pokok_detil');
+                $this->crud->use_table('t_rencana_mata_pelajaran_pokok_detail');
                 
                 $this->load->model('rencana_mata_pelajaran_model');
                 $this->rencana_mata_pelajaran_model->get_update($id, array('active' => 0));
@@ -301,8 +301,6 @@ class Rencana_mata_pelajaran extends CI_Controller {
         $this->load->model('rencana_mata_pelajaran_model');
         $data['plot_mata_kuliah_options'] = $this->rencana_mata_pelajaran_model->get_kelompok();
         
-        $this->load->model('rencana_mata_pelajaran_model');
-        $detail_options = $this->rencana_mata_pelajaran_model->get_matakuliah_mahasiswa_detil($id);
         
         $this->crud->use_table('m_mahasiswa');
         $data['mahasiswa_options'] = $this->crud->retrieve()->result();
@@ -366,7 +364,7 @@ class Rencana_mata_pelajaran extends CI_Controller {
                                     <td>".$no."</td>
                                     <td>".$row['nim']."</td>
                                     <td>".$row['nama']."</td>
-                                    <td style='text-align: center'><input type='checkbox' ".$checked." name='mahaiswa_id[]' value=".$row['id']."></td>
+                                    <td style='text-align: center'><input type='checkbox' ".$checked." name='mahasiswa_id[]' value=".$row['id']."></td>
                                 </tr>";
                  $no++;                  
             }
