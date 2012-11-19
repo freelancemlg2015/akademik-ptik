@@ -903,3 +903,15 @@ $route['laporan/laporan_daftar_dosen/search'] = "laporan_daftar_dosen/search";
 $route['laporan/laporan_daftar_dosen/report'] = "laporan_daftar_dosen/report";
 //END
 
+//LAPORAN KALENDER AKADEMIK 
+$route['laporan/laporan_kalender_akademik'] = "laporan_kalender_akademik";
+$route['laporan/laporan_kalender_akademik/view/(:any)'] = "laporan_kalender_akademik/index/$1";
+$route['laporan/laporan_kalender_akademik/(:any)/info'] = "laporan_kalender_akademik/info/$1";
+$route['laporan/laporan_kalender_akademik/(:any)/edit'] = "laporan_kalender_akademik/edit/$1";
+$route['laporan/laporan_kalender_akademik/(:any)/delete'] = "laporan_kalender_akademik/delete/$1";
+$route['laporan/laporan_kalender_akademik/(:any)/(:any)/(:any)'] = "laporan_kalender_akademik/index/$1/$2/$3";
+$route['laporan/laporan_kalender_akademik/create/(:any)'] = "laporan_kalender_akademik/create/$1";
+$route['laporan/laporan_kalender_akademik/create'] = "laporan_kalender_akademik/create";
+$route['laporan/laporan_kalender_akademik/search'] = "laporan_kalender_akademik/search";
+$route['laporan/laporan_kalender_akademik/report'] = "laporan_kalender_akademik/report";
+//END

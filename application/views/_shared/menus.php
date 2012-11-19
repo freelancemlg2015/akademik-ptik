@@ -436,7 +436,7 @@ $icon_color = 'icon-grey';
                                     <li class="<?= isActive($secondary_nav, 'laporan_daftar_matakuliah_paket'); ?>"><?= anchor('laporan/laporan_daftar_matakuliah_paket', 'Laporan Daftar Mata Kuliah Paket'); ?></li>
                                 <?php endif; ?>
 
-                                <?php if ($auth->has_capability('r_kurikulum_kalender_akademik')): ?>
+                                <?php if ($auth->has_capability('r_kurikulum_kalender_akademik')): ?>                              
                                     <li class="<?= isActive($secondary_nav, 'laporan_kalender_akademik'); ?>"><?= anchor('laporan/laporan_kalender_akademik', 'Laporan Kalender Akademik'); ?></li>
                                 <?php endif; ?>
 

@@ -309,7 +309,7 @@
            input[name="tgl_akhir_cicilan"],input[name="tgl_akhir_stnk"],input[name="tgl_akhir_kir"],input[name="tgl_akhir_asuransi"],\n\
            input[name="tgl_jual"],input[name="tgl_transaksi"],input[name="tgl_peminjaman"],input[name="tgl_payment"],input[name="tgl_pemakaian"],\n\
            input[name="tgl_pengembalian"],input[name="tgl_pengambilan"],input[name="tgl_perbaikan"],input[name="periode_awal"],input[name="periode_akhir"],\n\
-           input[name="tgl_penjualan"],input[name="tgl_mutasi"],input[name="tgl_audit"],input[name="tgl_start"],input[name="tgl_end"],input[name="tgl_claim"],input[name="tgl_sk_terakhir"],input[name="tgl_sk_akreditasi"],input[name="tgl_pendirian_program_studi"],input[name="tgl_akhir_sk"],input[name="tgl_mulai"],\n\
+           input[name="tgl_penjualan"],input[name="tgl_mutasi"],input[name="tgl_audit"],input[name="tgl_start"],input[name="tgl_end"],input[name="tgl_claim"],input[name="tgl_sk_terakhir"],input[name="tgl_sk_akreditasi"],input[name="tgl_pendirian_program_studi"],input[name="tgl_akhir_sk"],input[name="tgl_mulai"],input[name="tgl_akhir"],\n\
            input[name="tgl_lahir"],input[name="tgl_lahir_ayah"],input[name="tgl_lahir_wali"],input[name="tgl_mulai_masuk"],input[name="tgl_keluar"],input[name="tanggal"],input[name="tgl_ujian"],input[name="tanggal_tanda_tangan"],input[name="tgl_kalender_mulai"],input[name="tgl_kalender_akhir"],input[name="tgl_mulai_kegiatan"],\n\
            input[name="tgl_akhir_kegiatan"]')
         .datepicker({

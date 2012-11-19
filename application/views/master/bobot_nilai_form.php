@@ -39,7 +39,7 @@ $keterangan_bobot_nilai_attr = array(
     <?= form_open($action_url, array('class' => 'form-horizontal')); ?>
 
     <div class="control-group">
-        <?= form_label('Nilai Angak' . required(), 'nilai_angka', $control_label); ?>
+        <?= form_label('Nilai Angka' . required(), 'nilai_angka', $control_label); ?>
         <div class="controls">
             <?= form_input($nilai_angka_attr) ?>
             <p class="help-block"><?php echo form_error('nilai_angka') ?></p>

@@ -688,7 +688,29 @@ $config = array(
             'label' => 'nama_semester',
             'rules' => 'trim|required'
         )
-
+    /* PLOT SEMESTER */
+    ), 'plot_semester_create' => array(
+        array(
+            'field' => 'tgl_mulai',
+            'label' => 'tgl_mulai',
+            'rules' => 'trim|required'
+        ),
+        array(
+            'field' => 'tgl_akhir',
+            'label' => 'tgl_akhir',
+            'rules' => 'trim|required'
+        )
+    ), 'plot_semester_update' => array(
+        array(
+            'field' => 'tgl_mulai',
+            'label' => 'tgl_mulai',
+            'rules' => 'trim|required'
+        ),
+        array(
+            'field' => 'tgl_akhir',
+            'label' => 'tgl_akhir',
+            'rules' => 'trim|required'
+        )
     /* SEMESTER MULAI */
     ), 'semester_mulai_aktivitas_create' => array(
         array(
