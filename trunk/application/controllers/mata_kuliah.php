@@ -151,9 +151,9 @@ class Mata_kuliah extends CI_Controller {
                 'created_by' => logged_info()->on
             );
             
-              echo '<pre>';
+/*              echo '<pre>';
               var_dump($data_in);
-              echo '</pre>';
+              echo '</pre>';*/
             
             $created_id = $this->crud->create($data_in);
             redirect('master/mata_kuliah/' . $created_id . '/info');

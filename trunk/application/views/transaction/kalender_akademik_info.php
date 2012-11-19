@@ -23,23 +23,15 @@ $control_label = array(
             </tr>
             <tr>
                 <th class="span2">Tanggal Kalender Mulai</th>
-                <td><?= $tgl_kalender_mulai ?></td>
+                <td><?= $tgl_mulai_kegiatan ?></td>
             </tr>
             <tr>
                 <th class="span2">Tanggal Kalender Akhir</th>
-                <td><?= $tgl_kalender_akhir ?></td>
-            </tr>
-            <tr>
-                <th class="span2">Tanggal Mulai Kegiatan</th>
-                <td><?= $tgl_mulai_kegiatan ?></td>
+                <td><?= $tgl_akhir_kegiatan ?></td>
             </tr>
             <tr>
                 <th class="span2">Kegiatan</th>
                 <td><?= $nama_kegiatan ?></td>
-            </tr>
-            <tr>
-                <th class="span2">Keterangan</th>
-                <td><?= $keterangan ?></td>
             </tr>
         </tbody>
     </table>
