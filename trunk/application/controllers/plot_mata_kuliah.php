@@ -337,16 +337,14 @@ class Plot_mata_kuliah extends CI_Controller {
             $detail_options = $this->plot_mata_kuliah_model->get_matakuliah_detil($id);
                    
             $plot_kuliah = '';
-            $no = 1;
             foreach($get_matakuliah_detil_options as $row){
                 @$checked = in_array($row['id'], $detail_options) ? "checked='checked'" : "";
                 $plot_kuliah .= "<tr>
-                                    <td>".$no."</td>
+                                    <td></td>
                                     <td>".$row['kode_mata_kuliah']."</td>
                                     <td>".$row['nama_mata_kuliah']."</td>
                                     <td style='text-align: center'><input type='checkbox' ".$checked." name='mata_kuliah_id[]' value=".$row['id']."></td>
                                 </tr>";
-                 $no++;                  
             }
             $data['plot_mata_kuliah_data'] =  $plot_kuliah;
         }
@@ -368,7 +366,6 @@ class Plot_mata_kuliah extends CI_Controller {
     function getOptMatakuliah(){
         $this->load->model('plot_mata_kuliah_model');
         $get_matakuliah_detil_options = $this->plot_mata_kuliah_model->get_detail();
-        $no = 1;
         foreach($get_matakuliah_detil_options as $row){
             @$checked = in_array($row['id'], $detail_options) ? "checked='checked'" : ""; 
             echo "<tr>";
@@ -379,7 +376,6 @@ class Plot_mata_kuliah extends CI_Controller {
                         <input type='checkbox' $checked name='mata_kuliah_id[]' id='cek' value=".$row['id'].">
                       </td>";
             echo "</tr>";          
-            $no++;  
         }
     }
 }
