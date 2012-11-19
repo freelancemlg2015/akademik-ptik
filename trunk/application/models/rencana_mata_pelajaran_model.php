@@ -131,7 +131,7 @@ class Rencana_mata_pelajaran_model extends CI_Model {
     
     function get_mahasiswa_detil($id=null){
         $this->db->select('a.rencana_mata_pelajaran_id, b.nim, b.nama');
-        $this->db->from('t_rencana_mata_pelajaran_pokok_detil as a');
+        $this->db->from('t_rencana_mata_pelajaran_pokok_detail as a');
         $this->db->join('m_mahasiswa as b','b.id = a.mahasiswa_id','left');
         $this->db->where('a.rencana_mata_pelajaran_id', $id);
         $this->db->where('a.active', 1);
@@ -142,7 +142,7 @@ class Rencana_mata_pelajaran_model extends CI_Model {
     
     function get_rencana_pelajaran_update($rencana_mata_pelajaran_id, $mahasiswa_id){
         $this->db->select('a.id');
-        $this->db->from('t_rencana_mata_pelajaran_pokok_detil as a');
+        $this->db->from('t_rencana_mata_pelajaran_pokok_detail as a');
         $this->db->where('a.rencana_mata_pelajaran_id',$rencana_mata_pelajaran_id);
         $this->db->where('a.mahasiswa_id', $mahasiswa_id);
         $Q = $this->db->get();
@@ -151,7 +151,7 @@ class Rencana_mata_pelajaran_model extends CI_Model {
     
     function get_update($id, $data){
         $this->db->where('rencana_mata_pelajaran_id', $id);
-        $this->db->update('t_rencana_mata_pelajaran_pokok_detil', $data);
+        $this->db->update('t_rencana_mata_pelajaran_pokok_detail', $data);
     }
     
     function get_kelompok(){
