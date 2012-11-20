@@ -55,7 +55,8 @@ $thn_akademik_id_attr = array(
     'readonly' => 'readonly',
     'value' => set_value('tahun_akademik_id', $thn_akademik_id_attr),
     'autocomplete' => 'off'
-);                                                                          
+);
+                                                                          
 ?>
 <div class="container-full" id="paket_matakuliah">
 <?= form_open($action_url, array('class' => 'form-horizontal')); ?>
