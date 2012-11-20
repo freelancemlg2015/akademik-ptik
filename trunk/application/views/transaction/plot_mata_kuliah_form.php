@@ -86,7 +86,8 @@ $thn_akademik_id_attr = array(
             <p class="help-block"><?php echo form_error('kelompok_matakuliah_id') ?></p>
         </div>
     </div>
-    <span id="page" class="prev">Previous</span><span id="page" class="next">Next</span><br><br>
+    
+    <span class="prev">Previous</span><span class="next">Next</span>
     <table class="table table-bordered table-striped container-full"  id="plot_maata_kuliah" controller="transaction">
         <thead>
             <tr>
