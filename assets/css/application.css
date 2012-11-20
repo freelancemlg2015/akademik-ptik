@@ -182,13 +182,16 @@ text-align:center;
 	-moz-border-radius:4px;
 	-khtml-border-radius: 4px;
 	-webkit-border-radius: 4px;
-	border:1px dashed #cccccc;
+border:1px dashed #cccccc;
 }
 
 span.prev, span.next {
-    width: 150%;
-    text-align: center;
+    width: 50px;
+    height: 16px;     
+    text-align: center; 
+    color: #0088CC;
     margin-right: 10px;
+    margin-top:10px;   
     user-select: none;
    -o-user-select:none;
    -moz-user-select: none;
@@ -196,12 +199,51 @@ span.prev, span.next {
    -webkit-user-select: none;
 }
 
-span.prev, span.next {
-    border: 1px solid green;
+span.prev{
+     float:left;
+     margin-left:40%;        
+     display: inline-block;
+     padding: 5px 14px;
+     background-color: #fff;
+     border: 1px solid #ddd;
+     -webkit-border-radius: 15px;
+     -moz-border-radius: 15px;
+     border-radius: 15px; 
+     padding-top: 10px; 
+     cursor: pointer;
+     *zoom: 1;
+}
+
+span.prev:hover{
+    text-decoration: none;
+    background-color: #f5f5f5;
+}
+
+span.next:hover{
+    text-decoration: none;
+    background-color: #f5f5f5;    
+}
+ 
+span.next{
+    float:right;
+     margin-right:42%;      
+    display: inline-block;
+    padding: 5px 14px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    -webkit-border-radius: 15px;
+    -moz-border-radius: 15px;
+    border-radius: 15px;
+    text-align: center;
+    padding-top: 10px;
+    margin-bottom:10px; 
     cursor: pointer;
+    *zoom: 1;    
 }
 
 span.prev.disabled, span.next.disabled {
-    border: 1px solid red;
+    border: 1px solid #ddd;
     cursor: default;
 }
+   
+         
