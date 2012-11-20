@@ -304,12 +304,11 @@ class Paket_matakuliah extends CI_Controller {
             
             $this->crud->use_table('t_plot_mata_kuliah');
             $data['t_plot_semester'] = $this->crud->retrieve(array('id' => $data['plot_mata_kuliah_id']))->row();
-            $this->load->model('paket_matakuliah_model');
+			$this->load->model('paket_matakuliah_model');
             $plot_mata_semester = $this->paket_matakuliah_model->get_update_kelompok($data['t_plot_semester']->semester_id);
-            
             $plot_paket_semester = '';
             foreach($plot_mata_semester  as $row){
-                $plot_paket_semester .= $row['group_id'];
+                $plot_paket_semester .= $row['group_semester_id'];
             }
             $data['plot_mata_kuliah_id_attr'] = $plot_paket_semester ;                                                      
           
