@@ -1519,6 +1519,18 @@ $config = array(
             'rules' => 'trim|required'
         )      
 
+    ),'pengajuan_skripsi_create' => array(
+        array(
+            'field' => 'angkatan_id',
+            'label' => 'angkatan_id',
+            'rules' => 'trim|required'
+        )
+    ), 'pengajuan_skripsi_update' => array(
+        array(
+            'field' => 'angkatan_id',
+            'label' => 'angkatan_id',
+            'rules' => 'trim|required'
+        )
     )
     
 );

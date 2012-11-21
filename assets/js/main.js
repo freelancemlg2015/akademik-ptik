@@ -294,7 +294,7 @@
            #jam_pelajaran.data_list tbody tr,#ruang_pelajaran.data_list tbody tr,#jenis_ruang.data_list tbody tr,#status_akreditasi.data_list tbody tr,#status_aktivitas_dosen.data_list tbody tr,#status_kerja_dosen.data_list tbody tr,#status_dosen_penasehat.data_list tbody tr,#status_mata_kuliah.data_list tbody tr,#golongan.data_list tbody tr,#jabatan_akademik.data_list tbody tr,#jabatan_tertinggi.data_list tbody tr,#jenis_kelamin.data_list tbody tr,\n\
            #jenis_ujian.data_list tbody tr,#nilai.data_list tbody tr,#pangkat.data_list tbody tr,#kesatuan_asal.data_list tbody tr,#konsentrasi_studi.data_list tbody tr,#semester.data_list tbody tr,#semester_mulai_aktivitas.data_list tbody tr,#surat_ijin_mengajar.data_list tbody tr,#nilai_fisik.data_list tbody tr,#nilai_mental.data_list tbody tr,#jadwal_kuliah.data_list tbody tr,#ujian_skripsi.data_list tbody tr,#kalender_akademik.data_list tbody tr,\n\
            #plot_mata_kuliah.data_list tbody tr,#plot_semester.data_list tbody tr,#paket_matakuliah.data_list tbody tr,#plot_dosen_penanggung_jawab.data_list tbody tr,#rencana_mata_pelajaran.data_list tbody tr,#plot_kelas.data_list tbody tr,#nilai_akademik.data_list tbody tr, #penasehat_akademik.data_list tbody tr,#provinsi.data_list tbody tr,#kategori_pejabat.data_list tbody tr,#pejabat_tanda_tangan.data_list tbody tr,#kategori_berita.data_list tbody tr,\n\
-           #berita.data_list tbody tr,#kategori_unduhan.data_list tbody tr,#unduhan.data_list tbody tr,#jadwal_ujian.data_list tbody tr').live('dblclick',function(){
+           #berita.data_list tbody tr,#kategori_unduhan.data_list tbody tr,#unduhan.data_list tbody tr,#jadwal_ujian.data_list tbody tr,#pengajuan_skripsi.data_list tbody tr').live('dblclick',function(){
             var data_list_id = $('.data_list').attr('id');
             var id = $(this).attr('id');
             var controller = $('.data_list').attr('controller');
@@ -311,7 +311,7 @@
            input[name="tgl_pengembalian"],input[name="tgl_pengambilan"],input[name="tgl_perbaikan"],input[name="periode_awal"],input[name="periode_akhir"],\n\
            input[name="tgl_penjualan"],input[name="tgl_mutasi"],input[name="tgl_audit"],input[name="tgl_start"],input[name="tgl_end"],input[name="tgl_claim"],input[name="tgl_sk_terakhir"],input[name="tgl_sk_akreditasi"],input[name="tgl_pendirian_program_studi"],input[name="tgl_akhir_sk"],input[name="tgl_mulai"],input[name="tgl_akhir"],\n\
            input[name="tgl_lahir"],input[name="tgl_lahir_ayah"],input[name="tgl_lahir_wali"],input[name="tgl_mulai_masuk"],input[name="tgl_keluar"],input[name="tanggal"],input[name="tgl_ujian"],input[name="tanggal_tanda_tangan"],input[name="tgl_kalender_mulai"],input[name="tgl_kalender_akhir"],input[name="tgl_mulai_kegiatan"],\n\
-           input[name="tgl_akhir_kegiatan"]')
+           input[name="tgl_akhir_kegiatan"],input[name="tgl_pengajuan"]')
         .datepicker({
             changeMonth: true,
             changeYear: true,

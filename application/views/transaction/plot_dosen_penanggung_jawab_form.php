@@ -150,7 +150,7 @@ $thn_akademik_id_attr = array(
                             }    
                                 echo form_dropdown('dosen_id[]', $dosen_data, set_value('dosen_id', $row['dosen_id']), 'id="dosen_id" class="input-medium" prevData-selected="' . set_value('dosen_id', $row['dosen_id']) . '"');
                             if($i>0){
-                                echo '<span class="btn-mini-class"><a class="btn btn-mini remove-add_dosen"><i class="icon-minus"></i></a></span>';    
+                                echo '<span class="btn-mini-class"><a class="btn btn-mini remove-add_dosen_1"><i class="icon-minus"></i></a></span>';    
                             }
                         $i++;
                         endforeach;
