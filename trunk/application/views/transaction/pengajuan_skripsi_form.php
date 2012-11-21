@@ -113,15 +113,14 @@ $judul_skripsi_diajukan_dua_attr = array(
 );
 
 $mahasiswa_data_attr[0] = '';
-if (isset($mahasiswa)){
-    foreach ($mahasiswa as $row) {
+if (isset($mahasiswa_data)){
+    foreach ($mahasiswa_data as $row) {
         $mahasiswa_data_attr[$row['mahasiswa_id']] = $row['nama'];
     }    
 } 
 else {
     $mahasiswa_data_attr[''] = '';
 }
-                      
 
 ?>
 <div class="container-full" id="pengajuan_skripsi">
@@ -162,7 +161,7 @@ else {
     <div class="control-group">
         <?= form_label('Nama Mahasiswa' , 'mahasiswa_id', $control_label); ?>
         <div class="controls">
-            <?= form_dropdown('span_mahasiswa', $mahasiswa_data_attr, set_value('mahasiswa_id', ''), 'class="input-medium" prevData-selected="' . set_value('mahasiswa_id', '') .'"'); ?>
+            <?= form_dropdown('span_mahasiswa', $mahasiswa_data_attr, set_value('mahasiswa_id', $mahasiswa_id_attr), 'class="input-medium" prevData-selected="' . set_value('mahasiswa_id', $mahasiswa_id_attr) .'"'); ?>
             <p class="help-block"><?php echo form_error('mahasiswa_id') ?></p>
         </div>
     </div>
@@ -199,7 +198,7 @@ else {
         <div class="control-group">                                                                             
             <?= form_label('Judul 1' , 'judul_skripsi_diajukan', $control_label); ?>
             <div class="controls" style="margin-top: 5px;"> 
-                <?= form_radio($judul_checked)?> <?= form_textarea($judul_skripsi_diajukan_attr)?>
+                <?= form_radio('')?> <?= form_textarea($judul_skripsi_diajukan_attr)?>
                 <p class="help-block"><?php echo form_error('judul_skripsi_diajukan') ?></p>
             </div>
         </div>
@@ -207,7 +206,7 @@ else {
         <div class="control-group">                                                                             
             <?= form_label('Judul 2' , 'judul_skripsi_diajukan', $control_label); ?>
             <div class="controls" style="margin-top: 5px;"> 
-                <?= form_radio($judul_checked)?> <?= form_textarea($judul_skripsi_diajukan_satu_attr)?>
+                <?= form_radio('')?> <?= form_textarea($judul_skripsi_diajukan_satu_attr)?>
                 <p class="help-block"><?php echo form_error('judul_skripsi_diajukan') ?></p>
             </div>
         </div> 
@@ -215,7 +214,7 @@ else {
         <div class="control-group">                                                                             
             <?= form_label('Judul 3' , 'judul_skripsi_diajukan', $control_label); ?>
             <div class="controls" style="margin-top: 5px;"> 
-                <?= form_radio($judul_checked)?> <?= form_textarea($judul_skripsi_diajukan_dua_attr)?>
+                <?= form_radio('')?> <?= form_textarea($judul_skripsi_diajukan_dua_attr)?>
                 <p class="help-block"><?php echo form_error('judul_skripsi_diajukan') ?></p>
             </div>
         </div>     
