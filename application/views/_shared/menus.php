@@ -308,7 +308,7 @@ $icon_color = 'icon-grey';
                     <?php endif; ?>
 
                     <?php if ($auth->has_capability('t_jadwal_perkuliahan')): ?>
-                        <li class="dropdown <?= ($secondary_nav == 'jadwal_induk' || $secondary_nav == 'jadwal_kuliah' || $secondary_nav == 'jadwal_ujian' || $secondary_nav == 'ujian_skripsi' || $secondary_nav == 'plot_kelas' || $secondary_nav == 'absensi_mahasiswa' || $secondary_nav == 'absensi_dosen') ? 'active' : ''; ?>">
+                        <li class="dropdown <?= ($secondary_nav == 'jadwal_induk' || $secondary_nav == 'jadwal_kuliah' || $secondary_nav == 'jadwal_ujian' || $secondary_nav == 'plot_kelas' || $secondary_nav == 'absensi_mahasiswa' || $secondary_nav == 'absensi_dosen') ? 'active' : ''; ?>">
                             <a href="#" data-toggle="dropdown" class="dropdown-toggle">Jadwal Perkuliahan<b class="caret"></b></a>
                             <ul class="dropdown-menu">     
 
@@ -322,10 +322,6 @@ $icon_color = 'icon-grey';
 
                                 <?php if ($auth->has_capability('t_jadwal_perkuliahan_jadwal_ujian')): ?>
                                     <li class="<?= isActive($secondary_nav, 'jadwal_ujian'); ?>"><?= anchor('transaction/jadwal_ujian', 'Jadwal Ujian'); ?></li>
-                                <?php endif; ?>
-
-                                <?php if ($auth->has_capability('t_jadwal_perkuliahan_ujian_skripsi')): ?>
-                                    <li class="<?= isActive($secondary_nav, 'ujian_skripsi'); ?>"><?= anchor('transaction/ujian_skripsi', 'Jadwal Skripsi'); ?></li>
                                 <?php endif; ?>
 
                                 <?php if ($auth->has_capability('t_jadwal_perkuliahan_absensi_mahasiswa')): ?>
@@ -374,17 +370,21 @@ $icon_color = 'icon-grey';
                     <?php endif; ?>
 
                     <?php if ($auth->has_capability('t_skripsi')): ?>
-                        <li class="dropdown <?= ($secondary_nav == 'pengajuan_skripsi' || $secondary_nav == 'jadwal_ujian_skripsi' || $secondary_nav == 'nilai_skripsi') ? 'active' : ''; ?>">
+                        <li class="dropdown <?= ($secondary_nav == 'pengajuan_skripsi' || $secondary_nav == 'jadwal_ujian_skripsi' || $secondary_nav == 'nilai_skripsi' || $secondary_nav == 'ujian_skripsi') ? 'active' : ''; ?>">
                             <a href="#" data-toggle="dropdown" class="dropdown-toggle">Skripsi<b class="caret"></b></a>
                             <ul class="dropdown-menu">        
 
                                 <?php if ($auth->has_capability('t_skripsi_pengajuan_skripsi')): ?>
                                     <li class="<?= isActive($secondary_nav, 'pengajuan_skripsi'); ?>"><?= anchor('transaction/pengajuan_skripsi', 'Pengajuan Skripsi'); ?></li>
                                 <?php endif; ?>
+                                
+                                <?php if ($auth->has_capability('t_jadwal_perkuliahan_ujian_skripsi')): ?>
+                                    <li class="<?= isActive($secondary_nav, 'ujian_skripsi'); ?>"><?= anchor('transaction/ujian_skripsi', 'Jadwal Skripsi'); ?></li>
+                                <?php endif; ?>
 
                                 <?php if ($auth->has_capability('t_skripsi_nilai_skripsi')): ?>
                                     <li class="<?= isActive($secondary_nav, 'nilai_skripsi'); ?>"><?= anchor('transaction/nilai_skripsi', 'Nilai Skripsi'); ?></li>
-                                <?php endif; ?>    
+                                <?php endif; ?>     
 
                             </ul>
                         </li>
