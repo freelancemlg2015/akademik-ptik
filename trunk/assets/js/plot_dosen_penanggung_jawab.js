@@ -31,8 +31,19 @@ $().ready(function(){
             }
             return false;
         });
+        
+        if($('.remove-add_dosen_1').length > 0 ){
+            $('.remove-add_dosen_1').live('click',function(){
+                 elem = $(this);
+                 var idx = $('.remove-add_dosen_1').index(this);//console.log(idx);
+
+                 var elem = $(this);
+                 var elem_parent = elem.parents('.controls').parent().remove();
+            });
+        }
     }
-	if($('#button_add_pegawai').length > 0 ){
+    
+    if($('#button_add_pegawai').length > 0 ){
         $('#button_add_pegawai').live('click',function(){
 
             var cloned = $("#pegawai_id").html(); //<select class="input-medium" name="pegawai_id" prevData-selected="">'+pegawai_id+'</select>
@@ -64,5 +75,5 @@ $().ready(function(){
             }
             return false;
         });
-    }
+    } 
 });

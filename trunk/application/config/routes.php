@@ -825,6 +825,18 @@ $route['transaction/nilai_akademik/getMahasiswa'] = "nilai_akademik/getMahasiswa
 $route['transaction/nilai_akademik/submit_nilai'] = "nilai_akademik/submit_nilai";
 //END
 
+//PENGAJUAN SKRIPSI
+$route['transaction/pengajuan_skripsi'] = "pengajuan_skripsi";
+$route['transaction/pengajuan_skripsi/view/(:any)'] = "pengajuan_skripsi/index/$1";
+$route['transaction/pengajuan_skripsi/(:any)/info'] = "pengajuan_skripsi/info/$1";
+$route['transaction/pengajuan_skripsi/(:any)/edit'] = "pengajuan_skripsi/edit/$1";
+$route['transaction/pengajuan_skripsi/(:any)/delete'] = "pengajuan_skripsi/delete/$1";
+$route['transaction/pengajuan_skripsi/(:any)/(:any)/(:any)'] = "pengajuan_skripsi/index/$1/$2/$3";
+$route['transaction/pengajuan_skripsi/create/(:any)'] = "pengajuan_skripsi/create/$1";
+$route['transaction/pengajuan_skripsi/create'] = "pengajuan_skripsi/create";
+$route['transaction/pengajuan_skripsi/search'] = "pengajuan_skripsi/search";
+//END
+
 //NILAI AKADEMIK
 $route['laporan/template_report'] = "template_report";
 $route['laporan/template_report/view/(:any)'] = "template_report/index/$1";
