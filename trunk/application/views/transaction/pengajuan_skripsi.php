@@ -10,16 +10,16 @@ $this->load->view('_shared/menus');
         'name'  => 'nim',
         'class' => 'input-medium',
         'style' => 'text-transform : uppercase;',
-        'placeholder' => 'Angkatan'
+        'placeholder' => 'Nim'
     );
     $nama_attr = array(
         'id'    => 'nama',
         'name'  => 'nama',
         'class' => 'input-medium',
         'style' => 'text-transform : uppercase;',
-        'placeholder' => 'Semester'
+        'placeholder' => 'Nama'
     );
-    echo form_open('transaction/plot_mata_kuliah/search/') .
+    echo form_open('transaction/pengajuan_skripsi/search/') .
     form_input($nim_attr) . ' ' .
     form_input($nama_attr) . ' ' .
     form_submit('cari', 'CARI', 'class="btn btn-mini"') .
