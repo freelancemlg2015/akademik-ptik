@@ -193,6 +193,7 @@ class Pengajuan_skripsi extends CI_Controller {
         $data['judul_skripsi_diajukan_attr']      = '';
         $data['judul_skripsi_diajukan_satu_attr'] = '';
         $data['judul_skripsi_diajukan_dua_attr']  = '';
+        $data['mahasiswa_id_attr'] = '';
         
                      
         $this->load->model('pengajuan_skripsi_model', 'pengajuan_skripsi');
@@ -330,9 +331,21 @@ class Pengajuan_skripsi extends CI_Controller {
             }                
             $data['thn_akademik_id_attr'] = $thn_akademik_id_attr;
             
+            $this->load->model('pengajuan_skripsi_model');
+            $data['mahasiswa_data'] = $this->pengajuan_skripsi_model->get_mahasiswa($id);
+            $mhs_data = '';
+            foreach($data['mahasiswa_data'] as $row){
+                $mhs_data['id'] = $row['mahasiswa_id'];
+            }
+            $data['mahasiswa_id_attr'] = $mhs_data;
             
-            $this->load->model('pengajuan_skripsi_model');       
-            $data['mahasiswa'] = $this->pengajuan_skripsi_model->get_mahasiswa($id);
+//            $this->crud->use_table('m_angkatan');
+//            $data['m_angkatan'] = $this->crud->retrieve(array('id' => $data['angkatan_id']))->row();
+//            $this->load->model('pengajuan_skripsi_model');
+//            $data['mahasiswa_data'] = $this->pengajuan_skripsi_model->get_mahasiswa_change($data['m_angkatan']->tahun_akademik_id);
+//            var_dump($data['mahasiswa_data']);
+            
+            
            
                                                                                                                                     
         }
