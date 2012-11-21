@@ -41,12 +41,7 @@ $program_studi_data[0] = '';
 foreach ($program_studi_options as $row) {
     $program_studi_data[$row->id] = $row->nama_program_studi;
 }
-
-$mahasiswa_data[0] = '';
-foreach ($mahasiswa_options as $row) {
-    $mahasiswa_data[$row['mahasiswa_id']] = $row['nama'];
-}
-
+                                      
 $dosen_data[0] = '';
 foreach ($dosen_options as $row) {
     $dosen_data[$row->id] = $row->nama_dosen;
@@ -86,6 +81,7 @@ $judul_checked = array(
     'id'          => 'judul_skripsi_diajukan',
     'name'        => 'judul_skripsi_diajukan',
     'value'       => set_value('judul_skripsi_diajukan', ''),
+    'checked'     => TRUE,  
     'autocomplete'=> 'off'
 );
 
@@ -99,7 +95,7 @@ $judul_skripsi_diajukan_attr = array(
 );
 
 $judul_skripsi_diajukan_satu_attr = array(                          
-    'name'        => 'judul_skripsi_diajukan',
+    'name'        => 'judul_skripsi_diajukan_satu',
     'class'       => 'span3',
     'value'       => set_value('judul_skripsi_diajukan', $judul_skripsi_diajukan_satu_attr),
     'rows'        => '3', 
@@ -108,13 +104,23 @@ $judul_skripsi_diajukan_satu_attr = array(
 );
 
 $judul_skripsi_diajukan_dua_attr = array(                          
-    'name'        => 'judul_skripsi_diajukan',
+    'name'        => 'judul_skripsi_diajukan_dua',
     'class'       => 'span3',
     'value'       => set_value('judul_skripsi_diajukan', $judul_skripsi_diajukan_dua_attr),
     'rows'        => '3', 
     'cols'        => '40',
     'autocomplete'=> 'off'    
 );
+
+$mahasiswa_data_attr[0] = '';
+if (isset($mahasiswa)){
+    foreach ($mahasiswa as $row) {
+        $mahasiswa_data_attr[$row['mahasiswa_id']] = $row['nama'];
+    }    
+} 
+else {
+    $mahasiswa_data_attr[''] = '';
+}
                       
 
 ?>
@@ -156,7 +162,7 @@ $judul_skripsi_diajukan_dua_attr = array(
     <div class="control-group">
         <?= form_label('Nama Mahasiswa' , 'mahasiswa_id', $control_label); ?>
         <div class="controls">
-            <?= form_dropdown('mahasiswa_id', $mahasiswa_data, set_value('mahasiswa_id', $mahasiswa_id), 'id="mahasiswa_id" class="input-medium" prevData-selected="' . set_value('mahasiswa_id', $mahasiswa_id) . '"'); ?>
+            <?= form_dropdown('span_mahasiswa', $mahasiswa_data_attr, set_value('mahasiswa_id', ''), 'class="input-medium" prevData-selected="' . set_value('mahasiswa_id', '') .'"'); ?>
             <p class="help-block"><?php echo form_error('mahasiswa_id') ?></p>
         </div>
     </div>
@@ -193,16 +199,32 @@ $judul_skripsi_diajukan_dua_attr = array(
         <div class="control-group">                                                                             
             <?= form_label('Judul 1' , 'judul_skripsi_diajukan', $control_label); ?>
             <div class="controls" style="margin-top: 5px;"> 
-                <?= form_textarea($judul_skripsi_diajukan_attr)?>
+                <?= form_radio($judul_checked)?> <?= form_textarea($judul_skripsi_diajukan_attr)?>
                 <p class="help-block"><?php echo form_error('judul_skripsi_diajukan') ?></p>
             </div>
-        </div>    
+        </div>
+        
+        <div class="control-group">                                                                             
+            <?= form_label('Judul 2' , 'judul_skripsi_diajukan', $control_label); ?>
+            <div class="controls" style="margin-top: 5px;"> 
+                <?= form_radio($judul_checked)?> <?= form_textarea($judul_skripsi_diajukan_satu_attr)?>
+                <p class="help-block"><?php echo form_error('judul_skripsi_diajukan') ?></p>
+            </div>
+        </div> 
+        
+        <div class="control-group">                                                                             
+            <?= form_label('Judul 3' , 'judul_skripsi_diajukan', $control_label); ?>
+            <div class="controls" style="margin-top: 5px;"> 
+                <?= form_radio($judul_checked)?> <?= form_textarea($judul_skripsi_diajukan_dua_attr)?>
+                <p class="help-block"><?php echo form_error('judul_skripsi_diajukan') ?></p>
+            </div>
+        </div>     
         
         <div class="control-group">
             <?= form_label('Status Judul' , 'status_approval', $control_label); ?>
             <div class="controls" style="margin-left:177px;">
                 <?php 
-                    echo"<select id='status_judul' name='status_approval' class='input-medium' prevdata-selected='" .set_value('status_approval', $status_approval)."'>
+                    echo"<select id='status_judul' name='status_approval' value=".$status_approval.">
                             <option value='not_approval'>Not Approval</option>
                             <option value='approval'>Approval</option>
                          </select>";
@@ -225,6 +247,12 @@ $judul_skripsi_diajukan_dua_attr = array(
 	    $.post('<?php echo base_url(); ?>pengajuan_skripsi/getOptTahunAkademik', {angkatan_id: angkatan_id[1]},
         function(data){
             $('#thn_akademik_id_attr').val(data);
+        });
+        $.post('<?php echo base_url(); ?>pengajuan_skripsi/getOptMahasiswa', {angkatan_id: angkatan_id[1]},
+        function(data){                                                                 
+            $("select[name='span_mahasiswa']").closest("div.controls").append("<select name='span_mahasiswa'></select>");
+            $("select[name='span_mahasiswa']").closest("div.combobox-container").remove();
+            $("select[name='span_mahasiswa']").html(data).combobox();
         });                                          
     } 
      $("select[name='span_mahasiswa']").combobox();  

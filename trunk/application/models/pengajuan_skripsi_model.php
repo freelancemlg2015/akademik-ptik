@@ -108,13 +108,27 @@ class Pengajuan_skripsi_model extends CI_Model {
         return @$data;
     }
     
-    function get_mahasiswa(){
+    function get_mahasiswa($id=NULL){
         $this->db->select('t_rencana_mata_pelajaran_pokok_detail.mahasiswa_id, m_mahasiswa.nama');
         $this->db->from('t_rencana_mata_pelajaran_pokok_detail');
         $this->db->join('t_rencana_mata_pelajaran_pokok', 't_rencana_mata_pelajaran_pokok.id = t_rencana_mata_pelajaran_pokok_detail.rencana_mata_pelajaran_id', 'left');
         $this->db->join('m_mahasiswa', 'm_mahasiswa.id = t_rencana_mata_pelajaran_pokok_detail.mahasiswa_id', 'left');
         $this->db->join('m_angkatan', 'm_angkatan.id = t_rencana_mata_pelajaran_pokok.angkatan_id', 'left');
         $this->db->join('m_tahun_akademik', 'm_tahun_akademik.id = m_angkatan.tahun_akademik_id', 'left');
+        $this->db->where('t_rencana_mata_pelajaran_pokok_detail.mahasiswa_id',$id);
+        $Q = $this->db->get();
+        foreach ($Q->result_array() as $row) $data[] = $row['mahasiswa_id'];
+        return @$data;
+    }
+    
+    function get_mahasiswa_change($id=NULL){
+        $this->db->select('t_rencana_mata_pelajaran_pokok_detail.mahasiswa_id, m_mahasiswa.nama');
+        $this->db->from('t_rencana_mata_pelajaran_pokok_detail');
+        $this->db->join('t_rencana_mata_pelajaran_pokok', 't_rencana_mata_pelajaran_pokok.id = t_rencana_mata_pelajaran_pokok_detail.rencana_mata_pelajaran_id', 'left');
+        $this->db->join('m_mahasiswa', 'm_mahasiswa.id = t_rencana_mata_pelajaran_pokok_detail.mahasiswa_id', 'left');
+        $this->db->join('m_angkatan', 'm_angkatan.id = t_rencana_mata_pelajaran_pokok.angkatan_id', 'left');
+        $this->db->join('m_tahun_akademik', 'm_tahun_akademik.id = m_angkatan.tahun_akademik_id', 'left');
+        $this->db->where('m_angkatan.tahun_akademik_id',$id);
         $Q = $this->db->get();
         foreach ($Q->result_array() as $row) $data[] = $row;
         return @$data;
@@ -148,7 +162,8 @@ class Pengajuan_skripsi_model extends CI_Model {
         $this->db->where('a.pengajuan_skripsi_id', $id);
         $Q = $this->db->get();
         foreach($Q->result_array() as $row) $data[] = $row['pengajuan_skripsi_id'];
+        echo $this->db->last_query();
         return @$data;        
-    }
+    } 
 }
 
