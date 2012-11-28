@@ -42,19 +42,19 @@ $control_label = array(
             </tr>
             <tr>
                 <th class="span2">Ketua Penguji</th>
-                <td><?= $ketua_penguji ?></td>
+                <td><?= $nama_ketua_penguji ?></td>
             </tr>
             <tr>
                 <th class="span2">Anggota Penguji 1</th>
-                <td><?= $anggota_penguji_1 ?></td>
+                <td><?= $nama_anggota_satu ?></td>
             </tr>
             <tr>
                 <th class="span2">Anggota Penguji 2</th>
-                <td><?= $anggota_penguji_2 ?></td>
+                <td><?= $nama_anggota_dua ?></td>
             </tr>
             <tr>
                 <th class="span2">Sekretaris Penguji</th>
-                <td><?= $sekretaris_penguji ?></td>
+                <td><?= $nama_sekretaris ?></td>
             </tr>
             <tr>
                 <th class="span2">Keterangan</th>

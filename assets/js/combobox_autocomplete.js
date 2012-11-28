@@ -4,7 +4,7 @@ $(document).ready(function(){
        #status_aktivitas_dosen_id,#semester_mulai_aktivitas_id,#akta_mengajar_id,#surat_ijin_mengajar_id,#golongan_id,#kons_studi_id,\n\
        #sub_direktorat_id,#kategori_pejabat_id,#pangkat_id,#kesatuan_asal_id,#jabatan_akhir_id,#mata_kuliah_id,#dosen_id,#pegawai_id,#mahasiswa_id,#anak_id,\n\
        #nama_ruang_id,#dosen_ajar_id,#pegawai_id,#jadwal_kuliah_id,#absensi_id,#jenis_ujian_id,#hari_id,#jenis_waktu,#kelompok_mata_kuliah_id,#plot_mata_kuliah_id,#paket_mata_kuliah_id,\n\
-       #dosen_pembimbing_id,#status_judul').combobox()
+       #dosen_pembimbing_id,#status_judul,#ketua_penguji_id,#anggota_penguji_1_id,#anggota_penguji_2_id,#sekretaris_penguji_id,#pengajuan_skripsi_id').combobox()
 });
       
 

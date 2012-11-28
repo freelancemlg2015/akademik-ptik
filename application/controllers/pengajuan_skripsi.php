@@ -133,27 +133,27 @@ class Pengajuan_skripsi extends CI_Controller {
         } else {
             $this->crud->use_table('t_pengajuan_skripsi');
             $data_in = array(
-                'angkatan_id'                => $this->input->post('angkatan_id'),
-                'semester_id'                => $this->input->post('semester_id'),
-                'program_studi_id'           => $this->input->post('program_studi_id'),
-                'mahasiswa_id'               => $this->input->post('span_mahasiswa'),
-                'tgl_pengajuan'              => $this->input->post('tgl_pengajuan'),
-                'jam'                        => $this->input->post('jam'),
-                'dosen_pembimbing_1_id'      => $this->input->post('dosen_pembimbing_1_id'),
-                'dosen_pembimbing_2_id'      => $this->input->post('dosen_pembimbing_2_id'),
-                'status_approval'            => $this->input->post('status_approval'),
-                'keterangan'                 => $this->input->post('keterangan'),
-                'created_on'                 => date($this->config->item('log_date_format')),
-                'created_by'                 => logged_info()->on
+                'angkatan_id'                      => $this->input->post('angkatan_id'),
+                'semester_id'                      => $this->input->post('semester_id'),
+                'program_studi_id'                 => $this->input->post('program_studi_id'),
+                'rencana_mata_pelajaran_detail_id' => $this->input->post('rencana_mata_pelajaran_detail_id'),
+                'tgl_pengajuan'                    => $this->input->post('tgl_pengajuan'),
+                'jam'                              => $this->input->post('jam'),
+                'dosen_pembimbing_1_id'            => $this->input->post('dosen_pembimbing_1_id'),
+                'dosen_pembimbing_2_id'            => $this->input->post('dosen_pembimbing_2_id'),
+                'status_approval'                  => $this->input->post('status_approval'),
+                'keterangan'                       => $this->input->post('keterangan'),
+                'created_on'                       => date($this->config->item('log_date_format')),
+                'created_by'                       => logged_info()->on
             );                                              
             $created_id = $this->crud->create($data_in);
             $judul = $this->input->post('judul_skripsi_diajukan');
             $this->crud->use_table('t_pengajuan_skripsi_detail');
             $data_in = array(
-                'pengajuan_skripsi_id'   => $created_id,
-                'judul_skripsi_diajukan' => $judul,
-                'created_on'             => date($this->config->item('log_date_format')),
-                'created_by'             => logged_info()->on
+                'pengajuan_skripsi_id'  => $created_id,
+                'judul_skripsi_diajukan'=> $judul,
+                'created_on'            => date($this->config->item('log_date_format')),
+                'created_by'            => logged_info()->on
             );
              $this->crud->create($data_in);
                                                          
@@ -219,19 +219,19 @@ class Pengajuan_skripsi extends CI_Controller {
                 'id' => $id
             );
             $data_in = array(
-                'angkatan_id'                => $this->input->post('angkatan_id'),
-                'semester_id'                => $this->input->post('semester_id'),
-                'program_studi_id'           => $this->input->post('program_studi_id'),
-                'mahasiswa_id'               => $this->input->post('span_mahasiswa'),
-                'tgl_pengajuan'              => $this->input->post('tgl_pengajuan'),
-                'jam'                        => $this->input->post('jam'),
-                'dosen_pembimbing_1_id'      => $this->input->post('dosen_pembimbing_1_id'),
-                'dosen_pembimbing_2_id'      => $this->input->post('dosen_pembimbing_2_id'),
-                'status_approval'            => $this->input->post('status_approval'),
-                'keterangan'                 => $this->input->post('keterangan'),
-                'pengajuan_skripsi_detil_id' => $this->input->post('pengajuan_skripsi_detil_id'),
-                'modified_on'                => date($this->config->item('log_date_format')),
-                'modified_by'                => logged_info()->on
+                'angkatan_id'                      => $this->input->post('angkatan_id'),
+                'semester_id'                      => $this->input->post('semester_id'),
+                'program_studi_id'                 => $this->input->post('program_studi_id'),
+                'rencana_mata_pelajaran_detail_id' => $this->input->post('rencana_mata_pelajaran_detail_id'),
+                'tgl_pengajuan'                    => $this->input->post('tgl_pengajuan'),
+                'jam'                              => $this->input->post('jam'),
+                'dosen_pembimbing_1_id'            => $this->input->post('dosen_pembimbing_1_id'),
+                'dosen_pembimbing_2_id'            => $this->input->post('dosen_pembimbing_2_id'),
+                'status_approval'                  => $this->input->post('status_approval'),
+                'keterangan'                       => $this->input->post('keterangan'),
+                'pengajuan_skripsi_detil_id'       => $this->input->post('pengajuan_skripsi_detil_id'),
+                'modified_on'                      => date($this->config->item('log_date_format')),
+                'modified_by'                      => logged_info()->on
             );
             
             $this->crud->update($criteria, $data_in);
@@ -304,6 +304,9 @@ class Pengajuan_skripsi extends CI_Controller {
         $this->crud->use_table('m_dosen');
         $data['dosen_options'] = $this->crud->retrieve()->result();
         
+        $this->crud->use_table('m_dosen');
+        $data['mahasiswa_options'] = $this->crud->retrieve()->result();
+        
         $this->crud->use_table('t_pengajuan_skripsi_detail');
         $data['pengajuan_skripsi_detail'] = $this->crud->retrieve()->result();
         $pengajuan_skripsi = '';
@@ -335,19 +338,9 @@ class Pengajuan_skripsi extends CI_Controller {
             $data['mahasiswa_data'] = $this->pengajuan_skripsi_model->get_mahasiswa($id);
             $mhs_data = '';
             foreach($data['mahasiswa_data'] as $row){
-                $mhs_data['id'] = $row['mahasiswa_id'];
+                $mhs_data['id'] = $row['rencana_mata_pelajaran_detail_id'];
             }
             $data['mahasiswa_id_attr'] = $mhs_data;
-            
-//            $this->crud->use_table('m_angkatan');
-//            $data['m_angkatan'] = $this->crud->retrieve(array('id' => $data['angkatan_id']))->row();
-//            $this->load->model('pengajuan_skripsi_model');
-//            $data['mahasiswa_data'] = $this->pengajuan_skripsi_model->get_mahasiswa_change($data['m_angkatan']->tahun_akademik_id);
-//            var_dump($data['mahasiswa_data']);
-            
-            
-           
-                                                                                                                                    
         }
         $this->load->view('transaction/pengajuan_skripsi_form', $data);
     }
@@ -370,7 +363,7 @@ class Pengajuan_skripsi extends CI_Controller {
         $data['mahasiswa'] = $this->pengajuan_skripsi_model->get_mahasiswa_change($angkatan);
         echo '<option value="" ></option>';
         foreach($data['mahasiswa'] as $row){
-            echo '<option value=\''.$row['mahasiswa_id'].'\' >'.$row['nama'].'</option>';
+            echo '<option value=\''.$row['id'].'\' >'.$row['nama'].'</option>';
         } 
     }
 }

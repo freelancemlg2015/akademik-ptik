@@ -85,6 +85,22 @@ $judul_checked = array(
     'autocomplete'=> 'off'
 );
 
+$judul_checked_1 = array(
+    'id'          => 'judul_skripsi_diajukan',
+    'name'        => 'judul_skripsi_diajukan',
+    'value'       => set_value('judul_skripsi_diajukan', ''),
+    'checked'     => TRUE,  
+    'autocomplete'=> 'off'
+);
+
+$judul_checked_2 = array(
+    'id'          => 'judul_skripsi_diajukan',
+    'name'        => 'judul_skripsi_diajukan',
+    'value'       => set_value('judul_skripsi_diajukan', ''),
+    'checked'     => TRUE,  
+    'autocomplete'=> 'off'
+);
+
 $judul_skripsi_diajukan_attr = array(                          
     'name'        => 'judul_skripsi_diajukan',
     'class'       => 'span3',
@@ -115,7 +131,7 @@ $judul_skripsi_diajukan_dua_attr = array(
 $mahasiswa_data_attr[0] = '';
 if (isset($mahasiswa_data)){
     foreach ($mahasiswa_data as $row) {
-        $mahasiswa_data_attr[$row['mahasiswa_id']] = $row['nama'];
+        $mahasiswa_data_attr[$row['rencana_mata_pelajaran_detail_id']] = $row['nama'];
     }    
 } 
 else {
@@ -159,10 +175,10 @@ else {
     </div>
     
     <div class="control-group">
-        <?= form_label('Nama Mahasiswa' , 'mahasiswa_id', $control_label); ?>
+        <?= form_label('Nama Mahasiswa' , 'rencana_mata_pelajaran_detail_id', $control_label); ?>
         <div class="controls">
-            <?= form_dropdown('span_mahasiswa', $mahasiswa_data_attr, set_value('mahasiswa_id', $mahasiswa_id_attr), 'class="input-medium" prevData-selected="' . set_value('mahasiswa_id', $mahasiswa_id_attr) .'"'); ?>
-            <p class="help-block"><?php echo form_error('mahasiswa_id') ?></p>
+            <?= form_dropdown('rencana_mata_pelajaran_detail_id', $mahasiswa_data_attr, set_value('rencana_mata_pelajaran_detail_id', $rencana_mata_pelajaran_detail_id), 'class="input-medium" prevData-selected="' . set_value('rencana_mata_pelajaran_detail_id', $rencana_mata_pelajaran_detail_id) .'"'); ?>
+            <p class="help-block"><?php echo form_error('rencana_mata_pelajaran_detail_id') ?></p>
         </div>
     </div>
     
@@ -198,7 +214,7 @@ else {
         <div class="control-group">                                                                             
             <?= form_label('Judul 1' , 'judul_skripsi_diajukan', $control_label); ?>
             <div class="controls" style="margin-top: 5px;"> 
-                <?= form_radio('')?> <?= form_textarea($judul_skripsi_diajukan_attr)?>
+                <?= form_radio($judul_checked)?> <?= form_textarea($judul_skripsi_diajukan_attr)?>
                 <p class="help-block"><?php echo form_error('judul_skripsi_diajukan') ?></p>
             </div>
         </div>
@@ -206,7 +222,7 @@ else {
         <div class="control-group">                                                                             
             <?= form_label('Judul 2' , 'judul_skripsi_diajukan', $control_label); ?>
             <div class="controls" style="margin-top: 5px;"> 
-                <?= form_radio('')?> <?= form_textarea($judul_skripsi_diajukan_satu_attr)?>
+                <?= form_radio($judul_checked_1)?> <?= form_textarea($judul_skripsi_diajukan_satu_attr)?>
                 <p class="help-block"><?php echo form_error('judul_skripsi_diajukan') ?></p>
             </div>
         </div> 
@@ -214,7 +230,7 @@ else {
         <div class="control-group">                                                                             
             <?= form_label('Judul 3' , 'judul_skripsi_diajukan', $control_label); ?>
             <div class="controls" style="margin-top: 5px;"> 
-                <?= form_radio('')?> <?= form_textarea($judul_skripsi_diajukan_dua_attr)?>
+                <?= form_radio($judul_checked_2)?> <?= form_textarea($judul_skripsi_diajukan_dua_attr)?>
                 <p class="help-block"><?php echo form_error('judul_skripsi_diajukan') ?></p>
             </div>
         </div>     
@@ -223,10 +239,18 @@ else {
             <?= form_label('Status Judul' , 'status_approval', $control_label); ?>
             <div class="controls" style="margin-left:177px;">
                 <?php 
-                    echo"<select id='status_judul' name='status_approval' value=".$status_approval.">
+                    if(empty($status_approval)){
+                        echo"<select id='status_judul' name='status_approval' value=''>
                             <option value='not_approval'>Not Approval</option>
                             <option value='approval'>Approval</option>
-                         </select>";
+                         </select>";        
+                    }else{
+                        echo"<select id='status_judul' name='status_approval' value='".$status_approval."'>
+                            <option value='Not Approval'>Not Approval</option>
+                            <option value='Approval'>Approval</option>
+                         </select>";        
+                        
+                    }
                 ?>
                 <p class="help-block"><?php echo form_error('status_approval') ?></p>
             </div>
@@ -249,10 +273,10 @@ else {
         });
         $.post('<?php echo base_url(); ?>pengajuan_skripsi/getOptMahasiswa', {angkatan_id: angkatan_id[1]},
         function(data){                                                                 
-            $("select[name='span_mahasiswa']").closest("div.controls").append("<select name='span_mahasiswa'></select>");
-            $("select[name='span_mahasiswa']").closest("div.combobox-container").remove();
-            $("select[name='span_mahasiswa']").html(data).combobox();
+            $("select[name='rencana_mata_pelajaran_detail_id']").closest("div.controls").append("<select name='rencana_mata_pelajaran_detail_id'></select>");
+            $("select[name='rencana_mata_pelajaran_detail_id']").closest("div.combobox-container").remove();
+            $("select[name='rencana_mata_pelajaran_detail_id']").html(data).combobox();
         });                                          
     } 
-     $("select[name='span_mahasiswa']").combobox();  
+     $("select[name='rencana_mata_pelajaran_detail_id']").combobox();  
 </script>

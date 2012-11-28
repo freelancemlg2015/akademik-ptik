@@ -126,24 +126,20 @@ class Ujian_skripsi extends CI_Controller {
         } else {
             $this->crud->use_table('t_ujian_skripsi');
             $data_in = array(
-                'mahasiswa_id'       => $this->input->post('mahasiswa_id'),
-                'judul_skripsi'      => $this->input->post('judul_skripsi'),
-                'tgl_ujian'          => $this->input->post('tgl_ujian'),
-                'jam_mulai'          => $this->input->post('jam_mulai'),
-                'jam_akhir'          => $this->input->post('jam_akhir'),
-                'ketua_penguji'      => $this->input->post('ketua_penguji'),
-                'anggota_penguji_1'  => $this->input->post('anggota_penguji_1'),
-                'anggota_penguji_2'  => $this->input->post('anggota_penguji_2'),
-                'sekretaris_penguji' => $this->input->post('sekretaris_penguji'),
-                'keterangan'         => $this->input->post('keterangan'),
-                'created_on'         => date($this->config->item('log_date_format')),
-                'created_by'         => logged_info()->on
-            );
-            /*
-              echo '<pre>';
-              var_dump($data_in);
-              echo '</pre>';
-             */
+                'pengajuan_skripsi_id' => $this->input->post('pengajuan_skripsi_id'),
+                //'mahasiswa_id'         => $this->input->post('mahasiswa_id'),
+                'judul_skripsi'        => $this->input->post('judul_skripsi'),
+                'tgl_ujian'            => $this->input->post('tgl_ujian'),
+                'jam_mulai'            => $this->input->post('jam_mulai'),
+                'jam_akhir'            => $this->input->post('jam_akhir'),
+                'ketua_penguji_id'     => $this->input->post('ketua_penguji_id'),
+                'anggota_penguji_1_id' => $this->input->post('anggota_penguji_1_id'),
+                'anggota_penguji_2_id' => $this->input->post('anggota_penguji_2_id'),
+                'sekretaris_penguji_id'=> $this->input->post('sekretaris_penguji_id'),
+                'keterangan'           => $this->input->post('keterangan'),
+                'created_on'           => date($this->config->item('log_date_format')),
+                'created_by'           => logged_info()->on
+            );                                           
             $created_id = $this->crud->create($data_in);
             redirect('transaction/ujian_skripsi/' . $created_id . '/info');
         }
@@ -152,21 +148,25 @@ class Ujian_skripsi extends CI_Controller {
         $data['tools']      = array(
             'transaction/ujian_skripsi' => 'Back'
         );
+                                                  
+        $this->crud->use_table('m_dosen');
+        $data['dosen_options'] = $this->crud->retrieve()->result();
         
-        $this->crud->use_table('m_mahasiswa');
-        $data['mahasiswa_options'] = $this->crud->retrieve()->result();
-
+        $this->crud->use_table('t_pengajuan_skripsi');
+        $data['t_pengajuan_skripsi_options'] = $this->crud->retrieve()->result();
+                                                                                
+        $this->load->model('ujian_skripsi_model');
+        $data['m_angkatan_options'] = $this->ujian_skripsi_model->get_angkatan();
+        
+        $this->load->model('ujian_skripsi_model');
+        $data['m_semester_options'] = $this->ujian_skripsi_model->get_semester(); 
+       
+        $data['thn_akademik_id_attr'] = '';
+        $data['pengajuan_skripsi_id_attr'] = '';                                                             
         $this->load->model('ujian_skripsi_model', 'ujian_skripsi');
         $data = array_merge($data, $this->ujian_skripsi->set_default()); //merge dengan arr data dengan default
         $this->load->view('transaction/ujian_skripsi_form', $data);
     }
-
-//1. Model
-//2. Controller
-//3. View
-//4. Form Validation
-//5. Routes
-//6. Menus
 
     function edit() {
         $data['auth']        = $this->auth;
@@ -185,18 +185,19 @@ class Ujian_skripsi extends CI_Controller {
                 'id' => $id
             );
             $data_in = array(
-                'mahasiswa_id'       => $this->input->post('mahasiswa_id'),
-                'judul_skripsi'      => $this->input->post('judul_skripsi'),
-                'tgl_ujian'          => $this->input->post('tgl_ujian'),
-                'jam_mulai'          => $this->input->post('jam_mulai'),
-                'jam_akhir'          => $this->input->post('jam_akhir'),
-                'ketua_penguji'      => $this->input->post('ketua_penguji'),
-                'anggota_penguji_1'  => $this->input->post('anggota_penguji_1'),
-                'anggota_penguji_2'  => $this->input->post('anggota_penguji_2'),
-                'sekretaris_penguji' => $this->input->post('sekretaris_penguji'),
-                'keterangan'         => $this->input->post('keterangan'),
-                'modified_on'     => date($this->config->item('log_date_format')),
-                'modified_by'     => logged_info()->on
+                'pengajuan_skripsi_id'=> $this->input->post('pengajuan_skripsi_id'),
+                'mahasiswa_id'        => $this->input->post('mahasiswa_id'),
+                'judul_skripsi'       => $this->input->post('judul_skripsi'),
+                'tgl_ujian'           => $this->input->post('tgl_ujian'),
+                'jam_mulai'           => $this->input->post('jam_mulai'),
+                'jam_akhir'           => $this->input->post('jam_akhir'),
+                'ketua_penguji'       => $this->input->post('ketua_penguji'),
+                'anggota_penguji_1'   => $this->input->post('anggota_penguji_1'),
+                'anggota_penguji_2'   => $this->input->post('anggota_penguji_2'),
+                'sekretaris_penguji'  => $this->input->post('sekretaris_penguji'),
+                'keterangan'          => $this->input->post('keterangan'),
+                'modified_on'         => date($this->config->item('log_date_format')),
+                'modified_by'         => logged_info()->on
             );
             $this->crud->update($criteria, $data_in);
             redirect('transaction/ujian_skripsi/' . $id . '/info');
@@ -210,12 +211,33 @@ class Ujian_skripsi extends CI_Controller {
         $this->crud->use_table('t_ujian_skripsi');
         $ujian_skripsi_data = $this->crud->retrieve(array('id' => $id))->row();
         
+        $this->load->model('ujian_skripsi_model');
+        $data['m_angkatan_options'] = $this->ujian_skripsi_model->get_angkatan();
+
+        $this->crud->use_table('m_dosen');
+        $data['dosen_options'] = $this->crud->retrieve()->result();
+        
         $this->crud->use_table('m_mahasiswa');
         $data['mahasiswa_options'] = $this->crud->retrieve()->result();
         
         $this->load->model('ujian_skripsi_model', 'ujian_skripsi');
         $data = array_merge($data, $this->ujian_skripsi->set_default()); //merge dengan arr data dengan default
         $data = array_merge($data, (array) $ujian_skripsi_data);
+        if(!(empty($id))){                                                                      
+            $this->load->model('ujian_skripsi_model');           
+            $data['angkatan_pengajuan'] = $this->ujian_skripsi_model->get_update_angkatan($id);
+            $pengajuan_skripsi_id = '';            
+            foreach($data['angkatan_pengajuan'] as $row){
+                $pengajuan_skripsi_id = $row['id']."-".$row['angkatan_id'];
+            }
+            $data['pengajuan_skripsi_id_attr'] = $pengajuan_skripsi_id;
+                                              
+            $thn_akademik_id_attr = '';
+            foreach ($data['angkatan_pengajuan'] as $row) {
+                $thn_akademik_id_attr = $row['tahun_ajar_mulai'].'-'.$row['tahun_ajar_akhir'];
+            }                
+            $data['thn_akademik_id_attr'] = $thn_akademik_id_attr;                                                                    
+        }
         $this->load->view('transaction/ujian_skripsi_form', $data);
     }
 
@@ -237,6 +259,59 @@ class Ujian_skripsi extends CI_Controller {
             'judul_skripsi' => $judul_skripsi
         );
         $this->ujian_skripsi_model->suggestion($terms);
+    }
+    
+    function getOptTahunAkademik() {
+        $angkatan_id= $this->input->post('pengajuan_skripsi_id');
+        $sql = "SELECT a.id, b.nama_angkatan, c.tahun_ajar_mulai,c.tahun_ajar_akhir 
+                FROM akademik_t_pengajuan_skripsi AS a
+                LEFT JOIN akademik_m_angkatan AS b ON a.`angkatan_id` = b.`id`
+                LEFT JOIN akademik_m_tahun_akademik AS c ON b.`tahun_akademik_id` = c.`id`
+                WHERE a.`id` = '$angkatan_id'
+                GROUP BY a.angkatan_id";
+        $query = $this->db->query($sql);     
+        foreach($query->result_array() as $row){
+            echo $row['tahun_ajar_mulai'].'-'.$row['tahun_ajar_akhir'];
+        }
+    }             
+    
+    function getOptSemester(){
+        $this->load->model('ujian_skripsi_model');
+        $semester = $this->input->post('pengajuan_skripsi_id');
+        $data['semester'] = $this->ujian_skripsi_model->get_semester($semester);
+        echo '<option value="" ></option>';
+        foreach($data['semester'] as $row){
+            echo '<option value=\''.$row['id'].'\' >'.$row['nama_semester'].'</option>';
+        } 
+    }      
+    
+    function getOptProgramStudi(){
+        $this->load->model('ujian_skripsi_model');
+        $program_studi= $this->input->post('pengajuan_skripsi_id');
+        $data = $this->ujian_skripsi_model->get_program_studi($program_studi); 
+        echo '<option value="" ></option>';
+        foreach($data as $row){
+            echo '<option value=\''.$row['id'].'\' >'.$row['nama_program_studi'].'</option>';
+        } 
+    }
+    
+    function getOptMahasiswa(){
+        $this->load->model('ujian_skripsi_model');
+        $mahasiswa = $this->input->post('pengajuan_skripsi_id');
+        $data = $this->ujian_skripsi_model->get_mahasiswa($mahasiswa); 
+        echo '<option value="" ></option>';
+        foreach($data as $row){
+            echo '<option value=\''.$row['id'].'\' >'.$row['nama'].'</option>';
+        } 
+    }    
+    
+    function getOptPengajuanSkripsi(){
+        $this->load->model('ujian_skripsi_model');
+        $pengajuan = $this->input->post('pengajuan_skripsi_id');
+        $data['angkatan'] = $this->ujian_skripsi_model->get_pengajuan($pengajuan);
+        foreach($data['angkatan'] as $row){
+            echo $row['judul_skripsi_diajukan'];
+        } 
     }
 
 }

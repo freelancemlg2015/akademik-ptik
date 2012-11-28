@@ -17,7 +17,7 @@ class Pengajuan_skripsi_model extends CI_Model {
                         ->join('m_dosen', 'm_dosen.id = t_pengajuan_skripsi.dosen_pembimbing_1_id', 'left')
                         ->join('m_dosen as a', 'a.id = t_pengajuan_skripsi.dosen_pembimbing_1_id', 'left')                          
                         ->join('t_pengajuan_skripsi_detail', 't_pengajuan_skripsi_detail.pengajuan_skripsi_id = t_pengajuan_skripsi.id', 'left')
-                        ->join('t_rencana_mata_pelajaran_pokok_detail', 't_rencana_mata_pelajaran_pokok_detail.mahasiswa_id = t_pengajuan_skripsi.mahasiswa_id', 'left')
+                        ->join('t_rencana_mata_pelajaran_pokok_detail', 't_rencana_mata_pelajaran_pokok_detail.id = t_pengajuan_skripsi.rencana_mata_pelajaran_detail_id', 'left')
                         ->join('m_mahasiswa', 'm_mahasiswa.id = t_rencana_mata_pelajaran_pokok_detail.mahasiswa_id', 'left');
     }
 
@@ -109,11 +109,10 @@ class Pengajuan_skripsi_model extends CI_Model {
     }
     
     function get_mahasiswa($id=NULL){
-        $this->db->select('a.id, a.mahasiswa_id, d.nama');
+        $this->db->select('a.id, a.rencana_mata_pelajaran_detail_id, c.nama');
         $this->db->from('t_pengajuan_skripsi as a');
-        $this->db->join('m_angkatan as b', 'a.angkatan_id = b.id', 'left');
-        $this->db->join('m_tahun_akademik as c', 'b.tahun_akademik_id = c.id', 'left');
-        $this->db->join('m_mahasiswa as d', 'a.mahasiswa_id = d.id', 'left');
+        $this->db->join('t_rencana_mata_pelajaran_pokok_detail as b', 'a.rencana_mata_pelajaran_detail_id = b.id', 'left');
+        $this->db->join('m_mahasiswa as c', 'b.mahasiswa_id = c.id', 'left');
         $this->db->where('a.id',$id);
         $Q = $this->db->get();
         foreach ($Q->result_array() as $row) $data[] = $row;
@@ -161,7 +160,6 @@ class Pengajuan_skripsi_model extends CI_Model {
         $this->db->where('a.pengajuan_skripsi_id', $id);
         $Q = $this->db->get();
         foreach($Q->result_array() as $row) $data[] = $row['pengajuan_skripsi_id'];
-        echo $this->db->last_query();
         return @$data;        
     } 
 }

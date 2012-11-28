@@ -172,7 +172,7 @@ class Rencana_mata_pelajaran_model extends CI_Model {
         $this->db->join('m_semester', 'm_semester.id = t_plot_mata_kuliah.semester_id', 'left');
         $Q = $this->db->get();
         foreach ($Q->result_array() as $row) $data[] = $row;
-        return $data;
+		return $data;
     }
     
     function get_tahun_angkatan($id=NULL){
