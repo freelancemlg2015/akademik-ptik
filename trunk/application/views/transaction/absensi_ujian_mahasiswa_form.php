@@ -25,12 +25,13 @@ $control_label = array(
 				<tr class="table-bordered span4">
 					<th style="width:20px">No.</th>
 					<th style="width:20%">NIM</th>
+					<th style="width:20%">Kode Mahasiswa</th>
 					<th style="width:70%">Nama</th>
 					<th >Status</th>
 				</tr>
 			</thead>
 			<tbody id="listMahasiswa">
-				<tr><td colspan="4">&nbsp;</td></tr>
+				<tr><td colspan="5">&nbsp;</td></tr>
 			</tbody>
 			<div class="control-group" id="data-sub-form" style="display:none"></div>
 		</table>

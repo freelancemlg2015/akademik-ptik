@@ -939,53 +939,134 @@ $config = array(
     /* NILAI FISIK : Indah */
     ), 'nilai_fisik_create' => array(
         array(
-            'field' => 'mahasiswa_id',
-            'label' => 'mahasiswa_id',
-            'rules' => 'trim|required'
+            'field' => 'angkatan_id',
+            'label' => 'angkatan',
+            'rules' => 'trim|required|greater_than[0]'
         ),
-        array(
-            'field' => 'nilai_fisik',
-            'label' => 'nilai_fisik',
-            'rules' => 'trim|required'
+		array(
+            'field' => 'semester_id',
+            'label' => 'semester',
+            'rules' => 'trim|required|greater_than[0]'
+        ),
+		array(
+            'field' => 'program_studi_id',
+            'label' => 'program studi',
+            'rules' => 'trim|required|greater_than[0]'
+        ),
+		array(
+            'field' => 'mata_kuliah_id',
+            'label' => 'mata kuliah',
+            'rules' => 'trim|required|greater_than[0]'
         )
     ), 'nilai_fisik_update' => array(
         array(
-            'field' => 'mahasiswa_id',
-            'label' => 'mahasiswa_id',
-            'rules' => 'trim|required'
+            'field' => 'angkatan_id',
+            'label' => 'angkatan nilai',
+            'rules' => 'trim|required|greater_than[0]'
         ),
-        array(
-            'field' => 'nilai_fisik',
-            'label' => 'nilai_fisik',
-            'rules' => 'trim|required'
+		array(
+            'field' => 'semester_id',
+            'label' => 'semester',
+            'rules' => 'trim|required|greater_than[0]'
+        ),
+		array(
+            'field' => 'program_studi_id',
+            'label' => 'program studi',
+            'rules' => 'trim|required|greater_than[0]'
+        ),
+		array(
+            'field' => 'mata_kuliah_id',
+            'label' => 'mata kuliah',
+            'rules' => 'trim|required|greater_than[0]'
         )
     
     /*NILAI MENTAL*/    
     ), 'nilai_mental_create' => array(
         array(
-            'field' => 'nim',
-            'label' => 'nim',
-            'rules' => 'trim|required'
+            'field' => 'angkatan_id',
+            'label' => 'angkatan',
+            'rules' => 'trim|required|greater_than[0]'
         ),
-        array(
-            'field' => 'nilai_mental',
-            'label' => 'nilai_mental',
-            'rules' => 'trim|required'
+		array(
+            'field' => 'semester_id',
+            'label' => 'semester',
+            'rules' => 'trim|required|greater_than[0]'
+        ),
+		array(
+            'field' => 'program_studi_id',
+            'label' => 'program studi',
+            'rules' => 'trim|required|greater_than[0]'
+        ),
+		array(
+            'field' => 'mata_kuliah_id',
+            'label' => 'mata kuliah',
+            'rules' => 'trim|required|greater_than[0]'
         )
     ), 'nilai_mental_update' => array(
         array(
-            'field' => 'nim',
-            'label' => 'nim',
-            'rules' => 'trim|required'
+            'field' => 'angkatan_id',
+            'label' => 'angkatan nilai',
+            'rules' => 'trim|required|greater_than[0]'
         ),
-        array(
-            'field' => 'nilai_mental',
-            'label' => 'nilai_mental',
-            'rules' => 'trim|required'
+		array(
+            'field' => 'semester_id',
+            'label' => 'semester',
+            'rules' => 'trim|required|greater_than[0]'
+        ),
+		array(
+            'field' => 'program_studi_id',
+            'label' => 'program studi',
+            'rules' => 'trim|required|greater_than[0]'
+        ),
+		array(
+            'field' => 'mata_kuliah_id',
+            'label' => 'mata kuliah',
+            'rules' => 'trim|required|greater_than[0]'
         )
-    
-
-    /* JADWAL KULIAH induk*/
+	/*kode_ujian_mahasiswa*/    
+    ), 'kode_ujian_mahasiswa_create' => array(
+        array(
+            'field' => 'angkatan_id',
+            'label' => 'angkatan',
+            'rules' => 'trim|required|greater_than[0]'
+        ),
+		array(
+            'field' => 'semester_id',
+            'label' => 'semester',
+            'rules' => 'trim|required|greater_than[0]'
+        ),
+		array(
+            'field' => 'program_studi_id',
+            'label' => 'program studi',
+            'rules' => 'trim|required|greater_than[0]'
+        ),
+		array(
+            'field' => 'mata_kuliah_id',
+            'label' => 'mata kuliah',
+            'rules' => 'trim|required|greater_than[0]'
+        )
+    ), 'kode_ujian_mahasiswa_update' => array(
+        array(
+            'field' => 'angkatan_id',
+            'label' => 'angkatan nilai',
+            'rules' => 'trim|required|greater_than[0]'
+        ),
+		array(
+            'field' => 'semester_id',
+            'label' => 'semester',
+            'rules' => 'trim|required|greater_than[0]'
+        ),
+		array(
+            'field' => 'program_studi_id',
+            'label' => 'program studi',
+            'rules' => 'trim|required|greater_than[0]'
+        ),
+		array(
+            'field' => 'mata_kuliah_id',
+            'label' => 'mata kuliah',
+            'rules' => 'trim|required|greater_than[0]'
+        )
+	/* JADWAL KULIAH induk*/
     ), 'jadwal_kuliah_induk_create' => array(
         array(
             'field' => 'angkatan_id',

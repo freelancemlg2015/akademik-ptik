@@ -19,17 +19,18 @@ $action_url =''
     </div>
 	
 	<div class="control-group">
-		<table class="table table-bordered table-striped container-full data_list" >
+		<table class="table table-bordered table-striped container-full" >
 			<thead class="table table-bordered span4">
 				<tr class="table-bordered span4">
 					<th style="width:20px">No.</th>
 					<th style="width:20%">NIM</th>
+					<th style="width:20%">Kode Mahasiswa</th>
 					<th >Nama</th>
 					<th style="width:10%">Status</th>
 				</tr>
 			</thead>
 			<tbody id="listMahasiswa">
-				<tr><td colspan="4">&nbsp;</td></tr>
+				<tr><td colspan="5">&nbsp;</td></tr>
 			</tbody>
 			<div class="control-group" id="data-sub-form" style="display:none"></div>
 		</table>

@@ -2,7 +2,7 @@
 
 /*
  * Indah
- * Transaksi :  nilai Mental
+ * Transaksi :  nilai fisik
  * 9/9/2012
  */
 
@@ -59,37 +59,85 @@ class Nilai_mental extends CI_Controller {
         $data['sort_order'] = $sort_order;
 
         $data['page_title'] = 'Nilai Mental';
+		$angkatan_ids=(int)$this->input->post('angkatan_id');
+		if($angkatan_ids>0)
+		{
+			$data_program_studi=array();
+			$query = $this->db->query("select a.id, a.nama_program_studi, a.kode_program_studi from akademik_m_program_studi a where a.active ='1' and a.angkatan_id='$angkatan_ids';");
+			foreach($query->result_array() as $row){
+				if($this->input->post('program_studi')==$row['id']) {
+					$data_program_studi[$row['id']] = '<option selected value=\''.$row['id'].'\' >'.$row['kode_program_studi'].'-'.$row['nama_program_studi'].'</option>';
+				} else {
+					$data_program_studi[$row['id']] = '<option value=\''.$row['id'].'\' >'.$row['kode_program_studi'].'-'.$row['nama_program_studi'].'</option>';
+				}
+			}
+			$data['data_program_studi']=$data_program_studi;
+			//$data['program_studi_ids']=$absensi_mahasiswa_data->program_studi_id;
+		} else {
+			$data['data_program_studi']=array();
+		}
+		$mata_kuliahs=$this->input->post('mata_kuliah');
+		if($mata_kuliahs>0)
+		{
+			$data_mata_kuliah = array();
+			$query = $this->db->query("select a.id, a.kode_mata_kuliah, a.nama_mata_kuliah from akademik_m_mata_kuliah a where a.angkatan_id =$angkatan_ids and program_studi_id= ".$data['program_studi']);
+			foreach($query->result_array() as $row){
+				if($mata_kuliahs==$row['id']) {
+					$data_mata_kuliah[$row['id']]= '<option selected value=\''.$row['id'].'\' >'.$row['kode_mata_kuliah'].'-'.$row['nama_mata_kuliah'].'</option>';
+				} else {
+					$data_mata_kuliah[$row['id']]= '<option value=\''.$row['id'].'\' >'.$row['kode_mata_kuliah'].'-'.$row['nama_mata_kuliah'].'</option>';
+				}
+			}
+			$data['data_mata_kuliah']=$data_mata_kuliah;
+		} else {
+			$data['data_mata_kuliah'] = array();
+			$data['program_studi_ids']=0;
+		}
+		$this->crud->use_table('m_angkatan');
+		$angkatan_data = array();
+		$angkatan_data[0] = '';
+        foreach ($this->crud->retrieve()->result() as $row) {
+			$angkatan_data[$row->id] = $row->nama_angkatan;
+        }
+		$data['angkatan_options']=$angkatan_data;
+		
+		$this->crud->use_table('m_tahun_akademik');
+		$tahun_akademik_data = array();
+		$tahun_akademik_data[0] ="";
+        foreach ($this->crud->retrieve()->result() as $row) {
+			$tahun_akademik_data[$row->id] = $row->tahun_ajar_mulai.'-'.$row->tahun_ajar_akhir;
+		}
+        $data['tahun_akademik_options'] = $tahun_akademik_data;
+        
+		$this->crud->use_table('m_semester');
+		$semester_data = array();
+		$semester_data[0] = '';
+		foreach ($this->crud->retrieve()->result() as $row) {
+			$semester_data[$row->id] = $row->nama_semester;
+		}
+        $data['semester_options'] = $semester_data;
+		
+		
+		$data['angkatan_id']=(int)$this->input->post('angkatan_id');
+		$data['program_studi']=(int)$this->input->post('program_studi');
+		$data['tahun_akademik_id']=$this->input->post('tahun_akademik_id');
+		$data['semester_id']=$this->input->post('semester_id');
+		
+		$data['opt_angkatan_url'] = base_url() . 'transaction/select_data_form/getOptAngkatan';
+		$data['opt_program_studi_url'] = base_url() . 'transaction/select_data_form/getOptProgramStudi';
+        $data['opt_mata_kuliah_url'] =  base_url() . 'transaction/select_data_form/getOptMataKuliah';
+		$data['opt_data_mahasiswa_url'] = base_url() . 'transaction/select_data_form/getOptDataNilaiMahasiswaMental';
 
         $data['tools'] = array(
             'transaction/nilai_mental/create' => 'New'
         );
-		
-		$query = $this->db->query('SELECT a.id, a.kode_angkatan, a.nama_angkatan FROM akademik_m_angkatan a');
-        $angkatans = array(''=>'pilih');
-        foreach ($query->result_array() as $row) {
-            $angkatans[$row['id']] = $row['kode_angkatan'] . '-' . $row['nama_angkatan'];
-        }
-        $query = $this->db->query('SELECT a.id, a.tahun_ajar_mulai, a.tahun_ajar_akhir FROM akademik_m_tahun_akademik a WHERE a.active =\'1\';');
-        $opt_tahun_akademik = array(''=>'pilih');
-        foreach ($query->result_array() as $row) {
-            $opt_tahun_akademik[$row['id']] = $row['tahun_ajar_mulai'].' - '.$row['tahun_ajar_akhir'] ;
-        }		
-		$data['angkatans'] = $angkatans;
-        $data['opt_tahun_akademik'] = $opt_tahun_akademik;
-		$data['opt_semester'] = array(''=>'pilih', '1' => 'Semester 1', '2' => 'Semester 1', '2' => 'Semester 2', '3' => 'Semester 3');
-        $this->load->model('nilai_fisik_model', 'nilai_fisik');
-        $data = array_merge($data, $this->nilai_fisik->set_default()); //merge dengan arr data dengan default
-        $data['opt_tahun_akademik'] = $opt_tahun_akademik;
-		$data['opt_program_studi_url'] = base_url() . 'transaction/nilai_akademik/getOptProgramStudi';
-		$data['Mahasiswa_list_url'] =  base_url() . 'transaction/nilai_mental/getMahasiswa';
-		$data['submit_url'] =  base_url() . 'transaction/nilai_mental/submit_nilai';
 
         $this->load->view('transaction/nilai_mental', $data);
     }
 
     function search() {
         $query_array = array(
-            'mahasiswa_id' => $this->input->post('mahasiswa_id'),
+            'nim' => $this->input->post('nim'),
             'nilai_mental' => $this->input->post('nilai_mental'),
             'active' => 1
         );
@@ -116,7 +164,7 @@ class Nilai_mental extends CI_Controller {
             'transaction/nilai_mental/' . $id . '/edit' => 'Edit',
             'transaction/nilai_mental/' . $id . '/delete' => 'Delete'
         );
-        $data['page_title'] = 'Detail nilai_mental';
+        $data['page_title'] = 'Detail Nilai Fisik';
         $this->load->view('transaction/nilai_mental_info', $data);
     }
 
@@ -141,165 +189,136 @@ class Nilai_mental extends CI_Controller {
         $this->load->library(array('form_validation', 'table'));
         $this->load->helper(array('form', 'snippets'));
         $this->form_validation->set_error_delimiters('<span class="notice">', '</span>');
+		$is_valid=1;
+		//echo $is_valid; return; exit;
+		/*
+		if($this->input->post('angkatan_id')<=0) {$is_valid=0;}
+		//if($this->input->post('tahun_akademik_id_attr')=='') {$is_valid=0;}
+		if($this->input->post('semester_id')<=0) {$is_valid=0;}
+		if($this->input->post('program_studi')<=0) {$is_valid=0;}
+		$mata_kuliah_id=(int)$this->input->post('mata_kuliah_id');
+		if($mata_kuliah_id==0) {$is_valid=0;}
+		*/
         if ($this->form_validation->run('nilai_mental_create') === FALSE) {
             //don't do anything
         } else {
-            $this->crud->use_table('t_nilai_mental');
-            $data_in = array(
-                'mahasiswa_id' => $this->input->post('mahasiswa_id'),
-                'nilai_mental' => $this->input->post('nilai_mental'),
-                'keterangan' => $this->input->post('keterangan'),
-                'created_on' => date($this->config->item('log_date_format')),
-                'created_by' => logged_info()->on
-            );
-            /*
-              echo '<pre>';
-              var_dump($data_in);
-              echo '</pre>';
-             */
-            $created_id = $this->crud->create($data_in);
-            redirect('transaction/nilai_mental/' . $created_id . '/info');
+			if($is_valid==0){
+			} else {
+				$angkatan_id= $this->input->post('angkatan_id');
+				$program_studi_id=$this->input->post('program_studi_id');
+				$semester_id=$this->input->post('semester_id');
+				$mata_kuliah_id=$this->input->post('mata_kuliah_id');
+				$query = $this->db->query("select m.id as rencana_mata_pelajaran_pokok_id, d.mahasiswa_id, s.nim, s.nama as nama_mhs,
+				d.id as rencana_mata_pelajaran_pokok_dtl_id, c.sks_mata_kuliah,
+                a.id as nilai_kuliah_id, a.nilai_mental
+				from akademik_t_rencana_mata_pelajaran_pokok m					
+				left join akademik_t_rencana_mata_pelajaran_pokok_detil d on m.id = d.rencana_mata_pelajaran_id and d.active=1
+				left join akademik_m_mahasiswa s on  d.mahasiswa_id = s.id
+				left join akademik_m_mata_kuliah c on m.mata_kuliah_id = c.id
+				left join akademik_t_nilai_mental a on m.id = a.rencana_mata_pelajaran_pokok_id and a.mahasiswa_id = s.id
+				where m.angkatan_id = $angkatan_id and m.program_studi_id=$program_studi_id  
+				and m.semester_id = $semester_id and m.mata_kuliah_id = $mata_kuliah_id");
+				//echo '<pre>'.$this->db->last_query().'</pre>'; return;
+				foreach($query->result_array() as $row){
+					$nilai_mental = $this->input->post('nilai_mental_'.$row['rencana_mata_pelajaran_pokok_dtl_id']);
+					$parm = array();
+					$parm['nilai_mental'] =  $nilai_mental;
+					if(count($parm)>0){
+						if($row['nilai_kuliah_id']==''){
+							$parm['mahasiswa_id'] = $row['mahasiswa_id'];
+							$parm['rencana_mata_pelajaran_pokok_id'] = $row['rencana_mata_pelajaran_pokok_id'];
+							$parm['created_on'] = date($this->config->item('log_date_format'));
+							$parm['created_by'] = logged_info()->on;
+							$this->db->insert('akademik_t_nilai_mental',$parm);
+						}else{
+							$this->db->where('id',$row['nilai_kuliah_id']);
+							$parm['modified_on'] = date($this->config->item('log_date_format'));
+							$parm['modified_by'] = logged_info()->on;
+							$this->db->update('akademik_t_nilai_mental',$parm);
+						}
+						//echo '<pre>'; print_r($parm); echo '</pre>'; return;
+					}
+				}
+				redirect('transaction/nilai_mental/');
+			}
         }
         $data['action_url'] = $master_url . __FUNCTION__;
         $data['page_title'] = 'Create Nilai Mental';
         $data['tools'] = array(
             'transaction/nilai_mental' => 'Back'
         );
-
-        $this->load->model('nilai_mental_model', 'nilai_mental');
-        $data = array_merge($data, $this->nilai_mental->set_default()); //merge dengan arr data dengan default
-        $query = $this->db->query('SELECT a.id, a.kode_angkatan, a.nama_angkatan FROM akademik_m_angkatan a');
-        $angkatans = array(''=>'pilih');
-        foreach ($query->result_array() as $row) {
-            $angkatans[$row['id']] = $row['kode_angkatan'] . '-' . $row['nama_angkatan'];
+		
+		$angkatan_ids=(int)$this->input->post('angkatan_id');
+		if($angkatan_ids>0)
+		{
+			$data_program_studi=array();
+			$query = $this->db->query("select a.id, a.nama_program_studi, a.kode_program_studi from akademik_m_program_studi a where a.active ='1' and a.angkatan_id='$angkatan_ids';");
+			foreach($query->result_array() as $row){
+				if($this->input->post('program_studi')==$row['id']) {
+					$data_program_studi[$row['id']] = '<option selected value=\''.$row['id'].'\' >'.$row['kode_program_studi'].'-'.$row['nama_program_studi'].'</option>';
+				} else {
+					$data_program_studi[$row['id']] = '<option value=\''.$row['id'].'\' >'.$row['kode_program_studi'].'-'.$row['nama_program_studi'].'</option>';
+				}
+			}
+			$data['data_program_studi']=$data_program_studi;
+			//$data['program_studi_ids']=$absensi_mahasiswa_data->program_studi_id;
+		} else {
+			$data['data_program_studi']=array();
+		}
+		$mata_kuliahs=$this->input->post('mata_kuliah');
+		if($mata_kuliahs>0)
+		{
+			$data_mata_kuliah = array();
+			$query = $this->db->query("select a.id, a.kode_mata_kuliah, a.nama_mata_kuliah from akademik_m_mata_kuliah a where a.angkatan_id =$angkatan_ids and program_studi_id= ".$data['program_studi']);
+			foreach($query->result_array() as $row){
+				if($mata_kuliahs==$row['id']) {
+					$data_mata_kuliah[$row['id']]= '<option selected value=\''.$row['id'].'\' >'.$row['kode_mata_kuliah'].'-'.$row['nama_mata_kuliah'].'</option>';
+				} else {
+					$data_mata_kuliah[$row['id']]= '<option value=\''.$row['id'].'\' >'.$row['kode_mata_kuliah'].'-'.$row['nama_mata_kuliah'].'</option>';
+				}
+			}
+			$data['data_mata_kuliah']=$data_mata_kuliah;
+		} else {
+			$data['data_mata_kuliah'] = array();
+			$data['program_studi_ids']=0;
+		}
+		$this->crud->use_table('m_angkatan');
+		$angkatan_data = array();
+		$angkatan_data[0] = '';
+        foreach ($this->crud->retrieve()->result() as $row) {
+			$angkatan_data[$row->id] = $row->nama_angkatan;
         }
-        $query = $this->db->query('SELECT a.id, a.tahun_ajar_mulai, a.tahun_ajar_akhir FROM akademik_m_tahun_akademik a WHERE a.active =\'1\';');
-        $opt_tahun_akademik = array(''=>'pilih');
-        foreach ($query->result_array() as $row) {
-            $opt_tahun_akademik[$row['id']] = $row['tahun_ajar_mulai'].' - '.$row['tahun_ajar_akhir'] ;
-        }		
-		$data['angkatans'] = $angkatans;
-        $data['opt_tahun_akademik'] = $opt_tahun_akademik;
-		$data['opt_semester'] = array(''=>'pilih', '1' => 'Semester 1', '2' => 'Semester 1', '2' => 'Semester 2', '3' => 'Semester 3');
-        $this->load->model('nilai_fisik_model', 'nilai_fisik');
-        $data = array_merge($data, $this->nilai_fisik->set_default()); //merge dengan arr data dengan default
-        $data['opt_tahun_akademik'] = $opt_tahun_akademik;
-		$data['opt_program_studi_url'] = base_url() . 'transaction/nilai_akademik/getOptProgramStudi';
-		$data['Mahasiswa_list_url'] =  base_url() . 'transaction/nilai_mental/getMahasiswa';
-		$data['submit_url'] =  base_url() . 'transaction/nilai_mental/submit_nilai';
-        $data['nim']              = '';
+		$data['angkatan_options']=$angkatan_data;
+		
+		$this->crud->use_table('m_tahun_akademik');
+		$tahun_akademik_data = array();
+		$tahun_akademik_data[0] ="";
+        foreach ($this->crud->retrieve()->result() as $row) {
+			$tahun_akademik_data[$row->id] = $row->tahun_ajar_mulai.'-'.$row->tahun_ajar_akhir;
+		}
+        $data['tahun_akademik_options'] = $tahun_akademik_data;
+        
+		$this->crud->use_table('m_semester');
+		$semester_data = array();
+		$semester_data[0] = '';
+		foreach ($this->crud->retrieve()->result() as $row) {
+			$semester_data[$row->id] = $row->nama_semester;
+		}
+        $data['semester_options'] = $semester_data;
+		
+		
+		$data['angkatan_id']=(int)$this->input->post('angkatan_id');
+		$data['program_studi']=(int)$this->input->post('program_studi');
+		$data['tahun_akademik_id']=$this->input->post('tahun_akademik_id');
+		$data['semester_id']=$this->input->post('semester_id');
+		
+		$data['opt_angkatan_url'] = base_url() . 'transaction/select_data_form/getOptAngkatan';
+		$data['opt_program_studi_url'] = base_url() . 'transaction/select_data_form/getOptProgramStudi';
+        $data['opt_mata_kuliah_url'] =  base_url() . 'transaction/select_data_form/getOptMataKuliah';
+		$data['opt_data_mahasiswa_url'] = base_url() . 'transaction/select_data_form/getOptDataNilaiMahasiswaMental';
         
         $this->load->view('transaction/nilai_mental_form', $data);
     }
-	
-	function getMahasiswa(){
-		$angkatan_id= $this->input->post('angkatan_id');
-        $program_studi_id = $this->input->post('program_studi_id');
-        $tahun_akademik_id = $this->input->post('tahun_akademik_id');
-		$semester = $this->input->post('semester');
-		$mode = $this->input->post('mode');
-		if($mode=='') $mode ='edit';
-		$query = $this->db->query("select a.id, a.nim, a.nama, a.angkatan_id , a.program_studi_id, b.nilai_mental , b.id as nilai_id 
-			from akademik_m_mahasiswa a left join akademik_t_nilai_mental b on a.id = b.mahasiswa_id and b.semester = $semester
-			where a.angkatan_id = $angkatan_id and a.program_studi_id = $program_studi_id"); 
-		//echo $this->db->last_query();
-		$no =1;
-		if($query->num_rows()<1){
-			echo "<tr>";
-            echo "<td colspan='4'>Tidak ada mahasiswa</td>";
-			echo "</tr>";
-		}else foreach($query->result_array() as $row){
-			echo "<tr>";
-            echo "<td>$no</td>";
-            echo "<td>&nbsp;".$row['nim']."</td>";
-            echo "<td>&nbsp;".$row['nama']."</td>";
-			if($mode=='edit'){ 
-				echo "<td>&nbsp;<input type='text' style='width:30px' name='nilai_mental_".$row['id']."' value='".$row['nilai_mental']."' /></td>";
-            }else if($mode=='view'){
-				echo "<td>&nbsp;".$row['nilai_mental']."</td>";
-			}
-            echo "</tr>";
-            $no++;
-		}
-	}
-	
-	function submit_nilai(){
-		$angkatan_id= $this->input->post('angkatan_ids');
-        $program_studi_id = $this->input->post('program_studi_ids');
-        $tahun_akademik_id = $this->input->post('tahun_akademik_ids');
-		$semester = $this->input->post('semester_ids');
-		$query = $this->db->query("select a.id, a.nim, a.nama, a.angkatan_id , a.program_studi_id, b.nilai_mental,  b.id as nilai_id 
-			from akademik_m_mahasiswa a
-			left join akademik_t_nilai_mental b on a.id = b.mahasiswa_id and b.semester = $semester
-			where a.angkatan_id = $angkatan_id and a.program_studi_id = $program_studi_id");
-		foreach($query->result_array() as $row){
-			$nilai = $this->input->post('nilai_mental_'.$row['id']);
-			if($nilai !=''){
-				if($row['nilai_id']==""){
-					$parm = array('mahasiswa_id'=>$row['id'], 'semester'=>$semester,'nilai_mental'=>$nilai);
-					$this->db->insert('akademik_t_nilai_mental',$parm);
-				}else{
-					$this->db->where('id',$row['nilai_id']);
-					$parm = array('nilai_fisik'=>$nilai);
-					$this->db->update('akademik_t_nilai_mental',$parm);
-					
-				}
-				echo $this->db->last_query();
-			}
-		}
-	}
-
-    function edit() {
-        $data['auth'] = $this->auth;
-        $data['action_type'] = __FUNCTION__;
-        $master_url = 'transaction/nilai_mental/';
-        $id = $this->uri->segment(3);
-
-        $this->load->library(array('form_validation', 'table'));
-        $this->load->helper(array('form', 'snippets'));
-        $this->form_validation->set_error_delimiters('<span class="notice">', '</span>');
-        if ($this->form_validation->run('nilai_mental_update') === FALSE) {
-            //don't do anything
-        } else {
-            $this->crud->use_table('t_nilai_mental');
-            $criteria = array(
-                'id' => $id
-            );
-            $data_in = array(
-                'mahasiswa_id' => $this->input->post('mahasiswa_id'),
-                'nilai_mental' => $this->input->post('nilai_mental'),
-                'modified_on' => date($this->config->item('log_date_format')),
-                'modified_by' => logged_info()->on
-            );
-            $this->crud->update($criteria, $data_in);
-            redirect('transaction/nilai_mental/' . $id . '/info');
-        }
-        $data['action_url'] = $master_url . $id . '/' . __FUNCTION__;
-        $data['page_title'] = 'Update Nilai Mental';
-        $data['tools'] = array(
-            'transaction/nilai_mental' => 'Back'
-        );
-
-        $this->crud->use_table('t_nilai_mental');
-        $nilai_mental_data = $this->crud->retrieve(array('id' => $id))->row();
-
-        $this->load->model('nilai_mental_model', 'nilai_mental');
-        $data = array_merge($data, $this->nilai_mental->set_default()); //merge dengan arr data dengan default
-        $data = array_merge($data, (array) $nilai_mental_data);
-        $this->load->view('transaction/nilai_mental_form', $data);
-    }
-
-    function unique_nilai_mental($nilai_mental) {
-        $this->crud->use_table('t_nilai_mental');
-        $nilai_mental = $this->crud->retrieve(array('nilai_mental' => $nilai_mental))->row();
-        if (sizeof($nilai_mental) > 0) {
-            $this->form_validation->set_message(__FUNCTION__, 'Nilai Mental sudah terdaftar'); //pakai function karena ini harus sama dengan nama function nya
-            return FALSE;
-        } else {
-            return true;
-        }
-    }
-
 }
 
 ?>

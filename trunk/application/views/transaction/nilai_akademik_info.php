@@ -37,14 +37,7 @@ $control_label = array(
                 <th class="span2">Nilai Akhir</th>
                 <td><?= $nilai_akhir ?></td>
             </tr>
-            <tr>
-                <th class="span2">Rangking</th>
-                <td><?= $rangking ?></td>
-            </tr>
-            <tr>
-                <th class="span2">Keterangan</th>
-                <td><?= $keterangan ?></td>
-            </tr>
+            
         </tbody>
     </table>
 </div>
