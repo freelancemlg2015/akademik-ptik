@@ -59,9 +59,9 @@ $this->load->view('_shared/menus');
               <td>' . $row->nama . '</td>
               <td>' . $row->judul_skripsi . '</td>    
               <td>' . $row->tgl_ujian . '</td>   
-              <td>' . $row->ketua_penguji . '</td>     
-              <td>' . $jam . '</td>    
-              <td>' . $row->sekretaris_penguji . '</td>    
+              <td>' . $jam . '</td>   
+              <td>' . $row->nama_ketua_penguji . '</td>     
+              <td>' . $row->nama_sekretaris . '</td>    
             </tr>
           ';
         }
