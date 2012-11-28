@@ -7,63 +7,23 @@ $control_label = array(
     'class' => 'control-label'
 );
 ?>
-<?= form_open($action_url, array('class' => 'form-horizontal')); ?>      
-<div class="container-full" id="nilai_akademik">    
-    <div class="control-group">
-        <?= form_label('Angkatan', 'angkatan', $control_label); ?>
-        <div class="controls">
-            <?= form_dropdown('angkatan', $angkatans, '', ' id="angkatan" onChange=\'changeAngkatan()\''); ?>
-            <p class="help-block"><?php echo form_error('angkatan') ?></p>
-        </div>
-    </div>  
 
-
-    <div class="control-group">
-        <?= form_label('Tahun Akademik', 'tahun_akademik', $control_label); ?>
-        <div class="controls">
-            <?= form_dropdown('tahun_akademik', $opt_tahun_akademik, '', 'id="tahun_akademik" ') ?>
-            <p class="help-block"><?php echo form_error('tahun_akademik') ?></p>
-        </div>
-    </div>
-
-    <div class="control-group">
-        <?= form_label('Semester', 'semester', $control_label); ?>
-        <div class="controls">
-            <?= form_dropdown('semester', $opt_semester, '', 'id="semester"') ?>
-            <p class="help-block"><?php echo form_error('semester') ?></p>
-        </div>
-    </div>
-
-    <div class="control-group">
-        <?= form_label('Program Studi', 'program_studi', $control_label); ?>
-        <div class="controls">
-            <?= form_dropdown('program_studi', array(), '', 'id="program_studi" onChange=\'programStudiChange()\''); ?>
-            <p class="help-block"><?php echo form_error('program_studi') ?></p>
-        </div>
-    </div>
-
-    <div class="control-group">
-        <?= form_label('Mata Kuliah', 'mata_kuliah', $control_label); ?>
-        <div class="controls">
-            <?= form_dropdown('mata_kuliah', array(), '', 'id="mata_kuliah" onChange=getMahasiswa()') ?>
-            <p class="help-block"><?php echo form_error('mata_kuliah') ?></p>
-        </div>
-    </div>
-    <?php echo form_close() ?>
-    <?= form_open($action_url, array('class' => 'form-horizontal', 'id' => 'formNilai')); ?> 
+<div class="container-full" id="nilai_akademik">
+    <?php echo form_open($action_url, array('class' => 'form-horizontal')); ?>
+	<?php $this->load->view('transaction/header_select_transaction_nilai'); ?>
+	
     <input type="hidden" id="tahun_akademik_ids" name="tahun_akademik_ids" />
     <input type="hidden" id="angkatan_ids" name="angkatan_ids" />
     <input type="hidden" id="semester_ids" name="semester_ids" />
     <input type="hidden" id="program_studi_ids" name="program_studi_ids" />
     <input type="hidden" id="mata_kuliah_ids" name="mata_kuliah_ids" />
-    <table class="table table-bordered table-striped container-full data_list" >
+    <table class="table table-bordered table-striped container-full" >
         <thead class="table table-bordered span4">
             <tr class="table-bordered span4">
                 <th rowspan='2' style="width:20px">No.</th>
                 <th rowspan='2' style="width:80px">NIM</th>
                 <th rowspan='2' >Nama</th>
                 <th colspan='4' style="">Nilai</th>
-
             </tr>
             <tr>
                 <th style="width:80px">Tengah Sms</th>
@@ -77,70 +37,28 @@ $control_label = array(
         </tbody>
     </table>
     <?php echo form_close() ?>
-	<div class="form-actions well">
-        <button class="btn btn-small btn-primary" onClick="submitNilai(); return false;">Simpan</button>
-    </div>
 </div>
-<script>
-    function changeTahunAkademik(){
-        var tahun_akademik = $('#tahun_akademik').val();
-        var angkatan_id = $('#angkatan').val();
-        $.post('<?php echo $opt_program_studi_url; ?>',{tahun_akademik_id: tahun_akademik,angkatan_id: angkatan_id },
-        function(data){
-            $('#program_studi').html(data);
-            
-        });
-    }
-    
-    function changeAngkatan(){
-        var tahun_akademik = $('#tahun_akademik').val();
-        var angkatan_id = $('#angkatan').val();
-        $.post('<?php echo $opt_program_studi_url; ?>',{tahun_akademik_id: tahun_akademik,angkatan_id: angkatan_id },
-        function(data){
-            $('#program_studi').html(data);
-            
-        });
-    }
-    
-    function programStudiChange(){
-        var angkatan_id = $('#angkatan').val();
-        var program_studi_id = $('#program_studi').val();
-        $.post('<?php echo $opt_mata_kuliah_url; ?>',{program_studi_id: program_studi_id,angkatan_id: angkatan_id },
-        function(data){
-            $('#mata_kuliah').html(data);            
-        });
-    }
-    
-    function getMahasiswa(){
-        var mata_kuliah_id = $('#mata_kuliah').val();
-        var angkatan_id = $('#angkatan').val();
-        var program_studi_id = $('#program_studi').val();
-        var tahun_akademik_id= $('#tahun_akademik').val();
-		var semester_id = $('#semester').val();
-		
-		$('#tahun_akademik_ids').val(tahun_akademik_id)
-		$('#angkatan_ids').val(angkatan_id)
-		$('#semester_ids').val(semester_id)
-		$('#program_studi_ids').val(program_studi_id)
-		$('#mata_kuliah_ids').val(mata_kuliah_id)
-        if(mata_kuliah_id!='' & angkatan_id!='' & program_studi_id !='' & tahun_akademik_id !='' ) $.post('<?php echo $Mahasiswa_list_url; ?>',{program_studi_id: program_studi_id,angkatan_id: angkatan_id, mata_kuliah_id :mata_kuliah_id,tahun_akademik_id: tahun_akademik_id },
+<?php $this->load->view('_shared/footer'); ?>
+<script type="text/javascript">
+    function mataKuliahChange(){
+		///alert('wq'); return;
+		$('#listMahasiswa').hide();
+		//$('#listMahasiswa').show();
+		if($('#pertemuan_id').val()<=0) return;
+		var tahun_akademik = $('#tahun_akademik_id').val();
+        var angkatan_id = $('#angkatan_id').val();
+		var pertemuan_id = $('#pertemuan_id').val();
+		var program_studi_id = $('#program_studi_id').val();
+		var mata_kuliah_id = $('#mata_kuliah_id').val();
+		var semester_id = $('#semester_id').val();
+		var mode = 'edit';
+		//alert(pertemuan_id); 
+        $.post('<?php echo $opt_data_mahasiswa_url; ?>',{tahun_akademik_id: tahun_akademik,angkatan_id: angkatan_id,
+					pertemuan_id: pertemuan_id, semester_id:semester_id,
+					program_studi_id: program_studi_id,mata_kuliah_id: mata_kuliah_id, mode: mode},
         function(data){
             $('#listMahasiswa').html(data);
-            /*$('#formNilai').submit(function(){
-				return false;
-			})*/
+			$('#listMahasiswa').show();
         });
     }
-	
-	function submitNilai(){
-		var data_nilai = $('#formNilai').serializeArray();
-		 $.post('<?php echo $submit_url; ?>',data_nilai,function(data){
-		 });
-		//alert('formNilai submit');
-		return false;
-		
-	}
-	
-    
 </script>
-<?php $this->load->view('_shared/footer'); ?>

@@ -47,6 +47,8 @@ class Select_data_form extends CI_Controller {
         $angkatan_id= $this->input->post('angkatan_id');
         $program_studi_id = $this->input->post('program_studi_id');
 		$semester_id=$this->input->post('semester_id');
+		$jenis_nilai=(int)$this->input->post('jenis_nilai');
+		
 		/*
 		$sql = "select a.id, a.kode_mata_kuliah, a.nama_mata_kuliah from akademik_m_mata_kuliah a ".
 				"where a.angkatan_id=$angkatan_id and program_studi_id= $program_studi_id";
@@ -55,7 +57,7 @@ class Select_data_form extends CI_Controller {
 				from akademik_t_rencana_mata_pelajaran_pokok a
 				left join akademik_m_mata_kuliah d on a.mata_kuliah_id = d.id
 				where a.angkatan_id = $angkatan_id and a.program_studi_id=$program_studi_id 
-					and a.semester_id = $semester_id 
+					and a.semester_id = $semester_id and d.jenis_nilai=$jenis_nilai
 					group by d.id
 					");//group by d.id
 		$query = $this->db->query($sql);
@@ -198,6 +200,338 @@ and m.semester_id = $semester_id and m.mata_kuliah_id = $mata_kuliah_id");
         }
 	}
 	
+	function getOptDataNilaiMahasiswaAkademik() {
+		$angkatan_id= $this->input->post('angkatan_id');
+		$program_studi_id=$this->input->post('program_studi_id');
+		$mata_kuliah_id=$this->input->post('mata_kuliah_id');
+		$semester_id=$this->input->post('semester_id');
+		$mode = $this->input->post('mode');
+		if($mode=='') $mode ='edit';
+		$query = $this->db->query("select m.id as rencana_mata_pelajaran_pokok_id, d.mahasiswa_id, s.nim, s.nama as nama_mhs,
+				d.id as rencana_mata_pelajaran_pokok_dtl_id, c.sks_mata_kuliah,
+                a.id as nilai_kuliah_id, a.nilai_nts, a.nilai_tgs, a.nilai_nas, a.nilai_prb, a.nilai_akhir
+				from akademik_t_rencana_mata_pelajaran_pokok m					
+				left join akademik_t_rencana_mata_pelajaran_pokok_detil d on m.id = d.rencana_mata_pelajaran_id and d.active=1
+				left join akademik_m_mahasiswa s on  d.mahasiswa_id = s.id
+				left join akademik_m_mata_kuliah c on m.mata_kuliah_id = c.id
+				left join akademik_t_nilai_akademik a on m.id = a.rencana_mata_pelajaran_pokok_id and a.mahasiswa_id = s.id
+				where m.angkatan_id = $angkatan_id and m.program_studi_id=$program_studi_id  
+				and m.semester_id = $semester_id and m.mata_kuliah_id = $mata_kuliah_id");
+				//echo '<pre>'.$this->db->last_query().'</pre>'; //return;
+		$no = 1;
+        //for($i = 0; $i<10; $i++){
+		if($query->num_rows()<1){
+			echo "<tr>";
+            echo "<td colspan='4'>Tidak ada mahasiswa yang mengambil mata kuliah ini</td>";
+			echo "</tr>";
+		} else {
+			/*
+			foreach($query->result_array() as $row){
+				$nilai_nts = $this->input->post('nilai_nts_'.$row['rencana_mata_pelajaran_pokok_id']);
+				$parm = array();
+				if($nilai_nts !='') $parm['nilai_nts'] = $nilai_nts;
+			}
+			*/
+			foreach($query->result_array() as $row){
+				//$row['rencana_mata_pelajaran_pokok_id'] = $no;
+				//$row['nilai_akhir'] = '10';
+				//$row['nilai_akhir_huruf'] = 'A';
+				echo "<tr id='".$row['nilai_kuliah_id']."'>";
+				echo "<td>$no</td>";
+				echo "<td>&nbsp;".$row['nim']."</td>";
+				echo "<td>&nbsp;".$row['nama_mhs']."</td>";
+				$nilai_hadir = 0;
+				//if($row['nilai_kuliah_id'] !='') $nilai_hadir=$row['absensi_id'];
+				if($mode=='edit'){ 
+					echo "<td>&nbsp;<input type='text' style='width:30px' autocomplete='off' name='nilai_nts_".$row['rencana_mata_pelajaran_pokok_dtl_id']."' value='".$row['nilai_nts']."' />";
+					echo "<td>&nbsp;<input type='text' style='width:30px' autocomplete='off' name='nilai_tgs_".$row['rencana_mata_pelajaran_pokok_dtl_id']."' value='".$row['nilai_tgs']."' />";
+					echo "<td>&nbsp;<input type='text' style='width:30px' autocomplete='off' name='nilai_nas_".$row['rencana_mata_pelajaran_pokok_dtl_id']."' value='".$row['nilai_nas']."' />";
+					echo "<td>&nbsp;<input type='text' style='width:30px' autocomplete='off' name='nilai_prb_".$row['rencana_mata_pelajaran_pokok_dtl_id']."' value='".$row['nilai_prb']."' />";
+					echo "</td>";
+				} else {
+					$nilai_akhir=0;
+					$nilai_akhir=$row['nilai_akhir'];
+					if($nilai_akhir==0){
+						$str_nilai = '&nbsp;';
+					}elseif($nilai_akhir > 90){
+						$str_nilai = 'A';
+					}elseif($nilai_akhir > 80 && $nilai_akhir <= 90 ){
+						$str_nilai = 'B+';
+					}elseif($nilai_akhir > 75 && $nilai_akhir <= 80 ){
+						$str_nilai = 'B';
+					}elseif($nilai_akhir > 70 && $nilai_akhir <= 75 ){
+						$str_nilai = 'B-';
+					}elseif($nilai_akhir > 60 && $nilai_akhir <= 70 ){
+						$str_nilai = 'C+';
+					}else{
+						$str_nilai= 'E';
+					}
+					//$nilai_akhirs=$this->NilaiHuruf($nilai_akhir);
+					echo "<td>&nbsp;".$row['nilai_nts']."</td>";
+					echo "<td>&nbsp;".$row['nilai_tgs']."</td>";
+					echo "<td>&nbsp;".$row['nilai_nas']."</td>";
+					echo "<td>&nbsp;".$row['nilai_prb']."</td>";
+					echo "<td>&nbsp;".$nilai_akhir."</td>";
+					echo "<td>&nbsp;".$str_nilai."</td>";
+				}
+				echo "</tr>";
+				$no++;
+				//echo $row['mahasiswa_id'];
+			}
+			if($mode!='view'){ 
+				echo '<tr id="btn-save"><td colspan="7" class="form-actions well">&nbsp;<button class="btn btn-small btn-primary" type="submit">Simpan</button></td></tr>';
+			}
+        }
+	}
+	
+	function NilaiHuruf($nilai){
+		$str_nilai = '';
+		//if($nilai='') { $str_nilai= '&nbsp;' } else {$str_nilai= 'E';}
+			/*} elseif($nilai>90) {$str_nilai= 'A';
+			} elseif($nilai>80) {$str_nilai= 'B+';
+			} elseif($nilai>75) {$str_nilai= 'B';
+			} elseif($nilai>70) {$str_nilai= 'B-';
+			} elseif($nilai>60) {$str_nilai= 'C+';
+			} elseif($nilai>55) {$str_nilai= 'C';
+			} elseif($nilai>50) {$str_nilai= 'C-';
+			} elseif($nilai>40) {$str_nilai= 'D';*/
+		if($nilai=0){
+			$str_nilai = '&nbsp;';
+		}elseif($nilai >= 90 && $nilai <= 81){
+			$str_nilai = 'A';
+		/*}elseif($n >= 101 && $n <= 999){
+			$i = $n % 100;
+			$hasil = $iromawi[$n-$i] . Romawi($n % 100);*/
+		}else{
+			$str_nilai= 'E';
+		}
+		return $str_nilai;
+	}
+	
+	function getOptDataNilaiMahasiswaKode() {
+		$angkatan_id= $this->input->post('angkatan_id');
+		$program_studi_id=$this->input->post('program_studi_id');
+		$mata_kuliah_id=$this->input->post('mata_kuliah_id');
+		$semester_id=$this->input->post('semester_id');
+		$mode = $this->input->post('mode');
+		if($mode=='') $mode ='edit';
+		$query = $this->db->query("select m.id as rencana_mata_pelajaran_pokok_id, d.mahasiswa_id, s.nim, s.nama as nama_mhs,
+				d.id as rencana_mata_pelajaran_pokok_dtl_id, c.sks_mata_kuliah,
+                a.id as nilai_kuliah_id, a.nilai_mental
+				from akademik_t_rencana_mata_pelajaran_pokok m					
+				left join akademik_t_rencana_mata_pelajaran_pokok_detil d on m.id = d.rencana_mata_pelajaran_id and d.active=1
+				left join akademik_m_mahasiswa s on  d.mahasiswa_id = s.id
+				left join akademik_m_mata_kuliah c on m.mata_kuliah_id = c.id
+				left join akademik_t_nilai_mental a on m.id = a.rencana_mata_pelajaran_pokok_id and a.mahasiswa_id = s.id
+				where m.angkatan_id = $angkatan_id and m.program_studi_id=$program_studi_id  
+				and m.semester_id = $semester_id and m.mata_kuliah_id = $mata_kuliah_id");
+				//echo '<pre>'.$this->db->last_query().'</pre>'; //return;
+		$no = 1;
+        //for($i = 0; $i<10; $i++){
+		if($query->num_rows()<1){
+			echo "<tr>";
+            echo "<td colspan='4'>Tidak ada mahasiswa yang mengambil mata kuliah ini</td>";
+			echo "</tr>";
+		} else {
+			foreach($query->result_array() as $row){
+				//$row['rencana_mata_pelajaran_pokok_id'] = $no;
+				//$row['nilai_akhir'] = '10';
+				//$row['nilai_akhir_huruf'] = 'A';
+				echo "<tr id='".$row['nilai_kuliah_id']."'>";
+				echo "<td>$no</td>";
+				echo "<td>&nbsp;".$row['nim']."</td>";
+				echo "<td>&nbsp;".$row['nama_mhs']."</td>";
+				$nilai_hadir = 0;
+				//if($row['nilai_kuliah_id'] !='') $nilai_hadir=$row['absensi_id'];
+				if($mode=='edit'){ 
+					echo "<td>&nbsp;<input type='text' style='width:30px' autocomplete='off' name='nilai_mental_".$row['rencana_mata_pelajaran_pokok_dtl_id']."' value='".$row['nilai_mental']."' />";
+				} else {
+					echo "<td>&nbsp;".$row['nilai_mental']."</td>";
+				}
+				echo "</tr>";
+				$no++;
+				//echo $row['mahasiswa_id'];
+			}
+			if($mode!='view'){ 
+				echo '<tr id="btn-save">
+				<td colspan="7" class="form-actions well">
+				&nbsp;<button class="btn btn-small btn-primary" type="button" onclick="auto_generate_kode_ujian_mahasiswa()">Auto</button>
+				&nbsp;<button class="btn btn-small btn-primary" type="submit">Simpan</button></td></tr>';
+			}
+        }
+	}
+	
+	function auto_generate_kode_ujian_mahasiswa() {
+		$angkatan_id= $this->input->post('angkatan_id');
+		$program_studi_id=$this->input->post('program_studi_id');
+		$mata_kuliah_id=$this->input->post('mata_kuliah_id');
+		$semester_id=$this->input->post('semester_id');
+		$mode = $this->input->post('mode');
+		if($mode=='') $mode ='edit';
+		$query = $this->db->query("select m.id as rencana_mata_pelajaran_pokok_id, d.mahasiswa_id, s.nim, s.nama as nama_mhs,
+				d.id as rencana_mata_pelajaran_pokok_dtl_id, c.sks_mata_kuliah, d.kode_ujian_mahasiswa
+				from akademik_t_rencana_mata_pelajaran_pokok m					
+				left join akademik_t_rencana_mata_pelajaran_pokok_detil d on m.id = d.rencana_mata_pelajaran_id and d.active=1
+				left join akademik_m_mahasiswa s on  d.mahasiswa_id = s.id
+				left join akademik_m_mata_kuliah c on m.mata_kuliah_id = c.id
+				where m.angkatan_id = $angkatan_id and m.program_studi_id=$program_studi_id  
+				and m.semester_id = $semester_id and m.mata_kuliah_id = $mata_kuliah_id");
+				//echo '<pre>'.$this->db->last_query().'</pre>'; //return;
+		$no = 1;
+        //for($i = 0; $i<10; $i++){
+		if($query->num_rows()<1){
+			echo "<tr>";
+            echo "<td colspan='4'>Tidak ada mahasiswa yang mengambil mata kuliah ini</td>";
+			echo "</tr>";
+		} else {
+			$arr_kode_ujian_mahasiswa = array();
+			foreach($query->result_array() as $row){
+				$mahasiswa_no_ujian=$row['kode_ujian_mahasiswa'];
+				if($mahasiswa_no_ujian<=0) {
+					$mahasiswa_no_ujian = $this->get_kode_ujian_mahasiswa($arr_kode_ujian_mahasiswa);
+				}
+				$arr_kode_ujian_mahasiswa[] = $mahasiswa_no_ujian;
+				echo "<tr>";
+				echo "<td>$no</td>";
+				echo "<td>&nbsp;".$row['nim']."</td>";
+				echo "<td>&nbsp;".$row['nama_mhs']."</td>";
+				if($mode=='edit'){ 
+					echo "<td>&nbsp;<input type='text' style='width:30px' readonly autocomplete='off' name='kode_ujian_mahasiswa_".$row['rencana_mata_pelajaran_pokok_dtl_id']."' value='".$mahasiswa_no_ujian."' />";
+				} else {
+					echo "<td>&nbsp;".$row['kode_ujian_mahasiswa']."</td>";
+				}
+				echo "</tr>";
+				$no++;
+			}
+			//print_r(array_count_values($arr_kode_ujian_mahasiswa));
+			if($mode!='view'){ 
+				//&nbsp;<button class="btn btn-small btn-primary" type="button" onclick="auto_generate_kode_ujian_mahasiswa()">Auto</button>
+				echo '<tr id="btn-save">
+				<td colspan="7" class="form-actions well">
+				
+				&nbsp;<button class="btn btn-small btn-primary" type="submit">Simpan</button></td></tr>';
+			}
+        }
+	}
+	
+	function get_kode_ujian_mahasiswa($arr_kode_ujian_mahasiswa)
+	{
+		$status = FALSE;
+		$nilai = 0;
+		do {
+			$nilai = rand(1, 1000);
+			$arr_new = $arr_kode_ujian_mahasiswa;
+			$arr_new [] = $nilai;
+			if(count(array_unique($arr_new))<count($arr_new))
+			{
+				$status = FALSE;
+			} else {
+				$status = TRUE; break;
+			}
+		} while ($status);
+		return $nilai;
+	}
+	
+	function getOptDataNilaiMahasiswaFisik() {
+		$angkatan_id= $this->input->post('angkatan_id');
+		$program_studi_id=$this->input->post('program_studi_id');
+		$mata_kuliah_id=$this->input->post('mata_kuliah_id');
+		$semester_id=$this->input->post('semester_id');
+		$mode = $this->input->post('mode');
+		if($mode=='') $mode ='edit';
+		$query = $this->db->query("select m.id as rencana_mata_pelajaran_pokok_id, d.mahasiswa_id, s.nim, s.nama as nama_mhs,
+				d.id as rencana_mata_pelajaran_pokok_dtl_id, c.sks_mata_kuliah,
+                a.id as nilai_kuliah_id, a.nilai_fisik
+				from akademik_t_rencana_mata_pelajaran_pokok m					
+				left join akademik_t_rencana_mata_pelajaran_pokok_detil d on m.id = d.rencana_mata_pelajaran_id and d.active=1
+				left join akademik_m_mahasiswa s on  d.mahasiswa_id = s.id
+				left join akademik_m_mata_kuliah c on m.mata_kuliah_id = c.id
+				left join akademik_t_nilai_fisik a on m.id = a.rencana_mata_pelajaran_pokok_id and a.mahasiswa_id = s.id
+				where m.angkatan_id = $angkatan_id and m.program_studi_id=$program_studi_id  
+				and m.semester_id = $semester_id and m.mata_kuliah_id = $mata_kuliah_id");
+				//echo '<pre>'.$this->db->last_query().'</pre>'; //return;
+		$no = 1;
+        //for($i = 0; $i<10; $i++){
+		if($query->num_rows()<1){
+			echo "<tr>";
+            echo "<td colspan='4'>Tidak ada mahasiswa yang mengambil mata kuliah ini</td>";
+			echo "</tr>";
+		} else {
+			foreach($query->result_array() as $row){
+				//$row['rencana_mata_pelajaran_pokok_id'] = $no;
+				//$row['nilai_akhir'] = '10';
+				//$row['nilai_akhir_huruf'] = 'A';
+				echo "<tr id='".$row['nilai_kuliah_id']."'>";
+				echo "<td>$no</td>";
+				echo "<td>&nbsp;".$row['nim']."</td>";
+				echo "<td>&nbsp;".$row['nama_mhs']."</td>";
+				$nilai_hadir = 0;
+				//if($row['nilai_kuliah_id'] !='') $nilai_hadir=$row['absensi_id'];
+				if($mode=='edit'){ 
+					echo "<td>&nbsp;<input type='text' style='width:30px' autocomplete='off' name='nilai_fisik_".$row['rencana_mata_pelajaran_pokok_dtl_id']."' value='".$row['nilai_fisik']."' />";
+				} else {
+					echo "<td>&nbsp;".$row['nilai_fisik']."</td>";
+				}
+				echo "</tr>";
+				$no++;
+				//echo $row['mahasiswa_id'];
+			}
+			if($mode!='view'){ 
+				echo '<tr id="btn-save"><td colspan="7" class="form-actions well">&nbsp;<button class="btn btn-small btn-primary" type="submit">Simpan</button></td></tr>';
+			}
+        }
+	}
+	
+	function getOptDataNilaiMahasiswaMental() {
+		$angkatan_id= $this->input->post('angkatan_id');
+		$program_studi_id=$this->input->post('program_studi_id');
+		$mata_kuliah_id=$this->input->post('mata_kuliah_id');
+		$semester_id=$this->input->post('semester_id');
+		$mode = $this->input->post('mode');
+		if($mode=='') $mode ='edit';
+		$query = $this->db->query("select m.id as rencana_mata_pelajaran_pokok_id, d.mahasiswa_id, s.nim, s.nama as nama_mhs,
+				d.id as rencana_mata_pelajaran_pokok_dtl_id, c.sks_mata_kuliah,
+                a.id as nilai_kuliah_id, a.nilai_mental
+				from akademik_t_rencana_mata_pelajaran_pokok m					
+				left join akademik_t_rencana_mata_pelajaran_pokok_detil d on m.id = d.rencana_mata_pelajaran_id and d.active=1
+				left join akademik_m_mahasiswa s on  d.mahasiswa_id = s.id
+				left join akademik_m_mata_kuliah c on m.mata_kuliah_id = c.id
+				left join akademik_t_nilai_mental a on m.id = a.rencana_mata_pelajaran_pokok_id and a.mahasiswa_id = s.id
+				where m.angkatan_id = $angkatan_id and m.program_studi_id=$program_studi_id  
+				and m.semester_id = $semester_id and m.mata_kuliah_id = $mata_kuliah_id");
+				//echo '<pre>'.$this->db->last_query().'</pre>'; //return;
+		$no = 1;
+        //for($i = 0; $i<10; $i++){
+		if($query->num_rows()<1){
+			echo "<tr>";
+            echo "<td colspan='4'>Tidak ada mahasiswa yang mengambil mata kuliah ini</td>";
+			echo "</tr>";
+		} else {
+			foreach($query->result_array() as $row){
+				//$row['rencana_mata_pelajaran_pokok_id'] = $no;
+				//$row['nilai_akhir'] = '10';
+				//$row['nilai_akhir_huruf'] = 'A';
+				echo "<tr id='".$row['nilai_kuliah_id']."'>";
+				echo "<td>$no</td>";
+				echo "<td>&nbsp;".$row['nim']."</td>";
+				echo "<td>&nbsp;".$row['nama_mhs']."</td>";
+				$nilai_hadir = 0;
+				//if($row['nilai_kuliah_id'] !='') $nilai_hadir=$row['absensi_id'];
+				if($mode=='edit'){ 
+					echo "<td>&nbsp;<input type='text' style='width:30px' autocomplete='off' name='nilai_mental_".$row['rencana_mata_pelajaran_pokok_dtl_id']."' value='".$row['nilai_mental']."' />";
+				} else {
+					echo "<td>&nbsp;".$row['nilai_mental']."</td>";
+				}
+				echo "</tr>";
+				$no++;
+				//echo $row['mahasiswa_id'];
+			}
+			if($mode!='view'){ 
+				echo '<tr id="btn-save"><td colspan="7" class="form-actions well">&nbsp;<button class="btn btn-small btn-primary" type="submit">Simpan</button></td></tr>';
+			}
+        }
+	}
+		
 	function getOptDataDosenForm() {
 		$angkatan_id= $this->input->post('angkatan_id');
 		//$tahun_akademik_id = $this->input->post('tahun_akademik_id');
@@ -283,7 +617,7 @@ and m.semester_id = $semester_id and m.mata_kuliah_id = $mata_kuliah_id");
 		$mode = $this->input->post('mode');
 		if($mode=='') $mode ='edit';
 		$query = $this->db->query("select m.id, d.mahasiswa_id, s.nim, s.nama as nama_mhs, j.id as jadwal_kuliah_id,
-				d.id as rencana_mata_pelajaran_pokok_id, k.absensi as ket_absensi, a.absensi_id
+				d.id as rencana_mata_pelajaran_pokok_id, k.absensi as ket_absensi, a.absensi_id, d.kode_ujian_mahasiswa
 				from akademik_t_rencana_mata_pelajaran_pokok m					
 				left join akademik_t_rencana_mata_pelajaran_pokok_detil d on m.id = d.rencana_mata_pelajaran_id and d.active=1
 				left join akademik_m_mahasiswa s on d.mahasiswa_id = s.id
@@ -301,18 +635,19 @@ and m.semester_id = $semester_id and m.mata_kuliah_id = $mata_kuliah_id");
 			echo "</tr>";
 		} else {
 			if($mode=='edit'){ 
-			$this->crud->use_table('m_absensi');
-			$order_bys = array( "absensi"=>"asc");
-			$status_hadir_options=array();
-			$data_tbl_absen = $this->crud->retrieve('','*',0,0,$order_bys)->result();
-			foreach ($data_tbl_absen as $row) {
-				$status_hadir_options[$row->id] = $row->absensi;
-			}
+				$this->crud->use_table('m_absensi');
+				$order_bys = array( "absensi"=>"asc");
+				$status_hadir_options=array();
+				$data_tbl_absen = $this->crud->retrieve('','*',0,0,$order_bys)->result();
+				foreach ($data_tbl_absen as $row) {
+					$status_hadir_options[$row->id] = $row->absensi;
+				}
 			}
 			foreach($query->result_array() as $row){
 				echo "<tr>";
 				echo "<td>$no</td>";
 				echo "<td>&nbsp;".$row['nim']."</td>";
+				echo "<td>&nbsp;".$row['kode_ujian_mahasiswa']."</td>";
 				echo "<td>&nbsp;".$row['nama_mhs']."</td>";
 				$nilai_hadir = 0;
 				if($row['jadwal_kuliah_id'] !='') $nilai_hadir=$row['absensi_id'];
@@ -323,14 +658,20 @@ and m.semester_id = $semester_id and m.mata_kuliah_id = $mata_kuliah_id");
 					$nilai_hadir='';
 					if($row['rencana_mata_pelajaran_pokok_id']>0) $nilai_hadir=$row['ket_absensi'];
 					echo "<td>&nbsp;".$nilai_hadir."</td>";
+				}else if($mode=='cetak'){
+					$nilai_hadir='';
+					if($row['rencana_mata_pelajaran_pokok_id']>0) $nilai_hadir=$row['ket_absensi'];
+					echo "<td>&nbsp;".$nilai_hadir."</td>";
 				}
 				
 				echo "</tr>";
 				$no++;
 				//echo $row['mahasiswa_id'];
 			}
-			if($mode!='view'){ 
-				echo '<tr id="btn-save"><td colspan="4" class="form-actions well">&nbsp;<button class="btn btn-small btn-primary" type="submit">Simpan</button></td></tr>';
+			if($mode=='edit'){ 
+				echo '<tr id="btn-save"><td colspan="5" class="form-actions well">&nbsp;<button class="btn btn-small btn-primary" type="submit">Simpan</button></td></tr>';
+			} else if($mode=='cetak'){
+				echo '<tr id="btn-save"><td colspan="5" class="form-actions well">&nbsp;<button class="btn btn-info" type="submit">Cetak</button></td></tr>';
 			}
         }
 	}

@@ -765,9 +765,23 @@ $route['transaction/select_data_form/getOptDataJadwal'] = "select_data_form/getO
 $route['transaction/select_data_form/getOptDataJadwalUjian'] = "select_data_form/getOptDataJadwalUjian";
 $route['transaction/select_data_form/getOptDataMahasiswaUjian'] = "select_data_form/getOptDataMahasiswaUjian";
 $route['transaction/select_data_form/getOptDataDosenUjian'] = "select_data_form/getOptDataDosenUjian";
+$route['transaction/select_data_form/getOptDataNilaiMahasiswaAkademik'] = "select_data_form/getOptDataNilaiMahasiswaAkademik";
+$route['transaction/select_data_form/getOptDataNilaiMahasiswaFisik'] = "select_data_form/getOptDataNilaiMahasiswaFisik";
+$route['transaction/select_data_form/getOptDataNilaiMahasiswaMental'] = "select_data_form/getOptDataNilaiMahasiswaMental";
+$route['transaction/select_data_form/getOptDataNilaiMahasiswaKode'] = "select_data_form/getOptDataNilaiMahasiswaKode";
+$route['transaction/select_data_form/auto_generate_kode_ujian_mahasiswa'] = "select_data_form/auto_generate_kode_ujian_mahasiswa";
 
-
-
+//kode Ujian MAHASISWA
+$route['transaction/kode_ujian_mahasiswa'] = "kode_ujian_mahasiswa";
+$route['transaction/kode_ujian_mahasiswa/view/(:any)'] = "kode_ujian_mahasiswa/index/$1";
+$route['transaction/kode_ujian_mahasiswa/(:any)/info'] = "kode_ujian_mahasiswa/info/$1";
+$route['transaction/kode_ujian_mahasiswa/(:any)/edit'] = "kode_ujian_mahasiswa/edit/$1";
+$route['transaction/kode_ujian_mahasiswa/(:any)/delete'] = "kode_ujian_mahasiswa/delete/$1";
+$route['transaction/kode_ujian_mahasiswa/(:any)/(:any)/(:any)'] = "kode_ujian_mahasiswa/index/$1/$2/$3";
+$route['transaction/kode_ujian_mahasiswa/create/(:any)'] = "kode_ujian_mahasiswa/create/$1";
+$route['transaction/kode_ujian_mahasiswa/create'] = "kode_ujian_mahasiswa/create";
+$route['transaction/kode_ujian_mahasiswa/search'] = "kode_ujian_mahasiswa/search";
+//END
 
 //NILAI MENTAL
 $route['transaction/nilai_mental'] = "nilai_mental";
@@ -779,8 +793,6 @@ $route['transaction/nilai_mental/(:any)/(:any)/(:any)'] = "nilai_mental/index/$1
 $route['transaction/nilai_mental/create/(:any)'] = "nilai_mental/create/$1";
 $route['transaction/nilai_mental/create'] = "nilai_mental/create";
 $route['transaction/nilai_mental/search'] = "nilai_mental/search";
-$route['transaction/nilai_mental/getMahasiswa'] = "nilai_mental/getMahasiswa";
-$route['transaction/nilai_mental/submit_nilai'] = "nilai_mental/submit_nilai";
 //END
 
 //NILAI FISIK
@@ -793,8 +805,6 @@ $route['transaction/nilai_fisik/(:any)/(:any)/(:any)'] = "nilai_fisik/index/$1/$
 $route['transaction/nilai_fisik/create/(:any)'] = "nilai_fisik/create/$1";
 $route['transaction/nilai_fisik/create'] = "nilai_fisik/create";
 $route['transaction/nilai_fisik/search'] = "nilai_fisik/search";
-$route['transaction/nilai_fisik/getMahasiswa'] = "nilai_fisik/getMahasiswa";
-$route['transaction/nilai_fisik/submit_nilai'] = "nilai_fisik/submit_nilai";
 //END
 
 //PENASEHAT AKADEMIK

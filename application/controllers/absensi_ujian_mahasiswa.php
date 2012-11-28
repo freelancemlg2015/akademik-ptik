@@ -21,6 +21,7 @@ class Absensi_ujian_mahasiswa extends CI_Controller {
     function absensi_ujian_mahasiswa($query_id = 0, $sort_by = 'id', $sort_order = 'desc', $offset = 0) {
         $data_type = $this->input->post('data_type');
         $data['auth'] = $this->auth;
+		/*
         // pagination
         $limit = 5;
         $this->load->library(array('form_validation', 'table', 'pagination'));
@@ -50,6 +51,7 @@ class Absensi_ujian_mahasiswa extends CI_Controller {
         $data['pagination'] = $this->pagination->create_links();
         $data['sort_by'] = $sort_by;
         $data['sort_order'] = $sort_order;
+		*/
 
         $data['page_title'] = 'Absensi Ujian Mahasiswa';
 

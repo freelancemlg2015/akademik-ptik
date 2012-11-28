@@ -275,7 +275,7 @@ $icon_color = 'icon-grey';
                 <ul class="nav nav-pills">
 
                     <?php if ($auth->has_capability('t_kurikulum')): ?>
-                        <li class="dropdown <?= ($secondary_nav == 'pake_matakuliah' || $secondary_nav == 'plot_mata_kuliah' || $secondary_nav == 'plot_dosen_penanggung_jawab' || $secondary_nav == 'rencana_mata_pelajaran' || $secondary_nav == 'plot_semester' || $secondary_nav == 'kalender_akademik') ? 'active' : ''; ?>">
+                        <li class="dropdown <?= ($secondary_nav == 'pake_matakuliah' || $secondary_nav == 'plot_mata_kuliah' || $secondary_nav == 'plot_dosen_penanggung_jawab' || $secondary_nav == 'rencana_mata_pelajaran' || $secondary_nav == 'plot_semester' || $secondary_nav == 'kalender_akademik' || $secondary_nav == 'kode_ujian_mahasiswa') ? 'active' : ''; ?>">
                             <a href="#" data-toggle="dropdown" class="dropdown-toggle">Kurikulum<b class="caret"></b></a>
                             <ul class="dropdown-menu">    
 
@@ -294,6 +294,9 @@ $icon_color = 'icon-grey';
                                 <?php if ($auth->has_capability('t_kurikulum_rencana_mata_pelajaran')): ?>
                                     <li class="<?= isActive($secondary_nav, 'rencana_mata_pelajaran'); ?>"><?= anchor('transaction/rencana_mata_pelajaran', 'Rencana Mata Pelajaran'); ?></li>  
                                 <?php endif; ?>
+								<?php if ($auth->has_capability('t_kurikulum_rencana_mata_pelajaran')): ?>
+                                    <li class="<?= isActive($secondary_nav, 'kode_ujian_mahasiswa'); ?>"><?= anchor('transaction/kode_ujian_mahasiswa', 'Kode Mahasiswa'); ?></li>  
+                                <?php endif; ?>								
 
                                 <?php if ($auth->has_capability('t_kurikulum_plot_semester')): ?>
                                     <li class="<?= isActive($secondary_nav, 'plot_semester'); ?>"><?= anchor('transaction/plot_semester', 'Plot Semester'); ?></li>                  
@@ -308,12 +311,12 @@ $icon_color = 'icon-grey';
                     <?php endif; ?>
 
                     <?php if ($auth->has_capability('t_jadwal_perkuliahan')): ?>
-                        <li class="dropdown <?= ($secondary_nav == 'jadwal_induk' || $secondary_nav == 'jadwal_kuliah' || $secondary_nav == 'jadwal_ujian' || $secondary_nav == 'plot_kelas' || $secondary_nav == 'absensi_mahasiswa' || $secondary_nav == 'absensi_dosen') ? 'active' : ''; ?>">
+                        <li class="dropdown <?= ($secondary_nav == 'jadwal_kuliah_induk' || $secondary_nav == 'jadwal_kuliah' || $secondary_nav == 'jadwal_ujian' || $secondary_nav == 'plot_kelas' || $secondary_nav == 'absensi_mahasiswa' || $secondary_nav == 'absensi_dosen') ? 'active' : ''; ?>">
                             <a href="#" data-toggle="dropdown" class="dropdown-toggle">Jadwal Perkuliahan<b class="caret"></b></a>
                             <ul class="dropdown-menu">     
 
                                 <?php if ($auth->has_capability('t_jadwal_perkuliahan_jadwal_induk')): ?>
-                                    <li class="<?= isActive($secondary_nav, 'jadwal_induk'); ?>"><?= anchor('transaction/jadwal_induk', 'Jadwal Induk'); ?></li>             
+                                    <li class="<?= isActive($secondary_nav, 'jadwal_kuliah_induk'); ?>"><?= anchor('transaction/jadwal_kuliah_induk', 'Jadwal Induk'); ?></li>             
                                 <?php endif; ?>
 
                                 <?php if ($auth->has_capability('t_jadwal_perkuliahan_jadwal_kuliah')): ?>

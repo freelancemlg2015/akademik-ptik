@@ -98,7 +98,7 @@ function __construct() {
 		$this->load->model('mahasiswa_model', 'mahasiswa');
 		$jumlah_mahasiswa = $this->mahasiswa->count_mahasiswa($query_array);
 		$results = $this->mahasiswa->search($query_array, $jumlah_mahasiswa, 0, 'id', 'asc');
-
+		//print_r($results['results']); return; exit;
 	    $data = array("pdf" => $pdf,
 			  "lebar_gambar" => "25",
 			  "tinggi_gambar" => "25",
