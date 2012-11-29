@@ -194,17 +194,17 @@ class Ujian_skripsi extends CI_Controller {
                 'id' => $id
             );
             $data_in = array(
-                'pengajuan_skripsi_id'=> $this->input->post('pengajuan_skripsi_id'),
-                //'mahasiswa_id'        => $this->input->post('mahasiswa_id'),
-                //'judul_skripsi'       => $this->input->post('judul_skripsi'),
-                'tgl_ujian'           => $this->input->post('tgl_ujian'),
-                'jam_mulai'           => $this->input->post('jam_mulai'),
-                'jam_akhir'           => $this->input->post('jam_akhir'),
-                'ketua_penguji'       => $this->input->post('ketua_penguji'),
-                'anggota_penguji_1'   => $this->input->post('anggota_penguji_1'),
-                'anggota_penguji_2'   => $this->input->post('anggota_penguji_2'),
-                'sekretaris_penguji'  => $this->input->post('sekretaris_penguji'),
-                'keterangan'          => $this->input->post('keterangan'),
+                'pengajuan_skripsi_id' => $this->input->post('pengajuan_skripsi_id'),
+                //'mahasiswa_id'         => $this->input->post('mahasiswa_id'),
+                //'judul_skripsi'        => $this->input->post('judul_skripsi'),
+                'tgl_ujian'            => $this->input->post('tgl_ujian'),
+                'jam_mulai'            => $this->input->post('jam_mulai'),
+                'jam_akhir'            => $this->input->post('jam_akhir'),
+                'ketua_penguji_id'     => $this->input->post('ketua_penguji_id'),
+                'anggota_penguji_1_id' => $this->input->post('anggota_penguji_1_id'),
+                'anggota_penguji_2_id' => $this->input->post('anggota_penguji_2_id'),
+                'sekretaris_penguji_id'=> $this->input->post('sekretaris_penguji_id'),
+                'keterangan'           => $this->input->post('keterangan'),
                 'modified_on'         => date($this->config->item('log_date_format')),
                 'modified_by'         => logged_info()->on
             );
