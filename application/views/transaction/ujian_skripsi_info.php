@@ -10,12 +10,35 @@ $control_label = array(
     <table cellspacing="0" cellpadding="0" border="0" class="table table-bordered">
         <tbody>
             <tr>
+                <th class="span2">Angkatan</th>
+                <td><?= $nama_angkatan ?></td>
+            </tr>
+            <tr>
+                <th class="span2">Tahun</th>
+                <td>
+                    <?php
+                        $tahun = $tahun_ajar_mulai.'-'.$tahun_ajar_akhir;
+                        if(!empty($tahun)){
+                            echo $tahun;                                                        
+                        }     
+                    ?>
+                </td>
+            </tr>
+            <tr>
+                <th class="span2">Semester</th>
+                <td><?= $nama_semester ?></td>
+            </tr>
+            <tr>
+                <th class="span2">Program Studi</th>
+                <td><?= $nama_program_studi ?></td>
+            </tr>
+            <tr>
                 <th class="span2">Mahasiswa</th>
                 <td><?= $nama ?></td>
             </tr>
             <tr>
                 <th class="span2">Judul Skripsi</th>
-                <td><?= $judul_skripsi ?></td>
+                <td><?= $judul_skripsi_diajukan ?></td>
             </tr>
             <tr>
                 <th class="span2">Tanggal Ujian</th>

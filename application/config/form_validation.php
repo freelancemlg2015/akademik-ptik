@@ -1319,15 +1319,45 @@ $config = array(
     /*UJIAN SKRIPSI*/
     ),'ujian_skripsi_create' => array(
         array(
-            'field' => 'judul_skripsi',
-            'label' => 'judul_skripsi',
-            'rules' => 'trim|required'
+            'field' => 'ketua_penguji_id',
+            'label' => 'ketua_penguji_id',
+            'rules' => 'trim|required|greater_than[0]'
+        ),
+        array(
+            'field' => 'anggota_penguji_1_id',
+            'label' => 'anggota_penguji_1_id',
+            'rules' => 'trim|requred|greater_than[0]'
+        ),
+        array(
+            'field' => 'anggota_penguji_2_id',
+            'label' => 'anggota_penguji_2_id',
+            'rules' => 'trim|requred|greater_than[0]'
+        ),
+        array(
+            'field' => 'sekretaris_penguji_id',
+            'label' => 'sekretaris_penguji_id',
+            'rules' => 'trim|requred|greater_than[0]'
         )
     ), 'ujian_skripsi_update' => array(
         array(
-            'field' => 'judul_skripsi',
-            'label' => 'judul_skripsi',
+            'field' => 'ketua_penguji_id',
+            'label' => 'ketua_penguji_id',
             'rules' => 'trim|required'
+        ),
+        array(  
+            'field' => 'anggota_penguji_1_id',
+            'label' => 'anggota_penguji_1_id',
+            'rules' => 'trim|requred'
+        ),
+        array(
+            'field' => 'anggota_penguji_2_id',
+            'label' => 'anggota_penguji_2_id',
+            'rules' => 'trim|requred'
+        ),
+        array(
+            'field' => 'sekretaris_penguji_id',
+            'label' => 'sekretaris_penguji_id',
+            'rules' => 'trim|requred'
         )
         
     /* PAKET MATAKULIAH */
