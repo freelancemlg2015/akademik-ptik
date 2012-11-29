@@ -57,7 +57,7 @@ $this->load->view('_shared/menus');
             }
             echo '<tr id="' . $row->id . '">
               <td>' . $row->nama . '</td>
-              <td>' . $row->judul_skripsi . '</td>    
+              <td>' . $row->judul_skripsi_diajukan . '</td>    
               <td>' . $row->tgl_ujian . '</td>   
               <td>' . $jam . '</td>   
               <td>' . $row->nama_ketua_penguji . '</td>     

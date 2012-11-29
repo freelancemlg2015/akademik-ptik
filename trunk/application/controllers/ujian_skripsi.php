@@ -128,7 +128,7 @@ class Ujian_skripsi extends CI_Controller {
             $data_in = array(
                 'pengajuan_skripsi_id' => $this->input->post('pengajuan_skripsi_id'),
                 //'mahasiswa_id'         => $this->input->post('mahasiswa_id'),
-                'judul_skripsi'        => $this->input->post('judul_skripsi'),
+                //'judul_skripsi'        => $this->input->post('judul_skripsi'),
                 'tgl_ujian'            => $this->input->post('tgl_ujian'),
                 'jam_mulai'            => $this->input->post('jam_mulai'),
                 'jam_akhir'            => $this->input->post('jam_akhir'),
@@ -139,7 +139,8 @@ class Ujian_skripsi extends CI_Controller {
                 'keterangan'           => $this->input->post('keterangan'),
                 'created_on'           => date($this->config->item('log_date_format')),
                 'created_by'           => logged_info()->on
-            );                                           
+            );
+                                                    
             $created_id = $this->crud->create($data_in);
             redirect('transaction/ujian_skripsi/' . $created_id . '/info');
         }
@@ -161,8 +162,16 @@ class Ujian_skripsi extends CI_Controller {
         $this->load->model('ujian_skripsi_model');
         $data['m_semester_options'] = $this->ujian_skripsi_model->get_semester(); 
        
+        $data['pengajuan_semester'] = '';
+        $data['program_data'] = '';
+        $data['mahasiswa_data'] = '';
         $data['thn_akademik_id_attr'] = '';
-        $data['pengajuan_skripsi_id_attr'] = '';                                                             
+        $data['pengajuan_skripsi_id_attr'] = '';
+        $data['semester_id_attr'] = '';
+        $data['program_studi_id_attr'] = '';
+        $data['mahasiswa_id_attr'] = '';
+         $data['judul_skripsi_diajukan'] = '';
+                                                                     
         $this->load->model('ujian_skripsi_model', 'ujian_skripsi');
         $data = array_merge($data, $this->ujian_skripsi->set_default()); //merge dengan arr data dengan default
         $this->load->view('transaction/ujian_skripsi_form', $data);
@@ -186,8 +195,8 @@ class Ujian_skripsi extends CI_Controller {
             );
             $data_in = array(
                 'pengajuan_skripsi_id'=> $this->input->post('pengajuan_skripsi_id'),
-                'mahasiswa_id'        => $this->input->post('mahasiswa_id'),
-                'judul_skripsi'       => $this->input->post('judul_skripsi'),
+                //'mahasiswa_id'        => $this->input->post('mahasiswa_id'),
+                //'judul_skripsi'       => $this->input->post('judul_skripsi'),
                 'tgl_ujian'           => $this->input->post('tgl_ujian'),
                 'jam_mulai'           => $this->input->post('jam_mulai'),
                 'jam_akhir'           => $this->input->post('jam_akhir'),
@@ -211,6 +220,9 @@ class Ujian_skripsi extends CI_Controller {
         $this->crud->use_table('t_ujian_skripsi');
         $ujian_skripsi_data = $this->crud->retrieve(array('id' => $id))->row();
         
+        $this->crud->use_table('t_pengajuan_skripsi');
+        $data['t_pengajuan_skripsi_options'] = $this->crud->retrieve()->result();
+        
         $this->load->model('ujian_skripsi_model');
         $data['m_angkatan_options'] = $this->ujian_skripsi_model->get_angkatan();
 
@@ -224,19 +236,59 @@ class Ujian_skripsi extends CI_Controller {
         $data = array_merge($data, $this->ujian_skripsi->set_default()); //merge dengan arr data dengan default
         $data = array_merge($data, (array) $ujian_skripsi_data);
         if(!(empty($id))){                                                                      
-            $this->load->model('ujian_skripsi_model');           
-            $data['angkatan_pengajuan'] = $this->ujian_skripsi_model->get_update_angkatan($id);
+            $this->load->model('ujian_skripsi_model');
+            $data['m_angkatan_options'] = $this->ujian_skripsi_model->get_angkatan();
             $pengajuan_skripsi_id = '';            
-            foreach($data['angkatan_pengajuan'] as $row){
+            foreach($data['m_angkatan_options'] as $row){
                 $pengajuan_skripsi_id = $row['id']."-".$row['angkatan_id'];
             }
             $data['pengajuan_skripsi_id_attr'] = $pengajuan_skripsi_id;
                                               
             $thn_akademik_id_attr = '';
-            foreach ($data['angkatan_pengajuan'] as $row) {
+            foreach ($data['m_angkatan_options'] as $row) {
                 $thn_akademik_id_attr = $row['tahun_ajar_mulai'].'-'.$row['tahun_ajar_akhir'];
             }                
-            $data['thn_akademik_id_attr'] = $thn_akademik_id_attr;                                                                    
+            $data['thn_akademik_id_attr'] = $thn_akademik_id_attr;
+                                                                                          
+            $this->load->model('ujian_skripsi_model');            
+            $data['semester'] = $this->ujian_skripsi_model->get_update_semester($id);
+            $semester_data = '';
+            if(!empty($data['semester'])){
+                foreach($data['semester'] as $row){
+                    $semester_data = $row['id'];                                    
+                }    
+            }
+            $data['semester_id_attr'] = $semester_data;
+            
+            $this->load->model('ujian_skripsi_model');
+            $data['program_data'] = $this->ujian_skripsi_model->get_update_program_studi($id);
+            $program_data_attr = '';
+            if(!empty($data['program_data'])){
+                foreach($data['program_data'] as $row){
+                    $program_data_attr = $row['program_studi_id'];    
+                }    
+            }
+            $data['program_studi_id_attr'] = $program_data_attr;
+            
+            $this->load->model('ujian_skripsi_model');               
+            $data['mahasiswa_data'] = $this->ujian_skripsi_model->get_update_mahasiswa($id);
+            $mahasiswa_id_data = '';  
+            if(!empty($data['mahasiswa_data'])){
+                foreach($data['mahasiswa_data'] as $row){
+                    $mahasiswa_id_data = $row['rencana_mata_pelajaran_detail_id'];    
+                }    
+            } 
+            $data['mahasiswa_id_attr'] = $mahasiswa_id_data;
+            
+            $this->load->model('ujian_skripsi_model');               
+            $data['pengajuan_data'] = $this->ujian_skripsi_model->get_update_pengajuan($id);
+            $pengajuan_id_data = '';  
+            if(!empty($data['pengajuan_data'])){
+                foreach($data['pengajuan_data'] as $row){
+                    $pengajuan_id_data = $row['judul_skripsi_diajukan'];    
+                }    
+            } 
+            $data['judul_skripsi_diajukan'] = $pengajuan_id_data;   
         }
         $this->load->view('transaction/ujian_skripsi_form', $data);
     }
@@ -262,7 +314,7 @@ class Ujian_skripsi extends CI_Controller {
     }
     
     function getOptTahunAkademik() {
-        $angkatan_id= $this->input->post('pengajuan_skripsi_id');
+        $angkatan_id= $this->input->post('angkatan_id');
         $sql = "SELECT a.id, b.nama_angkatan, c.tahun_ajar_mulai,c.tahun_ajar_akhir 
                 FROM akademik_t_pengajuan_skripsi AS a
                 LEFT JOIN akademik_m_angkatan AS b ON a.`angkatan_id` = b.`id`
@@ -277,40 +329,56 @@ class Ujian_skripsi extends CI_Controller {
     
     function getOptSemester(){
         $this->load->model('ujian_skripsi_model');
-        $semester = $this->input->post('pengajuan_skripsi_id');
-        $data['semester'] = $this->ujian_skripsi_model->get_semester($semester);
+        $angkatan_id = $this->input->post('angkatan_id');       
+        $data['semester'] = $this->ujian_skripsi_model->get_semester($angkatan_id);
         echo '<option value="" ></option>';
-        foreach($data['semester'] as $row){
-            echo '<option value=\''.$row['id'].'\' >'.$row['nama_semester'].'</option>';
-        } 
+        if(!empty($data['semester'])){
+            foreach($data['semester'] as $row){
+                echo '<option value=\''.$row['id'].'\' >'.$row['nama_semester'].'</option>';
+            }        
+        }
     }      
     
     function getOptProgramStudi(){
         $this->load->model('ujian_skripsi_model');
-        $program_studi= $this->input->post('pengajuan_skripsi_id');
-        $data = $this->ujian_skripsi_model->get_program_studi($program_studi); 
+        $angkatan_id = $this->input->post('angkatan_id'); 
+        $semestr_id  = $this->input->post('span_semester');
+        $data['program'] = $this->ujian_skripsi_model->get_program_studi($angkatan_id, $semestr_id); 
         echo '<option value="" ></option>';
-        foreach($data as $row){
-            echo '<option value=\''.$row['id'].'\' >'.$row['nama_program_studi'].'</option>';
-        } 
+        if(!empty($data['program'])){
+            foreach($data['program'] as $row){
+                echo '<option value=\''.$row['id'].'\' >'.$row['nama_program_studi'].'</option>';
+            }    
+        }
+         
     }
     
     function getOptMahasiswa(){
         $this->load->model('ujian_skripsi_model');
-        $mahasiswa = $this->input->post('pengajuan_skripsi_id');
-        $data = $this->ujian_skripsi_model->get_mahasiswa($mahasiswa); 
+        $angkatan_id  = $this->input->post('angkatan_id'); 
+        $semestr_id   = $this->input->post('span_semester');
+        $program_id   = $this->input->post('span_program_studi');
+        $rencana_id   = $this->input->post('span_mahasiswa');
+        $data['mahasiswa'] = $this->ujian_skripsi_model->get_mahasiswa($angkatan_id,$semestr_id,$program_id,$rencana_id); 
         echo '<option value="" ></option>';
-        foreach($data as $row){
-            echo '<option value=\''.$row['id'].'\' >'.$row['nama'].'</option>';
-        } 
+        if(!empty($data['mahasiswa'])){
+            foreach($data['mahasiswa'] as $row){
+                echo '<option value=\''.$row['id'].'\' >'.$row['nama'].'</option>';
+            }    
+        }                             
     }    
     
     function getOptPengajuanSkripsi(){
         $this->load->model('ujian_skripsi_model');
-        $pengajuan = $this->input->post('pengajuan_skripsi_id');
-        $data['angkatan'] = $this->ujian_skripsi_model->get_pengajuan($pengajuan);
-        foreach($data['angkatan'] as $row){
-            echo $row['judul_skripsi_diajukan'];
+        $angkatan_id  = $this->input->post('angkatan_id'); 
+        $semestr_id   = $this->input->post('span_semester');
+        $program_id   = $this->input->post('span_program_studi');
+        $rencana_id   = $this->input->post('span_mahasiswa');
+        $data['angkatan'] = $this->ujian_skripsi_model->get_pengajuan($angkatan_id,$semestr_id,$program_id,$rencana_id);
+        if(!empty($data['angkatan'])){
+            foreach($data['angkatan'] as $row){
+                echo $row['judul_skripsi_diajukan'];
+            }
         } 
     }
 
