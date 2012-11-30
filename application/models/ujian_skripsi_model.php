@@ -164,7 +164,7 @@ class Ujian_skripsi_model extends CI_Model {
                      AND a.angkatan_id = '$id' 
                      AND a.semester_id = '$semester_ids'
                GROUP BY e.nama_program_studi ORDER BY e.nama_program_studi ASC";
-        $Q = $this->db->query($sql);
+        $Q = $this->db->query($sql);    
         foreach($Q->result_array() as $row) $data[] = $row;
         return @$data;
     }
@@ -176,7 +176,7 @@ class Ujian_skripsi_model extends CI_Model {
                LEFT JOIN akademik_m_semester AS d ON a.`semester_id` = d.`id`
                LEFT JOIN akademik_m_program_studi AS e ON a.`program_studi_id` = e.`id`
                WHERE e.active = '1'
-                     AND a.program_studi_id = '$id'            
+                     AND a.id = '$id'            
                GROUP BY e.nama_program_studi ORDER BY e.nama_program_studi ASC";
         $Q = $this->db->query($sql);
         foreach($Q->result_array() as $row) $data[] = $row;
@@ -211,8 +211,8 @@ class Ujian_skripsi_model extends CI_Model {
                LEFT JOIN akademik_m_semester ON akademik_m_semester.id = akademik_t_pengajuan_skripsi.`semester_id`
                LEFT JOIN akademik_m_program_studi ON akademik_m_program_studi.id = akademik_t_pengajuan_skripsi.`program_studi_id`
                WHERE akademik_t_rencana_mata_pelajaran_pokok_detail.active = '1' 
-                    AND `akademik_t_pengajuan_skripsi`.`rencana_mata_pelajaran_detail_id` = '$id'";
-        $Q = $this->db->query($sql);                             
+                    AND `akademik_t_pengajuan_skripsi`.`id` = '$id'";
+        $Q = $this->db->query($sql);
         foreach($Q->result_array() as $row) $data[] = $row; 
         return @$data;
     }
@@ -230,8 +230,8 @@ class Ujian_skripsi_model extends CI_Model {
                      AND b.`angkatan_id` = '$id'
                      AND b.`semester_id` = '$semester_ids'
                      AND b.`program_studi_id` = '$program_ids'    
-                     AND a.`pengajuan_skripsi_id` = '$rencana_ids'";
-        $Q = $this->db->query($sql);
+                     AND b.`id` = '$rencana_ids'";
+        $Q = $this->db->query($sql); 
         foreach($Q->result_array() as $row) $data[] = $row; 
         return @$data;
     }
@@ -246,7 +246,7 @@ class Ujian_skripsi_model extends CI_Model {
                LEFT JOIN akademik_t_rencana_mata_pelajaran_pokok_detail AS g ON b.`rencana_mata_pelajaran_detail_id` = g.`id`
                LEFT JOIN akademik_m_mahasiswa AS h ON g.`mahasiswa_id` = h.`id`
                WHERE a.`active` = '1'            
-                     AND a.`pengajuan_skripsi_id` = '$id'";
+                     AND a.`id` = '$id'";
         $Q = $this->db->query($sql);
         foreach($Q->result_array() as $row) $data[] = $row; 
         return @$data;
