@@ -229,7 +229,6 @@ class Pengajuan_skripsi extends CI_Controller {
                 'dosen_pembimbing_2_id'            => $this->input->post('dosen_pembimbing_2_id'),
                 'status_approval'                  => $this->input->post('status_approval'),
                 'keterangan'                       => $this->input->post('keterangan'),
-                'pengajuan_skripsi_detil_id'       => $this->input->post('pengajuan_skripsi_detil_id'),
                 'modified_on'                      => date($this->config->item('log_date_format')),
                 'modified_by'                      => logged_info()->on
             );

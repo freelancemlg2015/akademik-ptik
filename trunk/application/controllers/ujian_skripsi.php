@@ -208,6 +208,7 @@ class Ujian_skripsi extends CI_Controller {
                 'modified_on'         => date($this->config->item('log_date_format')),
                 'modified_by'         => logged_info()->on
             );
+            
             $this->crud->update($criteria, $data_in);
             redirect('transaction/ujian_skripsi/' . $id . '/info');
         }
@@ -220,17 +221,17 @@ class Ujian_skripsi extends CI_Controller {
         $this->crud->use_table('t_ujian_skripsi');
         $ujian_skripsi_data = $this->crud->retrieve(array('id' => $id))->row();
         
-        $this->crud->use_table('t_pengajuan_skripsi');
-        $data['t_pengajuan_skripsi_options'] = $this->crud->retrieve()->result();
-        
-        $this->load->model('ujian_skripsi_model');
-        $data['m_angkatan_options'] = $this->ujian_skripsi_model->get_angkatan();
-
         $this->crud->use_table('m_dosen');
         $data['dosen_options'] = $this->crud->retrieve()->result();
         
-        $this->crud->use_table('m_mahasiswa');
-        $data['mahasiswa_options'] = $this->crud->retrieve()->result();
+        $this->crud->use_table('t_pengajuan_skripsi');
+        $data['t_pengajuan_skripsi_options'] = $this->crud->retrieve()->result();
+                                                                                
+        $this->load->model('ujian_skripsi_model');
+        $data['m_angkatan_options'] = $this->ujian_skripsi_model->get_angkatan();
+        
+        $this->load->model('ujian_skripsi_model');
+        $data['m_semester_options'] = $this->ujian_skripsi_model->get_semester();
         
         $this->load->model('ujian_skripsi_model', 'ujian_skripsi');
         $data = array_merge($data, $this->ujian_skripsi->set_default()); //merge dengan arr data dengan default
@@ -265,7 +266,7 @@ class Ujian_skripsi extends CI_Controller {
             $program_data_attr = '';
             if(!empty($data['program_data'])){
                 foreach($data['program_data'] as $row){
-                    $program_data_attr = $row['program_studi_id'];    
+                    $program_data_attr = $row['id'];    
                 }    
             }
             $data['program_studi_id_attr'] = $program_data_attr;
@@ -275,7 +276,7 @@ class Ujian_skripsi extends CI_Controller {
             $mahasiswa_id_data = '';  
             if(!empty($data['mahasiswa_data'])){
                 foreach($data['mahasiswa_data'] as $row){
-                    $mahasiswa_id_data = $row['rencana_mata_pelajaran_detail_id'];    
+                    $mahasiswa_id_data = $row['id'];    
                 }    
             } 
             $data['mahasiswa_id_attr'] = $mahasiswa_id_data;
@@ -319,9 +320,10 @@ class Ujian_skripsi extends CI_Controller {
                 FROM akademik_t_pengajuan_skripsi AS a
                 LEFT JOIN akademik_m_angkatan AS b ON a.`angkatan_id` = b.`id`
                 LEFT JOIN akademik_m_tahun_akademik AS c ON b.`tahun_akademik_id` = c.`id`
-                WHERE a.`id` = '$angkatan_id'
+                WHERE a.`angkatan_id` = '$angkatan_id'
                 GROUP BY a.angkatan_id";
-        $query = $this->db->query($sql);     
+        $query = $this->db->query($sql);
+        //echo $this->db->last_query();     
         foreach($query->result_array() as $row){
             echo $row['tahun_ajar_mulai'].'-'.$row['tahun_ajar_akhir'];
         }
@@ -334,7 +336,7 @@ class Ujian_skripsi extends CI_Controller {
         echo '<option value="" ></option>';
         if(!empty($data['semester'])){
             foreach($data['semester'] as $row){
-                echo '<option value=\''.$row['id'].'\' >'.$row['nama_semester'].'</option>';
+                echo '<option value=\''.$row['semester_id'].'\' >'.$row['nama_semester'].'</option>';
             }        
         }
     }      
