@@ -6,17 +6,10 @@ $this->load->view('_shared/menus');
 $control_label = array(
     'class' => 'control-label'
 );
-
-$keterangan_attr = array(
-    'name' => 'keterangan',
-    'class' => 'span3',
-    'value' => set_value('keterangan', $keterangan),
-    'autocomplete' => 'off'    
-);
-
+              
 $angkatan_data[0] = '';
 foreach ($angkatan_options as $row) {
-    $angkatan_data[$row->id.'-'.$row->tahun_akademik_id] = $row->nama_angkatan;
+    $angkatan_data[$row['angkatan_id'].'-'.$row['tahun_akademik_id']] = $row['nama_angkatan'];
 }
 
 $tahun_data[0] = '';
@@ -38,9 +31,11 @@ else {
     $thn_akademik_id = '';
 }
 
-$plot_mata_kuliah_data[0] = '';
-foreach ($plot_mata_kuliah_options as $row) {
-    $plot_mata_kuliah_data[$row['group_id']] = $row['nama_semester'];
+$semester_data_attr[0] = '';        
+if(!empty($semester_data_options)){                                  
+    foreach ($semester_data_options as $row) {
+        $semester_data_attr[$row['group_id']] = $row['nama_semester'];
+    }                                  
 }
  
 $program_studi_data[0] = '';
@@ -78,10 +73,10 @@ $thn_akademik_id_attr = array(
     </div>
 
     <div class="control-group">
-        <?= form_label('Semester' , 'plot_mata_kuliah_id', $control_label); ?>
+        <?= form_label('Semester' , 'semester_id', $control_label); ?>
         <div class="controls">
-            <?= form_dropdown('plot_mata_kuliah_id', $plot_mata_kuliah_data, set_value('plot_mata_kuliah_id', $plot_mata_kuliah_id_attr), 'onChange="changeKelompok()" id="plot_mata_kuliah_id" class="input-medium" prevData-selected="' . set_value('plot_mata_kuliah_id', $plot_mata_kuliah_id_attr) . '"'); ?>
-            <p class="help-block"><?php echo form_error('plot_mata_kuliah_id') ?></p>
+            <?= form_dropdown('plot_mata_kuliah_id', $semester_data_attr, set_value('semester_id', $semester_id_attr), 'onChange="changeKelompok()" id="span_semester" class="input-medium" prevData-selected="' . set_value('semester_id', $semester_id_attr) . '"'); ?>
+            <p class="help-block"><?php echo form_error('semester_id') ?></p>
         </div>
     </div>
     
@@ -116,18 +111,27 @@ $thn_akademik_id_attr = array(
 <script type="text/javascript">                     
     function changeAngkatan(){
         var angkatan_id = ($('#angkatan_id').val()).split("-");
-		$.post('<?php echo base_url(); ?>paket_matakuliah/getOptTahunAkademik', {angkatan_id: angkatan_id[1]},
+        $.post('<?php echo base_url(); ?>paket_matakuliah/getOptTahunAkademik', {angkatan_id: angkatan_id[1]},
         function(data){
             $('#thn_akademik_id_attr').val(data);
         });
+        
+        $.post('<?php echo base_url(); ?>paket_matakuliah/getOptSemester', {angkatan_id: angkatan_id[0]},
+        function(data){                                                                 
+            $("select[name='plot_mata_kuliah_id']").closest("div.controls").append("<select name='plot_mata_kuliah_id' onChange='changeKelompok()' id='span_semester'></select>");
+            $("select[name='plot_mata_kuliah_id']").closest("div.combobox-container").remove();
+            $("select[name='plot_mata_kuliah_id']").html(data).combobox();
+        });
     }
+    $("select[name='plot_mata_kuliah_id']").combobox();
                     
     function changeKelompok(){
         $('#listkelompok').hide();
-        if($('#plot_mata_kuliah_id').val()<=0) return;
-        var plot_mata_kuliah_id = ($('#plot_mata_kuliah_id').val()).split(";");
+        if($('#span_semester').val()<=0) return;
+        var angkatan_id = ($('#angkatan_id').val());
+        var span_semester = ($('#span_semester').val()).split(";");
         var mode = 'view';      
-        $.post('<?php echo base_url(); ?>paket_matakuliah/getOptPlotmatakuliah', {plot_mata_kuliah_id: plot_mata_kuliah_id[0]},
+        $.post('<?php echo base_url(); ?>paket_matakuliah/getOptKelompokMatakuliah', {angkatan_id: angkatan_id, span_semester: span_semester[0]},
         function(data){
             $('#listkelompok').html(data);
             $('#listkelompok').show();
