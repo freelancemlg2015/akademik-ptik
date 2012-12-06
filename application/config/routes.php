@@ -602,18 +602,6 @@ $route['transaction/jadwal_ujian/create'] = "jadwal_ujian/create";
 $route['transaction/jadwal_ujian/search'] = "jadwal_ujian/search";
 //END
 
-//UJIAN SKRIPSI
-$route['transaction/ujian_skripsi'] = "ujian_skripsi";
-$route['transaction/ujian_skripsi/view/(:any)'] = "ujian_skripsi/index/$1";
-$route['transaction/ujian_skripsi/(:any)/info'] = "ujian_skripsi/info/$1";
-$route['transaction/ujian_skripsi/(:any)/edit'] = "ujian_skripsi/edit/$1";
-$route['transaction/ujian_skripsi/(:any)/delete'] = "ujian_skripsi/delete/$1";
-$route['transaction/ujian_skripsi/(:any)/(:any)/(:any)'] = "ujian_skripsi/index/$1/$2/$3";
-$route['transaction/ujian_skripsi/create/(:any)'] = "ujian_skripsi/create/$1";
-$route['transaction/ujian_skripsi/create'] = "ujian_skripsi/create";
-$route['transaction/ujian_skripsi/search'] = "ujian_skripsi/search";
-//END
-
 //PLOT MATAKULIAH
 $route['transaction/plot_mata_kuliah'] = "plot_mata_kuliah";
 $route['transaction/plot_mata_kuliah/view/(:any)'] = "plot_mata_kuliah/index/$1";
@@ -845,6 +833,30 @@ $route['transaction/pengajuan_skripsi/(:any)/(:any)/(:any)'] = "pengajuan_skrips
 $route['transaction/pengajuan_skripsi/create/(:any)'] = "pengajuan_skripsi/create/$1";
 $route['transaction/pengajuan_skripsi/create'] = "pengajuan_skripsi/create";
 $route['transaction/pengajuan_skripsi/search'] = "pengajuan_skripsi/search";
+//END
+
+//UJIAN SKRIPSI
+$route['transaction/ujian_skripsi'] = "ujian_skripsi";
+$route['transaction/ujian_skripsi/view/(:any)'] = "ujian_skripsi/index/$1";
+$route['transaction/ujian_skripsi/(:any)/info'] = "ujian_skripsi/info/$1";
+$route['transaction/ujian_skripsi/(:any)/edit'] = "ujian_skripsi/edit/$1";
+$route['transaction/ujian_skripsi/(:any)/delete'] = "ujian_skripsi/delete/$1";
+$route['transaction/ujian_skripsi/(:any)/(:any)/(:any)'] = "ujian_skripsi/index/$1/$2/$3";
+$route['transaction/ujian_skripsi/create/(:any)'] = "ujian_skripsi/create/$1";
+$route['transaction/ujian_skripsi/create'] = "ujian_skripsi/create";
+$route['transaction/ujian_skripsi/search'] = "ujian_skripsi/search";
+//END
+
+//NILAI SKRIPSI
+$route['transaction/nilai_skripsi'] = "nilai_skripsi";
+$route['transaction/nilai_skripsi/view/(:any)'] = "nilai_skripsi/index/$1";
+$route['transaction/nilai_skripsi/(:any)/info'] = "nilai_skripsi/info/$1";
+$route['transaction/nilai_skripsi/(:any)/edit'] = "nilai_skripsi/edit/$1";
+$route['transaction/nilai_skripsi/(:any)/delete'] = "nilai_skripsi/delete/$1";
+$route['transaction/nilai_skripsi/(:any)/(:any)/(:any)'] = "nilai_skripsi/index/$1/$2/$3";
+$route['transaction/nilai_skripsi/create/(:any)'] = "nilai_skripsi/create/$1";
+$route['transaction/nilai_skripsi/create'] = "nilai_skripsi/create";
+$route['transaction/nilai_skripsi/search'] = "nilai_skripsi/search";
 //END
 
 //NILAI AKADEMIK

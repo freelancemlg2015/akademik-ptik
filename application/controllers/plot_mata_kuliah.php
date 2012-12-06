@@ -133,7 +133,6 @@ class Plot_mata_kuliah extends CI_Controller {
                 'angkatan_id'             => $this->input->post('angkatan_id'),
                 'semester_id'             => $this->input->post('semester_id'),
                 'kelompok_mata_kuliah_id' => $this->input->post('kelompok_mata_kuliah_id'),
-                'keterangan'              => $this->input->post('keterangan'),
                 'created_on'              => date($this->config->item('log_date_format')),
                 'created_by'              => logged_info()->on
             );

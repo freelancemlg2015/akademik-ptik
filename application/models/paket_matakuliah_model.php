@@ -105,26 +105,51 @@ class Paket_matakuliah_model extends CI_Model {
             $data[$field] = '';
         }
         return $data;
-    }                                 
+    }
     
-    function get_kelompok(){  
-        $sql = "SELECT CONCAT(b.id, ';', GROUP_CONCAT(a.id SEPARATOR '-'))AS group_id, b.nama_semester
-                FROM (`akademik_t_plot_mata_kuliah` AS a)
-                LEFT JOIN `akademik_m_semester` AS b ON `a`.`semester_id` = `b`.`id` 
-                GROUP BY `a`.`semester_id`";
+    function get_angkatan(){
+        $sql = "SELECT a.`angkatan_id`, 
+                b.`tahun_akademik_id`, 
+                a.`nama_angkatan` 
+                FROM akademik_view_paket_plot_mata_kuliah a
+                LEFT JOIN akademik_m_angkatan b ON a.`angkatan_id` = b.`id`
+                LEFT JOIN akademik_m_tahun_akademik c ON b.`tahun_akademik_id` = c.`id`
+                GROUP BY a.`angkatan_id`";
+        $query = $this->db->query($sql);
+        return $query->result_array();
+    } 
+    
+    function get_semester($angkatan_id=NULL){  
+        $sql = "SELECT CONCAT(a.`semester_id`,';', GROUP_CONCAT(a.`plot_mata_kuliah_id` ORDER BY a.`plot_mata_kuliah_id` ASC SEPARATOR '-')) AS group_id, a.`nama_semester` 
+                FROM akademik_view_paket_plot_mata_kuliah a
+                WHERE a.`angkatan_id` = '$angkatan_id'
+                GROUP BY a.`angkatan_id`,a.`semester_id`";
         $query = $this->db->query($sql); 
         return $query->result_array();
     }
     
-    function get_update_kelompok($id=NULL){
-        $sql = "SELECT CONCAT(b.id, ';', GROUP_CONCAT(a.id SEPARATOR '-'))AS group_semester_id, b.nama_semester
-                FROM (`akademik_t_plot_mata_kuliah` AS a)
-                LEFT JOIN `akademik_m_semester` AS b ON `a`.`semester_id` = `b`.`id`
-                WHERE `a`.`semester_id` =  '$id'";
+    function get_update_semester($angkatan_id=NULL){  
+        $sql = "SELECT CONCAT(a.`semester_id`,';', GROUP_CONCAT(a.`plot_mata_kuliah_id` ORDER BY a.`plot_mata_kuliah_id` ASC SEPARATOR '-')) AS group_id, a.`nama_semester` 
+                FROM akademik_view_paket_plot_mata_kuliah a
+                WHERE a.`plot_mata_kuliah_id` = '$angkatan_id' 
+                GROUP BY a.`angkatan_id`, a.`semester_id`";
         $query = $this->db->query($sql);
-		return $query->result_array();
+        //echo $this->db->last_query();  
+        return $query->result_array();
     }
     
+    function get_kelompok_mata_kuliah($angkatan_id=NULL, $semester_id=NULL){
+        $sql = "SELECT a.`id`, a.`kelompok_mata_kuliah_id`, c.`nama_kelompok_mata_kuliah` FROM akademik_t_plot_mata_kuliah a
+                LEFT JOIN akademik_view_paket_plot_mata_kuliah b ON a.`id` = b.`plot_mata_kuliah_id`
+                LEFT JOIN akademik_m_kelompok_matakuliah c ON a.`kelompok_mata_kuliah_id` = c.`id`
+                WHERE a.active = '1'
+                  AND b.`angkatan_id` = '$angkatan_id' 
+                  AND b.`semester_id` = '$semester_id'
+                GROUP BY b.`angkatan_id`, b.`semester_id` , a.`kelompok_mata_kuliah_id`";
+        $query = $this->db->query($sql);
+        return $query->result_array();
+    }
+     
     function get_matakuliah_detil($id=null){
        $this->db->select('a.kelompok_mata_kuliah_id,b.kode_kelompok, b.nama_kelompok_mata_kuliah');
        $this->db->from('t_paket_mata_kuliah_detail as a');
@@ -146,21 +171,7 @@ class Paket_matakuliah_model extends CI_Model {
         foreach ($Q->result_array() as $row) $data[] = $row;
         return @$data;
     }
-    
-    function get_matakuliah_update($paket_mata_kuliah_id, $kelompok_mata_kuliah_id){
-        $this->db->select('a.id');
-        $this->db->from('t_paket_mata_kuliah_detail as a');
-        $this->db->where('a.paket_mata_kuliah_id',$paket_mata_kuliah_id);
-        $this->db->where('a.kelompok_mata_kuliah_id', $kelompok_mata_kuliah_id);
-        $Q = $this->db->get();
-        foreach ($Q->result_array() as $row) return $row['id'];
-    }
-    
-    function get_update($id=null, $data){
-        $this->db->where('paket_mata_kuliah_id', $id);
-        $this->db->update('t_paket_mata_kuliah_detail', $data);
-    }
-    
+                                                   
     function get_tahun_angkatan($id=NULL){
         $this->db->select('m_angkatan.*,m_angkatan.tahun_akademik_id, m_tahun_akademik.tahun_ajar_mulai, m_tahun_akademik.tahun_ajar_akhir');
         $this->db->from('m_angkatan');
@@ -186,22 +197,7 @@ class Paket_matakuliah_model extends CI_Model {
         foreach ($Q->result_array() as $row) $data[] = $row;
         return @$data;
     }
-    
-    function get_plot_matakuliah_detil($id=NULL){
-        $this->db->select('t_plot_mata_kuliah_detail.mata_kuliah_id, m_mata_kuliah.nama_mata_kuliah, t_plot_mata_kuliah_detail.plot_mata_kuliah_id, t_plot_mata_kuliah.id, t_plot_mata_kuliah.semester_id, m_kelompok_matakuliah.nama_kelompok_mata_kuliah');
-        $this->db->from('t_plot_mata_kuliah_detail');
-        $this->db->join('m_mata_kuliah','m_mata_kuliah.id = t_plot_mata_kuliah_detail.mata_kuliah_id','left');
-        $this->db->join('t_plot_mata_kuliah','t_plot_mata_kuliah.id = t_plot_mata_kuliah_detail.plot_mata_kuliah_id','left');
-        $this->db->join('m_semester','m_semester.id = t_plot_mata_kuliah.semester_id','left');
-        $this->db->join('m_kelompok_matakuliah','m_kelompok_matakuliah.id = t_plot_mata_kuliah.kelompok_mata_kuliah_id','left');
-        $this->db->where('t_plot_mata_kuliah.semester_id', $id);
-        $this->db->where('t_plot_mata_kuliah.active', 1);
-        $this->db->order_by('m_mata_kuliah.nama_mata_kuliah', 'asc');
-        $Q = $this->db->get();
-        foreach ($Q->result_array() as $row) $data[] = $row;
-        return @$data;
-    }
-    
+     
     function delete_detail($id=null){
         $this->db->delete('t_paket_mata_kuliah_detail', array('paket_mata_kuliah_id' => $id));
     }

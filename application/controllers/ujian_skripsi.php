@@ -229,7 +229,7 @@ class Ujian_skripsi extends CI_Controller {
                                                                                 
         $this->load->model('ujian_skripsi_model');
         $data['m_angkatan_options'] = $this->ujian_skripsi_model->get_angkatan();
-        
+                                                                                  
         $this->load->model('ujian_skripsi_model');
         $data['m_semester_options'] = $this->ujian_skripsi_model->get_semester();
         
@@ -251,8 +251,10 @@ class Ujian_skripsi extends CI_Controller {
             }                
             $data['thn_akademik_id_attr'] = $thn_akademik_id_attr;
                                                                                           
-            $this->load->model('ujian_skripsi_model');            
-            $data['semester'] = $this->ujian_skripsi_model->get_update_semester($id);
+            $this->crud->use_table('t_pengajian_skripsi');
+            $data['pengajuan'] = $this->crud->retrieve(array('id' => $data['pengajuan_skripsi_id']))->row();
+            $this->load->model('ujian_skripsi_model');
+            $data['semester'] = $this->ujian_skripsi_model->get_update_semester($data['pengajuan']->semester_id);
             $semester_data = '';
             if(!empty($data['semester'])){
                 foreach($data['semester'] as $row){
@@ -261,8 +263,10 @@ class Ujian_skripsi extends CI_Controller {
             }
             $data['semester_id_attr'] = $semester_data;
             
+            $this->crud->use_table('t_pengajian_skripsi');
+            $data['pengajuan'] = $this->crud->retrieve(array('id' => $data['pengajuan_skripsi_id']))->row();
             $this->load->model('ujian_skripsi_model');
-            $data['program_data'] = $this->ujian_skripsi_model->get_update_program_studi($id);
+            $data['program_data'] = $this->ujian_skripsi_model->get_update_program_studi($data['pengajuan']->program_studi_id);
             $program_data_attr = '';
             if(!empty($data['program_data'])){
                 foreach($data['program_data'] as $row){
@@ -271,8 +275,10 @@ class Ujian_skripsi extends CI_Controller {
             }
             $data['program_studi_id_attr'] = $program_data_attr;
             
-            $this->load->model('ujian_skripsi_model');               
-            $data['mahasiswa_data'] = $this->ujian_skripsi_model->get_update_mahasiswa($id);
+            $this->crud->use_table('t_pengajian_skripsi');
+            $data['pengajuan'] = $this->crud->retrieve(array('id' => $data['pengajuan_skripsi_id']))->row();
+            $this->load->model('ujian_skripsi_model');
+            $data['mahasiswa_data'] = $this->ujian_skripsi_model->get_update_mahasiswa($data['pengajuan']->rencana_mata_pelajaran_detail_id);
             $mahasiswa_id_data = '';  
             if(!empty($data['mahasiswa_data'])){
                 foreach($data['mahasiswa_data'] as $row){
@@ -281,8 +287,10 @@ class Ujian_skripsi extends CI_Controller {
             } 
             $data['mahasiswa_id_attr'] = $mahasiswa_id_data;
             
-            $this->load->model('ujian_skripsi_model');               
-            $data['pengajuan_data'] = $this->ujian_skripsi_model->get_update_pengajuan($id);
+            $this->crud->use_table('t_pengajian_skripsi');
+            $data['pengajuan'] = $this->crud->retrieve(array('id' => $data['pengajuan_skripsi_id']))->row();
+            $this->load->model('ujian_skripsi_model');
+            $data['pengajuan_data'] = $this->ujian_skripsi_model->get_update_pengajuan($data['pengajuan']->id);
             $pengajuan_id_data = '';  
             if(!empty($data['pengajuan_data'])){
                 foreach($data['pengajuan_data'] as $row){

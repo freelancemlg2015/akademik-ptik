@@ -6,14 +6,7 @@ $this->load->view('_shared/menus');
 $control_label = array(
     'class' => 'control-label'
 );
-
-$keterangan_attr = array(
-    'name' => 'keterangan',
-    'class' => 'span3',
-    'value' => set_value('keterangan', $keterangan),
-    'autocomplete' => 'off'    
-);
-
+                       
 $angkatan_data[0] = '';
 foreach ($angkatan_options as $row) {
     $angkatan_data[$row->id.'-'.$row->tahun_akademik_id] = $row->nama_angkatan;
@@ -235,7 +228,7 @@ $thn_akademik_id_attr = array(
         function(data){
             $('#listmahasiswa').html(data);
             $('#listmahasiswa').show();
-             var maxRows = 10;
+            var maxRows = 10;       
             $('#recana_mata_pelajaran').each(function() {
             var cTable = $(this);
             var cRows = cTable.find('tr:gt(0)');

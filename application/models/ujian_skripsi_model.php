@@ -142,14 +142,15 @@ class Ujian_skripsi_model extends CI_Model {
     }
     
     function get_update_semester($id=NULL){
-        $sql ="SELECT a.id, a.semester_id, a.angkatan_id, b.`nama_semester` FROM akademik_t_pengajuan_skripsi AS a
-             LEFT JOIN akademik_m_semester AS b ON a.`semester_id` = b.`id`
-             LEFT JOIN akademik_m_angkatan AS c ON a.`angkatan_id` = c.`id`
-             LEFT JOIN akademik_m_tahun_akademik AS d ON c.`tahun_akademik_id` = d.`id`
-             WHERE b.active = '1'           
-                   AND a.id = '$id'
-             GROUP BY a.`semester_id`";
-        $Q = $this->db->query($sql); 
+        $sql ="SELECT a.id, a.`pengajuan_skripsi_id`, e.`nama_semester` FROM akademik_t_ujian_skripsi a
+                LEFT JOIN akademik_t_pengajuan_skripsi b ON a.`pengajuan_skripsi_id` = b.`id`
+                LEFT JOIN akademik_m_angkatan c ON b.`angkatan_id` = c.`id`
+                LEFT JOIN akademik_m_tahun_akademik d ON c.`tahun_akademik_id` = d.`id`
+                LEFT JOIN akademik_m_semester e ON b.`semester_id` = e.`id`
+                WHERE e.active = '1' AND
+                      b.`semester_id` = '$id'  
+             GROUP BY b.`semester_id`";
+        $Q = $this->db->query($sql);
         foreach($Q->result_array() as $row) $data[] = $row;
         return @$data;
     }
@@ -170,15 +171,16 @@ class Ujian_skripsi_model extends CI_Model {
     }
     
     function get_update_program_studi($id=NULL){
-        $sql ="SELECT a.id, a.semester_id, a.angkatan_id, a.program_studi_id, b.nama_angkatan, d.nama_semester, e.nama_program_studi FROM akademik_t_pengajuan_skripsi AS a 
-               LEFT JOIN akademik_m_angkatan AS b ON a.`angkatan_id` = b.`id`
-               LEFT JOIN akademik_m_tahun_akademik AS c ON b.`tahun_akademik_id` = c.`id`
-               LEFT JOIN akademik_m_semester AS d ON a.`semester_id` = d.`id`
-               LEFT JOIN akademik_m_program_studi AS e ON a.`program_studi_id` = e.`id`
-               WHERE e.active = '1'
-                     AND a.id = '$id'            
-               GROUP BY e.nama_program_studi ORDER BY e.nama_program_studi ASC";
-        $Q = $this->db->query($sql);
+        $sql ="SELECT a.id, a.`pengajuan_skripsi_id`, b.`semester_id`, e.`nama_semester`, f.nama_program_studi FROM akademik_t_ujian_skripsi a
+                LEFT JOIN akademik_t_pengajuan_skripsi b ON a.`pengajuan_skripsi_id` = b.`id`
+                LEFT JOIN akademik_m_angkatan c ON b.`angkatan_id` = c.`id`
+                LEFT JOIN akademik_m_tahun_akademik d ON c.`tahun_akademik_id` = d.`id`
+                LEFT JOIN akademik_m_semester e ON b.`semester_id` = e.`id`
+                LEFT JOIN akademik_m_program_studi f ON b.`program_studi_id` = f.`id`
+               WHERE f.active = '1'
+                     AND b.program_studi_id = '$id'            
+               GROUP BY f.nama_program_studi ORDER BY f.nama_program_studi ASC";
+        $Q = $this->db->query($sql);                                                                                         
         foreach($Q->result_array() as $row) $data[] = $row;
         return @$data;
     }
@@ -202,16 +204,15 @@ class Ujian_skripsi_model extends CI_Model {
     }
     
     function get_update_mahasiswa($id=NULL){
-        $sql ="SELECT `akademik_t_pengajuan_skripsi`.`id`, `akademik_t_pengajuan_skripsi`.`angkatan_id`, `akademik_t_pengajuan_skripsi`.`rencana_mata_pelajaran_detail_id`, `akademik_m_mahasiswa`.`nama`
-               FROM (`akademik_t_pengajuan_skripsi`)
-               LEFT JOIN `akademik_t_rencana_mata_pelajaran_pokok_detail` ON `akademik_t_rencana_mata_pelajaran_pokok_detail`.`id` = `akademik_t_pengajuan_skripsi`.`rencana_mata_pelajaran_detail_id`
-               LEFT JOIN `akademik_m_mahasiswa` ON `akademik_m_mahasiswa`.`id` = `akademik_t_rencana_mata_pelajaran_pokok_detail`.`mahasiswa_id`
-               LEFT JOIN `akademik_m_angkatan` ON `akademik_m_angkatan`.`id` = `akademik_m_mahasiswa`.`angkatan_id`
-               LEFT JOIN `akademik_m_tahun_akademik` ON `akademik_m_tahun_akademik`.`id` = `akademik_m_angkatan`.`tahun_akademik_id`
-               LEFT JOIN akademik_m_semester ON akademik_m_semester.id = akademik_t_pengajuan_skripsi.`semester_id`
-               LEFT JOIN akademik_m_program_studi ON akademik_m_program_studi.id = akademik_t_pengajuan_skripsi.`program_studi_id`
-               WHERE akademik_t_rencana_mata_pelajaran_pokok_detail.active = '1' 
-                    AND `akademik_t_pengajuan_skripsi`.`id` = '$id'";
+        $sql ="SELECT a.id, a.`angkatan_id`, a.`semester_id`, a.`program_studi_id`, a.`rencana_mata_pelajaran_detail_id`, c.`nama` FROM akademik_t_pengajuan_skripsi a 
+                LEFT JOIN akademik_t_rencana_mata_pelajaran_pokok_detail b ON a.`rencana_mata_pelajaran_detail_id` = b.id
+                LEFT JOIN akademik_m_mahasiswa c ON b.`mahasiswa_id` = c.`id`
+                LEFT JOIN akademik_m_angkatan d ON a.`angkatan_id` = d.`id`
+                LEFT JOIN akademik_m_tahun_akademik e ON d.`tahun_akademik_id` = e.`id`
+                LEFT JOIN akademik_m_semester f ON a.`semester_id` = f.`id`
+                LEFT JOIN akademik_m_program_studi g ON a.`program_studi_id` = g.`id`
+                WHERE c.active = '1' 
+                      AND a.rencana_mata_pelajaran_detail_id = '$id'";
         $Q = $this->db->query($sql);
         foreach($Q->result_array() as $row) $data[] = $row; 
         return @$data;
@@ -247,7 +248,7 @@ class Ujian_skripsi_model extends CI_Model {
                LEFT JOIN akademik_m_mahasiswa AS h ON g.`mahasiswa_id` = h.`id`
                WHERE a.`active` = '1'            
                      AND a.`id` = '$id'";
-        $Q = $this->db->query($sql);
+        $Q = $this->db->query($sql); 
         foreach($Q->result_array() as $row) $data[] = $row; 
         return @$data;
     }
