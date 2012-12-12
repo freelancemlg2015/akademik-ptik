@@ -3,7 +3,7 @@
 *{
     font-family: verdana !important;
     font-size: 11px !important;
-    color: #666666;
+    color: #333333;
 }
 
 .icon-grey {
@@ -111,13 +111,14 @@ body {
     background: url("../images/bg-xy.jpg") repeat scroll 0 0 #FBFBFB;
     background : url("../img/template.jpg") no-repeat top center;*/
 	background: #007D3A url(../img/bg.jpg);
+	
 	width:1050px;
 	padding-top:100px;
 	margin:-50px 160px;
 }
-
+/*buat tabel sopi*/
 table,.pagination a{
-    background-color: #ffffff;
+    background-color: #FFFFFF;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -377,12 +378,6 @@ input, textarea, select, .uneditable-input {
     font-size: 12px !important;
 }
 
-.button_add_pegawai_class{
-    float: right;
-    margin-top: 4px;
-    margin-right: 630px;
-}
-
 .modal12 {
     position: fixed;
     top: 50%;
@@ -419,11 +414,7 @@ input, textarea, select, .uneditable-input {
     margin-top: 4px;
     margin-right: 630px;
 }
-.button_add_induk_class{
-    float: right;
-    margin-top: 4px;
-    margin-right: 630px;
-}
+
 span.btn-mini-class{
     float: right;
     margin-top: -29px;
