@@ -89,6 +89,13 @@ class Plot_mata_kuliah_model extends CI_Model {
         }
         return $data;
     }
+	
+	function get_angkatan(){
+		$sql = "select * from akademik_m_angkatan a
+				where a.active = '1'";
+		$query = $this->db->query($sql);
+		return $query->result_array();
+	}
          
     function get_matakuliah_detil($id=null){
         $this->db->select('a.mata_kuliah_id');

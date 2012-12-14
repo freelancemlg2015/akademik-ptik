@@ -216,7 +216,7 @@ class Paket_matakuliah extends CI_Controller {
                         $data_in = array(
                             'angkatan_id'             => $this->input->post('angkatan_id'),
                             'program_studi_id'        => $this->input->post('program_studi_id'),
-                            'plot_mata_kuliah_id'     => $pr[1],                          
+                            'plot_mata_kuliah_id'     => $pr[1],
                             'modified_on'             => date($this->config->item('log_date_format')),
                             'modified_by'             => logged_info()->on
                         );

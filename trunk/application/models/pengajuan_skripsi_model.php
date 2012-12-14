@@ -94,6 +94,18 @@ class Pengajuan_skripsi_model extends CI_Model {
         }
         return $data;
     }
+    
+    function get_angkatan(){
+        $sql = "select b.angkatan_id, c.`tahun_akademik_id`, b.`nama_angkatan` 
+                from `akademik_t_rencana_mata_pelajaran_pokok` a
+                left join akademik_view_paket_plot_mata_kuliah b ON a.`paket_mata_kuliah_id` = b.`paket_mata_kuliah_id`
+                left join akademik_m_angkatan c on b.`angkatan_id` = c.id
+                left join akademik_m_tahun_akademik d on c.`tahun_akademik_id` = d.id
+                where a.`active` = '1'
+                group by a.`angkatan_id`";
+        $query = $this->db->query($sql);
+        return $query->result_array();        
+    }
       
     function get_tahun_angkatan($id=NULL){
         $this->db->distinct();
@@ -108,6 +120,29 @@ class Pengajuan_skripsi_model extends CI_Model {
         return @$data;
     }
     
+    function get_semester($angkatan_id=NULL){
+        $sql = "select b.`semester_id`, b.`nama_semester`
+                from `akademik_t_rencana_mata_pelajaran_pokok` a
+                left join akademik_view_paket_plot_mata_kuliah b ON a.`paket_mata_kuliah_id` = b.`paket_mata_kuliah_id`
+                where a.`active` = '1'
+                  and b.`angkatan_id` = '$angkatan_id'
+                group by b.angkatan_id, b.semester_id";
+        $query = $this->db->query($sql);      
+        return $query->result_array();
+    }
+    
+    function get_program_studi($angkatan_id=NULL, $semester_id=NULL){
+        $sql = "select b.`program_studi_id`, b.`nama_program_studi`
+                from akademik_t_rencana_mata_pelajaran_pokok a
+                left join akademik_view_paket_plot_mata_kuliah b on a.`paket_mata_kuliah_id` = b.`paket_mata_kuliah_id`
+                where a.`active` = '1'
+                  and b.angkatan_id = '2'
+                  and b.semester_id = '3'
+                GROUP BY b.`angkatan_id`, b.`semester_id`, b.`program_studi_id`";
+        $query = $this->db->query($sql);
+        return $query->result_array();
+    }
+    
     function get_mahasiswa($id=NULL){
         $this->db->select('a.id, a.rencana_mata_pelajaran_detail_id, c.nama');
         $this->db->from('t_pengajuan_skripsi as a');
@@ -119,17 +154,18 @@ class Pengajuan_skripsi_model extends CI_Model {
         return @$data;
     }
     
-    function get_mahasiswa_change($id=NULL){
-        $this->db->select('t_rencana_mata_pelajaran_pokok_detail.id,t_rencana_mata_pelajaran_pokok_detail.mahasiswa_id, m_mahasiswa.nama');
-        $this->db->from('t_rencana_mata_pelajaran_pokok_detail');
-        $this->db->join('t_rencana_mata_pelajaran_pokok', 't_rencana_mata_pelajaran_pokok.id = t_rencana_mata_pelajaran_pokok_detail.rencana_mata_pelajaran_id', 'left');
-        $this->db->join('m_mahasiswa', 'm_mahasiswa.id = t_rencana_mata_pelajaran_pokok_detail.mahasiswa_id', 'left');
-        $this->db->join('m_angkatan', 'm_angkatan.id = t_rencana_mata_pelajaran_pokok.angkatan_id', 'left');
-        $this->db->join('m_tahun_akademik', 'm_tahun_akademik.id = m_angkatan.tahun_akademik_id', 'left');
-        $this->db->where('m_angkatan.tahun_akademik_id',$id);
-        $Q = $this->db->get();
-        foreach ($Q->result_array() as $row) $data[] = $row;
-        return @$data;
+    function get_mahasiswa_change($angkatan_id=NULL, $semester_id=NULL, $program_studi_id=NULL){
+        $sql = "select a.`id`, a.`rencana_mata_pelajaran_id`, a.`mahasiswa_id`, c.`nama` 
+                from `akademik_t_rencana_mata_pelajaran_pokok_detail` a
+                left join `akademik_t_rencana_mata_pelajaran_pokok` b on a.`rencana_mata_pelajaran_id` = b.`id`
+                left join `akademik_m_mahasiswa` c on a.`mahasiswa_id` = c.`id`
+                left join akademik_view_paket_plot_mata_kuliah d on b.`paket_mata_kuliah_id` = d.`paket_mata_kuliah_id`
+                WHERE a.`active` = '1'
+                  and d.`angkatan_id` = '$angkatan_id'
+                  and d.`semester_id` = '$semester_id'
+                  and d.`program_studi_id` = '$program_studi_id'";
+        $query = $this->db->query($sql);  
+        return $query->result_array();
     }
     
     function dosen_info($id=NULL){

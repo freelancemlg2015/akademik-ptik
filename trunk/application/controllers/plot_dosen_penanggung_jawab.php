@@ -92,17 +92,17 @@ class Plot_dosen_penanggung_jawab extends CI_Controller {
         }
         
         $this->load->model('plot_dosen_penanggung_jawab_model');
-        $data['plot_detil_options'] = $this->plot_dosen_penanggung_jawab_model->get_matakuliah_detil($id);
+        $data['mata_kuliah_info'] = $this->plot_dosen_penanggung_jawab_model->get_matakuliah_info($id);
         
         $this->load->model('plot_dosen_penanggung_jawab_model');
-        $data['dosen_detil_options'] = $this->plot_dosen_penanggung_jawab_model->get_dosen_detil($id);
-        
+        $data['dosen_info'] = $this->plot_dosen_penanggung_jawab_model->get_dosen_info($id);
+
         $data['tools'] = array(
             'transaction/plot_dosen_penanggung_jawab' => 'Back',
             'transaction/plot_dosen_penanggung_jawab/' . $id . '/edit' => 'Edit',
             'transaction/plot_dosen_penanggung_jawab/' . $id . '/delete' => 'Delete'
         );
-        $data['page_title'] = 'Detail Plot Dosen Penanggung Jawab';
+        $data['page_title'] = 'Detail Plot Dosen Ajar';
         $this->load->view('transaction/plot_dosen_penanggung_jawab_info', $data);
     }
 
@@ -118,7 +118,7 @@ class Plot_dosen_penanggung_jawab extends CI_Controller {
         $this->crud->update($criteria, $data_in);
         redirect('transaction/plot_dosen_penanggung_jawab');
     }
-    
+
     function create() {
         $data['auth'] = $this->auth;
         $data['action_type'] = __FUNCTION__;
@@ -129,16 +129,16 @@ class Plot_dosen_penanggung_jawab extends CI_Controller {
         $this->form_validation->set_error_delimiters('<span class="notice">', '</span>');
         if ($this->form_validation->run('plot_dosen_penanggung_jawab_create') === FALSE) {
             //don't do anything
-        } else {   
+        } else {
             $this->crud->use_table('t_dosen_ajar');
             $data_in = array(
-                'angkatan_id'         => $this->input->post('angkatan_id'),      
+                'angkatan_id'         => $this->input->post('angkatan_id'),
                 'semester_id'         => $this->input->post('semester_id'),
                 'mata_kuliah_id'      => $this->input->post('mata_kuliah_id'),
                 'paket_mata_kuliah_id'=> $this->input->post('paket_mata_kuliah_id'),
                 'created_on'          => date($this->config->item('log_date_format')),
                 'created_by'          => logged_info()->on
-            ); 
+            );
             
             $created_id = $this->crud->create($data_in);
             
@@ -146,18 +146,17 @@ class Plot_dosen_penanggung_jawab extends CI_Controller {
             if($created_id && is_array($dosen)){
                 $this->crud->use_table('t_dosen_ajar_detail');
                 for($i=0; $i< count($dosen); $i++){
-                    $data_in = array(
+                    $data_query = array(
                         'dosen_ajar_id' => $created_id,
                         'dosen_id'      => $dosen[$i],
                         'created_on'    => date($this->config->item('log_date_format')),
                         'created_by'    => logged_info()->on
-                    );
-                    $this->crud->create($data_in);
-                }
+                    );                                           
+                    $this->crud->create($data_query);                   
+                }   
             }
             redirect('transaction/plot_dosen_penanggung_jawab/' . $created_id . '/info');
         }
-        
         $data['action_url'] = $transaction_url . __FUNCTION__;
         $data['page_title'] = 'Create Plot Dosen Penanggung Jawab';
         $data['tools'] = array(
@@ -166,24 +165,24 @@ class Plot_dosen_penanggung_jawab extends CI_Controller {
         
         $this->load->model('plot_dosen_penanggung_jawab_model');
         $data['angkatan_options'] = $this->plot_dosen_penanggung_jawab_model->get_angkatan();
+
+        $this->crud->use_table('t_plot_mata_kuliah');
+        $data['plot_mata_kuliah_options'] = $this->crud->retrieve()->result();
         
         $this->crud->use_table('m_dosen');
         $data['dosen_options'] = $this->crud->retrieve()->result();
-                        
-        $this->crud->use_table('t_dosen_ajar_detail');
+        
+        $this->crud->use_table('t_dosen_ajar_detil');
         $data['dosen_ajar_detil_options'] = $this->crud->retrieve()->result();
         
-        $data['dosen_options_edit']   = '';
         $data['thn_akademik_id_attr'] = '';
-        $data['kelompok_mata_kuliah_id_attr'] = '';
-        $data['mata_kuliah_id_attr']  = '';
         
         $this->load->model('plot_dosen_penanggung_jawab_model', 'plot_dosen_penanggung_jawab');
         $data = array_merge($data, $this->plot_dosen_penanggung_jawab->set_default()); //merge dengan arr data dengan default
         
         $this->load->view('transaction/plot_dosen_penanggung_jawab_form', $data);
     }
-                       
+                            
     function edit() {
         $data['auth']        = $this->auth;
         $data['action_type'] = __FUNCTION__;
@@ -201,32 +200,32 @@ class Plot_dosen_penanggung_jawab extends CI_Controller {
                 'id' => $id
             );
             $data_in = array(
-                'angkatan_id'         => $this->input->post('angkatan_id'),       
+                'angkatan_id'         => $this->input->post('angkatan_id'),
                 'semester_id'         => $this->input->post('semester_id'),
                 'mata_kuliah_id'      => $this->input->post('mata_kuliah_id'),
                 'paket_mata_kuliah_id'=> $this->input->post('paket_mata_kuliah_id'),
                 'modified_on'         => date($this->config->item('log_date_format')),
                 'modified_by'         => logged_info()->on
-            );
-            
+            );                            
             $this->crud->update($criteria, $data_in);
             
             $this->load->model('plot_dosen_penanggung_jawab_model');
             $this->plot_dosen_penanggung_jawab_model->delete_detail($id);
             
             $dosen = $this->input->post('dosen_id');
-            if($created_id && is_array($dosen)){
+            if(is_array($dosen)){
                 $this->crud->use_table('t_dosen_ajar_detail');
                 for($i=0; $i< count($dosen); $i++){
-                    $data_in = array(
-                        'dosen_ajar_id' => $created_id,
+                    $data_query = array(
+                        'dosen_ajar_id' => $id,
                         'dosen_id'      => $dosen[$i],
-                        'created_on'    => date($this->config->item('log_date_format')),
-                        'created_by'    => logged_info()->on
-                    );
-                    $this->crud->create($data_in);
-                }
-            }             
+                        'modified_on'   => date($this->config->item('log_date_format')),
+                        'modified_by'   => logged_info()->on
+                    );                       
+                    $this->crud->create($data_query);                   
+                }   
+            }
+            
             redirect('transaction/plot_dosen_penanggung_jawab/' . $id . '/info');
         }
         $data['action_url'] = $transaction_url . $id . '/' . __FUNCTION__;
@@ -237,18 +236,13 @@ class Plot_dosen_penanggung_jawab extends CI_Controller {
         
         $this->crud->use_table('t_dosen_ajar');
         $plot_dosen_penanggung_jawab_data = $this->crud->retrieve(array('id' => $id))->row();
-                                                                                             
+        
         $this->load->model('plot_dosen_penanggung_jawab_model');
         $data['angkatan_options'] = $this->plot_dosen_penanggung_jawab_model->get_angkatan();
-                                                                
-        $data['plot_mata_kuliah_options'] = '';                                    
-        
+
         $this->crud->use_table('m_dosen');
         $data['dosen_options'] = $this->crud->retrieve()->result();
         
-        $this->crud->use_table('t_dosen_ajar_detail');
-        $data['dosen_ajar_detil_options'] = $this->crud->retrieve()->result();
-                                                                                                       
         $this->load->model('plot_dosen_penanggung_jawab_model', 'plot_dosen_penanggung_jawab');
         $data = array_merge($data, $this->plot_dosen_penanggung_jawab->set_default()); //merge dengan arr data dengan default
         $data = array_merge($data, (array) $plot_dosen_penanggung_jawab_data);
@@ -262,24 +256,28 @@ class Plot_dosen_penanggung_jawab extends CI_Controller {
             foreach ($data['m_tahun_akademik'] as $row) {
                 $thn_akademik_id_attr = $row['tahun_ajar_mulai'].'-'.$row['tahun_ajar_akhir'];
             }                
-
             $data['thn_akademik_id_attr'] = $thn_akademik_id_attr;
-            $data['kelompok_mata_kuliah_id_attr'] = '';
-            $data['mata_kuliah_id_attr'] = '';                                                                                                                                    
             
+            $this->crud->use_table('t_paket_mata_kuliah');
+            $data['semester'] = $this->crud->retrieve(array('id' => $data['paket_mata_kuliah_id']))->row();
+            $this->load->model('plot_dosen_penanggung_jawab_model');
+            $data['semester_options'] = $this->plot_dosen_penanggung_jawab_model->get_update_semester($data['semester']->plot_mata_kuliah_id);
+            
+            //$this->crud->use_table('t_paket_mata_kuliah');
+            //$data['program'] = $this->crud->retrieve(array('id' => $data['paket_mata_kuliah_id']))->row();
+            $this->load->model('plot_dosen_penanggung_jawab_model');
+            $data['program_options'] = $this->plot_dosen_penanggung_jawab_model->get_update_program_studi($id);
+            
+            $this->crud->use_table('t_paket_mata_kuliah');
+            $data['matakuliah'] = $this->crud->retrieve(array('id' => $data['paket_mata_kuliah_id']))->row();
+            $this->load->model('plot_dosen_penanggung_jawab_model');
+            $data['matakuliah_options'] = $this->plot_dosen_penanggung_jawab_model->get_update_mata_kuliah($data['matakuliah']->plot_mata_kuliah_id);          
+        
+            $this->load->model('plot_dosen_penanggung_jawab_model');
+            $data['update_dosen'] = $this->plot_dosen_penanggung_jawab_model->get_update_dosen($id); 
         }
         $this->load->view('transaction/plot_dosen_penanggung_jawab_form', $data);
     }
-    
-    /*function getOptTahunAkademik(){
-        $this->load->model('plot_dosen_penanggung_jawab_model');
-        $angkatan_id= $this->input->post('angkatan_id');
-        $data = $this->plot_dosen_penanggung_jawab_model->get_tahun_angkatan($angkatan_id);
-        echo '<option value="" ></option>';
-        foreach($data as $row){
-            echo '<option value=\''.$row['id'].'\' >'.$row['tahun_ajar_mulai'].'-'.$row['tahun_ajar_akhir'].'</option>';
-        } 
-    }*/
     
     function getOptTahunAkademik() {
         $angkatan_id= $this->input->post('angkatan_id');
@@ -294,38 +292,35 @@ class Plot_dosen_penanggung_jawab extends CI_Controller {
     
     function getOptSemester(){
         $this->load->model('plot_dosen_penanggung_jawab_model');
-        $angkatan = $this->input->post('angkatan_id');
-        $data = $this->plot_dosen_penanggung_jawab_model->get_semester($angkatan);
-        //var_dump($data);
+        $angkatan_id = $this->input->post('angkatan_id');
+        $semester = $this->plot_dosen_penanggung_jawab_model->get_semester($angkatan_id);
         echo '<option value="" ></option>';
-        foreach($data as $row){
+        foreach($semester as $row){
             echo '<option value=\''.$row['semester_id'].'\' >'.$row['nama_semester'].'</option>';
         } 
     }
     
     function getOptProgramStudi(){
         $this->load->model('plot_dosen_penanggung_jawab_model');
-        $angkatan = $this->input->post('angkatan_id');
-        $semester = $this->input->post('span_semester');
-        $data = $this->plot_dosen_penanggung_jawab_model->get_program_studi($angkatan, $semester);
-        //var_dump($data);
+        $angkatan_id = $this->input->post('angkatan_id');
+        $semester_id = $this->input->post('span_semester');
+        $semester = $this->plot_dosen_penanggung_jawab_model->get_program_studi($angkatan_id,$semester_id);
         echo '<option value="" ></option>';
-        foreach($data as $row){
-            echo '<option value=\''.$row['program_studi_id'].'\' >'.$row['nama_program_studi'].'</option>';
-        }     
+        foreach($semester as $row){
+            echo '<option value=\''.$row['paket_mata_kuliah_id'].'\' >'.$row['nama_program_studi'].'</option>';
+        } 
     }
     
-    function getOptMataKuliah(){
+    function getOptMatakuliah(){
         $this->load->model('plot_dosen_penanggung_jawab_model');
-        $angkatan = $this->input->post('angkatan_id');
-        $semester = $this->input->post('span_semester');
-        $program  = $this->input->post('span_program');
-        $data = $this->plot_dosen_penanggung_jawab_model->get_mata_kuliah($angkatan, $semester,$program);
-        //var_dump($data);
+        $angkatan_id = $this->input->post('angkatan_id');
+        $semester_id = $this->input->post('span_semester');
+        $progran_id  = $this->input->post('span_program');
+        $semester = $this->plot_dosen_penanggung_jawab_model->get_mata_kuliah($angkatan_id,$semester_id,$progran_id);
         echo '<option value="" ></option>';
-        foreach($data as $row){
+        foreach($semester as $row){
             echo '<option value=\''.$row['mata_kuliah_id'].'\' >'.$row['nama_mata_kuliah'].'</option>';
-        }     
+        } 
     }
 }
 

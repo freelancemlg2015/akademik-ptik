@@ -21,35 +21,6 @@ class Absensi_dosen extends CI_Controller {
     function absensi_dosen($query_id = 0, $sort_by = 'id', $sort_order = 'desc', $offset = 0) {
         $data_type = $this->input->post('data_type');
         $data['auth'] = $this->auth;
-        // pagination
-        $limit = 5;
-        $this->load->library(array('form_validation', 'table', 'pagination'));
-        $this->input->load_query($query_id);
-        $query_array = array(
-            'nama_dosen' => $this->input->get('nama_dosen'),
-            'nama_ruang' => $this->input->get('nama_ruang'),
-            'active' => 1
-        );
-
-        $this->load->model('jadwal_kuliah_model', 'jadwal_kuliah');
-        $results = $this->jadwal_kuliah->search($query_array, $limit, $offset, $sort_by, $sort_order);
-        //echo get_instance()->db->last_query();
-        $data['results'] = $results['results'];
-        $data['num_results'] = $results['num_rows'];
-
-        // pagination
-        $config = array();
-        $config['base_url'] = site_url("transaction/absensi_dosen/$query_id/$sort_by/$sort_order");
-        $config['total_rows'] = $data['num_results'];
-        $config['per_page'] = $limit;
-        $config['uri_segment'] = 6;
-        $config['num_links'] = 6;
-
-        $config = array_merge($config, default_pagination_btn());
-        $this->pagination->initialize($config);
-        $data['pagination'] = $this->pagination->create_links();
-        $data['sort_by'] = $sort_by;
-        $data['sort_order'] = $sort_order;
 
         $data['page_title'] = 'Absensi Dosen';
 
@@ -98,23 +69,29 @@ class Absensi_dosen extends CI_Controller {
 			$angkatan_data[$row->id] = $row->nama_angkatan;
         }
 		$data['angkatan_options']=$angkatan_data;
-		
-		$this->crud->use_table('m_tahun_akademik');
-		$tahun_akademik_data = array();
-		$tahun_akademik_data[0] ="";
-        foreach ($this->crud->retrieve()->result() as $row) {
-			$tahun_akademik_data[$row->id] = $row->tahun_ajar_mulai.'-'.$row->tahun_ajar_akhir;
-		}
-        $data['tahun_akademik_options'] = $tahun_akademik_data;
+        $data['tahun_akademik_id_attr'] = ''; $data['tahun_akademik_options'] = '';
+		$tahun_akademik_datas='';
+		$sql = "select a.tahun_ajar_mulai, a.tahun_ajar_akhir from akademik_m_tahun_akademik a ".
+				" left join akademik_m_angkatan b on b.tahun_akademik_id=a.id ".
+				"where a.active ='1' and b.id=".$angkatan_ids;
+        $query = $this->db->query($sql);
+		//echo $sql; return;
+		//echo  '<pre>'.$this->db->last_query().'</pre><br>'; return;
+        foreach($query->result_array() as $row){
+            $tahun_akademik_datas = $row['tahun_ajar_mulai'].'-'.$row['tahun_ajar_akhir'];
+        }
+		$data['tahun_akademik_id_attr'] = $tahun_akademik_datas;
         
-		$this->crud->use_table('m_semester');
+		//$this->crud->use_table('m_semester');
 		$semester_data = array();
 		$semester_data[0] = '';
+		/*
 		foreach ($this->crud->retrieve()->result() as $row) {
 			$semester_data[$row->id] = $row->nama_semester;
 		}
+		*/
         $data['semester_options'] = $semester_data;
-		
+		//$data['semester_options'] = '';
 		
 		$data['angkatan_id']=(int)$this->input->post('angkatan_id');
 		$data['program_studi']=(int)$this->input->post('program_studi');
@@ -128,58 +105,13 @@ class Absensi_dosen extends CI_Controller {
 		$data['opt_program_studi_url'] = base_url() . 'transaction/select_data_form/getOptProgramStudi';
         $data['opt_mata_kuliah_url'] =  base_url() . 'transaction/select_data_form/getOptMataKuliah';
 		$data['opt_data_mahasiswa_url'] = base_url() . 'transaction/select_data_form/getOptDataDosenForm';
-		//$data['opt_data_mahasiswa_url'] = base_url() . 'transaction/select_data_form/getOptDataSubForm';
 		$data['opt_data_jadwal_url'] = base_url() . 'transaction/select_data_form/getOptDataJadwal';
+		$data['opt_semester_url'] = base_url() . 'transaction/select_data_form/getOptSemester';
+		$data['action_url'] = '';
 
         $this->load->view('transaction/absensi_dosen', $data);
     }
 
-    function search() {
-        $query_array = array(
-            'nama_dosen' => $this->input->post('nama_dosen'),
-            'nama_ruang' => $this->input->post('nama_ruang'),
-            'active' => 1
-        );
-        $query_id = $this->input->save_query($query_array);
-        redirect("transaction/absensi_dosen/view/$query_id");
-    }
-
-    function info() {
-        $id = $this->uri->segment(3);
-        $data['auth'] = $this->auth;
-        $criteria = array(
-            't_jadwal_kuliah.id' => $id
-        );
-        $this->load->model('jadwal_kuliah_model', 'jadwal_kuliah');
-        $result = $this->jadwal_kuliah->get_many('', $criteria)->row_array();
-        //[debug]echo get_instance()->db->last_query();
-        $result_keys = array_keys($result);
-        foreach ($result_keys as $result_key) {
-            $data[$result_key] = $result[$result_key];
-        }
-
-        $data['tools'] = array(
-            'transaction/absensi_dosen' => 'Back',
-            'transaction/absensi_dosen/' . $id . '/edit' => 'Edit',
-            'transaction/absensi_dosen/' . $id . '/delete' => 'Delete'
-        );
-        $data['page_title'] = 'Detail Absensi Mahasiswa';
-        $this->load->view('transaction/absensi_dosen_info', $data);
-    }
-
-    function delete() {
-        $id = $this->uri->segment(3);
-        $this->crud->use_table('t_absensi_mhs');
-        $criteria = array('id' => $id);
-        $data_in = array(
-            'active' => 0,
-            'modified_on' => logged_info()->on,
-            'modified_by' => logged_info()->by
-        );
-        $this->crud->update($criteria, $data_in);
-        redirect('transaction/absensi_dosen');
-    }
-	
 	function create() {
         //echo '<pre>'; print_r($_POST); echo '</pre>'; 
 		$data['auth'] = $this->auth;
@@ -219,11 +151,13 @@ class Absensi_dosen extends CI_Controller {
 			} else {
 				
 				$angkatan_id= $this->input->post('angkatan_id');
-				//$tahun_akademik_id = $this->input->post('tahun_akademik_id');
 				$jadwal_kuliah_id=$this->input->post('pertemuan_id');
 				$program_studi_id=$this->input->post('program_studi_id');
 				$mata_kuliah_id=$this->input->post('mata_kuliah_id');
 				$semester_id=$this->input->post('semester_id');
+				$this->load->model('select_data_form_model', 'select_data_form');
+				$data_results = $this->select_data_form->getOptDataDosenForm($angkatan_id, $semester_id, $program_studi_id, $mata_kuliah_id, $jadwal_kuliah_id);
+				/*
 				$query = $this->db->query("select a.id as akademik_t_absensi_mhs_id, d.dosen_id, s.no_karpeg_dosen as nim, s.nama_dosen as nama_mhs,
 					j.id as jadwal_kuliah_id, d.dosen_ajar_id, 
 					j.pertemuan_ke, d.id as rencana_mata_pelajaran_pokok_id,
@@ -235,8 +169,9 @@ class Absensi_dosen extends CI_Controller {
 					left join akademik_t_absensi_dosen a on j.id = a.jadwal_kuliah_id and a.dosen_id=d.dosen_id and a.dosen_ajar_id = d.dosen_ajar_id
 					left join akademik_m_absensi k on a.absensi_id = k.id
 					where m.angkatan_id = $angkatan_id and m.semester_id=$semester_id and m.mata_kuliah_id=$mata_kuliah_id");
+				*/
 				//echo '<pre>'.$this->db->last_query().'</pre>'; return;
-				foreach($query->result_array() as $row){
+				foreach($data_results->result_array() as $row){
 					$absensi_id = $this->input->post('nilai_nts_'.$row['rencana_mata_pelajaran_pokok_id']);
 					$parm = array();
 					if($absensi_id !='') $parm['absensi_id'] = $absensi_id;
@@ -311,42 +246,37 @@ class Absensi_dosen extends CI_Controller {
 			$angkatan_data[$row->id] = $row->nama_angkatan;
         }
 		$data['angkatan_options']=$angkatan_data;
+        $data['tahun_akademik_id_attr'] = ''; $data['tahun_akademik_options'] = '';
+		$tahun_akademik_datas='';
+		$sql = "select a.tahun_ajar_mulai, a.tahun_ajar_akhir from akademik_m_tahun_akademik a ".
+				" left join akademik_m_angkatan b on b.tahun_akademik_id=a.id ".
+				"where a.active ='1' and b.id=".$angkatan_ids;
+        $query = $this->db->query($sql);
+		//echo $sql; return;
+		//echo  '<pre>'.$this->db->last_query().'</pre><br>'; return;
+        foreach($query->result_array() as $row){
+            $tahun_akademik_datas = $row['tahun_ajar_mulai'].'-'.$row['tahun_ajar_akhir'];
+        }
+		$data['tahun_akademik_id_attr'] = $tahun_akademik_datas;
         
-        $this->crud->use_table('m_tahun_akademik');
-		$tahun_akademik_data = array();
-		$tahun_akademik_data[0] ="";
-        foreach ($this->crud->retrieve()->result() as $row) {
-			$tahun_akademik_data[$row->id] = $row->tahun_ajar_mulai.'-'.$row->tahun_ajar_akhir;
-		}
-        $data['tahun_akademik_options'] = $tahun_akademik_data;
-        
-		$this->crud->use_table('m_semester');
+		//$this->crud->use_table('m_semester');
 		$semester_data = array();
 		$semester_data[0] = '';
+		/*
 		foreach ($this->crud->retrieve()->result() as $row) {
 			$semester_data[$row->id] = $row->nama_semester;
 		}
-        $data['semester_options'] = $semester_data;
-		
-		$this->crud->use_table('m_jenis_ujian');
-		$order_bys = array( "kode_ujian"=>"asc");
-		$kegiatan_data = array();
-		$kegiatan_data[0] = '';
-		/*
-		for ($i = 1; $i <= 20; $i++) {
-			$kegiatan_data[$i] = $i;
-		}
 		*/
-        $data['kegiatan_options'] = $kegiatan_data;
+        $data['semester_options'] = $semester_data;
+		//$data['semester_options'] = '';
 		
-        $data['opt_angkatan_url'] = base_url() . 'transaction/select_data_form/getOptAngkatan';
+		$data['opt_angkatan_url'] = base_url() . 'transaction/select_data_form/getOptAngkatan';
 		$data['opt_program_studi_url'] = base_url() . 'transaction/select_data_form/getOptProgramStudi';
         $data['opt_mata_kuliah_url'] =  base_url() . 'transaction/select_data_form/getOptMataKuliah';
-		$data['opt_data_mahasiswa_url'] = base_url() . 'transaction/select_data_form/getOptDataDosenUjian';
+		$data['opt_data_mahasiswa_url'] = base_url() . 'transaction/select_data_form/getOptDataDosenForm';
 		$data['opt_data_jadwal_url'] = base_url() . 'transaction/select_data_form/getOptDataJadwal';
-		
-        $this->crud->use_table('m_data_ruang');
-        $data['ruang_pelajaran_options'] = $this->crud->retrieve()->result();
+		$data['opt_semester_url'] = base_url() . 'transaction/select_data_form/getOptSemester';
+		$data['action_url'] = '';
         
         $this->load->model('absensi_dosen_model', 'absensi_dosen');
         $data = array_merge($data, $this->absensi_dosen->set_default()); //merge dengan arr data dengan default
