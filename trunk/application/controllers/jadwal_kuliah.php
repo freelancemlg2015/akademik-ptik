@@ -29,6 +29,7 @@ class Jadwal_kuliah extends CI_Controller {
     function jadwal_kuliah($query_id = 0, $sort_by = 'id', $sort_order = 'desc', $offset = 0) {
         $data_type = $this->input->post('data_type');
         $data['auth'] = $this->auth;
+		/*
         // pagination
         $limit = 5;
         $this->load->library(array('form_validation', 'table', 'pagination'));
@@ -58,6 +59,7 @@ class Jadwal_kuliah extends CI_Controller {
         $data['pagination'] = $this->pagination->create_links();
         $data['sort_by'] = $sort_by;
         $data['sort_order'] = $sort_order;
+		*/
 
         $data['page_title'] = 'Jadwal Kuliah';
 
