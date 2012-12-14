@@ -97,6 +97,7 @@ class Plot_dosen_penanggung_jawab extends CI_Controller {
         $this->load->model('plot_dosen_penanggung_jawab_model');
         $data['dosen_info'] = $this->plot_dosen_penanggung_jawab_model->get_dosen_info($id);
 
+
         $data['tools'] = array(
             'transaction/plot_dosen_penanggung_jawab' => 'Back',
             'transaction/plot_dosen_penanggung_jawab/' . $id . '/edit' => 'Edit',
@@ -132,6 +133,7 @@ class Plot_dosen_penanggung_jawab extends CI_Controller {
         } else {
             $this->crud->use_table('t_dosen_ajar');
             $data_in = array(
+
                 'angkatan_id'         => $this->input->post('angkatan_id'),
                 'semester_id'         => $this->input->post('semester_id'),
                 'mata_kuliah_id'      => $this->input->post('mata_kuliah_id'),
@@ -141,16 +143,13 @@ class Plot_dosen_penanggung_jawab extends CI_Controller {
             );
             
             $created_id = $this->crud->create($data_in);
-            
-            $dosen = $this->input->post('dosen_id');
-            if($created_id && is_array($dosen)){
-                $this->crud->use_table('t_dosen_ajar_detail');
-                for($i=0; $i< count($dosen); $i++){
+            $kelompok = $this->input->post('dosen_id');
+            if($created_id && is_array($kelompok)){
+                $this->crud->use_table('t_dosen_ajar_detil');
+                for($i=0; $i< count($kelompok); $i++){
                     $data_query = array(
                         'dosen_ajar_id' => $created_id,
-                        'dosen_id'      => $dosen[$i],
-                        'created_on'    => date($this->config->item('log_date_format')),
-                        'created_by'    => logged_info()->on
+                        'dosen_id' => $kelompok[$i]
                     );                                           
                     $this->crud->create($data_query);                   
                 }   
@@ -163,12 +162,27 @@ class Plot_dosen_penanggung_jawab extends CI_Controller {
             'transaction/plot_dosen_penanggung_jawab' => 'Back'
         );
         
-        $this->load->model('plot_dosen_penanggung_jawab_model');
-        $data['angkatan_options'] = $this->plot_dosen_penanggung_jawab_model->get_angkatan();
+        $this->crud->use_table('m_angkatan');
+        $data['angkatan_options'] = $this->crud->retrieve()->result();
+
+        $this->crud->use_table('m_tahun_akademik');
+        $data['tahun_akademik_options'] = $this->crud->retrieve()->result();
+
+        $this->crud->use_table('m_semester');
+        $data['semester_options'] = $this->crud->retrieve()->result();
 
         $this->crud->use_table('t_plot_mata_kuliah');
         $data['plot_mata_kuliah_options'] = $this->crud->retrieve()->result();
         
+        $this->crud->use_table('m_mata_kuliah');
+        $data['mata_kuliah_options'] = $this->crud->retrieve()->result();
+        
+        $this->crud->use_table('t_plot_mata_kuliah');
+        $data['plot_mata_kuliah_options'] = $this->crud->retrieve()->result();
+
+        $this->crud->use_table('m_kelompok_matakuliah');
+        $data['kelompok_matakuliah_options'] = $this->crud->retrieve()->result();
+
         $this->crud->use_table('m_dosen');
         $data['dosen_options'] = $this->crud->retrieve()->result();
         
@@ -177,12 +191,13 @@ class Plot_dosen_penanggung_jawab extends CI_Controller {
         
         $data['thn_akademik_id_attr'] = '';
         
+
         $this->load->model('plot_dosen_penanggung_jawab_model', 'plot_dosen_penanggung_jawab');
         $data = array_merge($data, $this->plot_dosen_penanggung_jawab->set_default()); //merge dengan arr data dengan default
         
         $this->load->view('transaction/plot_dosen_penanggung_jawab_form', $data);
     }
-                            
+
     function edit() {
         $data['auth']        = $this->auth;
         $data['action_type'] = __FUNCTION__;
@@ -208,7 +223,7 @@ class Plot_dosen_penanggung_jawab extends CI_Controller {
                 'modified_by'         => logged_info()->on
             );                            
             $this->crud->update($criteria, $data_in);
-            
+
             $this->load->model('plot_dosen_penanggung_jawab_model');
             $this->plot_dosen_penanggung_jawab_model->delete_detail($id);
             
