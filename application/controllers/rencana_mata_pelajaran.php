@@ -131,28 +131,27 @@ class Rencana_mata_pelajaran extends CI_Controller {
             //don't do anything
         } else {
             $this->crud->use_table('t_rencana_mata_pelajaran_pokok');
-            $data_in = array(
-                'angkatan_id'         => $this->input->post('angkatan_id'),     
-                'mata_kuliah_id'      => $this->input->post('mata_kuliah_id'),
-                'paket_mata_kuliah_id'=> $this->input->post('paket_mata_kuliah_id'),
-                'created_on'          => date($this->config->item('log_date_format')),
-                'created_by'          => logged_info()->on
-            );
-            
-            $created_id = $this->crud->create($data_in);
+                $data_in = array(
+                    'angkatan_id'         => $this->input->post('angkatan_id'),     
+                    'mata_kuliah_id'      => $this->input->post('mata_kuliah_id'),
+                    'paket_mata_kuliah_id'=> $this->input->post('paket_mata_kuliah_id'),
+                    'created_on'          => date($this->config->item('log_date_format')),
+                    'created_by'          => logged_info()->on
+                );
+                $created_id = $this->crud->create($data_in);
             
             $mahasiswa = $this->input->post('mahasiswa_id');
             if($created_id && is_array($mahasiswa)){
                 $this->crud->use_table('t_rencana_mata_pelajaran_pokok_detail');
                 for($i=0; $i< count($mahasiswa); $i++){
-                    $data_in = array(
-                            'rencana_mata_pelajaran_id' => $created_id,
-                            'mahasiswa_id'              => $mahasiswa[$i],
-                            'created_on'                => date($this->config->item('log_date_format')),
-                            'created_by'                => logged_info()->on,
-                            'active'                    => 1   
-                        );
-                    $this->crud->create($data_in);  
+                $data_in = array(
+                    'rencana_mata_pelajaran_id' => $created_id,
+                    'mahasiswa_id'              => $mahasiswa[$i],
+                    'created_on'                => date($this->config->item('log_date_format')),
+                    'created_by'                => logged_info()->on,
+                    'active'                    => 1   
+                );
+                $this->crud->create($data_in);  
                 }
             }  
             redirect('transaction/rencana_mata_pelajaran/' . $created_id . '/info');
@@ -264,31 +263,31 @@ class Rencana_mata_pelajaran extends CI_Controller {
             }                
             $data['thn_akademik_id_attr'] = $thn_akademik_id_attr;
 
-            $this->crud->use_table('t_paket_mata_kuliah');
-            $data['semester'] = $this->crud->retrieve(array('id' => $data['paket_mata_kuliah_id']))->row();
+//            $this->crud->use_table('t_paket_mata_kuliah');
+//            $data['semester'] = $this->crud->retrieve(array('id' => $data['paket_mata_kuliah_id']))->row();
             $this->load->model('rencana_mata_pelajaran_model');
-            $data['semester_options'] = $this->rencana_mata_pelajaran_model->get_update_semester($data['semester']->plot_mata_kuliah_id);
+            $data['semester_options'] = $this->rencana_mata_pelajaran_model->get_update_semester($id);
             $semester_id_attr = '';
             foreach($data['semester_options'] as $row){
                 $semester_id_attr = $row['semester_id'];                                
             }
             $data['semester_id'] = $semester_id_attr;
             
-            $this->crud->use_table('t_paket_mata_kuliah');
-            $data['program'] = $this->crud->retrieve(array('id' => $data['paket_mata_kuliah_id']))->row();
+//            $this->crud->use_table('t_paket_mata_kuliah');
+//            $data['program'] = $this->crud->retrieve(array('id' => $data['paket_mata_kuliah_id']))->row();
             $this->load->model('rencana_mata_pelajaran_model');
-            $data['program_options'] = $this->rencana_mata_pelajaran_model->get_update_program_studi($data['program']->program_studi_id);
+            $data['program_options'] = $this->rencana_mata_pelajaran_model->get_update_program_studi($id);
             $program_id_attr = '';
             foreach($data['program_options'] as $row){
-                $program_id_attr = $row['program_studi_id'];                                
+                $program_id_attr = $row['paket_mata_kuliah_id'];                                
             }
             $data['program_studi_id'] = $program_id_attr;
             
-            $this->crud->use_table('t_paket_mata_kuliah');
-            $data['mata_kuliah'] = $this->crud->retrieve(array('id' => $data['paket_mata_kuliah_id']))->row();
+//            $this->crud->use_table('t_paket_mata_kuliah');
+//            $data['mata_kuliah'] = $this->crud->retrieve(array('id' => $data['paket_mata_kuliah_id']))->row();
             $this->load->model('rencana_mata_pelajaran_model');
-            $data['mata_kuliah_options'] = $this->rencana_mata_pelajaran_model->get_update_mata_kuliah($data['mata_kuliah']->plot_mata_kuliah_id);
-            
+            $data['mata_kuliah_options'] = $this->rencana_mata_pelajaran_model->get_update_mata_kuliah($id);
+            var_dump($data['mata_kuliah_options']);            
             $this->load->model('rencana_mata_pelajaran_model');
             $mahasiswa_data = $this->rencana_mata_pelajaran_model->get_edit_mahasiswa();
             
