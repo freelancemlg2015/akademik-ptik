@@ -10,35 +10,12 @@ $control_label = array(
     <table cellspacing="0" cellpadding="0" border="0" class="table table-bordered">
         <tbody>
             <tr>
-                <th class="span2">Angkatan</th>
-                <td><?= $nama_angkatan ?></td>
-            </tr>
-            <tr>
-                <th class="span2">Tahun</th>
-                <td>
-                    <?php
-                        $tahun = $tahun_ajar_mulai.'-'.$tahun_ajar_akhir;
-                        if(!empty($tahun)){
-                            echo $tahun;                                                        
-                        }     
-                    ?>
-                </td>
-            </tr>
-            <tr>
-                <th class="span2">Semester</th>
-                <td><?= $nama_semester ?></td>
-            </tr>
-            <tr>
-                <th class="span2">Program Studi</th>
-                <td><?= $nama_program_studi ?></td>
-            </tr>
-            <tr>
                 <th class="span2">Mahasiswa</th>
                 <td><?= $nama ?></td>
             </tr>
             <tr>
                 <th class="span2">Judul Skripsi</th>
-                <td><?= $judul_skripsi_diajukan ?></td>
+                <td><?= $judul_skripsi ?></td>
             </tr>
             <tr>
                 <th class="span2">Tanggal Ujian</th>
@@ -65,19 +42,19 @@ $control_label = array(
             </tr>
             <tr>
                 <th class="span2">Ketua Penguji</th>
-                <td><?= $nama_ketua_penguji ?></td>
+                <td><?= $ketua_penguji ?></td>
             </tr>
             <tr>
                 <th class="span2">Anggota Penguji 1</th>
-                <td><?= $nama_anggota_satu ?></td>
+                <td><?= $anggota_penguji_1 ?></td>
             </tr>
             <tr>
                 <th class="span2">Anggota Penguji 2</th>
-                <td><?= $nama_anggota_dua ?></td>
+                <td><?= $anggota_penguji_2 ?></td>
             </tr>
             <tr>
                 <th class="span2">Sekretaris Penguji</th>
-                <td><?= $nama_sekretaris ?></td>
+                <td><?= $sekretaris_penguji ?></td>
             </tr>
             <tr>
                 <th class="span2">Keterangan</th>

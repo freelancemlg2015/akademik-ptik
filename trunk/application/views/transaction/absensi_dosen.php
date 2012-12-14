@@ -19,7 +19,7 @@ $action_url =''
     </div>
 	
 	<div class="control-group">
-		<table class="table table-bordered table-striped container-full data_list" >
+		<table class="table table-bordered table-striped container-full" >
 			<thead class="table table-bordered span4">
 				<tr class="table-bordered span4">
 					<th style="width:20px">No.</th>
@@ -37,8 +37,6 @@ $action_url =''
 	
 	<?php form_close() ?>
 </div>
-
-
 
 <?php $this->load->view('_shared/footer'); ?>
 <script type="text/javascript">

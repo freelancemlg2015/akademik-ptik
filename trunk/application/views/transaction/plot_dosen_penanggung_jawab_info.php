@@ -30,13 +30,13 @@ $control_label = array(
             </tr>
             <tr>
                 <th class="span2">Konsentrasi Studi</th>
-                <td><?= $nama_kelompok_mata_kuliah ?></td>
+                <td><?= $nama_program_studi ?></td>
             </tr>
             <tr>
                 <th class="span2">Mata Kuliah</th>
                 <td>
                     <?php 
-                        foreach($plot_detil_options as $row){
+                        foreach($mata_kuliah_info as $row){
                             echo $row['nama_mata_kuliah'];
                         }
                     ?>
@@ -58,8 +58,8 @@ $control_label = array(
         <tbody>
             <?php         
                 $no = 1;
-                if(isset($dosen_detil_options)){
-                    foreach ($dosen_detil_options As $row) {
+                if(isset($dosen_info)){
+                    foreach ($dosen_info As $row) {
                     echo '<tr>
                             <td style="text-align: center">' . $no . '</td>    
                             <td>' . $row['no_karpeg_dosen'] . '</td>    

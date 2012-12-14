@@ -102,3 +102,6 @@ foreach ($jam_pelajaran_options as $row) {
     <?php form_close() ?>
 </div>
 <?php $this->load->view('_shared/footer'); ?>
+<script type="text/javascript">
+	function mataKuliahChange(){}
+</script>

@@ -125,6 +125,8 @@ foreach ($jam_pelajaran_options as $row) {
 </div>
 <?php $this->load->view('_shared/footer'); ?>
 <script type="text/javascript">
+	function mataKuliahChange(){}
+	
 $().ready(function(){
     if($('#button_add_induk').length > 0 ){
         $('#button_add_induk').live('click',function(){

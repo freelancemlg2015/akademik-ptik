@@ -9,7 +9,7 @@ $control_label = array(
 
 $angkatan_data[0] = '';
 foreach ($angkatan_options as $row) {
-    $angkatan_data[$row->id.'-'.$row->tahun_akademik_id] = $row->nama_angkatan;
+    $angkatan_data[$row['id'].'-'.$row['tahun_akademik_id']] = $row['nama_angkatan'];
 }
 
 $tahun_data[0] = '';

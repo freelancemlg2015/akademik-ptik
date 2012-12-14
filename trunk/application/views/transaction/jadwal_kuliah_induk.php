@@ -1,9 +1,34 @@
 <?php
 $this->load->view('_shared/header');
 $this->load->view('_shared/menus');
+$action_url='';
 ?>
-
+<script type="text/javascript">
+	function mataKuliahChange(){
+		//alert('wq'); return;
+		$('#listMahasiswa').hide();
+		//$('#listMahasiswa').show();
+		if($('#pertemuan_id').val()<=0) return;
+		//var tahun_akademik = $('#tahun_akademik_id').val();
+        var angkatan_id = $('#angkatan_id').val();
+		var pertemuan_id = $('#pertemuan_id').val();
+		var program_studi_id = $('#program_studi_id').val();
+		var mata_kuliah_id = $('#mata_kuliah_id').val();
+		var semester_id = $('#semester_id').val();
+		var mode = 'view';
+		//alert(pertemuan_id); 
+        $.post('<?php echo $opt_data_mahasiswa_url; ?>',{angkatan_id: angkatan_id,
+					pertemuan_id: pertemuan_id, semester_id:semester_id,
+					program_studi_id: program_studi_id,mata_kuliah_id: mata_kuliah_id, mode: mode},
+        function(data){
+            $('#listMahasiswa').html(data);
+			$('#listMahasiswa').show();
+        });
+    }
+</script>
 <div class="container-fluid form-inline well" id="jadwal_kuliah_induk-search">
+	<?php echo form_open($action_url, array('class' => 'form-horizontal')); ?>
+	<?php $this->load->view('transaction/header_select_transaction'); ?>
     <?php
     $nama_dosen_attr = array(
         'id' => 'nama_dosen', //yg ini masih rancu dosen apa mata kuliah
@@ -43,21 +68,10 @@ $this->load->view('_shared/menus');
             <th>Pelaksanaan Kuliah</th>
         </tr>
     </thead>
-    <tbody>
-        <?php
-		// $row->nama_mata_kuliah.
-		//$row->nama_hari.'<br>'.$row->jam_normal_mulai .' - '. $row->jam_normal_akhir .
-		//$row->pelaksanaan_kuliah.
-        foreach ($results->result() as $row) {
-			echo '<tr id="' . $row->id . '">
-              <td>' . $row->nama_mata_kuliah . '</td>  
-              <td>' . $row->nama_hari.'<br>'.$row->jam_normal_mulai .' - '. $row->jam_normal_akhir . '</td>  
-              <td>' . $row->pelaksanaan_kuliah . '</td>  
-            </tr>
-          ';
-        }
-        ?>
-    </tbody>
+    <tbody id="listMahasiswa">
+		<tr><td colspan="4">&nbsp;</td></tr>
+	</tbody>
+	<div class="control-group" id="data-sub-form" style="display:none"></div>
 </table>
 
 <?php if ($pagination): ?>

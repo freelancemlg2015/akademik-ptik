@@ -3,23 +3,23 @@ $this->load->view('_shared/header');
 $this->load->view('_shared/menus');
 ?>
 
-<div class="container-fluid form-inline well" id="ujian_skripsi-search">
+<div class="container-fluid form-inline well" id="nilai_skripsi-search">
     <?php
     $nama_attr = array(
+        'id' => 'nama_angkatan',
+        'name' => 'nama_angkatan',
+        'class' => 'input-medium',
+        'style' => 'text-transform : uppercase;',
+        'placeholder' => 'Nama Angkatan'
+    );
+    $judul_skripsi_attr = array(
         'id' => 'nama',
         'name' => 'nama',
         'class' => 'input-medium',
         'style' => 'text-transform : uppercase;',
         'placeholder' => 'Nama'
     );
-    $judul_skripsi_attr = array(
-        'id' => 'judul_skripsi',
-        'name' => 'judul_skripsi',
-        'class' => 'input-medium',
-        'style' => 'text-transform : uppercase;',
-        'placeholder' => 'Judul Skripsi'
-    );
-    echo form_open('transaction/ujian_skripsi/search/') .
+    echo form_open('transaction/nilai_skripsi/search/') .
     form_input($nama_attr) . ' ' .
     form_input($judul_skripsi_attr) . ' ' .
     form_submit('cari', 'CARI', 'class="btn btn-mini"') .
@@ -35,33 +35,29 @@ $this->load->view('_shared/menus');
     </div>
 <?php endif; ?>
 
-<table class="table table-bordered table-striped container-full data_list" id="ujian_skripsi" controller="transaction">
+<table class="table table-bordered table-striped container-full data_list" id="nilai_skripsi" controller="transaction">
     <thead>
         <tr>
-            <th>Mahasiswa</th>
-            <th>Judul Skripsi</th>
-            <th>Tanggal Ujian</th>
-            <th>Jam</th>
-            <th>Ketua Penguji</th>
-            <th>Sekretaris Penguji</th>
+            <th>Angkatan</th>
+            <th>Tahun</th>
+            <th>Nim</th>
+            <th>Nama Mahasiswa</th>
+            <th>Program Studi</th>     
         </tr>
     </thead>
     <tbody>
         <?php
         foreach ($results->result() as $row) {
-            $jam = $row->jam_mulai.$row->jam_akhir;
-            if(empty($jam)){
-                
-            }else{
-               $jam = substr($row->jam_mulai,0,5).'-'.substr($row->jam_akhir, 0,5); 
+            $tahun = $row->tahun_ajar_mulai.$row->tahun_ajar_akhir;
+            if(!empty($tahun)){
+               $tahun = $row->tahun_ajar_mulai.'-'.$row->tahun_ajar_akhir; 
             }
             echo '<tr id="' . $row->id . '">
-              <td>' . $row->nama . '</td>
-              <td>' . $row->judul_skripsi . '</td>    
-              <td>' . $row->tgl_ujian . '</td>   
-              <td>' . $row->ketua_penguji . '</td>     
-              <td>' . $jam . '</td>    
-              <td>' . $row->sekretaris_penguji . '</td>    
+              <td>' . $row->nama_angkatan . '</td>
+              <td>' . $tahun . '</td>    
+              <td>' . $row->nim . '</td>  
+              <td>' . $row->nama . '</td>     
+              <td>' . $row->nama_program_studi . '</td>    
             </tr>
           ';
         }

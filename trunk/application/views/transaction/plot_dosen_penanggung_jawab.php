@@ -40,7 +40,8 @@ $this->load->view('_shared/menus');
         <tr>
             <th>Angkatan</th>
             <th>Tahun</th>
-            <th>Semester</th>         
+            <th>Semester</th>
+            <th>Program Studi</th>         
         </tr>
     </thead>
     <tbody>
@@ -53,7 +54,8 @@ $this->load->view('_shared/menus');
             echo '<tr id="' . $row->id . '">
               <td>' . $row->nama_angkatan . '</td>
               <td>' . $tahun . '</td>   
-              <td>' . $row->nama_semester . '</td>                 
+              <td>' . $row->nama_semester . '</td>
+              <td>' . $row->nama_program_studi . '</td>                  
             </tr>
           ';
         }
