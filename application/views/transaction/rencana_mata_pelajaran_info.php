@@ -35,7 +35,13 @@ $control_label = array(
             </tr>
             <tr>
                 <th class="span2">Mata Kuliah</th>
-                <td><?= $nama_mata_kuliah ?></td>
+                <td>
+                    <?php
+                      foreach($mata_kuliah_info as $row){
+                         echo $row['nama_mata_kuliah'];                          
+                      }
+                    ?> 
+                </td>
             </tr> 
         </tbody>
     </table>
@@ -51,8 +57,8 @@ $control_label = array(
         <tbody>
             <?php         
                 $no = 1;
-                if(isset($mahasiswa_detil_options)){
-                    foreach ($mahasiswa_detil_options As $row) {
+                if(isset($mahasiswa_info)){
+                    foreach ($mahasiswa_info As $row) {
                     echo '<tr>
                             <td style="text-align: center">' . $no . '</td>    
                             <td>' . $row['nim'] . '</td>    

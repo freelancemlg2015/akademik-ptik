@@ -9,7 +9,7 @@ $control_label = array(
 
 $angkatan_data[0] = '';
 foreach ($angkatan_options as $row) {
-    $angkatan_data[$row->id.'-'.$row->tahun_akademik_id] = $row->nama_angkatan;
+    $angkatan_data[$row['angkatan_id'].'-'.$row['tahun_akademik_id']] = $row['nama_angkatan'];
 }
 
 $tahun_data[0] = '';
@@ -110,7 +110,7 @@ $judul_skripsi_diajukan_attr = array(
     'autocomplete'=> 'off'    
 );
 
-$judul_skripsi_diajukan_satu_attr = array(                          
+/*$judul_skripsi_diajukan_satu_attr = array(                          
     'name'        => 'judul_skripsi_diajukan_satu',
     'class'       => 'span3',
     'value'       => set_value('judul_skripsi_diajukan', $judul_skripsi_diajukan_satu_attr),
@@ -127,6 +127,7 @@ $judul_skripsi_diajukan_dua_attr = array(
     'cols'        => '40',
     'autocomplete'=> 'off'    
 );
+*/
 
 $mahasiswa_data_attr[0] = '';
 if (isset($mahasiswa_data)){
@@ -161,7 +162,7 @@ else {
     <div class="control-group">
         <?= form_label('Semester' , 'semester_id', $control_label); ?>
         <div class="controls">
-            <?= form_dropdown('semester_id', $semester_data, set_value('semester_id', $semester_id), 'id="semester_id" class="input-medium" prevData-selected="' . set_value('semester_id', $semester_id) . '"'); ?>
+            <?= form_dropdown('semester_id', $semester_data, set_value('semester_id', $semester_id), 'onChange="changeProgramStudi()" id="span_semester" class="input-medium" prevData-selected="' . set_value('semester_id', $semester_id) . '"'); ?>
             <p class="help-block"><?php echo form_error('semester_id') ?></p>
         </div>
     </div>
@@ -169,7 +170,7 @@ else {
     <div class="control-group">
         <?= form_label('Konsentrasi Studi' , 'program_studi_id', $control_label); ?>
         <div class="controls">
-            <?= form_dropdown('program_studi_id', $program_studi_data, set_value('program_studi_id', $program_studi_id), 'id="program_studi_id" class="input-medium" prevData-selected="' . set_value('program_studi_id', $program_studi_id) . '"'); ?>
+            <?= form_dropdown('program_studi_id', $program_studi_data, set_value('program_studi_id', $program_studi_id), 'onChange="changeMahasiswa()" id="span_program" class="input-medium" prevData-selected="' . set_value('program_studi_id', $program_studi_id) . '"'); ?>
             <p class="help-block"><?php echo form_error('program_studi_id') ?></p>
         </div>
     </div>
@@ -222,7 +223,7 @@ else {
         <div class="control-group">                                                                             
             <?= form_label('Judul 2' , 'judul_skripsi_diajukan', $control_label); ?>
             <div class="controls" style="margin-top: 5px;"> 
-                <?= form_radio($judul_checked_1)?> <?= form_textarea($judul_skripsi_diajukan_satu_attr)?>
+                <?= form_radio($judul_checked_1)?> <?= form_textarea($judul_skripsi_diajukan_attr)?>
                 <p class="help-block"><?php echo form_error('judul_skripsi_diajukan') ?></p>
             </div>
         </div> 
@@ -230,7 +231,7 @@ else {
         <div class="control-group">                                                                             
             <?= form_label('Judul 3' , 'judul_skripsi_diajukan', $control_label); ?>
             <div class="controls" style="margin-top: 5px;"> 
-                <?= form_radio($judul_checked_2)?> <?= form_textarea($judul_skripsi_diajukan_dua_attr)?>
+                <?= form_radio($judul_checked_2)?> <?= form_textarea($judul_skripsi_diajukan_attr)?>
                 <p class="help-block"><?php echo form_error('judul_skripsi_diajukan') ?></p>
             </div>
         </div>     
@@ -271,12 +272,38 @@ else {
         function(data){
             $('#thn_akademik_id_attr').val(data);
         });
-        $.post('<?php echo base_url(); ?>pengajuan_skripsi/getOptMahasiswa', {angkatan_id: angkatan_id[1]},
+        
+        $.post('<?php echo base_url(); ?>pengajuan_skripsi/getOptSemester', {angkatan_id: angkatan_id[0]},
+        function(data){                                                                 
+            $("select[name='semester_id']").closest("div.controls").append("<select name='semester_id' onChange='changeProgramStudi()' id='span_semester'></select>");
+            $("select[name='semester_id']").closest("div.combobox-container").remove();
+            $("select[name='semester_id']").html(data).combobox();
+        });                                                  
+    }
+    $("select[name='semester_id']").combobox();
+    
+    function changeProgramStudi(){
+        var angkatan_id   = ($('#angkatan_id').val());
+        var span_semester = ($('#span_semester').val());
+        $.post('<?php echo base_url(); ?>pengajuan_skripsi/getOptPrograStudi', {angkatan_id: angkatan_id[0], span_semester:span_semester},
+        function(data){                                                                 
+            $("select[name='program_studi_id']").closest("div.controls").append("<select name='program_studi_id' onChange='changeMahasiswa()' id='span_program'></select>");
+            $("select[name='program_studi_id']").closest("div.combobox-container").remove();
+            $("select[name='program_studi_id']").html(data).combobox();
+        });        
+    }  
+    $("select[name='program_studi_id']").combobox();
+    
+    function changeMahasiswa(){
+        var angkatan_id   = ($('#angkatan_id').val());
+        var span_semester = ($('#span_semester').val());
+        var span_program  = ($('#span_program').val());  
+        $.post('<?php echo base_url(); ?>pengajuan_skripsi/getOptMahasiswa', {angkatan_id: angkatan_id[0], span_semester: span_semester, span_program: span_program},
         function(data){                                                                 
             $("select[name='rencana_mata_pelajaran_detail_id']").closest("div.controls").append("<select name='rencana_mata_pelajaran_detail_id'></select>");
             $("select[name='rencana_mata_pelajaran_detail_id']").closest("div.combobox-container").remove();
             $("select[name='rencana_mata_pelajaran_detail_id']").html(data).combobox();
-        });                                          
+        });
     } 
      $("select[name='rencana_mata_pelajaran_detail_id']").combobox();  
 </script>

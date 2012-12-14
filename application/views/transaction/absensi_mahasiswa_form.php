@@ -10,6 +10,7 @@ $control_label = array(
 <div class="container-full" id="jadwal_kuliah">
     <?php echo form_open($action_url, array('class' => 'form-horizontal')); ?>
 	<?php $this->load->view('transaction/header_select_transaction_jadwal'); ?>
+	<?php //$this->load->view('transaction/header_select_transaction'); ?>
 	
 	<div class="control-group">
         <?= form_label('Pertemuan Ke' . required(), 'pertemuan_id', $control_label); ?>
@@ -20,7 +21,7 @@ $control_label = array(
     </div>
 	
 	<div class="control-group">
-		<table class="table table-bordered table-striped container-full data_list" >
+		<table class="table table-bordered table-striped container-full" >
 			<thead class="table table-bordered span4">
 				<tr class="table-bordered span4">
 					<th style="width:20px">No.</th>
@@ -52,10 +53,11 @@ $control_label = array(
 		var program_studi_id = $('#program_studi_id').val();
 		var mata_kuliah_id = $('#mata_kuliah_id').val();
 		var semester_id = $('#semester_id').val();
+		var mode = 'edit';
 		//alert(pertemuan_id); 
         $.post('<?php echo $opt_data_mahasiswa_url; ?>',{angkatan_id: angkatan_id,
 					pertemuan_id: pertemuan_id, semester_id:semester_id,
-					program_studi_id: program_studi_id,mata_kuliah_id: mata_kuliah_id},
+					program_studi_id: program_studi_id,mata_kuliah_id: mata_kuliah_id, mode: mode},
         function(data){
             $('#listMahasiswa').html(data);
 			$('#listMahasiswa').show();

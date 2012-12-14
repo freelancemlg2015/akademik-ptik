@@ -6,10 +6,10 @@ $this->load->view('_shared/menus');
 $control_label = array(
     'class' => 'control-label'
 );
-                       
+               
 $angkatan_data[0] = '';
 foreach ($angkatan_options as $row) {
-    $angkatan_data[$row->id.'-'.$row->tahun_akademik_id] = $row->nama_angkatan;
+    $angkatan_data[$row['angkatan_id'].'-'.$row['tahun_akademik_id']] = $row['nama_angkatan'];
 }
 
 $tahun_data[0] = '';
@@ -29,29 +29,31 @@ else {
     $thn_akademik_id = '';
 }
                           
-$plot_mata_kuliah_data[0] = '';
-foreach ($plot_mata_kuliah_options as $row) {
-    $plot_mata_kuliah_data[$row['id'].'-'.$row['semester_id']] = $row['nama_semester'];
+$semester_data[0] = '';
+if(!empty($semester_options)){
+    foreach ($semester_options as $row) {
+        $semester_data[$row['semester_id']] = $row['nama_semester'];
+    }
 }
           
-$mata_data[0] = '';
-if (isset($t_plot_mata_kuliah)){
-    foreach ($t_plot_mata_kuliah as $row) {
-        $mata_data[$row['plot_mata_kuliah_id']] = $row['nama_program_studi'];
+$program_data[0] = '';
+if (isset($program_options)){
+    foreach ($program_options as $row) {
+        $program_data[$row['paket_mata_kuliah_id']] = $row['nama_program_studi'];
     }    
 } 
 else {
-    $mata_data[''] = '';
+    $program_data[''] = '';
 }
 
-$matakuliah_attr_data[0] = '';
-if (isset($t_mata_kuliah)){
-    foreach ($t_mata_kuliah as $row) {
-        $matakuliah_attr_data[$row['plot_mata_kuliah_id']] = $row['nama_mata_kuliah'];
+$matakuliah_data[0] = '';
+if (isset($mata_kuliah_options)){
+    foreach ($mata_kuliah_options as $row) {
+        $matakuliah_data[$row['mata_kuliah_id']] = $row['nama_mata_kuliah'];
     }    
 } 
 else {
-    $matakuliah_attr_data[''] = '';
+    $matakuliah_data[''] = '';
 }
  
 if (isset($paket_mata_kuliah->plot_mata_kuliah_id)){
@@ -92,26 +94,26 @@ $thn_akademik_id_attr = array(
     </div>
 
     <div class="control-group">
-        <?= form_label('Semester' , 'paket_mata_kuliah_id', $control_label); ?>
+        <?= form_label('Semester' , 'semester_id', $control_label); ?>
         <div class="controls">
-            <?= form_dropdown('paket_mata_kuliah_id',$plot_mata_kuliah_data, set_value('paket_mata_kuliah_id', $paket_mata_kuliah_id."-".$plot_semester_id), 'id="plot_mata_kuliah_id" class="input-medium" prevData-selected="' . set_value('paket_mata_kuliah_id', $paket_mata_kuliah_id) . '"'); ?>
-            <p class="help-block"><?php echo form_error('plot_mata_kuliah_id') ?></p>
+            <?= form_dropdown('semester_id', $semester_data, set_value('semester_id', $semester_id), 'onChange="changeProgramStudi()" id="span_semester" class="input-medium" prevData-selected="' . set_value('semester_id', $semester_id) . '"'); ?>
+            <p class="help-block"><?php echo form_error('semester_id') ?></p>
         </div>
     </div>
         
     <div class="control-group">
-        <?= form_label('Konsentrasi Studi' , 'paket_mata_kuliah_id', $control_label); ?>
+        <?= form_label('Konsentrasi Studi' , 'program_studi_id', $control_label); ?>
         <div class="controls">
-            <?= form_dropdown('span_kelompok',$mata_data, set_value('paket_mata_kuliah_id', $kelompok_mata_kuliah_id_attr), 'class="input-medium" prevData-selected="' . set_value('paket_mata_kuliah_id', $kelompok_mata_kuliah_id_attr) . '"'); ?>
-            <p class="help-block"><?php echo form_error('plot_mata_kuliah_id') ?></p>
+            <?= form_dropdown('paket_mata_kuliah_id',$program_data, set_value('paket_mata_kuliah_id', $program_studi_id), 'onChange="changeMataKuliah()" id="span_program" class="input-medium" prevData-selected="' . set_value('paket_mata_kuliah_id', $program_studi_id) . '"'); ?>
+            <p class="help-block"><?php echo form_error('program_studi_id') ?></p>
         </div>
     </div>
         
     <div class="control-group">
-        <?= form_label('Mata Kuliah' , 'plot_mata_kuliah_id', $control_label); ?>
+        <?= form_label('Mata Kuliah' , 'mata_kuliah_id', $control_label); ?>
         <div class="controls">
-            <?= form_dropdown('span_matakuliah',$matakuliah_attr_data, set_value('paket_mata_kuliah_id', $mata_kuliah_id_attr), 'class="input-medium" prevData-selected="' . set_value('paket_mata_kuliah_id', $mata_kuliah_id_attr) . '"'); ?>
-            <p class="help-block"><?php echo form_error('plot_mata_kuliah_id') ?></p>
+            <?= form_dropdown('mata_kuliah_id',$matakuliah_data, set_value('mata_kuliah_id', $mata_kuliah_id), 'onChange="changeMahasiswa()" id="span_mata_kuliah" class="input-medium" prevData-selected="' . set_value('mata_kuliah_id', $mata_kuliah_id) . '"'); ?>
+            <p class="help-block"><?php echo form_error('mata_kuliah_id') ?></p>
         </div>
     </div>
     
@@ -129,8 +131,8 @@ $thn_akademik_id_attr = array(
         </thead>
         <tbody id="listmahasiswa">
             <?php
-                if(isset($plot_mata_kuliah_id_data)){
-                    echo $plot_mata_kuliah_id_data;                    
+                if(isset($checked_mahasiswa)){
+                    echo $checked_mahasiswa;                    
                 }
             ?> 
         </tbody>
@@ -216,19 +218,57 @@ $thn_akademik_id_attr = array(
 
     });
     function changeAngkatan(){
-        $('#listmahasiswa').hide();
-        if($('#angatan_id').val()<=0) return;                    
-        var mode = 'view';
         var angkatan_id = ($('#angkatan_id').val()).split("-");
         $.post('<?php echo base_url(); ?>rencana_mata_pelajaran/getOptTahunAkademik', {angkatan_id: angkatan_id[1]},
         function(data){
             $('#thn_akademik_id_attr').val(data);
         });
-        $.post('<?php echo base_url(); ?>rencana_mata_pelajaran/getOptMahasiswa', {angkatan_id: angkatan_id[1]},
+        
+       $.post('<?php echo base_url(); ?>rencana_mata_pelajaran/getOptSemester', {angkatan_id: angkatan_id[0]},
+        function(data){                                                                 
+            $("select[name='semester_id']").closest("div.controls").append("<select name='semester_id' onChange='changeProgramStudi()' id='span_semester'></select>");
+            $("select[name='semester_id']").closest("div.combobox-container").remove();
+            $("select[name='semester_id']").html(data).combobox();
+        });
+    }
+    $("select[name='semester_id']").combobox();
+    
+   function changeProgramStudi(){
+        var angkatan_id   = ($('#angkatan_id').val());
+        var span_semester = ($('#span_semester').val());
+        $.post('<?php echo base_url(); ?>rencana_mata_pelajaran/getOptProgramStudi', {angkatan_id: angkatan_id[0], span_semester: span_semester[0]},
+        function(data){                                                                 
+            $("select[name='paket_mata_kuliah_id']").closest("div.controls").append("<select name='paket_mata_kuliah_id' onChange='changeMataKuliah()' id='span_program'></select>");
+            $("select[name='paket_mata_kuliah_id']").closest("div.combobox-container").remove();
+            $("select[name='paket_mata_kuliah_id']").html(data).combobox();
+        });
+    }
+    $("select[name='paket_mata_kuliah_id']").combobox();
+    
+    function changeMataKuliah(){
+        var angkatan_id   = ($('#angkatan_id').val());
+        var span_semester = ($('#span_semester').val());
+        var span_program  = ($('#span_program').val());
+        $.post('<?php echo base_url(); ?>rencana_mata_pelajaran/getOptMataKuliah', {angkatan_id: angkatan_id[0], span_semester: span_semester[0], span_program: span_program[0]},
+        function(data){                                                                 
+            $("select[name='mata_kuliah_id']").closest("div.controls").append("<select name='mata_kuliah_id' onChange='changeMahasiswa()' id='span_mata_kuliah'></select>");
+            $("select[name='mata_kuliah_id']").closest("div.combobox-container").remove();
+            $("select[name='mata_kuliah_id']").html(data).combobox();
+        });
+    }
+    $("select[name='mata_kuliah_id']").combobox(); 
+   
+    
+    function changeMahasiswa(){ 
+        $('#listmahasiswa').hide();
+        if($('#span_mata_kuliah').val()<=0) return;                    
+        var mode = 'view';
+        var angkatan_id = ($('#angkatan_id').val());   
+        $.post('<?php echo base_url(); ?>rencana_mata_pelajaran/getOptMahasiswa', {angkatan_id: angkatan_id[0]},
         function(data){
             $('#listmahasiswa').html(data);
             $('#listmahasiswa').show();
-            var maxRows = 10;       
+             var maxRows = 10;
             $('#recana_mata_pelajaran').each(function() {
             var cTable = $(this);
             var cRows = cTable.find('tr:gt(0)');
@@ -296,27 +336,5 @@ $thn_akademik_id_attr = array(
             });
         });
     }
-    
-    $("#plot_mata_kuliah_id").change(function(){
-        var value = ($(this).val()).split("-");
-        $.post('<?php echo base_url(); ?>rencana_mata_pelajaran/getOptPlotmatakuliah', {paket_mata_kuliah_id: value[1]},
-        function(data){                                                                 
-            $("select[name='span_kelompok']").closest("div.controls").append("<select name='span_kelompok'></select>");
-            $("select[name='span_kelompok']").closest("div.combobox-container").remove();
-            $("select[name='span_kelompok']").html(data).combobox();
-        });
-    })                                         
-    $("select[name='span_kelompok']").combobox();
-    
-    $("#plot_mata_kuliah_id").change(function(){
-        var value = ($(this).val()).split("-");
-        $.post('<?php echo base_url(); ?>rencana_mata_pelajaran/getOptPlotmatakuliahDetil', {paket_mata_kuliah_id: value[1]},
-        function(data){                                                                 
-            $("select[name='span_matakuliah']").closest("div.controls").append("<select name='span_matakuliah'></select>");
-            $("select[name='span_matakuliah']").closest("div.combobox-container").remove();
-            $("select[name='span_matakuliah']").html(data).combobox();
-        });
-    })                                         
-    $("select[name='span_matakuliah']").combobox();
 </script>
 
