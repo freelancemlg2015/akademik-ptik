@@ -131,12 +131,12 @@ class Rencana_mata_pelajaran_model extends CI_Model {
     }
     
     function get_update_semester($id=NULL){
-        $sql = "SELECT a.`semester_id`, a.`nama_semester` 
-                FROM akademik_view_paket_plot_mata_kuliah a
-                WHERE a.`paket_mata_kuliah_id` = '$id'
-                GROUP BY a.`semester_id`";
+        $sql = "select a.`id`, c.semester_id, d.`nama_semester`  from akademik_t_rencana_mata_pelajaran_pokok a
+                left join akademik_t_paket_mata_kuliah b on a.`paket_mata_kuliah_id` = b.`id`
+                left join `akademik_t_plot_mata_kuliah` c on b.`plot_mata_kuliah_id` = c.`id`
+                left join akademik_m_semester d on c.`semester_id` = d.`id`
+                where a.`id` = '$id'";
         $query = $this->db->query($sql);
-        echo $this->db->last_query();    
         return $query->result_array();
     }
     
@@ -155,12 +155,12 @@ class Rencana_mata_pelajaran_model extends CI_Model {
     }
     
     function get_update_program_studi($id=NULL){
-        $sql = "SELECT a.`paket_mata_kuliah_id`, a.`angkatan_id`, a.`semester_id`, a.`program_studi_id`, a.`paket_mata_kuliah_id`, a.`nama_program_studi`
-                FROM akademik_view_paket_plot_mata_kuliah a
-                LEFT JOIN akademik_t_paket_mata_kuliah b on a.`paket_mata_kuliah_id` = b.`id`
-                WHERE a.`paket_mata_kuliah_id` = '$id'
-                  group by a.`program_studi_id`";
-        $query = $this->db->query($sql);
+        $sql = "select a.`paket_mata_kuliah_id`, b.`program_studi_id`, c.`nama_program_studi`
+                from akademik_t_rencana_mata_pelajaran_pokok a
+                left join `akademik_t_paket_mata_kuliah` b on a.`paket_mata_kuliah_id` = b.`id`
+                left join `akademik_m_program_studi` c on b.`program_studi_id` = c.`id`
+                where a.`id` = '$id'";
+        $query = $this->db->query($sql);    
         return $query->result_array();
     }
     
@@ -180,12 +180,14 @@ class Rencana_mata_pelajaran_model extends CI_Model {
     }
     
     function get_update_mata_kuliah($id=NULL){
-        $sql = "select a.`paket_mata_kuliah_id`, b.`mata_kuliah_id`, c.nama_mata_kuliah from akademik_t_paket_mata_kuliah_detail a
+        $sql = "select a.`paket_mata_kuliah_id`, b.`mata_kuliah_id`, c.nama_mata_kuliah 
+                from akademik_t_paket_mata_kuliah_detail a
                 left join akademik_t_plot_mata_kuliah_detail b on a.`plot_mata_kuliah_id` = b.`plot_mata_kuliah_id`
                 left join akademik_m_mata_kuliah c on b.`mata_kuliah_id` = c.id
                 where b.active = '1'
                   and a.`paket_mata_kuliah_id` = '$id'";
-        $query = $this->db->query($sql);    
+        $query = $this->db->query($sql);
+        echo $this->db->last_query();    
         return $query->result_array();
     }
     

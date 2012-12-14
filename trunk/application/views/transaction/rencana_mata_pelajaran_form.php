@@ -35,7 +35,7 @@ if(!empty($semester_options)){
         $semester_data[$row['semester_id']] = $row['nama_semester'];
     }
 }
-          
+                                    
 $program_data[0] = '';
 if (isset($program_options)){
     foreach ($program_options as $row) {
@@ -104,7 +104,7 @@ $thn_akademik_id_attr = array(
     <div class="control-group">
         <?= form_label('Konsentrasi Studi' , 'program_studi_id', $control_label); ?>
         <div class="controls">
-            <?= form_dropdown('paket_mata_kuliah_id',$program_data, set_value('paket_mata_kuliah_id', $program_studi_id), 'onChange="changeMataKuliah()" id="span_program" class="input-medium" prevData-selected="' . set_value('paket_mata_kuliah_id', $program_studi_id) . '"'); ?>
+            <?= form_dropdown('paket_mata_kuliah_id',$program_data, set_value('paket_mata_kuliah_id', $paket_mata_kuliah_id), 'onChange="changeMataKuliah()" id="span_program" class="input-medium" prevData-selected="' . set_value('paket_mata_kuliah_id', $paket_mata_kuliah_id) . '"'); ?>
             <p class="help-block"><?php echo form_error('program_studi_id') ?></p>
         </div>
     </div>
