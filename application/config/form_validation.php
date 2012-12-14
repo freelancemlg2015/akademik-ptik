@@ -1358,6 +1358,44 @@ $config = array(
             'field' => 'sekretaris_penguji_id',
             'label' => 'sekretaris_penguji_id',
             'rules' => 'trim|requred'
+        ),
+		
+	/*NILAI SKRIPSI*/
+    ),'nilai_skripsi_create' => array(
+        array(
+            'field' => 'nilai_ketua',
+            'label' => 'nilai_ketua',
+            'rules' => 'trim|required'
+        ),
+        array(
+            'field' => 'nilai_agt_1',
+            'label' => 'nilai_agt_1',
+            'rules' => 'trim|required'
+        ),
+        array(
+            'field' => 'nilai_agt_2',
+            'label' => 'nilai_agt_2',
+            'rules' => 'trim|required'
+        ),array(
+            'field' => 'ujian_skripsi_id',
+            'label' => 'ujian_skripsi_id',
+            'rules' => 'trim|required|callback_unique_ujian_skripsi_id'
+        )
+    ), 'nilai_skripsi_update' => array(
+        array(
+            'field' => 'nilai_ketua',
+            'label' => 'nilai_ketua',
+            'rules' => 'trim|required'
+        ),
+        array(
+            'field' => 'nilai_agt_1',
+            'label' => 'nilai_agt_1',
+            'rules' => 'trim|required'
+        ),
+        array(
+            'field' => 'nilai_agt_2',
+            'label' => 'nilai_agt_2',
+            'rules' => 'trim|required'
         )
         
     /* PAKET MATAKULIAH */

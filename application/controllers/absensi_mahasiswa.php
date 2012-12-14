@@ -21,6 +21,7 @@ class Absensi_mahasiswa extends CI_Controller {
     function absensi_mahasiswa($query_id = 0, $sort_by = 'id', $sort_order = 'desc', $offset = 0) {
         $data_type = $this->input->post('data_type');
         $data['auth'] = $this->auth;
+		/*
         // pagination
         $limit = 5;
         $this->load->library(array('form_validation', 'table', 'pagination'));
@@ -50,6 +51,7 @@ class Absensi_mahasiswa extends CI_Controller {
         $data['pagination'] = $this->pagination->create_links();
         $data['sort_by'] = $sort_by;
         $data['sort_order'] = $sort_order;
+		*/
 
         $data['page_title'] = 'Absensi Mahasiswa';
 
@@ -98,22 +100,29 @@ class Absensi_mahasiswa extends CI_Controller {
 			$angkatan_data[$row->id] = $row->nama_angkatan;
         }
 		$data['angkatan_options']=$angkatan_data;
-		
-		$this->crud->use_table('m_tahun_akademik');
-		$tahun_akademik_data = array();
-		$tahun_akademik_data[0] ="";
-        foreach ($this->crud->retrieve()->result() as $row) {
-			$tahun_akademik_data[$row->id] = $row->tahun_ajar_mulai.'-'.$row->tahun_ajar_akhir;
-		}
-        $data['tahun_akademik_options'] = $tahun_akademik_data;
+        $data['tahun_akademik_id_attr'] = ''; $data['tahun_akademik_options'] = '';
+		$tahun_akademik_datas='';
+		$sql = "select a.tahun_ajar_mulai, a.tahun_ajar_akhir from akademik_m_tahun_akademik a ".
+				" left join akademik_m_angkatan b on b.tahun_akademik_id=a.id ".
+				"where a.active ='1' and b.id=".$angkatan_ids;
+        $query = $this->db->query($sql);
+		//echo $sql; return;
+		//echo  '<pre>'.$this->db->last_query().'</pre><br>'; return;
+        foreach($query->result_array() as $row){
+            $tahun_akademik_datas = $row['tahun_ajar_mulai'].'-'.$row['tahun_ajar_akhir'];
+        }
+		$data['tahun_akademik_id_attr'] = $tahun_akademik_datas;
         
-		$this->crud->use_table('m_semester');
+		//$this->crud->use_table('m_semester');
 		$semester_data = array();
 		$semester_data[0] = '';
+		/*
 		foreach ($this->crud->retrieve()->result() as $row) {
 			$semester_data[$row->id] = $row->nama_semester;
 		}
+		*/
         $data['semester_options'] = $semester_data;
+		//$data['semester_options'] = '';
 		
 		
 		$data['angkatan_id']=(int)$this->input->post('angkatan_id');
@@ -127,58 +136,14 @@ class Absensi_mahasiswa extends CI_Controller {
 		$data['opt_angkatan_url'] = base_url() . 'transaction/select_data_form/getOptAngkatan';
 		$data['opt_program_studi_url'] = base_url() . 'transaction/select_data_form/getOptProgramStudi';
         $data['opt_mata_kuliah_url'] =  base_url() . 'transaction/select_data_form/getOptMataKuliah';
-		$data['opt_data_mahasiswa_url'] = base_url() . 'transaction/select_data_form/getOptDataSubForm';
+		$data['opt_data_mahasiswa_url'] = base_url() . 'transaction/select_data_form/getOptDataMahasiswaForm';
 		$data['opt_data_jadwal_url'] = base_url() . 'transaction/select_data_form/getOptDataJadwal';
+		$data['opt_semester_url'] = base_url() . 'transaction/select_data_form/getOptSemester';
+		$data['action_url'] = '';
 
         $this->load->view('transaction/absensi_mahasiswa', $data);
     }
 
-    function search() {
-        $query_array = array(
-            'nama_dosen' => $this->input->post('nama_dosen'),
-            'nama_ruang' => $this->input->post('nama_ruang'),
-            'active' => 1
-        );
-        $query_id = $this->input->save_query($query_array);
-        redirect("transaction/absensi_mahasiswa/view/$query_id");
-    }
-
-    function info() {
-        $id = $this->uri->segment(3);
-        $data['auth'] = $this->auth;
-        $criteria = array(
-            't_jadwal_kuliah.id' => $id
-        );
-        $this->load->model('jadwal_kuliah_model', 'jadwal_kuliah');
-        $result = $this->jadwal_kuliah->get_many('', $criteria)->row_array();
-        //[debug]echo get_instance()->db->last_query();
-        $result_keys = array_keys($result);
-        foreach ($result_keys as $result_key) {
-            $data[$result_key] = $result[$result_key];
-        }
-
-        $data['tools'] = array(
-            'transaction/absensi_mahasiswa' => 'Back',
-            'transaction/absensi_mahasiswa/' . $id . '/edit' => 'Edit',
-            'transaction/absensi_mahasiswa/' . $id . '/delete' => 'Delete'
-        );
-        $data['page_title'] = 'Detail Absensi Mahasiswa';
-        $this->load->view('transaction/absensi_mahasiswa_info', $data);
-    }
-
-    function delete() {
-        $id = $this->uri->segment(3);
-        $this->crud->use_table('t_absensi_mhs');
-        $criteria = array('id' => $id);
-        $data_in = array(
-            'active' => 0,
-            'modified_on' => logged_info()->on,
-            'modified_by' => logged_info()->by
-        );
-        $this->crud->update($criteria, $data_in);
-        redirect('transaction/absensi_mahasiswa');
-    }
-	
 	function create() {
         //echo '<pre>'; print_r($_POST); echo '</pre>'; 
 		$data['auth'] = $this->auth;
@@ -218,38 +183,14 @@ class Absensi_mahasiswa extends CI_Controller {
 			} else {
 				
 				$angkatan_id= $this->input->post('angkatan_id');
-				//$tahun_akademik_id = $this->input->post('tahun_akademik_id');
 				$jadwal_kuliah_id=$this->input->post('pertemuan_id');
 				$program_studi_id=$this->input->post('program_studi_id');
 				$mata_kuliah_id=$this->input->post('mata_kuliah_id');
 				$semester_id=$this->input->post('semester_id');
-				//$jadwal_kuliah_id=1;
-				//$angkatan_id= 2; $program_studi_id = 1; $mata_kuliah_id  = 8; $tahun_akademik_id = 1;
-				/*
-				$query = $this->db->query("select a.id as rencana_mata_pelajaran_pokok_id, g.mahasiswa_id,b.id as akademik_t_absensi_mhs_id , 
-				c.nama as nama_mhs, c.nim, a.mata_kuliah_id, b.absensi_id, e.id as jadwal_kuliah_id,  f.absensi as ket_absensi
-				from akademik_t_rencana_mata_pelajaran_pokok a
-				left join akademik_m_mata_kuliah d on a.mata_kuliah_id = d.id 
-				left join akademik_t_jadwal_kuliah e on e.id=$jadwal_kuliah_id
-				left join akademik_t_absensi_mhs b on e.id = b.jadwal_kuliah_id and b.jadwal_kuliah_id=$jadwal_kuliah_id
-				left join akademik_m_absensi f on b.absensi_id = f.id
-				left join akademik_t_rencana_mata_pelajaran_pokok_detil g on a.id = g.rencana_mata_pelajaran_id
-				left join akademik_m_mahasiswa c on g.mahasiswa_id = c.id
-				where a.angkatan_id = $angkatan_id and a.program_studi_id=$program_studi_id
-				and a.semester_id = $semester_id and a.mata_kuliah_id = $mata_kuliah_id");
-				*/
-				$query = $this->db->query("select a.id as akademik_t_absensi_mhs_id, m.id, d.mahasiswa_id, s.nim, s.nama as nama_mhs, j.id as jadwal_kuliah_id,
-j.pertemuan_ke, d.id as rencana_mata_pelajaran_pokok_id, k.absensi as ket_absensi, a.absensi_id
-from akademik_t_rencana_mata_pelajaran_pokok m					
-left join akademik_t_rencana_mata_pelajaran_pokok_detil d on m.id = d.rencana_mata_pelajaran_id and d.active=1
-left join akademik_m_mahasiswa s on d.mahasiswa_id = s.id
-left join akademik_t_jadwal_kuliah j on j.id=$jadwal_kuliah_id
-left join akademik_t_absensi_mhs a on j.id = a.jadwal_kuliah_id  and a.mahasiswa_id = d.mahasiswa_id
-left join akademik_m_absensi k on a.absensi_id = k.id
-where m.angkatan_id = $angkatan_id and m.program_studi_id=$program_studi_id 
-and m.semester_id = $semester_id and m.mata_kuliah_id = $mata_kuliah_id");
+				$this->load->model('select_data_form_model', 'select_data_form');
+				$data_results = $this->select_data_form->getOptDataMahasiswaForm($angkatan_id, $semester_id, $program_studi_id, $mata_kuliah_id, $jadwal_kuliah_id);
 				//echo '<pre>'.$this->db->last_query().'</pre>'; return;
-				foreach($query->result_array() as $row){
+				foreach($data_results->result_array() as $row){
 					$absensi_id = $this->input->post('nilai_nts_'.$row['rencana_mata_pelajaran_pokok_id']);
 					$parm = array();
 					if($absensi_id !='') $parm['absensi_id'] = $absensi_id;
@@ -262,7 +203,8 @@ and m.semester_id = $semester_id and m.mata_kuliah_id = $mata_kuliah_id");
 							$parm['mahasiswa_id'] = $row['mahasiswa_id'];
 							$this->db->insert('akademik_t_absensi_mhs',$parm);
 						}else{
-							$this->db->where('id',$row['akademik_t_absensi_mhs_id']);
+							$this->db->where('mahasiswa_id',$row['akademik_t_absensi_mhs_id']);
+							$this->db->where('id',$row['rencana_mata_pelajaran_pokok_id']);
 							$parm['absensi_id'] = $absensi_id;
 							$this->db->update('akademik_t_absensi_mhs',$parm);
 						}
@@ -346,22 +288,24 @@ and m.semester_id = $semester_id and m.mata_kuliah_id = $mata_kuliah_id");
 			$angkatan_data[$row->id] = $row->nama_angkatan;
         }
 		$data['angkatan_options']=$angkatan_data;
+        $data['tahun_akademik_id_attr'] = ''; $data['tahun_akademik_options'] = '';
+		$tahun_akademik_datas='';
+		$sql = "select a.tahun_ajar_mulai, a.tahun_ajar_akhir from akademik_m_tahun_akademik a ".
+				" left join akademik_m_angkatan b on b.tahun_akademik_id=a.id ".
+				"where a.active ='1' and b.id=".$angkatan_ids;
+        $query = $this->db->query($sql);
+		//echo $sql; return;
+		//echo  '<pre>'.$this->db->last_query().'</pre><br>'; return;
+        foreach($query->result_array() as $row){
+            $tahun_akademik_datas = $row['tahun_ajar_mulai'].'-'.$row['tahun_ajar_akhir'];
+        }
+		$data['tahun_akademik_id_attr'] = $tahun_akademik_datas;
         
-        $this->crud->use_table('m_tahun_akademik');
-		$tahun_akademik_data = array();
-		$tahun_akademik_data[0] ="";
-        foreach ($this->crud->retrieve()->result() as $row) {
-			$tahun_akademik_data[$row->id] = $row->tahun_ajar_mulai.'-'.$row->tahun_ajar_akhir;
-		}
-        $data['tahun_akademik_options'] = $tahun_akademik_data;
-        
-		$this->crud->use_table('m_semester');
+		//$this->crud->use_table('m_semester');
 		$semester_data = array();
 		$semester_data[0] = '';
-		foreach ($this->crud->retrieve()->result() as $row) {
-			$semester_data[$row->id] = $row->nama_semester;
-		}
         $data['semester_options'] = $semester_data;
+		//$data['semester_options'] = '';
 		
 		$this->crud->use_table('m_jenis_ujian');
 		$order_bys = array( "kode_ujian"=>"asc");
@@ -377,8 +321,9 @@ and m.semester_id = $semester_id and m.mata_kuliah_id = $mata_kuliah_id");
         $data['opt_angkatan_url'] = base_url() . 'transaction/select_data_form/getOptAngkatan';
 		$data['opt_program_studi_url'] = base_url() . 'transaction/select_data_form/getOptProgramStudi';
         $data['opt_mata_kuliah_url'] =  base_url() . 'transaction/select_data_form/getOptMataKuliah';
-		$data['opt_data_mahasiswa_url'] = base_url() . 'transaction/select_data_form/getOptDataSubForm';
+		$data['opt_data_mahasiswa_url'] = base_url() . 'transaction/select_data_form/getOptDataMahasiswaForm';
 		$data['opt_data_jadwal_url'] = base_url() . 'transaction/select_data_form/getOptDataJadwal';
+		$data['opt_semester_url'] = base_url() . 'transaction/select_data_form/getOptSemester';
 		
         $this->crud->use_table('m_data_ruang');
         $data['ruang_pelajaran_options'] = $this->crud->retrieve()->result();

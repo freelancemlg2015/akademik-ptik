@@ -7,7 +7,15 @@ class Jadwal_kuliah_model extends CI_Model {
     }
 
     function s_jadwal_kuliah() {
-        return 	$this->db->select('t_jadwal_kuliah.*,m_data_ruang.nama_ruang,m_dosen.nama_dosen,
+        $query = $this->db->query("SELECT j.*, b.nama_mata_kuliah
+FROM (akademik_t_jadwal_kuliah as j)
+LEFT JOIN akademik_view_paket_plot_mata_kuliah_detail b
+	on b.angkatan_id=j.id and b.semester_id=j.semester_id and b.program_studi_id=j.program_studi_id
+WHERE j.active = 1");
+		//return $query;
+						
+		
+		return 	$this->db->select('t_jadwal_kuliah.*,m_data_ruang.nama_ruang,m_dosen.nama_dosen,
 						m_jam_pelajaran.kode_jam, m_jam_pelajaran.jam_normal_mulai, m_jam_pelajaran.jam_normal_akhir, 
 						m_mata_kuliah.nama_mata_kuliah, m_metode_ajar.metode_ajar, m_kegiatan.nama_kegiatan,
 						m_hari.nama_hari')
@@ -22,6 +30,7 @@ class Jadwal_kuliah_model extends CI_Model {
 						->join('m_hari', 'm_hari.id = t_jadwal_kuliah.hari_id', 'left')
 						->join('t_dosen_ajar', 't_dosen_ajar.id = t_jadwal_kuliah.dosen_ajar_id', 'left')
                         ->join('m_dosen', 'm_dosen.id = t_dosen_ajar.dosen_id', 'left');
+		
     }
 
     function get_many($data_type = NULL, $term = array(), $limit = NULL, $offset = NULL) {

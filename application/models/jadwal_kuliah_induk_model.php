@@ -47,7 +47,7 @@ class Jadwal_kuliah_induk_model extends CI_Model {
                         ->from('t_jadwal_kuliah_induk')
                         ->join('t_jadwal_kuliah_induk_detil as d', 'd.jadwal_kuliah_induk_id=t_jadwal_kuliah_induk.id', 'left')						
 						->join('t_dosen_ajar as s', 't_jadwal_kuliah_induk.dosen_ajar_id=s.id', 'left')
-                        ->join('m_mata_kuliah as k', 's.mata_kuliah_id=k.id', 'left')
+                        ->join('akademik_view_paket_plot_mata_kuliah_detail as k', 's.paket_mata_kuliah_id=k.paket_mata_kuliah_id and s.mata_kuliah_id=k.mata_kuliah_id', 'left')
                         ->join('m_hari as h', 'd.hari_id=h.id', 'left')
 						->join('m_jam_pelajaran as w', 'd.jenis_waktu=w.id', 'left');
 						

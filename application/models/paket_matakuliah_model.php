@@ -108,21 +108,25 @@ class Paket_matakuliah_model extends CI_Model {
     }
     
     function get_angkatan(){
-        $sql = "SELECT a.`angkatan_id`, 
-                b.`tahun_akademik_id`, 
-                a.`nama_angkatan` 
+        $sql = "SELECT a.`angkatan_id`,
+                       c.`tahun_akademik_id`,
+                       a.`nama_angkatan`
                 FROM akademik_view_paket_plot_mata_kuliah a
-                LEFT JOIN akademik_m_angkatan b ON a.`angkatan_id` = b.`id`
-                LEFT JOIN akademik_m_tahun_akademik c ON b.`tahun_akademik_id` = c.`id`
+                LEFT JOIN `akademik_t_plot_mata_kuliah` b on a.`plot_mata_kuliah_id` = b.`id`
+                LEFT JOIN akademik_m_angkatan c ON b.`angkatan_id` = c.`id`
+                LEFT JOIN akademik_m_tahun_akademik d ON c.`tahun_akademik_id` = d.`id`
+                WHERE b.`active` = '1'
                 GROUP BY a.`angkatan_id`";
         $query = $this->db->query($sql);
         return $query->result_array();
     } 
     
     function get_semester($angkatan_id=NULL){  
-        $sql = "SELECT CONCAT(a.`semester_id`,';', GROUP_CONCAT(a.`plot_mata_kuliah_id` ORDER BY a.`plot_mata_kuliah_id` ASC SEPARATOR '-')) AS group_id, a.`nama_semester` 
+        $sql = "SELECT CONCAT(a.`semester_id`,';', GROUP_CONCAT(a.`plot_mata_kuliah_id` ORDER BY a.`plot_mata_kuliah_id` ASC SEPARATOR '-')) AS group_id, a.`nama_semester`
                 FROM akademik_view_paket_plot_mata_kuliah a
-                WHERE a.`angkatan_id` = '$angkatan_id'
+                LEFT JOIN akademik_t_plot_mata_kuliah b on a.`plot_mata_kuliah_id` = b.`id`
+                WHERE b.active = '1'
+                  AND a.`angkatan_id` = '$angkatan_id'
                 GROUP BY a.`angkatan_id`,a.`semester_id`";
         $query = $this->db->query($sql); 
         return $query->result_array();
@@ -131,21 +135,22 @@ class Paket_matakuliah_model extends CI_Model {
     function get_update_semester($angkatan_id=NULL){  
         $sql = "SELECT CONCAT(a.`semester_id`,';', GROUP_CONCAT(a.`plot_mata_kuliah_id` ORDER BY a.`plot_mata_kuliah_id` ASC SEPARATOR '-')) AS group_id, a.`nama_semester` 
                 FROM akademik_view_paket_plot_mata_kuliah a
-                WHERE a.`plot_mata_kuliah_id` = '$angkatan_id' 
+                WHERE a.`semester_id` = '$angkatan_id' 
                 GROUP BY a.`angkatan_id`, a.`semester_id`";
-        $query = $this->db->query($sql);
-        //echo $this->db->last_query();  
+        $query = $this->db->query($sql);  
         return $query->result_array();
     }
     
     function get_kelompok_mata_kuliah($angkatan_id=NULL, $semester_id=NULL){
-        $sql = "SELECT a.`id`, a.`kelompok_mata_kuliah_id`, c.`nama_kelompok_mata_kuliah` FROM akademik_t_plot_mata_kuliah a
+        $sql = "SELECT a.`id`, a.`kelompok_mata_kuliah_id`, c.`nama_kelompok_mata_kuliah`
+                FROM akademik_t_plot_mata_kuliah a
                 LEFT JOIN akademik_view_paket_plot_mata_kuliah b ON a.`id` = b.`plot_mata_kuliah_id`
-                LEFT JOIN akademik_m_kelompok_matakuliah c ON a.`kelompok_mata_kuliah_id` = c.`id`
+                LEFT JOIN `akademik_m_kelompok_matakuliah` c ON a.`kelompok_mata_kuliah_id` = c.`id`
                 WHERE a.active = '1'
-                  AND b.`angkatan_id` = '$angkatan_id' 
+                  AND b.`angkatan_id` = '$angkatan_id'
                   AND b.`semester_id` = '$semester_id'
-                GROUP BY b.`angkatan_id`, b.`semester_id` , a.`kelompok_mata_kuliah_id`";
+                GROUP BY b.`angkatan_id`, b.`semester_id` , a.`kelompok_mata_kuliah_id`
+                ORDER BY c.`nama_kelompok_mata_kuliah` ASC";
         $query = $this->db->query($sql);
         return $query->result_array();
     }

@@ -23,6 +23,7 @@ class Jadwal_kuliah extends CI_Controller {
 
     function index($query_id = 0, $sort_by = 'id', $sort_order = 'desc', $offset = 0) {
         $this->jadwal_kuliah($query_id, $sort_by, $sort_order, $offset);
+		//echo get_instance()->db->last_query();
     }
 
     function jadwal_kuliah($query_id = 0, $sort_by = 'id', $sort_order = 'desc', $offset = 0) {
@@ -266,10 +267,13 @@ class Jadwal_kuliah extends CI_Controller {
 		$this->crud->use_table('m_semester');
 		$semester_data = array();
 		$semester_data[0] = '';
+		/*
 		foreach ($this->crud->retrieve()->result() as $row) {
 			$semester_data[$row->id] = $row->nama_semester;
 		}
+		*/
         $data['semester_options'] = $semester_data;
+		//$data['semester_options'] = '';
 		
 		$this->crud->use_table('m_kegiatan');
 		$order_bys = array( "nama_kegiatan"=>"asc");
@@ -290,6 +294,8 @@ class Jadwal_kuliah extends CI_Controller {
         $data['opt_angkatan_url'] = base_url() . 'transaction/select_data_form/getOptAngkatan';
 		$data['opt_program_studi_url'] = base_url() . 'transaction/select_data_form/getOptProgramStudi';
         $data['opt_mata_kuliah_url'] =  base_url() . 'transaction/select_data_form/getOptMataKuliah';
+		$data['opt_semester_url'] = base_url() . 'transaction/select_data_form/getOptSemester';
+		
         
         $this->crud->use_table('m_dosen');
         $data['nama_dosen_options'] = $this->crud->retrieve()->result();
@@ -436,10 +442,11 @@ class Jadwal_kuliah extends CI_Controller {
 		}
         $data['metode_ajar_options'] = $metode_ajar_data;
 		
-		$this->crud->use_table('m_semester');
+		$this->load->model('select_data_form_model', 'select_data_form');
+		$data_results = $this->select_data_form->getOptSemester($jadwal_kuliah_data->angkatan_id);
 		$semester_data = array();
-		foreach ($this->crud->retrieve()->result() as $row) {
-			$semester_data[$row->id] = $row->nama_semester;
+		foreach ($data_results->result_array() as $row) {
+			$semester_data[$row['semester_id']] = $row['nama_semester'];
 		}
         $data['semester_options'] = $semester_data;
 		
@@ -461,6 +468,7 @@ class Jadwal_kuliah extends CI_Controller {
         $data['opt_angkatan_url'] = base_url() . 'transaction/select_data_form/getOptAngkatan';
 		$data['opt_program_studi_url'] = base_url() . 'transaction/select_data_form/getOptProgramStudi';
         $data['opt_mata_kuliah_url'] =  base_url() . 'transaction/select_data_form/getOptMataKuliah';
+		$data['opt_semester_url'] = base_url() . 'transaction/select_data_form/getOptSemester';
         
         $this->crud->use_table('m_dosen');
         $data['nama_dosen_options'] = $this->crud->retrieve()->result();
@@ -475,6 +483,7 @@ class Jadwal_kuliah extends CI_Controller {
 		$angkatan_ids=$jadwal_kuliah_data->angkatan_id;
 		$data['tgl_lahir']=$jadwal_kuliah_data->tanggal;
 		//echo $angkatan_ids; return;
+		/*
 		$query = $this->db->query("select a.id, a.nama_program_studi, a.kode_program_studi from akademik_m_program_studi a where a.active ='1' and a.angkatan_id='$angkatan_ids';");
         foreach($query->result_array() as $row){
             if($jadwal_kuliah_data->program_studi_id==$row['id']) {
@@ -483,10 +492,23 @@ class Jadwal_kuliah extends CI_Controller {
 				$data_program_studi[$row['id']] = '<option value=\''.$row['id'].'\' >'.$row['kode_program_studi'].'-'.$row['nama_program_studi'].'</option>';
 			}
         }
+		*/
+		
+		$data_results = $this->select_data_form->getOptProgramStudi($angkatan_ids, $jadwal_kuliah_data->semester_id);
+		//echo  '<pre>'.$this->db->last_query().'</pre><br>';
+		//$query = $this->db->query("select a.id, a.nama_program_studi, a.kode_program_studi from akademik_m_program_studi a where a.active ='1' and a.angkatan_id='$jadwal_kuliah_induk_data_angkatan_id';");
+        foreach($data_results->result_array() as $row){
+            if($jadwal_kuliah_data->program_studi_id==$row['program_studi_id']) {
+				$data_program_studi[$row['program_studi_id']] = '<option selected value=\''.$row['program_studi_id'].'\' >'.$row['nama_program_studi'].'</option>';
+			} else {
+				$data_program_studi[$row['program_studi_id']] = '<option value=\''.$row['program_studi_id'].'\' >'.$row['nama_program_studi'].'</option>';
+			}
+        }
 		$data['data_program_studi']=$data_program_studi;
 		$data['program_studi_ids']=$jadwal_kuliah_data->program_studi_id;
 		
 		$data_mata_kuliah = array();
+		/*
 		$sql = ("select d.id, d.kode_mata_kuliah, d.nama_mata_kuliah
 				from akademik_t_rencana_mata_pelajaran_pokok a
 				left join akademik_m_mata_kuliah d on a.mata_kuliah_id = d.id
@@ -495,8 +517,18 @@ class Jadwal_kuliah extends CI_Controller {
 					group by d.id
 					");//group by d.id
 		$query = $this->db->query($sql);
-        //$query = $this->db->query("select a.id, a.kode_mata_kuliah, a.nama_mata_kuliah from akademik_m_mata_kuliah a where a.angkatan_id =$angkatan_ids and program_studi_id= $jadwal_kuliah_data->program_studi_id");
-        foreach($query->result_array() as $row){
+		*/
+        $data_results = $this->select_data_form->getOptMataKuliah($angkatan_ids, $jadwal_kuliah_data->semester_id, $jadwal_kuliah_data->program_studi_id, 0);
+        foreach($data_results->result_array() as $row){
+			if($jadwal_kuliah_data->mata_kuliah_id==$row['mata_kuliah_id']) {
+				$data_mata_kuliah[$row['mata_kuliah_id']]= '<option selected value=\''.$row['mata_kuliah_id'].'\' >'.$row['nama_mata_kuliah'].'</option>';
+			} else {
+				$data_mata_kuliah[$row['mata_kuliah_id']]= '<option value=\''.$row['mata_kuliah_id'].'\' >'.$row['nama_mata_kuliah'].'</option>';
+			}
+        }
+		$data['data_mata_kuliah']=$data_mata_kuliah;
+		/*
+		foreach($data_results->result_array() as $row){
 			if($jadwal_kuliah_data->mata_kuliah_id==$row['id']) {
 				$data_mata_kuliah[$row['id']]= '<option selected value=\''.$row['id'].'\' >'.$row['kode_mata_kuliah'].'-'.$row['nama_mata_kuliah'].'</option>';
 			} else {
@@ -505,6 +537,7 @@ class Jadwal_kuliah extends CI_Controller {
         }
 		$data['data_mata_kuliah']=$data_mata_kuliah;
 		//print_r($data_program_studi); return;
+		*/
 		
         $this->load->model('jadwal_kuliah_model', 'jadwal_kuliah');
         $data = array_merge($data, $this->jadwal_kuliah->set_default()); //merge dengan arr data dengan default

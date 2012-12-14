@@ -295,10 +295,13 @@ class Jadwal_ujian extends CI_Controller {
 		$this->crud->use_table('m_semester');
 		$semester_data = array();
 		$semester_data[0] = '';
+		/*
 		foreach ($this->crud->retrieve()->result() as $row) {
 			$semester_data[$row->id] = $row->nama_semester;
 		}
+		*/
         $data['semester_options'] = $semester_data;
+		//$data['semester_options'] = '';
 		
 		$this->crud->use_table('m_jenis_ujian');
 		$order_bys = array( "kode_ujian"=>"asc");
@@ -312,6 +315,7 @@ class Jadwal_ujian extends CI_Controller {
         $data['opt_angkatan_url'] = base_url() . 'transaction/select_data_form/getOptAngkatan';
 		$data['opt_program_studi_url'] = base_url() . 'transaction/select_data_form/getOptProgramStudi';
         $data['opt_mata_kuliah_url'] =  base_url() . 'transaction/select_data_form/getOptMataKuliah';
+		$data['opt_semester_url'] = base_url() . 'transaction/select_data_form/getOptSemester';
         
         $this->crud->use_table('m_data_ruang');
         $data['ruang_pelajaran_options'] = $this->crud->retrieve()->result();
@@ -477,10 +481,11 @@ class Jadwal_ujian extends CI_Controller {
 		}
         $data['kegiatan_options'] = $kegiatan_data;
 		
-		$this->crud->use_table('m_semester');
+		$this->load->model('select_data_form_model', 'select_data_form');
+		$data_results = $this->select_data_form->getOptSemester($jadwal_ujian_data->angkatan_id);
 		$semester_data = array();
-		foreach ($this->crud->retrieve()->result() as $row) {
-			$semester_data[$row->id] = $row->nama_semester;
+		foreach ($data_results->result_array() as $row) {
+			$semester_data[$row['semester_id']] = $row['nama_semester'];
 		}
         $data['semester_options'] = $semester_data;
 		
@@ -496,6 +501,7 @@ class Jadwal_ujian extends CI_Controller {
         $data['opt_angkatan_url'] = base_url() . 'transaction/select_data_form/getOptAngkatan';
 		$data['opt_program_studi_url'] = base_url() . 'transaction/select_data_form/getOptProgramStudi';
         $data['opt_mata_kuliah_url'] =  base_url() . 'transaction/select_data_form/getOptMataKuliah';
+		$data['opt_semester_url'] = base_url() . 'transaction/select_data_form/getOptSemester';
         
         //$this->crud->use_table('m_dosen');
         //$data['nama_dosen_options'] = $this->crud->retrieve()->result();
@@ -511,6 +517,7 @@ class Jadwal_ujian extends CI_Controller {
 		$semester_ids=$jadwal_ujian_data->semester_id;
 		$data['tgl_lahir']=$jadwal_ujian_data->tanggal;
 		//echo $angkatan_ids; return;
+		/*
 		$query = $this->db->query("select a.id, a.nama_program_studi, a.kode_program_studi from akademik_m_program_studi a where a.active ='1' and a.angkatan_id='$angkatan_ids';");
         foreach($query->result_array() as $row){
             if($jadwal_ujian_data->program_studi_id==$row['id']) {
@@ -520,9 +527,23 @@ class Jadwal_ujian extends CI_Controller {
 			}
         }
 		$data['data_program_studi']=$data_program_studi;
+		*/
+		$data_results = $this->select_data_form->getOptProgramStudi($angkatan_ids, $jadwal_ujian_data->semester_id);
+		//echo  '<pre>'.$this->db->last_query().'</pre><br>';
+		//$query = $this->db->query("select a.id, a.nama_program_studi, a.kode_program_studi from akademik_m_program_studi a where a.active ='1' and a.angkatan_id='$jadwal_kuliah_induk_data_angkatan_id';");
+        foreach($data_results->result_array() as $row){
+            if($jadwal_ujian_data->program_studi_id==$row['program_studi_id']) {
+				$data_program_studi[$row['program_studi_id']] = '<option selected value=\''.$row['program_studi_id'].'\' >'.$row['nama_program_studi'].'</option>';
+			} else {
+				$data_program_studi[$row['program_studi_id']] = '<option value=\''.$row['program_studi_id'].'\' >'.$row['nama_program_studi'].'</option>';
+			}
+        }
+		$data['data_program_studi']=$data_program_studi;
+		
 		$data['program_studi_ids']=$jadwal_ujian_data->program_studi_id;
 		
 		$data_mata_kuliah = array();
+		/*
 		$sql = "select d.id, d.kode_mata_kuliah, d.nama_mata_kuliah
 				from akademik_t_rencana_mata_pelajaran_pokok a
 				left join akademik_m_mata_kuliah d on a.mata_kuliah_id = d.id
@@ -536,6 +557,15 @@ class Jadwal_ujian extends CI_Controller {
 				$data_mata_kuliah[$row['id']]= '<option selected value=\''.$row['id'].'\' >'.$row['kode_mata_kuliah'].'-'.$row['nama_mata_kuliah'].'</option>';
 			} else {
 				$data_mata_kuliah[$row['id']]= '<option value=\''.$row['id'].'\' >'.$row['kode_mata_kuliah'].'-'.$row['nama_mata_kuliah'].'</option>';
+			}
+        }
+		*/
+		$data_results = $this->select_data_form->getOptMataKuliah($angkatan_ids, $jadwal_ujian_data->semester_id, $jadwal_ujian_data->program_studi_id, 0);
+        foreach($data_results->result_array() as $row){
+			if($jadwal_ujian_data->mata_kuliah_id==$row['mata_kuliah_id']) {
+				$data_mata_kuliah[$row['mata_kuliah_id']]= '<option selected value=\''.$row['mata_kuliah_id'].'\' >'.$row['nama_mata_kuliah'].'</option>';
+			} else {
+				$data_mata_kuliah[$row['mata_kuliah_id']]= '<option value=\''.$row['mata_kuliah_id'].'\' >'.$row['nama_mata_kuliah'].'</option>';
 			}
         }
 		$data['data_mata_kuliah']=$data_mata_kuliah;

@@ -145,18 +145,27 @@ class Pengajuan_skripsi extends CI_Controller {
                 'keterangan'                       => $this->input->post('keterangan'),
                 'created_on'                       => date($this->config->item('log_date_format')),
                 'created_by'                       => logged_info()->on
-            );                                              
+            );                                                         
             $created_id = $this->crud->create($data_in);
+            
             $judul = $this->input->post('judul_skripsi_diajukan');
-            $this->crud->use_table('t_pengajuan_skripsi_detail');
-            $data_in = array(
-                'pengajuan_skripsi_id'  => $created_id,
-                'judul_skripsi_diajukan'=> $judul,
-                'created_on'            => date($this->config->item('log_date_format')),
-                'created_by'            => logged_info()->on
-            );
-             $this->crud->create($data_in);
-                                                         
+            if($created_id && is_array($judul)){
+                $this->crud->use_table('t_pengajuan_skripsi_detail');
+                for($i=0; $i< count($judul); $i++){
+                $query_data = array(
+                    'pengajuan_skripsi_id'  => $created_id,
+                    'judul_skripsi_diajukan'=> $judul[$i],
+                    'created_on'            => date($this->config->item('log_date_format')),
+                    'created_by'            => logged_info()->on,
+                    'active'                => 1   
+                ); 
+                echo '<pre>';
+                var_dump($query_data);
+                echo '</pre>';            
+                $this->crud->create($query_data);  
+                }
+            }     
+            
             redirect('transaction/pengajuan_skripsi/' . $created_id . '/info');
         }
         $data['action_url'] = $transaction_url . __FUNCTION__;
@@ -165,8 +174,8 @@ class Pengajuan_skripsi extends CI_Controller {
             'transaction/pengajuan_skripsi' => 'Back'
         );
                                                
-        $this->crud->use_table('m_angkatan');
-        $data['angkatan_options'] = $this->crud->retrieve()->result();      
+        $this->load->model('pengajuan_skripsi_model');
+        $data['angkatan_options'] = $this->pengajuan_skripsi_model->get_angkatan();
                                                                             
         $this->crud->use_table('m_semester');
         $data['semester_options'] = $this->crud->retrieve()->result();
@@ -232,7 +241,9 @@ class Pengajuan_skripsi extends CI_Controller {
                 'modified_on'                      => date($this->config->item('log_date_format')),
                 'modified_by'                      => logged_info()->on
             );
-            
+            echo '<pre>';
+                var_dump($data_in);            
+            echo '</pre>';
             $this->crud->update($criteria, $data_in);
                                                                           
             $this->crud->use_table('t_pengajuan_skripsi_detail');   
@@ -241,7 +252,10 @@ class Pengajuan_skripsi extends CI_Controller {
                     'judul_skripsi_diajukan' => $this->input->post('judul_skripsi_diajukan'),
                     'modified_on'            => date($this->config->item('log_date_format')),
                     'modified_by'            => logged_info()->on,
-                );                                                  
+                );       
+                echo '<pre>';
+                var_dump($data_in);            
+                echo '</pre>';                                           
                 $this->crud->update($criteria, $data_in);
 
             /*$mata_kuliah = $this->input->post('mata_kuliah_id');
@@ -291,8 +305,9 @@ class Pengajuan_skripsi extends CI_Controller {
         $criteria = array(
             'id' => $pengajuan_skripsi_data->angkatan_id
         ); 
-        $this->crud->use_table('m_angkatan');
-        $data['angkatan_options'] = $this->crud->retrieve()->result();      
+        
+        $this->load->model('pengajuan_skripsi_model');
+        $data['angkatan_options'] = $this->pengajuan_skripsi_model->get_angkatan();      
                                                                             
         $this->crud->use_table('m_semester');
         $data['semester_options'] = $this->crud->retrieve()->result();
@@ -356,10 +371,33 @@ class Pengajuan_skripsi extends CI_Controller {
         }
     }
     
+    function getOptSemester(){
+        $this->load->model('pengajuan_skripsi_model');
+        $angkatan_id = $this->input->post('angkatan_id');
+        $data['semester_attr'] = $this->pengajuan_skripsi_model->get_semester($angkatan_id);
+        echo '<option value="" ></option>';
+        foreach($data['semester_attr'] as $row){
+            echo '<option value=\''.$row['semester_id'].'\' >'.$row['nama_semester'].'</option>';
+        }
+    }
+    
+    function getOptPrograStudi(){
+        $this->load->Model('pengajuan_skripsi_model');
+        $angkatan_id = $this->input->post('angkatan_id');
+        $semester_id = $this->input->post('span_semester');
+        $data['program_attr'] = $this->pengajuan_skripsi_model->get_program_studi($angkatan_id, $semester_id);
+        echo '<option value=""></option>';
+        foreach($data['program_attr'] as $row){
+            echo '<option value=\''.$row['program_studi_id'].'\' >'.$row['nama_program_studi'].'</option>';            
+        }
+    }
+    
     function getOptMahasiswa(){
         $this->load->model('pengajuan_skripsi_model');
-        $angkatan = $this->input->post('angkatan_id');
-        $data['mahasiswa'] = $this->pengajuan_skripsi_model->get_mahasiswa_change($angkatan);
+        $angkatan_id = $this->input->post('angkatan_id');
+        $semester_id = $this->input->post('span_semester');
+        $program_studi = $this->input->post('span_program');
+        $data['mahasiswa'] = $this->pengajuan_skripsi_model->get_mahasiswa_change($angkatan_id,$semester_id,$program_studi);
         echo '<option value="" ></option>';
         foreach($data['mahasiswa'] as $row){
             echo '<option value=\''.$row['id'].'\' >'.$row['nama'].'</option>';
