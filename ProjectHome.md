@@ -1,0 +1,1 @@
+Sistem Akademik Perguruan Tinggi Ilmu Kepolisian
